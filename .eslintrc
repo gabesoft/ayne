@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+
+    "rules": {
+        "comma-style": [2, "first"],
+        "key-spacing": false,
+        "no-comma-dangle": true,
+        "quotes": [2, "single", "avoid-escape"],
+        "block-scoped-var": 2,
+        "no-extra-parens": 2,
+        "no-mixed-requires": false,
+        "eqeqeq": [2, "smart"]
+    }
+}
