@@ -11,11 +11,11 @@ server.views({
 });
 
 function userHandler (request, reply) {
-    return reply.view('auth/index.html', { title: 'user' });
+    return reply.view('auth/templ/index.html', { title: 'user' });
 }
 
 function homeHandler (request, reply) {
-    return reply.view('home/index.html', { title: 'home' });
+    return reply.view('home/templ/index.html', { title: 'home' });
 }
 
 server.route({
