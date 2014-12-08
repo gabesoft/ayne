@@ -12,6 +12,12 @@
         "block-scoped-var": 2,
         "no-extra-parens": 2,
         "no-mixed-requires": false,
-        "eqeqeq": [2, "smart"]
+        "eqeqeq": [2, "smart"],
+        "radix": 2
+    },
+
+    "globals": {
+        "$": false,
+        "_": false
     }
 }
