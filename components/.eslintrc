@@ -1,0 +1,11 @@
+{
+    "env": {
+        "browser": true
+    },
+
+    "globals": {
+        "$": false,
+        "_": false,
+        "Ember": false
+    }
+}

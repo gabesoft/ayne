@@ -1,6 +1,5 @@
 {
     "env": {
-        "browser": true,
         "node": true
     },
 
@@ -14,10 +13,5 @@
         "no-mixed-requires": false,
         "eqeqeq": [2, "smart"],
         "radix": 2
-    },
-
-    "globals": {
-        "$": false,
-        "_": false
     }
 }
