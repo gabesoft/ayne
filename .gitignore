@@ -14,6 +14,7 @@ NERD_tree_*
 lib-cov
 logs
 node_modules
+bower_components
 npm-debug.log
 pids
 results
