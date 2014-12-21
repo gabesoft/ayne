@@ -1,0 +1,8 @@
+doctype html
+html
+    include ./head.jade
+    title #{title}
+    body
+        h3 Welcome to jade
+        script.
+            window.pageData = !{JSON.stringify(pageData || "{}")};

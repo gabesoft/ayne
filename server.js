@@ -10,26 +10,26 @@ var path = require('path')
 
 server.connection({ port : 8005 });
 server.views({
-    engines : { html : require('handlebars') }
-  , path    : path.join(__dirname, '/components')
+    engines        : { jade : require('jade') }
+  , path           : path.join(__dirname, '/components')
+  , compileOptions : { pretty: true }
 });
 
-//function userHandler (request, reply) {
-    //return reply.view('auth/templ/index.html', { title: 'user' });
-//}
+function userHandler (request, reply) {
+    return reply.view('auth/templates/index.jade', {
+        title    : 'user'
+      , pageData : { context: 'context data goes here' }
+    });
+}
 
 function homeHandler (request, reply) {
-    return reply.view('home/templ/index.html', { title: 'home' });
+    return reply.view('home/templates/index.jade', { title: 'home' });
 }
 
 server.route({
     method  : 'GET'
   , path    : '/user'
-  , handler : {
-        file: function () {
-            return path.join(__dirname, 'components/auth/templ/index.html');
-        }
-    }
+  , handler : userHandler
 });
 
 server.route({
