@@ -13,6 +13,7 @@
     "broccoli": "^0.13.3",
     "broccoli-concat": "0.0.12",
     "broccoli-ember-hbs-template-compiler": "git+https://github.com/gabesoft/broccoli-ember-hbs-template-compiler.git",
+    "broccoli-es6-module-transpiler": "^0.5.0",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-static-compiler": "^0.2.1",
     "broccoli-uglify-js": "^0.1.3",
