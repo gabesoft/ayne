@@ -4,46 +4,121 @@ var pickFiles = require('broccoli-static-compiler')
   , templateCompiler = require('broccoli-ember-hbs-template-compiler')
   , moduleCompiler = require('broccoli-es6-module-transpiler')
   , concatenate = require('broccoli-concat')
-    //, uglifyJs = require('broccoli-uglify-js')
-  , mergeTrees = require('broccoli-merge-trees');
+  , uglifyJs = require('broccoli-uglify-js')
+  , prod = process.env.BRCOCCOLI_ENV === 'production'
+  , mergeTrees = require('broccoli-merge-trees')
+  , trees = {
+        app   : 'app'
+      , bower : '../../bower_components'
+    };
 
-var templ = templateCompiler(pickFiles('app', {
+function run (tree, fns) {
+    return fns.reduce(function (tree, fn) {
+        return fn(tree);
+    }, tree);
+}
+
+function pickTemplates (tree) {
+    return pickFiles(tree, {
         srcDir  : '/templates'
       , destDir : '/templates'
-    }));
-var templCombined = concatenate(templ, {
-        inputFiles: [ 'templates/*.js' ]
-      , outputFile: '/app-templates.js'
     });
-var jsFiles = pickFiles('app', {
+}
+
+function concatenateTemplates (tree) {
+    return concatenate(tree, {
+        inputFiles : [ 'templates/*.js' ]
+      , outputFile : '/app-templates.js'
+    });
+}
+
+function pickJsFiles (tree) {
+    return pickFiles(tree, {
         srcDir  : '.'
-      , files   : ['**/*.js']
       , destDir : '.'
+      , files   : [ '**/*.js' ]
     });
-var jsCombined = moduleCompiler(jsFiles, {
+}
+
+function es6Compile (tree) {
+    return moduleCompiler(tree, {
         formatter : 'bundle'
-      , output    : '/app-combined.js'
+      , output    : '/app-compiled.js'
     });
-var allCombined = mergeTrees([ templCombined, jsCombined ]);
-var allJs = concatenate(allCombined, {
-        inputFiles     : [ 'app-templates.js', 'app-combined.js' ]
+}
+
+function concatenateJsLib (tree) {
+    return concatenate(tree, {
+        inputFiles     : [ 'app-templates.js', 'app-compiled.js' ]
       , outputFile     : '/app-all.js'
       , wrapInFunction : true
-      , separator      : '\n'
-      , header         : '// Created at ' + Date.now()
+      , header         : '// Generated on ' + (new Date()).toString()
     });
-var sourceMapJs = pickFiles(allCombined, {
+}
+
+function concatenateJsVendor (tree) {
+    return concatenate(tree, {
+        inputFiles : [
+            'jquery/dist/jquery.js'
+          , 'handlebars/handlebars.js'
+          , 'ember/ember.js'
+        ]
+      , outputFile : '/vendor-all.js'
+    });
+}
+
+function pickSourceMap (tree) {
+    return pickFiles(tree, {
         srcDir  : '.'
-      , files   : [ 'app-combined.js.map' ]
       , destDir : '.'
+      , files   : [ 'app-compiled.js.map' ]
     });
+}
 
-// TODO: uglify only for prod
-//var uglify = uglifyJs(allJs, { compress: true });
-//var outJs = uglify;
+function copyToAssetsDir (tree) {
+    return pickFiles(tree, {
+        srcDir  : '.'
+      , destDir : '/assets/auth/js/'
+    });
+}
 
-//var outJs = allJs;
+trees.templates = run(trees.app, [
+    pickTemplates
+  , templateCompiler
+  , concatenateTemplates
+]);
 
-module.exports = mergeTrees([ allJs, sourceMapJs ]);
+trees.jsLibCompiled = run(trees.app, [
+    pickJsFiles
+  , es6Compile
+]);
 
-//module.exports = mergeTrees([ compileTemplates(), concatJs() ]);
+trees.jsLibSourceMap = pickSourceMap(trees.jsLibCompiled);
+
+trees.jsLibCombined = run([ trees.templates, trees.jsLibCompiled ], [
+    mergeTrees
+  , concatenateJsLib
+]);
+
+trees.jsVendorCombined = run(trees.bower, [
+    pickJsFiles
+  , concatenateJsVendor
+]);
+
+trees.jsLibOutput = prod
+    ? uglifyJs(trees.jsLibCombined, { compress: true })
+    : trees.jsLibCombined;
+
+trees.jsVendorOutput = prod
+    ? uglifyJs(trees.jsVendorCombined, { compress: true })
+    : trees.jsVendorCombined;
+
+trees.assets = run([
+    trees.jsLibOutput
+  , trees.jsVendorOutput
+  , trees.jsLibSourceMap ], [
+    mergeTrees
+  , copyToAssetsDir
+]);
+
+module.exports = trees.assets;

@@ -1,12 +1,9 @@
 head
     meta(charset="UTF-8")
 
-    script(src="/vendor/jquery/dist/jquery.js")
-    script(src="/vendor/handlebars/handlebars.js")
-    script(src="/vendor/ember/ember.js")
-
-    //-TODO: fix the public assets path
-    script(src="/public/auth/public/app-all.js")
+    //-TODO: get assets host from co,fig
+    script(src="http://localhost:4200/assets/auth/js/vendor-all.js")
+    script(src="http://localhost:4200/assets/auth/js/app-all.js")
 
     link(href="/vendor/foundation/css/foundation.css", rel="stylesheet", type="text/css")
     link(href="/vendor/foundation/css/normalize.css", rel="stylesheet", type="text/css")

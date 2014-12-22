@@ -1,0 +1,23 @@
+{
+    "server":{
+        "command": "node-dev",
+        "color": "blue",
+        "args" : ["server.js"],
+        "env": {
+            "NODE_ENV": "development"
+        }
+    },
+    "broccoli-auth" : {
+        "command": "broccoli",
+        "color": "magenta",
+        "args": [
+            "serve",
+            "--port",
+            "4200"
+        ],
+        "cwd": "components/auth",
+        "env": {
+            "BROCCOLI_ENV": "development"
+        }
+    }
+}
