@@ -82,6 +82,10 @@ function copyToAssetsDir (tree) {
     });
 }
 
+function uglifyAndCompress (tree) {
+    return prod ? uglifyJs(tree, { compress: true }) : tree;
+}
+
 trees.templates = run(trees.app, [
     pickTemplates
   , templateCompiler
@@ -105,13 +109,8 @@ trees.jsVendorCombined = run(trees.bower, [
   , concatenateJsVendor
 ]);
 
-trees.jsLibOutput = prod
-    ? uglifyJs(trees.jsLibCombined, { compress: true })
-    : trees.jsLibCombined;
-
-trees.jsVendorOutput = prod
-    ? uglifyJs(trees.jsVendorCombined, { compress: true })
-    : trees.jsVendorCombined;
+trees.jsLibOutput = uglifyAndCompress(trees.jsLibCombined);
+trees.jsVendorOutput = uglifyAndCompress(trees.jsVendorCombined);
 
 trees.assets = run([
     trees.jsLibOutput
