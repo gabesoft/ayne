@@ -51,8 +51,8 @@ function concatenateJsLib (tree) {
     return concatenate(tree, {
         inputFiles     : [ 'app-templates.js', 'app-compiled.js' ]
       , outputFile     : '/app-all.js'
-      , wrapInFunction : true
       , header         : '// Generated on ' + (new Date()).toString()
+      , wrapInFunction : true
     });
 }
 
