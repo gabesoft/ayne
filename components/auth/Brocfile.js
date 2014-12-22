@@ -40,7 +40,7 @@ function pickJsFiles (tree) {
     });
 }
 
-function es6Compile (tree) {
+function compileModules (tree) {
     return moduleCompiler(tree, {
         formatter : 'bundle'
       , output    : '/app-compiled.js'
@@ -90,7 +90,7 @@ trees.templates = run(trees.app, [
 
 trees.jsLibCompiled = run(trees.app, [
     pickJsFiles
-  , es6Compile
+  , compileModules
 ]);
 
 trees.jsLibSourceMap = pickSourceMap(trees.jsLibCompiled);
