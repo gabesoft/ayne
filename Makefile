@@ -18,7 +18,7 @@ serve:
 	@node-dev server.js
 
 serve-auth-assets:
-	@cd components/auth && broccoli serve --port 4200
+	@cd components/auth && broccoli serve --port 4300
 
 build-auth-assets:
 	@cd components/auth && rm -rf public && broccoli build 'public'

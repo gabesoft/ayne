@@ -52,9 +52,6 @@ function setupServer (cb) {
         console.log(tags, event);
     });
 
-    //server.ext('onPreHandler'
-    //server.ext('onRequest'
-    //server.ext('onPreResponse'
     server.ext('onPreResponse', function (request, reply) {
         if (request.response.isBoom) {
             return reply.continue();
