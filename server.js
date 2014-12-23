@@ -54,12 +54,23 @@ function setupServer (cb) {
 
     //server.ext('onPreHandler'
     //server.ext('onRequest'
-    //server.ext('onRequest'
     //server.ext('onPreResponse'
     server.ext('onPreResponse', function (request, reply) {
-        // TODO: setup pre response
-        return reply(request.response);
+        if (request.response.isBoom) {
+            return reply.continue();
+        }
+
+        var response = request.response
+          , context = response.source.context || {};
+
+        context.ayne = context.ayne || {};
+        context.ayne.assets = conf.get('assets');
+        context.ayne.locals = context.$locals || {};
+        delete context.$locals;
+
+        return reply.continue();
     });
+
     cb(null);
 }
 

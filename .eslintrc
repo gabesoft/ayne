@@ -11,6 +11,7 @@
         "block-scoped-var": 2,
         "no-extra-parens": 2,
         "no-mixed-requires": false,
+        "no-multi-spaces": false,
         "eqeqeq": [2, "smart"],
         "radix": 2
     }
