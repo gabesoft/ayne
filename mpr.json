@@ -2,7 +2,7 @@
     "server":{
         "command": "node-dev",
         "color": "blue",
-        "args" : ["server.js"],
+        "args" : ["server.js", "--port", "8005"],
         "env": {
             "NODE_ENV": "development"
         }

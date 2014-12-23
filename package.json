@@ -6,8 +6,11 @@
   "main": "./lib/index.js",
   "bin": {},
   "dependencies": {
+    "async": "^0.9.0",
+    "glob": "^4.3.2",
     "hapi": "^8.0.0",
-    "jade": "^1.8.2"
+    "jade": "^1.8.2",
+    "nconf": "^0.7.1"
   },
   "devDependencies": {
     "broccoli": "^0.13.3",

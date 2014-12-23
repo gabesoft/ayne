@@ -34,8 +34,8 @@ function concatenateTemplates (tree) {
 
 function pickJsFiles (tree) {
     return pickFiles(tree, {
-        srcDir  : '.'
-      , destDir : '.'
+        srcDir  : '/'
+      , destDir : '/'
       , files   : [ '**/*.js' ]
     });
 }
@@ -69,15 +69,15 @@ function concatenateJsVendor (tree) {
 
 function pickSourceMap (tree) {
     return pickFiles(tree, {
-        srcDir  : '.'
-      , destDir : '.'
+        srcDir  : '/'
+      , destDir : '/'
       , files   : [ 'app-compiled.js.map' ]
     });
 }
 
 function copyToAssetsDir (tree) {
     return pickFiles(tree, {
-        srcDir  : '.'
+        srcDir  : '/'
       , destDir : '/assets/auth/js/'
     });
 }
