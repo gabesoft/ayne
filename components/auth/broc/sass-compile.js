@@ -2,35 +2,34 @@
 
 var pickFiles = require('broccoli-static-compiler')
   , compileSass = require('broccoli-sass')
-  , path = require('path')
   , trees = {
         app   : 'app'
       , bower : '../../bower_components'
     };
 
 trees.vendor = pickFiles(trees.bower, {
-    srcDir  : '/foundation'
+    srcDir  : '/foundation/scss'
   , destDir : '/foundation'
-  , files   : [ '**/*.scss' ]
 });
 
 trees.lib = pickFiles(trees.app, {
     srcDir  : '/styles'
   , destDir : '/styles'
-  , files   : [ '**/*.scss' ]
-})
+});
 
 trees.compiled = compileSass([ trees.vendor, trees.lib ]
   , '/styles/app.scss'
   , '/app.css'
   , {
-        options: { includePaths: '/foundation' }
+        sourceMap      : true
+      , outputStyle    : 'compressed'
+      , sourceComments : 'map'
     });
 
 trees.output = pickFiles(trees.compiled, {
     srcDir  : '/'
   , destDir : '/assets/auth/css/'
-  , files   : [ 'app.css' ]
-})
+  , files   : [ 'app.css', 'app.css.map' ]
+});
 
 module.exports = trees.output;
