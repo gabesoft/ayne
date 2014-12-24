@@ -1,8 +1,9 @@
 'use strict';
 
-var pickFiles = require('broccoli-static-compiler')
+var pickFiles   = require('broccoli-static-compiler')
   , compileSass = require('broccoli-sass')
-  , trees = {
+  , mergeTrees  = require('broccoli-merge-trees')
+  , trees       = {
         app   : 'app'
       , bower : '../../bower_components'
     };
@@ -12,19 +13,29 @@ trees.vendor = pickFiles(trees.bower, {
   , destDir : '/foundation'
 });
 
+trees.fonts = pickFiles(trees.bower, {
+    srcDir  : '/font-awesome/scss'
+  , destDir : '/font-awesome'
+});
+
 trees.lib = pickFiles(trees.app, {
     srcDir  : '/styles'
   , destDir : '/styles'
 });
 
-trees.compiled = compileSass([ trees.vendor, trees.lib ]
+trees.compiled = compileSass([ trees.vendor, trees.fonts, trees.lib ]
   , '/styles/app.scss'
   , '/app.css'
   , {
         sourceMap      : true
-      , outputStyle    : 'compressed'
+      //, outputStyle    : 'compressed'
       , sourceComments : 'map'
     });
+
+trees.fontsDir = pickFiles(trees.bower, {
+    srcDir  : '/font-awesome/fonts'
+  , destDir : '/assets/auth/fonts'
+});
 
 trees.output = pickFiles(trees.compiled, {
     srcDir  : '/'
@@ -32,4 +43,4 @@ trees.output = pickFiles(trees.compiled, {
   , files   : [ 'app.css', 'app.css.map' ]
 });
 
-module.exports = trees.output;
+module.exports = mergeTrees([ trees.output, trees.fontsDir ]);

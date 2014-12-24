@@ -13,7 +13,8 @@
         "args": [
             "serve",
             "--port",
-            "4300"
+            "4300",
+            "--cors"
         ],
         "cwd": "components/auth",
         "env": {

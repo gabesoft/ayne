@@ -1,21 +1,24 @@
 {
-    "name": "ayne",
-    "version": "0.0.1",
-    "homepage": "https://github.com/gabesoft/ayne",
-    "description": "Web Application",
-    "main": "index.html",
-    "authors": ["Gabriel Adomnicai"],
-    "license": "MIT",
-    "private": true,
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "ember": "~1.9.0",
-        "foundation": "~5.5.0"
-    }
+  "name": "ayne",
+  "version": "0.0.1",
+  "homepage": "https://github.com/gabesoft/ayne",
+  "description": "Web Application",
+  "main": "index.html",
+  "authors": [
+    "Gabriel Adomnicai"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember": "~1.9.0",
+    "foundation": "~5.5.0",
+    "font-awesome": "~4.2.0"
+  }
 }

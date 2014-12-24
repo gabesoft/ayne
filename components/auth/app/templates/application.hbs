@@ -2,17 +2,24 @@
     <ul class="title-area">
         <li class="name">
             <h1>
-                <a href="/user">User</a>
+                <a href="/user">
+                    <!-- TODO: show the user icon if logged in -->
+                    <i class="fa fa-user"></i>
+                    <!--User-->
+                </a>
             </h1>
         </li>
     </ul>
     <section class="top-bar-section">
         <ul class="right">
             <li class="divider"></li>
+            <!-- login & signup are available if the user is logged out -->
             <li>{{#link-to 'login'}}Login{{/link-to}}</li>
             <li class="divider"></li>
             <li>{{#link-to 'signup'}}Signup{{/link-to}}</li>
             <li class="divider"></li>
+            <!-- account & profile are available if the user is logged in -->
+            <!-- add a logout button if logged in -->
             <li>{{#link-to 'account'}}Account{{/link-to}}</li>
             <li class="divider"></li>
             <li>{{#link-to 'profile'}}Profile{{/link-to}}</li>
