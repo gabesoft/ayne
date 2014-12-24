@@ -12,9 +12,9 @@
         "color": "magenta",
         "args": [
             "serve",
+            "--cors",
             "--port",
-            "4300",
-            "--cors"
+            "4300"
         ],
         "cwd": "components/auth",
         "env": {
