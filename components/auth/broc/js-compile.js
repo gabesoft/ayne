@@ -60,6 +60,8 @@ function concatenateJsVendor (tree) {
     return concatenate(tree, {
         inputFiles : [
             'jquery/dist/jquery.js'
+          , 'fastclick/lib/fastclick.js'
+          , 'foundation/js/foundation.js'
           , 'handlebars/handlebars.js'
           , 'ember/ember.js'
         ]
