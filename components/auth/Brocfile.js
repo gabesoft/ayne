@@ -1,7 +1,16 @@
 'use strict';
 
 var mergeTrees = require('broccoli-merge-trees')
-  , js = require('./broc/js-compile')
-  , sass = require('./broc/sass-compile.js');
+  , prod       = process.env.BRCOCCOLI_ENV === 'production'
+  , dest       = '/auth'
+  , opts       = {
+        prod  : prod
+      , dest  : dest
+      , app   : 'app'
+      , bower : '../../bower_components'
+    };
 
-module.exports = mergeTrees([ js, sass ]);
+module.exports = mergeTrees([
+    require('./broc/js-compile')(opts)
+  , require('./broc/sass-compile.js')(opts)
+]);

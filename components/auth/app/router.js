@@ -1,5 +1,9 @@
 import App from 'app';
 
+App.Router.reopen({
+    rootURL: '/user/'
+});
+
 App.Router.map(function () {
     this.route('login');
     this.route('signup');
