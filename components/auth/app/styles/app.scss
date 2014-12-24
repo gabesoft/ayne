@@ -4,5 +4,11 @@
 @import "foundation/foundation";
 
 body {
+    background-color: $silver;
+}
 
+fieldset {
+    legend {
+        background-color: transparent;
+    }
 }
