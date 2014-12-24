@@ -3,9 +3,9 @@
 var pickFiles   = require('broccoli-static-compiler')
   , path        = require('path')
   , compileSass = require('broccoli-sass')
-  , mergeTrees  = require('broccoli-merge-trees')
+  , mergeTrees  = require('broccoli-merge-trees');
 
-  module.exports = function (opts) {
+ module.exports = function (opts) {
       var trees = {
               app   : opts.app
             , bower : opts.bower
