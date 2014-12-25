@@ -5,6 +5,8 @@ var mergeTrees = require('broccoli-merge-trees')
   , path       = require('path')
   , async      = require('async')
   , glob       = require('glob')
+  , jsBuild    = require('./broc/js-compile')
+  , sassBuild  = require('./broc/sass-compile')
   , components = path.join(__dirname, 'components')
   , bower      = path.join(__dirname, 'bower_components')
   , dirs       = glob.sync(components + '/*')
@@ -20,17 +22,9 @@ dirs.forEach(function (dir) {
         };
 
     trees.push(mergeTrees([
-        require('./broc/js-compile')(opts)
-      , require('./broc/sass-compile.js')(opts)
+        jsBuild(opts)
+      , sassBuild(opts)
     ]));
 })
 
 module.exports = mergeTrees(trees);
-
-//module.exports = trees[0];
-
-
-//module.exports = mergeTrees([
-//require('./broc/js-compile')(opts)
-//, require('./broc/sass-compile.js')(opts)
-//]);
