@@ -1,6 +1,12 @@
 <form class="inner-wrap">
     <fieldset>
-        <legend>Enter your credentials below</legend>
+        <legend {{bind-attr class="error.form:error"}}>
+            {{#if error.form}}
+                {{error.form}}
+            {{else}}
+                Enter your credentials below
+            {{/if}}
+        </legend>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
                 {{input
@@ -23,13 +29,6 @@
                 name="password"
                 aria-label="password"
                 placeholder="Enter your password"}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-12 medium-6 large-4 columns">
-                {{#if error.form}}
-                    <small class="error">{{error.form}}</small>
-                {{/if}}
             </div>
         </div>
     </fieldset>

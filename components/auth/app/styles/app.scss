@@ -10,5 +10,9 @@ body {
 fieldset {
     legend {
         background-color: transparent;
+
+        &.error {
+            color: $alert-color;
+        }
     }
 }
