@@ -33,15 +33,14 @@ module.exports = function (opts) {
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {
-                    sourceMap      : true
-                  , sourceComments : 'map'
+                    sourceMap      : !opts.minify
+                  , sourceComments : opts.minify ? false : 'map'
                   , outputStyle    : opts.minify ? 'compressed' : 'inline'
                 });
 
         return pickFiles(compiled, {
             srcDir  : '/'
           , destDir : path.join(opts.name, 'css')
-          , files   : [ 'app.css', 'app.css.map' ]
         });
     }
 
