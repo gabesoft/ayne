@@ -16,7 +16,6 @@
             "--port",
             "4300"
         ],
-        "cwd": "components/auth",
         "env": {
             "BROCCOLI_ENV": "development"
         }

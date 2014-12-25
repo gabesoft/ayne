@@ -20,8 +20,8 @@ serve:
 serve-auth-assets:
 	@cd components/auth && broccoli serve --port 4300
 
-build-auth-assets:
-	@cd components/auth && rm -rf public && broccoli build 'public'
+build:
+	@rm -rf public && broccoli build 'public'
 
 tag:
 	@git tag -a "v$(VERSION)" -m "Version $(VERSION)"
