@@ -17,9 +17,20 @@ App.LoginController = Ember.Controller.extend({
     }.observes('model.password')
 
   , onEmailChanged: function () {
-        var value = this.get('model.email');
+        var email      = this.get('model.email')
+          , validEmail = function (input) {
+                var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return regex.test(email);
+            };
 
-        this.set('error.email', value ? null : 'This is a required field');
+        if (!email) {
+            this.set('error.email', 'This is a required field');
+        } else if (!validEmail(email)) {
+            this.set('error.email', 'Please enter a valid email address');
+        } else {
+            this.set('error.email', null);
+        }
+
         this.set('error.form', null);
     }.observes('model.email')
 
