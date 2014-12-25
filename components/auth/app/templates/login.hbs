@@ -10,7 +10,7 @@
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
                 {{input
-                value=email
+                value=model.email
                 type="text"
                 name="email"
                 aria-label="email"
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
                 {{input
-                value=password
+                value=model.password
                 type="password"
                 name="password"
                 aria-label="password"
@@ -35,8 +35,12 @@
     <fieldset>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                <button class="button small" type="button" {{bind-attr disabled=invalid}} {{action 'authenticate'}}>
-                    <i class="fa fa-sign-in"></i>
+                <button class="button small" type="button" {{bind-attr disabled=disableLogin}} {{action 'authenticate'}}>
+                    {{#if authenticating}}
+                        <i class="fa fa-spin fa-cog"></i>
+                    {{else}}
+                        <i class="fa fa-sign-in"></i>
+                    {{/if}}
                     Login
                 </button>
             </div>

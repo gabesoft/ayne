@@ -1,41 +1,38 @@
 import App from 'app';
 
 App.LoginController = Ember.Controller.extend({
-    error    : {}
+    error : {}
+  , authenticating: false
 
-  , email    : function () {
-        return this.get('model.email');
-    }.property('model.email')
-
-  , password : function () {
-        return this.get('model.password');
-    }.property('model.password')
-
-  , invalid  : function () {
+  , invalid : function () {
         return this.get('error.email') || this.get('error.form');
     }.property('error.email', 'error.form')
 
-  , invalidForm: function () {
-        return !this.get('error.form');
-    }.property('error.form')
+  , disableLogin : function () {
+        return this.get('invalid') || this.get('authenticating');
+    }.property('invalid', 'authenticating')
 
   , onPasswordChanged: function () {
-        this.set('model.password', this.get('password'));
         this.set('error.form', null);
-    }.observes('password')
+    }.observes('model.password')
 
   , onEmailChanged: function () {
-        var value = this.get('email');
+        var value = this.get('model.email');
 
-        this.set('model.email', value);
         this.set('error.email', value ? null : 'This is a required field');
         this.set('error.form', null);
-    }.observes('email')
+    }.observes('model.email')
 
-  , actions  : {
+  , actions : {
         authenticate: function () {
+            var self = this;
             console.log(this.get('model'));
-            this.set('error.form', 'Invalid credentials');
+
+            self.set('authenticating', true);
+            setTimeout(function () {
+                self.set('error.form', 'Invalid credentials');
+                self.set('authenticating', false);
+            }, 5000);
         }
     }
 });
