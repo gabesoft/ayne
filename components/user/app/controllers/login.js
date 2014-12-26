@@ -5,6 +5,7 @@ App.LoginController = Ember.Controller.extend(Validator, {
     authenticatePending: false
 
   , init : function () {
+        this._super();
         this.requiredField('email');
         this.emailField('email');
         this.invalidate('server');

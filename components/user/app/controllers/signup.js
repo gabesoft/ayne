@@ -6,6 +6,7 @@ App.SignupController = Ember.Controller.extend(Validator, {
   , createUserPending: false
 
   , init: function () {
+        this._super();
         this.requiredField('email');
         this.emailField('email');
         this.passwordFields('password', 'passwordVerify');

@@ -1,9 +1,12 @@
 import App from 'app';
 
 export default Ember.Mixin.create({
-    error      : {}
-  , validators : {}
-  , invalid    : false
+    init: function () {
+        this._super();
+        this.set('error', {});
+        this.set('validators', {});
+        this.set('invalid', false);
+    }
 
   , validEmail : function (email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -11,7 +14,7 @@ export default Ember.Mixin.create({
     }
 
   , validate: function () {
-        Ember.$.each(this.validators, function (key, runValidator) {
+        Ember.$.each(this.get('validators'), function (key, runValidator) {
             runValidator(true);
         });
     }
@@ -34,13 +37,13 @@ export default Ember.Mixin.create({
 
   , addValidator: function (name, fn) {
         var self = this;
-        this.validators[name] = function () {
+        this.set('validators.' + name, function () {
             fn.apply(self, arguments);
-        };
+        });
     }
 
   , getValidator: function (name) {
-        return this.validators[name];
+        return this.get('validators.' + name);
     }
 
   , requiredField : function (name) {
@@ -84,7 +87,7 @@ export default Ember.Mixin.create({
     }
 
   , passwordFields: function (name1, name2) {
-        var key = name1 + ":" + name2;
+        var key = 'passwordFields:' + name1 + ':' + name2;
 
         this.addValidator(key, function (force) {
             var value1 = this.get('model.' + name1)
