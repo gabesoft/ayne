@@ -61,14 +61,16 @@ module.exports = function (opts) {
     }
 
     function compileJsVendor () {
+        var ext = opts.minify ? '.min.js' : '.js';
+
         return concatenate(opts.bower, {
             outputFile : '/vendor.js'
           , inputFiles : [
-                'jquery/dist/jquery.js'
+                'jquery/dist/jquery' + ext
               , 'fastclick/lib/fastclick.js'
-              , 'foundation/js/foundation.js'
-              , 'handlebars/handlebars.js'
-              , 'ember/ember.js'
+              , 'foundation/js/foundation' + ext
+              , 'handlebars/handlebars' + ext
+              , 'ember/ember' + ext
             ]
         });
     }
@@ -89,7 +91,20 @@ module.exports = function (opts) {
           , combined = mergeTrees([ vendor, lib ]);
 
         if (opts.minify) {
-            return uglifyJs(combined, { compress: true });
+            return uglifyJs(combined, {
+                mangle   : true
+              , compress : {
+                    sequences     : true
+                  , dead_code     : true
+                  , conditionals  : true
+                  , booleans      : true
+                  , unused        : true
+                  , if_return     : true
+                  , join_vars     : true
+                  , drop_console  : true
+                  , drop_debugger : true
+                }
+            });
         } else {
             return mergeTrees([ combined, map ]);
         }
@@ -98,5 +113,5 @@ module.exports = function (opts) {
     return pickFiles(combineJsAssets(), {
         srcDir  : '/'
       , destDir : path.join(opts.name, 'js')
-    })
+    });
 };

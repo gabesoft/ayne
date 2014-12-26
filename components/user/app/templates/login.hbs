@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                <button class="button small" type="button" {{bind-attr disabled=disableLogin}} {{action 'authenticate'}}>
+                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'authenticate'}}>
                     {{#if authenticatePending}}
                         <i class="fa fa-spin fa-cog"></i>
                     {{else}}

@@ -1,7 +1,7 @@
 'use strict';
 
 function userHandler (request, reply) {
-    return reply.view('auth/templates/index.jade', {
+    return reply.view('user/templates/index.jade', {
         title   : 'user'
       , $locals : { data: 'page data goes here' }
     });
