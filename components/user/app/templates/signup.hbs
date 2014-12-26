@@ -1,8 +1,8 @@
 <form action="">
     <fieldset>
-        <legend {{bind-attr class="error.form:error"}}>
-            {{#if error.form}}
-                {{error.form}}
+        <legend {{bind-attr class="error.server:error"}}>
+            {{#if error.server}}
+                {{error.server}}
             {{else}}
                 Create an account
             {{/if}}
@@ -30,6 +30,9 @@
                 aria-label="password"
                 placeholder="Enter your password"}}
             </div>
+            {{#if error.passwords}}
+                <small class="error">{{error.passwords}}</small>
+            {{/if}}
         </div>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
@@ -40,6 +43,9 @@
                 aria-label="password"
                 placeholder="Re-enter password"}}
             </div>
+            {{#if error.passwords}}
+                <small class="error">{{error.passwords}}</small>
+            {{/if}}
         </div>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">

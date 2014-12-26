@@ -8,7 +8,8 @@ App.SignupController = Ember.Controller.extend(Validator, {
   , init: function () {
         this.requiredField('email');
         this.emailField('email');
-        this.invalidate('form');
+        this.passwordFields('password', 'passwordVerify');
+        this.invalidate('server');
     }
 
   , disableSubmit : function () {
@@ -16,17 +17,22 @@ App.SignupController = Ember.Controller.extend(Validator, {
     }.property('invalid', 'createUserPending')
 
   , onModelChanged: function () {
-        this.set('error.form', null);
-    }.observes('model.password', 'model.email')
+        this.set('error.server', null);
+    }.observes('model.email', 'model.password', 'model.passwordVerify')
 
   , actions : {
         createUser: function () {
             var self = this;
             console.log(this.get('model'));
 
+            this.validate();
+            if (this.get('invalid')) {
+                return;
+            }
+
             self.set('createUserPending', true);
             setTimeout(function () {
-                self.set('error.form', 'An error occurred');
+                self.set('error.server', 'An error occurred');
                 self.set('createUserPending', false);
             }, 4000);
         }

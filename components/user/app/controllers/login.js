@@ -7,7 +7,7 @@ App.LoginController = Ember.Controller.extend(Validator, {
   , init : function () {
         this.requiredField('email');
         this.emailField('email');
-        this.invalidate('form');
+        this.invalidate('server');
     }
 
   , disableSubmit : function () {
@@ -15,17 +15,23 @@ App.LoginController = Ember.Controller.extend(Validator, {
     }.property('invalid', 'authenticatePending')
 
   , onModelChanged: function () {
-        this.set('error.form', null);
+        this.set('error.server', null);
     }.observes('model.password', 'model.email')
 
   , actions : {
         authenticate: function () {
             var self = this;
+
             console.log(this.get('model'));
+
+            this.validate();
+            if (this.get('invalid')) {
+                return;
+            }
 
             self.set('authenticatePending', true);
             setTimeout(function () {
-                self.set('error.form', 'Invalid credentials');
+                self.set('error.server', 'Invalid credentials');
                 self.set('authenticatePending', false);
             }, 4000);
         }
