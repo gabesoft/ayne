@@ -1,7 +1,12 @@
 import App from 'app';
 
 App.SignupRoute = Ember.Route.extend({
-    // TODO: if logged in redirect to profile
+    setupController : function (controller, model) {
+        controller.set('model', model);
+    },
+    model: function () {
+        return {};
+    }
 });
 
 export default App.LoginRoute;

@@ -5,3 +5,6 @@ html
     body
         script.
             window.ayne = !{JSON.stringify(ayne)};
+            window.ayne.loggedIn = function() {
+                return window.ayne.user && window.ayne.user.id;
+            };
