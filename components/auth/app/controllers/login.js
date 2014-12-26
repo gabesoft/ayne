@@ -2,15 +2,15 @@ import App from 'app';
 
 App.LoginController = Ember.Controller.extend({
     error : {}
-  , authenticating: false
+  , authenticatePending: false
 
   , invalid : function () {
         return this.get('error.email') || this.get('error.form');
     }.property('error.email', 'error.form')
 
   , disableLogin : function () {
-        return this.get('invalid') || this.get('authenticating');
-    }.property('invalid', 'authenticating')
+        return this.get('invalid') || this.get('authenticatePending');
+    }.property('invalid', 'authenticatePending')
 
   , onPasswordChanged: function () {
         this.set('error.form', null);
@@ -39,10 +39,10 @@ App.LoginController = Ember.Controller.extend({
             var self = this;
             console.log(this.get('model'));
 
-            self.set('authenticating', true);
+            self.set('authenticatePending', true);
             setTimeout(function () {
                 self.set('error.form', 'Invalid credentials');
-                self.set('authenticating', false);
+                self.set('authenticatePending', false);
             }, 5000);
         }
     }

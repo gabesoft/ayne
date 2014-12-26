@@ -7,7 +7,7 @@
             "NODE_ENV": "development"
         }
     },
-    "broccoli-auth" : {
+    "brocco" : {
         "command": "broccoli",
         "color": "magenta",
         "args": [

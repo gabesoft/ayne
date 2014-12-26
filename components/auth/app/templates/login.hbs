@@ -1,10 +1,10 @@
-<form class="inner-wrap">
+<form action="">
     <fieldset>
         <legend {{bind-attr class="error.form:error"}}>
             {{#if error.form}}
                 {{error.form}}
             {{else}}
-                Enter your credentials below
+                Enter your credentials
             {{/if}}
         </legend>
         <div class="row">
@@ -14,7 +14,7 @@
                 type="email"
                 name="email"
                 aria-label="email"
-                required="true"
+                required=true
                 placeholder="Enter your email" }}
             </div>
             {{#if error.email}}
@@ -31,12 +31,10 @@
                 placeholder="Enter your password"}}
             </div>
         </div>
-    </fieldset>
-    <fieldset>
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
                 <button class="button small" type="button" {{bind-attr disabled=disableLogin}} {{action 'authenticate'}}>
-                    {{#if authenticating}}
+                    {{#if authenticatePending}}
                         <i class="fa fa-spin fa-cog"></i>
                     {{else}}
                         <i class="fa fa-sign-in"></i>
