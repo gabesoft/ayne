@@ -36,5 +36,9 @@ App.LoginController = Ember.Controller.extend(Validator, {
                 self.set('authenticatePending', false);
             }, 4000);
         }
+      , redirectToSignup: function () {
+            ayne.user = this.get('model');
+            this.transitionToRoute('signup');
+        }
     }
 });

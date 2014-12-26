@@ -2,7 +2,7 @@ import App from 'app';
 
 App.SignupRoute = Ember.Route.extend({
     model: function () {
-        return {};
+        return Ember.copy(ayne.user || {}, true);
     }
 });
 
