@@ -87,11 +87,10 @@ module.exports = function (opts) {
                 srcDir  : '/'
               , destDir : '/'
               , files   : [ '**/*.map' ]
-            })
-          , combined = mergeTrees([ vendor, lib ]);
+            });
 
         if (opts.minify) {
-            return uglifyJs(combined, {
+            lib = uglifyJs(lib, {
                 mangle   : true
               , compress : {
                     sequences     : true
@@ -105,9 +104,14 @@ module.exports = function (opts) {
                   , drop_debugger : true
                 }
             });
-        } else {
-            return mergeTrees([ combined, map ]);
+
+            vendor = uglifyJs(vendor, {
+                mangle   : false
+              , compress : false
+            });
         }
+
+        return mergeTrees([ vendor, lib, map ]);
     }
 
     return pickFiles(combineJsAssets(), {

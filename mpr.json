@@ -3,9 +3,7 @@
         "command": "node-dev",
         "color": "blue",
         "args" : ["server.js", "--port", "8005"],
-        "env": {
-            "NODE_ENV": "development"
-        }
+        "env": {}
     },
     "brocco" : {
         "command": "broccoli",
@@ -16,8 +14,6 @@
             "--port",
             "4300"
         ],
-        "env": {
-            "BROCCOLI_ENV": "development"
-        }
+        "env": {}
     }
 }
