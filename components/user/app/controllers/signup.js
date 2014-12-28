@@ -32,10 +32,19 @@ App.SignupController = Ember.Controller.extend(Validator, {
             }
 
             self.set('createUserPending', true);
-            setTimeout(function () {
-                self.set('error.server', 'An error occurred');
-                self.set('createUserPending', false);
-            }, 4000);
+            Ember.$.ajax({
+                url     : '/api/signup'
+              , type    : 'POST'
+              , data    : this.get('model')
+              , context : this
+            }).then(function (data, status, jqXHR) {
+                console.log('signup succeeded', data);
+            }, function (jqXHR, status, error) {
+                this.set('error.server', 'An error occurred');
+                console.log('signup failed', error);
+            }).always(function () {
+                this.set('createUserPending', false);
+            });
         }
     }
 });

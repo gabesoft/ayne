@@ -12,7 +12,7 @@ var pickFiles        = require('broccoli-static-compiler')
 
 module.exports = function (opts) {
     function hasTemplates () {
-        return glob.sync(path.join(opts.name, '**/*.hbs'), {
+        return glob.sync(path.join(opts.name, 'app', '**/*.hbs'), {
             nomount : false
           , cwd     : opts.root
           , root    : opts.root
