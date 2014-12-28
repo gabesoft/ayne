@@ -1,7 +1,8 @@
 import App from 'app';
 
 App.Router.reopen({
-    rootURL: '/user/'
+    rootURL  : '/user/'
+  , location : 'history'
 });
 
 App.Router.map(function () {
