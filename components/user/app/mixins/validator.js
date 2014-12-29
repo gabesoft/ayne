@@ -91,15 +91,15 @@ export default Ember.Mixin.create({
     }
 
   , passwordFields: function (name1, name2) {
-        var key = 'passwordFields:' + name1 + ':' + name2;
+        var key  = 'passwordFields:' + name1 + ':' + name2
+          , key1 = 'model.' + name1
+          , key2 = 'model.' + name2;
 
         this.addValidator(key, function (force) {
-            var value1 = this.get('model.' + name1)
-              , value2 = this.get('model.' + name2);
+            var value1 = this.getWithDefault(key1, '')
+              , value2 = this.getWithDefault(key2, '');
 
-            if (!force && (typeof value1 === 'undefined' || typeof value2 === 'undefined')) {
-                return;
-            } else if (value1 === value2) {
+            if (value1 === value2) {
                 this.set('error.passwords', null);
             } else {
                 this.set('error.passwords', 'Passwords don\'t match');
@@ -107,10 +107,10 @@ export default Ember.Mixin.create({
         });
 
         this.invalidate('passwords');
-        this.addObserver('model.' + name1, this, function () {
+        this.addObserver(key1, this, function () {
             this.getValidator(key)();
         });
-        this.addObserver('model.' + name2, this, function () {
+        this.addObserver(key2, this, function () {
             this.getValidator(key)();
         });
     }

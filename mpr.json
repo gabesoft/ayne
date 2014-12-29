@@ -15,5 +15,17 @@
             "4300"
         ],
         "env": {}
+    },
+    "api":{
+        "command": "node-dev",
+        "color": "grey",
+        "args" : ["server.js", "--port", "8006"],
+        "cwd": "../dask",
+        "env": {}
+    },
+    "mongo":{
+        "command": "mongod",
+        "color": "green",
+        "args" : ["--config", "/usr/local/etc/mongod.conf"]
     }
 }

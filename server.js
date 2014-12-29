@@ -1,10 +1,10 @@
 'use strict';
 
-var path = require('path')
-  , Hapi = require('hapi')
-  , async = require('async')
-  , glob = require('glob')
-  , conf = require('./config/store.js')
+var path   = require('path')
+  , Hapi   = require('hapi')
+  , async  = require('async')
+  , glob   = require('glob')
+  , conf   = require('./config/store.js')
   , server = new Hapi.Server({
         debug: {
             log     : [ 'error' ]
@@ -12,14 +12,19 @@ var path = require('path')
     });
 
 function loadRoutes (cb) {
-    var root = conf.get('path:root')
-      , opts = { cwd  : path.join(root, 'components') };
+    var root       = conf.get('path:root')
+      , components = path.join(root, 'components')
+      , opts       = {
+            nomount : false
+          , cwd     : components
+          , root    : components
+        };
 
-    glob('**/routes.js', opts, function (err, files) {
+    glob('/**/routes.js', opts, function (err, files) {
         if (err) { return cb(err); }
 
         files.forEach(function (file) {
-            var routes = require(path.join(opts.cwd, file));
+            var routes = require(file);
 
             if (!Array.isArray(routes)) {
                 routes = [ routes ];

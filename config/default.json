@@ -1,5 +1,8 @@
 {
     "assets": {
         "host": "//localhost:4300"
+    },
+    "api": {
+        "url": "http://localhost:8006"
     }
 }

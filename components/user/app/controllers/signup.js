@@ -23,15 +23,12 @@ App.SignupController = Ember.Controller.extend(Validator, {
 
   , actions : {
         createUser: function () {
-            var self = this;
-            console.log(this.get('model'));
-
             this.validate();
             if (this.get('invalid')) {
                 return;
             }
 
-            self.set('createUserPending', true);
+            this.set('createUserPending', true);
             Ember.$.ajax({
                 url     : '/api/signup'
               , type    : 'POST'

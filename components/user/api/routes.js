@@ -1,7 +1,18 @@
 'use strict';
 
+var user = require('./user')
+  , Boom = require('boom');
+
 function loginHandler (request, reply) {
-    reply({ token: 'login:abcd' });
+    user.login(request.payload, function (err, data) {
+        if (err && err.name === 'InvalidCredentials') {
+            reply(Boom.unauthorized(err));
+        } else if (err) {
+            reply(Boom.badImplementation(err));
+        } else {
+            reply(data);
+        }
+    });
 }
 
 function logoutHandler (request, reply) {
@@ -9,7 +20,13 @@ function logoutHandler (request, reply) {
 }
 
 function signupHandler (request, reply) {
-    reply({ token: 'signup:abcd', user: request.payload });
+    user.create(request.payload, function (err, data) {
+        if (err) {
+            reply(Boom.badImplementation(err));
+        } else {
+            reply(data);
+        }
+    });
 }
 
 module.exports = [{
