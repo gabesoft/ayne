@@ -1,7 +1,8 @@
 'use strict';
 
-var api    = require('../../core/lib/api')
-  , bcrypt = require('bcrypt');
+var api               = require('../../core/lib/api')
+  , UnauthorizedError = require('./unauthorized-error')
+  , bcrypt            = require('bcrypt');
 
 function create (data, cb) {
     bcrypt.genSalt(10, function (err, salt) {
@@ -22,24 +23,15 @@ function create (data, cb) {
     })
 }
 
-InvalidCredentialsError.prototype = Object.create(Error.prototype);
-InvalidCredentialsError.prototype.constructor = InvalidCredentialsError;
-function InvalidCredentialsError () {
-    if (!(this instanceof InvalidCredentialsError)) {
-        return new InvalidCredentialsError();
-    }
-    this.name = 'InvalidCredentials';
-    this.message = 'Invalid credentials';
-}
-
 function login (data, cb) {
     api.get('/user/byemail/' + encodeURIComponent(data.email), function (err, response, body) {
+        if (!body) { return cb(new UnauthorizedError()); }
         if (err) { return cb(err); }
 
         bcrypt.compare(data.password, body.password, function (err, match) {
             if (err) { return cb(err); }
             if (!match) {
-                return cb(new InvalidCredentialsError());
+                return cb(new UnauthorizedError());
             }
 
             delete body.password;

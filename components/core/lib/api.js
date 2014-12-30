@@ -37,7 +37,13 @@ function makeRequest(path, method, data, cb) {
         cb   = data;
         data = {};
     }
-    request(options(path, method, data), cb);
+    request(options(path, method, data), function (err, response, body) {
+        if (body.statusCode && +body.statusCode >= 400) {
+            cb(err || body, response, null);
+        } else {
+            cb(err, response, body);
+        }
+    });
 }
 
 module.exports = {

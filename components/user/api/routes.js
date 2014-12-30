@@ -1,31 +1,20 @@
 'use strict';
 
-var user = require('./user')
-  , Boom = require('boom');
+var user = require('./user');
 
 function loginHandler (request, reply) {
     user.login(request.payload, function (err, data) {
-        if (err && err.name === 'InvalidCredentials') {
-            reply(Boom.unauthorized(err));
-        } else if (err) {
-            reply(Boom.badImplementation(err));
-        } else {
-            reply(data);
-        }
+        return err ? reply.fail(err) : reply(data);
     });
 }
 
 function logoutHandler (request, reply) {
-    reply({ status: 'logout-complete' });
+    throw new Error('Not implemented');
 }
 
 function signupHandler (request, reply) {
     user.create(request.payload, function (err, data) {
-        if (err) {
-            reply(Boom.badImplementation(err));
-        } else {
-            reply(data);
-        }
+        return err ? reply.fail(err) : reply(data);
     });
 }
 

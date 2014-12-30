@@ -5,11 +5,7 @@ var path   = require('path')
   , async  = require('async')
   , glob   = require('glob')
   , conf   = require('./config/store.js')
-  , server = new Hapi.Server({
-        debug: {
-            log     : [ 'error' ]
-          , request : [ 'received', 'handler', 'response', 'error' ]}
-    });
+  , server = new Hapi.Server({});
 
 function loadRoutes (cb) {
     var root       = conf.get('path:root')
@@ -73,13 +69,25 @@ function setupServer (cb) {
         return reply.continue();
     });
 
-    cb(null);
+    server.register([{
+        register : require('boom-decorate')
+    },{
+        register : require('good')
+      , options  : {
+            reporters : [{
+                reporter : require('good-console')
+              , args     : [
+                    { log    : '*', response: '*', error: '*' }
+                  , { format : 'hh:mm:ss.SSS' }
+                ]
+            }],
+        }
+    }], cb);
 }
 
 function startServer (cb) {
     server.start(function (err) {
-        console.log('server started with connection:');
-        console.log(server.connections[0].info);
+        console.log('server started: ', server.info.uri);
         cb(err);
     });
 }
