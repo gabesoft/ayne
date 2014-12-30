@@ -2,10 +2,28 @@ Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
 });
 
-var App = Ember.Application.create({
-        LOG_TRANSITIONS: true,
-        LOG_MODULE_RESOLVER: true,
-        LOG_VIEW_LOOKUPS: true
-    });
+Ember.RSVP.configure('oneerror', function (error) {
+    if (error instanceof Error) {
+        Ember.Logger.assert(false, error);
+        Ember.Logger.error(error.stack);
+    }
+});
 
-export default App;
+Ember.Application.initializer({
+    name       : 'setup'
+  , initialize : function (container, app) {
+        app.LOG_TRANSITIONS       = ayne.env !== 'production';
+        app.LOG_MODULE_RESOLVER   = ayne.env !== 'production';
+        app.LOG_VIEW_LOOKUPS      = ayne.env !== 'production';
+        app.LOG_ACTIVE_GENERATION = ayne.env !== 'production';
+    }
+});
+
+Ember.Application.initializer({
+    name       : 'ayne'
+  , initialize : function (container, app) {
+       // TODO: initialize the ayne object here
+    }
+});
+
+export default Ember.Application.create({});

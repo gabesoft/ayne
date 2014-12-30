@@ -1,10 +1,16 @@
 export default Ember.Mixin.create({
     apiPost: function (path, data) {
+        var fp = new Fingerprint({ canvas: true, screen_resolution : true });
+
         return Ember.$.ajax({
             url     : path
           , type    : 'POST'
           , data    : data
           , context : this
+          , headers : {
+                'browser-fingerprint': fp.get()
+              //, 'jwt-token' : store.get()
+            }
         });
     },
 

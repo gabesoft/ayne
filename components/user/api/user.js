@@ -1,12 +1,13 @@
 'use strict';
 
 var api               = require('../../core/lib/api')
-  , UnauthorizedError = require('./unauthorized-error')
-  , EmailExistsError  = require('./email-exists-error')
+  , UnauthorizedError = require('../api-errors/unauthorized')
+  , EmailExistsError  = require('../api-errors/email-exists')
+  , UserNotFoundError = require('../api-errors/user-not-found')
   , bcrypt            = require('bcrypt');
 
 function create (data, cb) {
-    bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.genSalt(11, function (err, salt) {
         if (err) { return cb(err); }
 
         bcrypt.hash(data.password || '', salt, function (err, hash) {
@@ -30,7 +31,7 @@ function create (data, cb) {
 
 function login (data, cb) {
     api.get('/user/byemail/' + encodeURIComponent(data.email), function (err, response, body) {
-        if (!body) { return cb(new UnauthorizedError()); }
+        if (err && err.statusCode === 404) { return cb(new UnauthorizedError()); }
         if (err) { return cb(err); }
 
         bcrypt.compare(data.password || '', body.password, function (err, match) {
@@ -48,12 +49,18 @@ function update (data, cb) {
 }
 
 function read (id, cb) {
-    throw new Error('Not implemented');
+    api.get('/user/' + encodeURIComponent(id), function (err, response, body) {
+        if (err && err.statusCode === 404) { return cb(new UserNotFoundError(id)); }
+        if (err) { return cb(err); }
+
+        delete body.password;
+        cb(null, body);
+    });
 }
 
 module.exports = {
     create : create
   , login  : login
-  , read   : read
+  , get    : read
   , update : update
 }

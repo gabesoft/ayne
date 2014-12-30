@@ -67,6 +67,7 @@ module.exports = function (opts) {
             outputFile : '/vendor.js'
           , inputFiles : [
                 'jquery/dist/jquery' + ext
+              , 'fingerprint/fingerprint.js'
               , 'fastclick/lib/fastclick.js'
               , 'foundation/js/foundation' + ext
               , 'handlebars/handlebars' + ext

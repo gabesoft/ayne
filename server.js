@@ -46,29 +46,38 @@ function setupServer (cb) {
       , compileOptions : { pretty: true }
       , path           : path.join(conf.get('path:root'), '/components')
     });
+
     server.decorate('reply', 'conf', function (key) {
         return conf.get(key);
     });
-    server.on('log', function (event, tags) {
-        console.log(tags, event);
+
+    server.ext('onRequest', function (request, reply) {
+        console.log('ON_REQUEST');
+        return reply.continue();
     });
 
     server.ext('onPreResponse', function (request, reply) {
+        console.log('ON_PRE_RESPONSE');
         if (request.response.isBoom) {
             return reply.continue();
         }
 
         var response = request.response
-          , context = response.source.context || {};
+          , context  = response.source.context || {};
 
         context.ayne = context.ayne || {};
         context.ayne.assets = conf.get('assets');
         context.ayne.locals = context.$locals || {};
+        context.ayne.env = conf.get('env');
         delete context.$locals;
 
         return reply.continue();
     });
 
+    cb(null);
+}
+
+function registerPlugins (cb) {
     server.register([{
         register : require('boom-decorate')
     },{
@@ -94,6 +103,7 @@ function startServer (cb) {
 
 async.series([
     setupServer
+  , registerPlugins
   , loadRoutes
   , startServer
 ], function (err) {

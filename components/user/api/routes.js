@@ -1,10 +1,20 @@
 'use strict';
 
-var user = require('./user');
+var user  = require('./user')
+  , token = require('../../core/lib/token');
 
 function loginHandler (request, reply) {
     user.login(request.payload, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        if (err) { return reply.fail(err); }
+
+        token.make(data, request.headers, function (err, tk) {
+            if (err) { return reply.fail(err); }
+
+            reply({
+                user  : data
+              , token : tk
+            });
+        });
     });
 }
 
