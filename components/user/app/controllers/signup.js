@@ -1,7 +1,8 @@
 import App from 'app';
 import Validator from '../mixins/validator';
+import Api from '../mixins/api';
 
-App.SignupController = Ember.Controller.extend(Validator, {
+App.SignupController = Ember.Controller.extend(Validator, Api, {
     error: {}
   , createUserPending: false
 
@@ -29,19 +30,23 @@ App.SignupController = Ember.Controller.extend(Validator, {
             }
 
             this.set('createUserPending', true);
-            Ember.$.ajax({
-                url     : '/api/signup'
-              , type    : 'POST'
-              , data    : this.get('model')
-              , context : this
-            }).then(function (data, status, jqXHR) {
-                console.log('signup succeeded', data);
-            }, function (jqXHR, status, error) {
-                this.set('error.server', 'An error occurred');
-                console.log('signup failed', error);
-            }).always(function () {
-                this.set('createUserPending', false);
-            });
+            this.apiSignup()
+               .then(function (data, status, jqXHR) {
+                    return this.apiLogin();
+               })
+               .then(function (data, status, jqXHR) {
+                    console.log('signup succeeded', data);
+                }, function (jqXHR, status, error) {
+                    var response = jqXHR.responseJSON;
+
+                    if (jqXHR.status === 409) {
+                        this.set('error.server', response.message);
+                    } else {
+                        this.set('error.server', 'An unknown error occurred');
+                    }
+                }).always(function () {
+                    this.set('createUserPending', false);
+                });
         }
     }
 });

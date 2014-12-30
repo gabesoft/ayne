@@ -1,5 +1,3 @@
-import App from 'app';
-
 export default Ember.Mixin.create({
     init: function () {
         this._super();

@@ -1,7 +1,8 @@
 import App from 'app';
 import Validator from '../mixins/validator';
+import Api from '../mixins/api';
 
-App.LoginController = Ember.Controller.extend(Validator, {
+App.LoginController = Ember.Controller.extend(Validator, Api, {
     authenticatePending: false
 
   , init : function () {
@@ -27,17 +28,11 @@ App.LoginController = Ember.Controller.extend(Validator, {
             }
 
             this.set('authenticatePending', true);
-            Ember.$.ajax({
-                url     : '/api/login'
-              , type    : 'POST'
-              , data    : this.get('model')
-              , context : this
-            }).then(function (data, status, jqXHR) {
+            this.apiLogin().then(function (data, status, jqXHR) {
                 console.log('login succeeded', data);
             }, function (jqXHR, status, error) {
-                console.log(jqXHR.responseJSON);
-
                 var response = jqXHR.responseJSON;
+
                 if (jqXHR.status === 401) {
                     this.set('error.server', 'Invalid credentials');
                 } else {
