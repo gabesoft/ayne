@@ -1,33 +1,40 @@
 export default Ember.Mixin.create({
-    apiPost: function (path, data) {
-        var fp = new Fingerprint({ canvas: true, screen_resolution : true });
+    getHeaders : function () {
+        var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
+          , token = 'todo-get-the-real-token-2';
 
+        return {
+            'Browser-Fingerprint' : fp.get()
+          , 'Authorization'       : 'Bearer ' + token
+        }
+    }
+
+  , apiPost: function (path, data) {
+        console.log(this.getHeaders());
         return Ember.$.ajax({
             url     : path
           , type    : 'POST'
           , data    : data
           , context : this
-          , headers : {
-                'browser-fingerprint': fp.get()
-              //, 'jwt-token' : store.get()
-            }
+          , headers : this.getHeaders()
         });
-    },
+    }
 
-    apiGet: function (path, query) {
+  , apiGet: function (path, query) {
         return Ember.$.ajax({
             url     : path
           , type    : 'GET'
           , qs      : query
           , context : this
-        })
-    },
+          , headers : this.getHeaders()
+        });
+    }
 
-    apiLogin: function (data) {
+  , apiLogin: function (data) {
         return this.apiPost('/api/login', data || this.get('model'));
-    },
+    }
 
-    apiSignup : function (data) {
+  , apiSignup : function (data) {
         return this.apiPost('/api/signup', data || this.get('model'));
     }
 });
