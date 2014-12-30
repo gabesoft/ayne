@@ -1,5 +1,9 @@
-UnauthorizedError.prototype = Object.create(Error.prototype);
-UnauthorizedError.prototype.constructor = UnauthorizedError;
+'use strict';
+
+var util = require('util');
+
+util.inherits(UnauthorizedError, Error);
+
 function UnauthorizedError () {
     if (!(this instanceof UnauthorizedError)) {
         return new UnauthorizedError();

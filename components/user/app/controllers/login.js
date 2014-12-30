@@ -28,20 +28,24 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
             }
 
             this.set('authenticatePending', true);
-            this.apiLogin().then(function (data, status, jqXHR) {
-                console.log('login succeeded', data);
-            }, function (jqXHR, status, error) {
-                var response = jqXHR.responseJSON;
+            this.apiLogin()
+               .then(function (data, status, jqXHR) {
+                    console.log('login succeeded', data);
+                })
+               .fail(function (jqXHR, status, error) {
+                    var response = jqXHR.responseJSON;
 
-                if (jqXHR.status === 401) {
-                    this.set('error.server', 'Invalid credentials');
-                } else {
-                    this.set('error.server', response.message);
-                }
-            }).always(function () {
-                this.set('authenticatePending', false);
-            });
+                    if (jqXHR.status === 401) {
+                        this.set('error.server', 'Invalid credentials');
+                    } else {
+                        this.set('error.server', response.message);
+                    }
+                })
+               .always(function () {
+                    this.set('authenticatePending', false);
+                });
         }
+
       , redirectToSignup: function () {
             ayne.user = this.get('model');
             this.transitionToRoute('signup');

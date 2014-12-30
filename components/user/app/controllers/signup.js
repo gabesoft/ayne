@@ -33,10 +33,11 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
             this.apiSignup()
                .then(function (data, status, jqXHR) {
                     return this.apiLogin();
-               })
+                })
                .then(function (data, status, jqXHR) {
                     console.log('signup succeeded', data);
-                }, function (jqXHR, status, error) {
+                })
+               .fail(function (jqXHR, status, error) {
                     var response = jqXHR.responseJSON;
 
                     if (jqXHR.status === 409) {
@@ -44,7 +45,8 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
                     } else {
                         this.set('error.server', 'An unknown error occurred');
                     }
-                }).always(function () {
+                })
+               .always(function () {
                     this.set('createUserPending', false);
                 });
         }

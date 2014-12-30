@@ -1,6 +1,9 @@
+'use strict';
 
-EmailExistsError.prototype = Object.create(Error.prototype);
-EmailExistsError.prototype.constructor = EmailExistsError;
+var util = require('util');
+
+util.inherits(EmailExistsError, Error);
+
 function EmailExistsError (email) {
     if (!(this instanceof EmailExistsError)) {
         return new EmailExistsError(email);
