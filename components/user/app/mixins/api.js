@@ -1,22 +1,10 @@
 export default Ember.Mixin.create({
-    getHeaders : function () {
-        var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
-          , token = 'todo-get-the-real-token-2';
-
-        return {
-            'Browser-Fingerprint' : fp.get()
-          , 'Authorization'       : 'Bearer ' + token
-        }
-    }
-
-  , apiPost: function (path, data) {
-        console.log(this.getHeaders());
+    apiPost: function (path, data) {
         return Ember.$.ajax({
             url     : path
           , type    : 'POST'
           , data    : data
           , context : this
-          , headers : this.getHeaders()
         });
     }
 
@@ -26,7 +14,6 @@ export default Ember.Mixin.create({
           , type    : 'GET'
           , qs      : query || {}
           , context : this
-          , headers : this.getHeaders()
         });
     }
 

@@ -1,3 +1,13 @@
+Ember.$.ajaxSetup({
+    beforeSend: function (xhr) {
+        var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
+          , token = localStorage.jwt;
+
+        xhr.setRequestHeader('Browser-Fingerprint', fp.get());
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    }
+});
+
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
 });
