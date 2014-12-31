@@ -78,20 +78,26 @@ function setupServer (cb) {
 }
 
 function registerPlugins (cb) {
-    server.register([{
-        register : require('boom-decorate')
-    },{
-        register : require('good')
-      , options  : {
-            reporters : [{
-                reporter : require('good-console')
-              , args     : [
-                    { log    : '*', response: '*', error: '*' }
-                  , { format : 'hh:mm:ss.SSS' }
-                ]
-            }],
-        }
-    }], cb);
+    server.register([
+        require('boom-decorate')
+      , require('./plugins/jwt')
+      , {
+            register : require('good')
+          , options  : {
+                reporters : [{
+                    reporter : require('good-console')
+                  , args     : [
+                        { log    : '*', response: '*', error: '*' }
+                      , { format : 'hh:mm:ss.SSS' }
+                    ]
+                }],
+            }
+        }], cb);
+}
+
+function setupAuth (cb) {
+    server.auth.strategy('token', 'jwt');
+    cb();
 }
 
 function startServer (cb) {
@@ -104,6 +110,7 @@ function startServer (cb) {
 async.series([
     setupServer
   , registerPlugins
+  , setupAuth
   , loadRoutes
   , startServer
 ], function (err) {

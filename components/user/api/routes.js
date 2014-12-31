@@ -22,6 +22,13 @@ function logoutHandler (request, reply) {
     throw new Error('Not implemented');
 }
 
+function accountHandler (request, reply) {
+    var user            = request.auth.credentials
+      , isAuthenticated = request.auth.isAuthenticated;
+
+    reply({ user: user, isAuthenticated: isAuthenticated, account: 'TO BE IMPLEMENTED' });
+}
+
 function signupHandler (request, reply) {
     user.create(request.payload, function (err, data) {
         return err ? reply.fail(err) : reply(data);
@@ -40,4 +47,11 @@ module.exports = [{
     method  : 'POST'
   , path    : '/api/signup'
   , handler : signupHandler
+}, {
+    method  : 'GET'
+  , path    : '/api/account'
+  , handler : accountHandler
+  , config  : {
+        auth: 'token'
+    }
 }];

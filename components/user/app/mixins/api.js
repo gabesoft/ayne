@@ -24,7 +24,7 @@ export default Ember.Mixin.create({
         return Ember.$.ajax({
             url     : path
           , type    : 'GET'
-          , qs      : query
+          , qs      : query || {}
           , context : this
           , headers : this.getHeaders()
         });
