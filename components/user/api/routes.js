@@ -19,14 +19,21 @@ function loginHandler (request, reply) {
 }
 
 function logoutHandler (request, reply) {
-    throw new Error('Not implemented');
+    token.remove(request.auth.artifacts, request.headers, function (err) {
+        if (err) {
+            reply.fail(err);
+        } else {
+            reply({ status: 'token-invalidated' });
+        }
+    });
 }
 
 function accountHandler (request, reply) {
-    var user            = request.auth.credentials
-      , isAuthenticated = request.auth.isAuthenticated;
-
-    reply({ user: user, isAuthenticated: isAuthenticated, account: 'TO BE IMPLEMENTED' });
+    reply({
+        user      : request.auth.credentials
+      , artifacts : request.auth.artifacts
+      , account   : 'TO BE IMPLEMENTED'
+    });
 }
 
 function signupHandler (request, reply) {
@@ -43,6 +50,9 @@ module.exports = [{
     method  : 'POST'
   , path    : '/api/logout'
   , handler : logoutHandler
+  , config  : {
+        auth : 'token'
+    }
 }, {
     method  : 'POST'
   , path    : '/api/signup'

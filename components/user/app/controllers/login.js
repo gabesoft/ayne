@@ -4,6 +4,7 @@ import Api from '../mixins/api';
 
 App.LoginController = Ember.Controller.extend(Validator, Api, {
     authenticatePending: false
+  , needs : ['application']
 
   , init : function () {
         this._super();
@@ -30,7 +31,8 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
             this.set('authenticatePending', true);
             this.apiLogin()
                .then(function (data, status, jqXHR) {
-                    console.log('login succeeded', data);
+                    localStorage.jwt = data.token;
+                    this.get('controllers.application').set('loggedIn', true);
                 })
                .fail(function (jqXHR, status, error) {
                     var response = jqXHR.responseJSON;
@@ -47,7 +49,6 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
         }
 
       , redirectToSignup: function () {
-            ayne.user = this.get('model');
             this.transitionToRoute('signup');
         }
     }

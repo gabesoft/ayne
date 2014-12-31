@@ -2,7 +2,7 @@ import App from 'app';
 
 App.SignupRoute = Ember.Route.extend({
     model: function () {
-        return Ember.copy(ayne.user || {}, true);
+        return this.controllerFor('login').get('model') || {};
     }
   , setupController : function (controller, model) {
         controller.resetErrors();

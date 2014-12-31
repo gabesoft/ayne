@@ -17,7 +17,13 @@
         <ul class="right">
             <li class="divider"></li>
             <!-- login & signup are available if the user is logged out -->
-            <li>{{#link-to 'login'}}Login{{/link-to}}</li>
+            <li>
+                {{#if loggedIn}}
+                    <a href="#" {{action 'logout'}}><i class="fa fa-sign-out"></i></a>
+                {{else}}
+                    {{#link-to 'login'}}Login{{/link-to}}
+                {{/if}}
+            </li>
             <li class="divider"></li>
             <li>{{#link-to 'signup'}}Sign-up{{/link-to}}</li>
             <li class="divider"></li>

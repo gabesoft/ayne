@@ -19,11 +19,4 @@ Ember.Application.initializer({
     }
 });
 
-Ember.Application.initializer({
-    name       : 'ayne'
-  , initialize : function (container, app) {
-       // TODO: initialize the ayne object here
-    }
-});
-
 export default Ember.Application.create({});

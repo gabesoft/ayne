@@ -30,6 +30,10 @@ export default Ember.Mixin.create({
         });
     }
 
+  , apiLogout: function (data) {
+        return this.apiPost('/api/logout');
+    }
+
   , apiLogin: function (data) {
         return this.apiPost('/api/login', data || this.get('model'));
     }

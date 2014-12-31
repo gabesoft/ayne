@@ -34,12 +34,12 @@ function authenticate (request, reply) {
 
     token.verify(parts[1], request.headers, function (err, payload) {
         if (err && err.name === 'TokenExpiredError') {
-            return reply(Boom.unauthorized('Expired token received from JSON Web Token validation', 'Bearer'));
+            reply(Boom.unauthorized('Expired token received from JSON Web Token validation', 'Bearer'));
+        } else if (err) {
+            reply(Boom.unauthorized('Invalid signature received for JSON Web Token validation', 'Bearer'));
+        } else {
+            reply.continue({ credentials: payload.user, artifacts: parts[1] });
         }
-        if (err) {
-            return (Boom.unauthorized('Invalid signature received for JSON Web Token validation', 'Bearer'));
-        }
-        return reply.continue({ credentials: payload.user });
     });
 
 }
