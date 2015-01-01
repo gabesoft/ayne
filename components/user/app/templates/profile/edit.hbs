@@ -1,0 +1,50 @@
+<form action="" class="profile-edit">
+    <fieldset>
+        <legend>Name and Details</legend>
+        <div class="row">
+            <div class="small-12 medium-6 large-4 columns">
+                {{input
+                value=model.firstName
+                type="text"
+                name="firstName"
+                placeholder="First Name"}}
+
+                {{input
+                value=model.lastName
+                type="text"
+                name="lastName"
+                placeholder="Last Name"}}
+
+                {{input
+                value=model.displayName
+                type="text"
+                name="displayName"
+                placeholder="Display Name"}}
+
+                {{input
+                value=model.location
+                type="text"
+                name="location"
+                placeholder="Location"}}
+
+                {{input
+                value=model.gravatarEmail
+                type="email"
+                name="gravatarEmail"
+                aria-label="email"
+                placeholder="Gravatar Email"}}
+            </div>
+            <div class="small-hidden medium-6 large-8 columns profile-photo-wrapper">
+                <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 medium-6 large-4 columns">
+                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+                    <i class="fa fa-save"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

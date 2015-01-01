@@ -1,7 +1,8 @@
 'use strict';
 
-var user  = require('./user')
-  , token = require('../../core/lib/token');
+var user    = require('./user')
+  , profile = require('./profile')
+  , token   = require('../../core/lib/token');
 
 function loginHandler (request, reply) {
     user.login(request.payload, function (err, data) {
@@ -28,18 +29,22 @@ function logoutHandler (request, reply) {
     });
 }
 
-function accountHandler (request, reply) {
-    reply({
-        user      : request.auth.credentials
-      , artifacts : request.auth.artifacts
-      , account   : 'TO BE IMPLEMENTED'
-    });
-}
-
 function signupHandler (request, reply) {
     user.create(request.payload, function (err, data) {
         return err ? reply.fail(err) : reply(data);
     });
+}
+
+function profileSaveHandler (request, reply) {
+    reply({
+        user      : request.auth.credentials
+      , artifacts : request.auth.artifacts
+      , profile   : 'TO BE IMPLEMENTED'
+    });
+}
+
+function profileReadHandler (request, reply) {
+    reply('NOT IMPLEMENTED');
 }
 
 module.exports = [{
@@ -50,18 +55,18 @@ module.exports = [{
     method  : 'POST'
   , path    : '/api/logout'
   , handler : logoutHandler
-  , config  : {
-        auth : 'token'
-    }
+  , config  : { auth : 'token' }
 }, {
     method  : 'POST'
   , path    : '/api/signup'
   , handler : signupHandler
+}, , {
+    method  : 'POST'
+  , path    : '/api/profile'
+  , handler : profileSaveHandler
+  , config  : { auth: 'token' }
 }, {
     method  : 'GET'
-  , path    : '/api/account'
-  , handler : accountHandler
-  , config  : {
-        auth: 'token'
-    }
+  , path    : '/api/profile'
+  , handler : profileReadHandler
 }];

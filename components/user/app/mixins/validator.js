@@ -19,6 +19,7 @@ export default Ember.Mixin.create({
         Ember.$.each(this.get('validators'), function (key, runValidator) {
             runValidator(true);
         });
+        return !this.get('invalid');
     }
 
   , invalidate : function (name) {

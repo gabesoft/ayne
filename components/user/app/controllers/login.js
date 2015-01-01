@@ -23,10 +23,7 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
 
   , actions : {
         authenticate: function () {
-            this.validate();
-            if (this.get('invalid')) {
-                return;
-            }
+            if (!this.validate()) { return; }
 
             this.set('authenticatePending', true);
             this.apiLogin()

@@ -8,8 +8,10 @@ App.Router.reopen({
 App.Router.map(function () {
     this.route('login');
     this.route('signup');
-    this.route('profile');
-    this.route('account');
+    this.resource('profile', function () {
+        this.route('edit');
+        this.route('view');
+    });
 });
 
 export default App.Router;

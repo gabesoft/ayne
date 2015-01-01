@@ -21,17 +21,17 @@
                 {{#if loggedIn}}
                     <a href="#" title="Logout" {{action 'logout'}}><i class="fa fa-sign-out"></i></a>
                 {{else}}
-                    {{#link-to 'login'}}Login{{/link-to}}
+                    {{#link-to 'login'}}Log In{{/link-to}}
                 {{/if}}
             </li>
             <li class="divider"></li>
-            <li>{{#link-to 'signup'}}SignUp{{/link-to}}</li>
+            <li>{{#link-to 'signup'}}Sign Up{{/link-to}}</li>
             <li class="divider"></li>
             <!-- account & profile are available if the user is logged in -->
             <!-- add a logout button if logged in -->
-            <li>{{#link-to 'profile'}}Profile{{/link-to}}</li>
+            <li>{{#link-to 'profile.view'}}Profile{{/link-to}}</li>
             <li class="divider"></li>
-            <li>{{#link-to 'account'}}Account{{/link-to}}</li>
+            <li>{{#link-to 'profile.edit'}}Account{{/link-to}}</li>
         </ul>
     </section>
 </nav>

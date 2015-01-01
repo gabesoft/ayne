@@ -35,10 +35,11 @@ module.exports = function (opts) {
         var templ = pickFiles(opts.root, {
                 srcDir  : path.join(opts.name, 'app', 'templates')
               , destDir : '/templates'
+              , files   : [ '**/*.hbs' ]
             });
 
         return concatenate(templateCompiler(templ), {
-            inputFiles : [ 'templates/*.js' ]
+            inputFiles : [ 'templates/**/*.js' ]
           , outputFile : '/app-templates.js'
         });
     }
@@ -67,6 +68,7 @@ module.exports = function (opts) {
             outputFile : '/vendor.js'
           , inputFiles : [
                 'jquery/dist/jquery' + ext
+              , 'blueimp-md5/js/md5' + ext
               , 'fingerprint/fingerprint.js'
               , 'fastclick/lib/fastclick.js'
               , 'foundation/js/foundation' + ext

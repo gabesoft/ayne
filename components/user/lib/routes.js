@@ -4,8 +4,9 @@ var paths = [
         '/user'
       , '/user/login'
       , '/user/signup'
-      , '/user/account'
       , '/user/profile'
+      , '/user/profile/view'
+      , '/user/profile/edit'
     ];
 
 function userHandler (request, reply) {

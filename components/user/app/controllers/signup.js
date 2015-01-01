@@ -25,10 +25,7 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
 
   , actions : {
         createUser: function () {
-            this.validate();
-            if (this.get('invalid')) {
-                return;
-            }
+            if (!this.validate()) { return; }
 
             this.set('createUserPending', true);
             this.apiSignup()

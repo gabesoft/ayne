@@ -3,10 +3,6 @@
 @import "foundation/normalize";
 @import "foundation/foundation";
 
-body {
-    background-color: $silver;
-}
-
 fieldset {
     legend {
         background-color: transparent;
@@ -14,5 +10,24 @@ fieldset {
         &.error {
             color: $alert-color;
         }
+    }
+}
+
+@media #{$small-only} {
+    .small-hidden {
+        display: none;
+    }
+}
+
+.profile-edit {
+    .profile-photo-wrapper {
+        padding: 30px 0 0 30px;
+    }
+
+    .profile-photo {
+        height: 200px;
+        width: 200px;
+        border-radius: 100%;
+        display: inline-block;
     }
 }

@@ -17,6 +17,10 @@ export default Ember.Mixin.create({
         });
     }
 
+  , apiSaveProfile: function (data) {
+        return this.apiPost('/api/profile', data || this.get('model'));
+    }
+
   , apiLogout: function (data) {
         return this.apiPost('/api/logout');
     }
