@@ -8,8 +8,19 @@ App.ProfileIndexRoute = Ember.Route.extend({
 });
 
 App.ProfileEditRoute = Ember.Route.extend(Api, {
-    model : function () {
-        return this.apiGet('/api/profile');
+    beforeModel : function (transition) {
+        if (!this.controllerFor('application').get('loggedIn')) {
+            this.controllerFor('login').set('prevTransition', transition);
+            this.transitionTo('login');
+        }
+    }
+  , model : function () {
+        return this.apiGet('/api/profile')
+           .fail(function (jqXHR, status, error) {
+                if (jqXHR.status === 401) {
+                    this.transitionTo('login');
+                }
+            });
     }
 });
 

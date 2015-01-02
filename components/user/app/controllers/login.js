@@ -30,6 +30,14 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
                .then(function (data, status, jqXHR) {
                     localStorage.jwt = data.token;
                     this.get('controllers.application').set('loggedIn', true);
+
+                    var prev = this.get('prevTransition');
+                    if (prev) {
+                        this.set('prevTransition', null);
+                        prev.retry();
+                    } else {
+                        this.transitionToRoute('profile.view');
+                    }
                 })
                .fail(function (jqXHR, status, error) {
                     var response = jqXHR.responseJSON;
