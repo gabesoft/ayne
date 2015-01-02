@@ -35,6 +35,7 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
                .then(function (data, status, jqXHR) {
                     localStorage.jwt = data.token;
                     this.get('controllers.application').set('loggedIn', true);
+                    this.transitionToRoute('profile.view');
                 })
                .fail(function (jqXHR, status, error) {
                     var response = jqXHR.responseJSON;

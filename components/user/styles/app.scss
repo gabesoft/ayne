@@ -10,10 +10,14 @@ fieldset {
         &.error {
             color: $alert-color;
         }
+
+        &.success {
+            color: $success-color;
+        }
     }
 }
 
-.profile-edit {
+.profile-edit,.profile-view {
     .profile-photo-wrapper {
         padding: 30px 0 0 30px;
         position: relative;
@@ -24,5 +28,9 @@ fieldset {
         width: 200px;
         border-radius: 100%;
         display: inline-block;
+    }
+
+    .profile-info {
+        margin: 30px 30px 0 30px;
     }
 }

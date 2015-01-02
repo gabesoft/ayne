@@ -1,1 +1,18 @@
-<h3>Profile View</h3>
+<div class="profile-view">
+    <div class="row">
+        <div class="medium-6 columns">
+            <div class="panel profile-info">
+                <p>
+                    {{model.firstName}} {{model.lastName}} ({{model.displayName}})
+                </p>
+                <p>
+                    {{model.location}}
+                </p>
+                <small class="pull-right">{{#link-to 'profile.edit'}}Edit{{/link-to}}</small>
+            </div>
+        </div>
+        <div class="show-for-medium-up medium-6 columns profile-photo-wrapper">
+            <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
+        </div>
+    </div>
+</div>

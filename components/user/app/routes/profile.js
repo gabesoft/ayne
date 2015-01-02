@@ -7,9 +7,10 @@ App.ProfileIndexRoute = Ember.Route.extend({
     }
 });
 
-App.ProfileEditRoute = Ember.Route.extend(Api, {
+App.ProfileRoute = Ember.Route.extend(Api, {
     beforeModel : function (transition) {
         if (!this.controllerFor('application').get('loggedIn')) {
+            console.log('not logged in');
             this.controllerFor('login').set('prevTransition', transition);
             this.transitionTo('login');
         }
