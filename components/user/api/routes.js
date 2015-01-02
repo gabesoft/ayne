@@ -36,15 +36,17 @@ function signupHandler (request, reply) {
 }
 
 function profileSaveHandler (request, reply) {
-    reply({
-        user      : request.auth.credentials
-      , artifacts : request.auth.artifacts
-      , profile   : 'TO BE IMPLEMENTED'
+    var userId = request.auth.credentials.id
+      , input  = request.payload;
+    profile.save(userId, input, function (err, data) {
+        return err ? reply.fail(err) : reply(data);
     });
 }
 
 function profileReadHandler (request, reply) {
-    reply('NOT IMPLEMENTED');
+    profile.read(request.auth.credentials.id, function (err, data) {
+        return err ? reply.fail(err) : reply(data);
+    });
 }
 
 module.exports = [{
@@ -69,4 +71,5 @@ module.exports = [{
     method  : 'GET'
   , path    : '/api/profile'
   , handler : profileReadHandler
+  , config  : { auth: 'token' }
 }];

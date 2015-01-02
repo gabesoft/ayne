@@ -4,7 +4,9 @@ Ember.$.ajaxSetup({
           , token = localStorage.jwt;
 
         xhr.setRequestHeader('Browser-Fingerprint', fp.get());
-        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        if (token) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
     }
 });
 
