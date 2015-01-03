@@ -16,9 +16,19 @@
     </ul>
     <section class="top-bar-section">
         <ul class="right hide-for-medium-up">
-            <li>{{#link-to 'profile.edit'}}Profile Edit{{/link-to}}</li>
-            <li>{{#link-to 'profile.view'}}Profile View{{/link-to}}</li>
-            <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+            {{#if loggedIn}}
+                {{#link-to 'profile.edit' tagName="li" href=false}}
+                    <a {{bind-attr href="view.href"}}>Profile Edit</a>
+                {{/link-to}}
+                {{#link-to 'profile.view' tagName="li" href=false}}
+                    <a {{bind-attr href="view.href"}}>Profile View</a>
+                {{/link-to}}
+                <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+            {{else}}
+                {{#link-to 'login' tagName="li" href=false}}
+                    <a {{bind-attr href="view.href"}}>Log In</a>
+                {{/link-to}}
+            {{/if}}
         </ul>
         <ul class="right show-for-medium-up">
             {{#if loggedIn}}
@@ -27,17 +37,17 @@
                     <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
                 </a>
                 <ul class="dropdown">
-                    <li>{{#link-to 'profile.edit'}}Profile Edit{{/link-to}}</li>
-                    <li>{{#link-to 'profile.view'}}Profile View{{/link-to}}</li>
+                    {{#link-to 'profile.edit' tagName="li" href=false}}
+                        <a {{bind-attr href="view.href"}}>Profile Edit</a>
+                    {{/link-to}}
+                    {{#link-to 'profile.view' tagName="li" href=false}}
+                        <a {{bind-attr href="view.href"}}>Profile View</a>
+                    {{/link-to}}
                     <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
                 </ul>
             </li>
             {{else}}
-                <li>
-                    {{#link-to 'login'}}
-                        <i class="fa fa-sign-in" title="Log In"></i>
-                    {{/link-to}}
-                </li>
+                <li>{{#link-to 'login'}}<i class="fa fa-sign-in" title="Log In"></i>{{/link-to}}</li>
             {{/if}}
         </ul>
     </section>
