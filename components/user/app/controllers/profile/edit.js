@@ -1,6 +1,6 @@
 import App from 'app';
-import Api from '../mixins/api';
-import Gravatar from '../mixins/gravatar';
+import Api from '../../mixins/api';
+import Gravatar from '../../mixins/gravatar';
 
 App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, {
     savePending      : false
