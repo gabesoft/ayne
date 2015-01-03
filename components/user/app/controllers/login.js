@@ -2,13 +2,7 @@ import App from 'app';
 import Validator from '../mixins/validator';
 import Api from '../mixins/api';
 
-App.LoginView = Ember.View.extend({
-    keyDown: function (e) {
-        this.get('controller').send('updateKey', e.keyCode);
-    }
-});
-
-App.LoginController = Ember.Controller.extend(Validator, Api, {
+App.LoginController = Ember.ObjectController.extend(Validator, Api, {
     authenticatePending: false
   , needs : ['application']
 
@@ -25,7 +19,7 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
 
   , onModelChanged: function () {
         this.set('error.server', null);
-    }.observes('model.password', 'model.email')
+    }.observes('password', 'email')
 
   , actions : {
         authenticate: function () {

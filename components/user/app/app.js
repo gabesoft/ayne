@@ -21,16 +21,6 @@ Ember.RSVP.configure('oneerror', function (error) {
     }
 });
 
-Ember.View.reopen({
-    didInsertElement: function () {
-        this._super();
-        Ember.run.scheduleOnce('afterRender', this, this.afterRenderEvent);
-    }
-  , afterRenderEvent: function () {
-        Ember.$(document).foundation();
-    }
-});
-
 Ember.Application.initializer({
     name       : 'setup'
   , initialize : function (container, app) {

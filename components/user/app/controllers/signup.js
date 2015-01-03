@@ -2,15 +2,15 @@ import App from 'app';
 import Validator from '../mixins/validator';
 import Api from '../mixins/api';
 
-App.SignupController = Ember.Controller.extend(Validator, Api, {
+App.SignupController = Ember.ObjectController.extend(Validator, Api, {
     error: {}
   , createUserPending: false
   , needs : ['application']
 
   , init: function () {
         this._super();
-        this.requiredField('email');
         this.emailField('email');
+        this.requiredField('email');
         this.passwordFields('password', 'passwordVerify');
         this.invalidate('server');
     }
@@ -21,7 +21,7 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
 
   , onModelChanged: function () {
         this.set('error.server', null);
-    }.observes('model.email', 'model.password', 'model.passwordVerify')
+    }.observes('email', 'password', 'passwordVerify')
 
   , actions : {
         createUser: function () {
@@ -35,6 +35,7 @@ App.SignupController = Ember.Controller.extend(Validator, Api, {
                .then(function (data, status, jqXHR) {
                     localStorage.jwt = data.token;
                     this.get('controllers.application').set('loggedIn', true);
+                    this.get('controllers.application').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');
                 })
                .fail(function (jqXHR, status, error) {

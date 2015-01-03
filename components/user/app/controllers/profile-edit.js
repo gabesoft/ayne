@@ -2,7 +2,7 @@ import App from 'app';
 import Api from '../mixins/api';
 import Gravatar from '../mixins/gravatar';
 
-App.ProfileEditController = Ember.Controller.extend(Api, Gravatar, {
+App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, {
     savePending      : false
   , profilePhotoSize : 200
   , legendText       : 'Name and Details'

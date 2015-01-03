@@ -54,7 +54,7 @@ export default Ember.Mixin.create({
 
         this.invalidate(name);
         this.addValidator(key, function (force) {
-            var value = this.get('model.' + name);
+            var value = this.get(name);
             if (!force && typeof value === 'undefined') {
                 return;
             } else if (!value) {
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
                 this.set('error.' + name, null);
             }
         });
-        this.addObserver('model.' + name, this, function () {
+        this.addObserver(name, this, function () {
             this.getValidator(key)();
         });
     }
@@ -72,7 +72,7 @@ export default Ember.Mixin.create({
         var key = 'emailField:' + name;
 
         this.addValidator(key, function () {
-            var value = this.get('model.' + name)
+            var value = this.get(name)
               , valid = this.validEmail(value);
 
             if (!value) {
@@ -84,19 +84,17 @@ export default Ember.Mixin.create({
             }
         });
         this.invalidate(name);
-        this.addObserver('model.' + name, this, function () {
+        this.addObserver(name, this, function () {
             this.getValidator(key)();
         });
     }
 
   , passwordFields: function (name1, name2) {
-        var key  = 'passwordFields:' + name1 + ':' + name2
-          , key1 = 'model.' + name1
-          , key2 = 'model.' + name2;
+        var key  = 'passwordFields:' + name1 + ':' + name2;
 
         this.addValidator(key, function (force) {
-            var value1 = this.getWithDefault(key1, '')
-              , value2 = this.getWithDefault(key2, '');
+            var value1 = this.getWithDefault(name1, '')
+              , value2 = this.getWithDefault(name2, '');
 
             if (value1 === value2) {
                 this.set('error.passwords', null);
@@ -106,10 +104,10 @@ export default Ember.Mixin.create({
         });
 
         this.invalidate('passwords');
-        this.addObserver(key1, this, function () {
+        this.addObserver(name1, this, function () {
             this.getValidator(key)();
         });
-        this.addObserver(key2, this, function () {
+        this.addObserver(name2, this, function () {
             this.getValidator(key)();
         });
     }
