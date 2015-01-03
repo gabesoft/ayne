@@ -27,9 +27,11 @@ App.LoginController = Ember.ObjectController.extend(Validator, Api, {
 
             this.set('authenticatePending', true);
             this.apiLogin()
-               .then(function (data, status, jqXHR) {
-                    localStorage.jwt = data.token;
+               .then(function (response) {
+                    localStorage.jwt = response.data.token;
                     this.get('controllers.application').set('loggedIn', true);
+
+                    // TODO: use this.router.get('application').send('invalidateModel');
                     this.get('controllers.application').target.send('invalidateModel');
 
                     var prev = this.get('prevTransition');
@@ -39,19 +41,19 @@ App.LoginController = Ember.ObjectController.extend(Validator, Api, {
                     } else {
                         this.transitionToRoute('profile.view');
                     }
-                })
-               .fail(function (jqXHR, status, error) {
-                    var response = jqXHR.responseJSON;
+                }.bind(this))
+               .catch(function (response) {
+                    var json = response.json;
 
-                    if (jqXHR.status === 401) {
+                    if (json.statusCode === 401) {
                         this.set('error.server', 'Invalid credentials');
                     } else {
-                        this.set('error.server', response.message);
+                        this.set('error.server', json.message);
                     }
-                })
-               .always(function () {
+                }.bind(this))
+               .finally(function () {
                     this.set('authenticatePending', false);
-                });
+                }.bind(this));
         }
 
       , redirectToSignup: function () {

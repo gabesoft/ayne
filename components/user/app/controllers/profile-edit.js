@@ -37,29 +37,29 @@ App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, {
   , actions: {
         save: function () {
             this.apiSaveProfile()
-               .then(function (data, status, jqXHR) {
-                    this.set('model', data);
-                    this.get('controllers.application').set('model', data);
+               .then(function (response) {
+                    this.set('model', response.data);
+                    this.get('controllers.application').set('model', response.data);
                     this.alert('Settings Updated', 'success', 5000);
-                })
-               .fail(function (jqXHR, status, error) {
-                    var response = jqXHR.responseJSON;
-                    if (response.statusCode === 409) {
-                        this.alert(response.message, 'error');
+                }.bind(this))
+               .catch(function (response) {
+                    var json = response.json;
+                    if (json.statusCode === 409) {
+                        this.alert(json.message, 'error');
                     } else {
                         this.alert('Failed to Update Settings', 'error');
                     }
-                });
+                }.bind(this));
         }
       , cancel : function () {
-            this.apiGet('/api/profile')
-               .then(function (data, status, jqXHR) {
-                    this.set('model', data);
-                    this.get('controllers.application').set('model', data);
-                })
-               .fail(function (jqXHR, status, error) {
-                    this.alert('Unknown Error', 'error');
-                });
+            this.apiGetProfile()
+               .then(function (response) {
+                    this.set('model', response.data);
+                    this.get('controllers.application').set('model', response.data);
+                }.bind(this))
+               .catch(function (response) {
+                    this.alert(response.json.message || 'Unknown Error', 'error');
+                }.bind(this));
         }
     }
 });

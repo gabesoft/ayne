@@ -1,24 +1,40 @@
 export default Ember.Mixin.create({
-    apiPost: function (path, data) {
-        return Ember.$.ajax({
-            url     : path
-          , type    : 'POST'
-          , data    : data
-          , context : this
+    apiRun: function (opts) {
+        return new Ember.RSVP.Promise(function (resolve, reject) {
+            Ember.$
+               .ajax(opts)
+               .then(function (data, status, jqXHR) {
+                    resolve({
+                        data   : data
+                      , status : status
+                      , jqXHR  : jqXHR
+                      , json   : jqXHR.responseJSON || {}
+                    });
+                }, function (jqXHR, status, error) {
+                    reject({
+                        error  : error
+                      , status : status
+                      , jqXHR  : jqXHR
+                      , json   : jqXHR.responseJSON || {}
+                    });
+                });
         });
     }
 
+  , apiPost: function (path, data) {
+        return this.apiRun({ url: path , type: 'POST' , data: data });
+    }
+
   , apiGet: function (path, query) {
-        return Ember.$.ajax({
-            url     : path
-          , type    : 'GET'
-          , qs      : query || {}
-          , context : this
-        });
+        return this.apiRun({ url: path, type: 'GET', qs: query });
     }
 
   , apiSaveProfile: function (data) {
         return this.apiPost('/api/profile', data || this.get('model'));
+    }
+
+  , apiGetProfile: function () {
+        return this.apiGet('/api/profile');
     }
 
   , apiLogout: function (data) {

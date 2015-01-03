@@ -6,20 +6,17 @@ App.ApplicationRoute = Ember.Route.extend(Api, {
         this.controllerFor('application').set('loggedIn', Boolean(localStorage.jwt));
     }
   , model: function () {
-        var self = this;
-        return new Ember.RSVP.Promise(function (resolve, reject) {
-            self.apiGet('/api/profile')
-               .then(function (data) { resolve(data); })
-               .fail(function () { resolve({}); });
-        });
+        return this.apiGetProfile()
+           .then(function (response) { return response.data; })
+           .catch(function () { return {}; });
     }
   , actions : {
         logout: function () {
-            this.apiLogout().always(function () {
+            this.apiLogout().finally(function () {
                 delete localStorage.jwt;
                 this.controllerFor('application').set('loggedIn', false);
                 this.transitionTo('login');
-            });
+            }.bind(this));
         }
       , invalidateModel: function () {
             this.refresh();

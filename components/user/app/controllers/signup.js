@@ -29,27 +29,27 @@ App.SignupController = Ember.ObjectController.extend(Validator, Api, {
 
             this.set('createUserPending', true);
             this.apiSignup()
-               .then(function (data, status, jqXHR) {
+               .then(function () {
                     return this.apiLogin();
-                })
-               .then(function (data, status, jqXHR) {
-                    localStorage.jwt = data.token;
+                }.bind(this))
+               .then(function (response) {
+                    localStorage.jwt = response.data.token;
                     this.get('controllers.application').set('loggedIn', true);
                     this.get('controllers.application').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');
-                })
-               .fail(function (jqXHR, status, error) {
-                    var response = jqXHR.responseJSON;
+                }.bind(this))
+               .catch(function (response) {
+                    var json = response.json;
 
-                    if (jqXHR.status === 409) {
-                        this.set('error.server', response.message);
+                    if (json.statusCode === 409) {
+                        this.set('error.server', json.message);
                     } else {
                         this.set('error.server', 'An unknown error occurred');
                     }
-                })
-               .always(function () {
+                }.bind(this))
+               .finally(function () {
                     this.set('createUserPending', false);
-                });
+                }.bind(this));
         }
     }
 });

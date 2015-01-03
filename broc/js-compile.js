@@ -71,6 +71,7 @@ module.exports = function (opts) {
               , 'blueimp-md5/js/md5' + ext
               , 'fingerprint/fingerprint.js'
               , 'fastclick/lib/fastclick.js'
+              , 'modernizr/modernizr.js'
               , 'foundation/js/foundation' + ext
               , 'handlebars/handlebars' + ext
               , 'ember/ember' + ext
