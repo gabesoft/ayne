@@ -3,9 +3,10 @@ import Validator from '../mixins/validator';
 import Api from '../mixins/api';
 
 App.LoginController = Ember.ObjectController.extend(Validator, Api, {
-    authenticatePending: false
-  , prevTransition: null
-  , needs : ['application']
+    authenticatePending : false
+  , prevTransition      : null
+  , needs               : ['application']
+  , appCtrl             : Ember.computed.alias('controllers.application')
 
   , init : function () {
         this._super();
@@ -30,10 +31,9 @@ App.LoginController = Ember.ObjectController.extend(Validator, Api, {
             this.apiLogin()
                .then(function (response) {
                     localStorage.jwt = response.data.token;
-                    this.get('controllers.application').set('loggedIn', true);
+                    this.get('appCtrl').set('loggedIn', true);
+                    this.get('appCtrl').get('target').send('invalidateModel');
 
-                    // TODO: use this.router.get('application').send('invalidateModel');
-                    this.get('controllers.application').target.send('invalidateModel');
 
                     var prev = this.get('prevTransition');
                     if (prev) {
