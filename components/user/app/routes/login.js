@@ -2,7 +2,7 @@ import App from 'app';
 
 App.LoginRoute = Ember.Route.extend({
     model: function () {
-        return ayne.user || {};
+        return {};
     }
   , setupController : function (controller, model) {
         controller.resetErrors();

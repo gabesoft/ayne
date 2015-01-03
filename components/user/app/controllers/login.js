@@ -4,6 +4,7 @@ import Api from '../mixins/api';
 
 App.LoginController = Ember.ObjectController.extend(Validator, Api, {
     authenticatePending: false
+  , prevTransition: null
   , needs : ['application']
 
   , init : function () {

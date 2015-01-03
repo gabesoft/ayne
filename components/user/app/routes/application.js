@@ -6,9 +6,14 @@ App.ApplicationRoute = Ember.Route.extend(Api, {
         this.controllerFor('application').set('loggedIn', Boolean(localStorage.jwt));
     }
   , model: function () {
-        return this.apiGetProfile()
-           .then(function (response) { return response.data; })
-           .catch(function () { return {}; });
+        var loggedIn = this.controllerFor('application').get('loggedIn');
+        if (loggedIn) {
+            return this.apiGetProfile()
+               .then(function (response) { return response.data; })
+               .catch(function () { return {}; });
+        } else {
+            return {};
+        }
     }
   , actions : {
         logout: function () {
