@@ -1,4 +1,4 @@
-<nav class="top-bar">
+<nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area">
         <li class="name">
             <h1>
@@ -12,26 +12,28 @@
                 </a>
             </h1>
         </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
     </ul>
     <section class="top-bar-section">
         <ul class="right">
-            <li class="divider"></li>
-            <!-- login & signup are available if the user is logged out -->
-            <li>
-                {{#if loggedIn}}
-                    <a href="#" title="Logout" {{action 'logout'}}><i class="fa fa-sign-out"></i></a>
-                {{else}}
-                    {{#link-to 'login'}}Log In{{/link-to}}
-                {{/if}}
+            {{#if loggedIn}}
+            <li class="has-dropdown not-click">
+                <a href="#">
+                    <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
+                </a>
+                <ul class="dropdown">
+                    <li>{{#link-to 'profile.edit'}}Profile Edit{{/link-to}}</li>
+                    <li>{{#link-to 'profile.view'}}Profile View{{/link-to}}</li>
+                    <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+                </ul>
             </li>
-            <li class="divider"></li>
-            <li>{{#link-to 'signup'}}Sign Up{{/link-to}}</li>
-            <li class="divider"></li>
-            <!-- account & profile are available if the user is logged in -->
-            <!-- add a logout button if logged in -->
-            <li>{{#link-to 'profile.view'}}Profile{{/link-to}}</li>
-            <li class="divider"></li>
-            <li>{{#link-to 'profile.edit'}}Account{{/link-to}}</li>
+            {{else}}
+                <li>
+                    {{#link-to 'login'}}
+                        <i class="fa fa-sign-in" title="Log In"></i>
+                    {{/link-to}}
+                </li>
+            {{/if}}
         </ul>
     </section>
 </nav>

@@ -2,6 +2,12 @@ import App from 'app';
 import Validator from '../mixins/validator';
 import Api from '../mixins/api';
 
+App.LoginView = Ember.View.extend({
+    keyDown: function (e) {
+        this.get('controller').send('updateKey', e.keyCode);
+    }
+});
+
 App.LoginController = Ember.Controller.extend(Validator, Api, {
     authenticatePending: false
   , needs : ['application']
@@ -30,6 +36,7 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
                .then(function (data, status, jqXHR) {
                     localStorage.jwt = data.token;
                     this.get('controllers.application').set('loggedIn', true);
+                    this.get('controllers.application').target.send('invalidateModel');
 
                     var prev = this.get('prevTransition');
                     if (prev) {
@@ -55,6 +62,12 @@ App.LoginController = Ember.Controller.extend(Validator, Api, {
 
       , redirectToSignup: function () {
             this.transitionToRoute('signup');
+        }
+
+      , updateKey : function (keyCode) {
+            if (keyCode === 13) {
+                this.send('authenticate');
+            }
         }
     }
 });

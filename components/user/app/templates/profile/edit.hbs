@@ -40,6 +40,7 @@
             <div class="show-for-medium-up medium-6 large-8 columns profile-photo-wrapper">
                 <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
             </div>
+            <small class="right view-link">{{#link-to 'profile.view'}}View{{/link-to}}</small>
         </div>
         <div class="row">
             <div class="medium-6 large-4 columns">
@@ -51,7 +52,6 @@
                     <i class="fa fa-undo"></i>
                     Cancel
                 </button>
-                <small class="pull-right view-link">{{#link-to 'profile.view'}}View{{/link-to}}</small>
             </div>
         </div>
     </fieldset>

@@ -1,22 +1,15 @@
 import App from 'app';
 import Api from '../mixins/api';
+import Gravatar from '../mixins/gravatar';
 
-App.ProfileEditController = Ember.Controller.extend(Api, {
+App.ProfileEditController = Ember.Controller.extend(Api, Gravatar, {
     savePending      : false
   , profilePhotoSize : 200
   , legendText       : 'Name and Details'
   , legendClass      : ''
   , legendIcon       : ''
   , model            : {}
-
-  , gravatarUrl : function () {
-        var email = this.get('model.gravatarEmail')
-          , size  = this.get('profilePhotoSize')
-          , base  = 'http://www.gravatar.com/avatar/' + md5(email)
-          , query = 's=' + size + '&d=retro';
-
-        return base + '?' + query;
-    }.property('model.gravatarEmail', 'profilePhotoSize')
+  , needs            : [ 'application' ]
 
   , alert : function (msg, type, timeout) {
         if (this.alertRun) {
@@ -46,12 +39,13 @@ App.ProfileEditController = Ember.Controller.extend(Api, {
             this.apiSaveProfile()
                .then(function (data, status, jqXHR) {
                     this.set('model', data);
+                    this.get('controllers.application').set('model', data);
                     this.alert('Settings Updated', 'success', 5000);
                 })
                .fail(function (jqXHR, status, error) {
                     var response = jqXHR.responseJSON;
                     if (response.statusCode === 409) {
-                        this.alert(response.message, 'error')
+                        this.alert(response.message, 'error');
                     } else {
                         this.alert('Failed to Update Settings', 'error');
                     }
@@ -61,6 +55,7 @@ App.ProfileEditController = Ember.Controller.extend(Api, {
             this.apiGet('/api/profile')
                .then(function (data, status, jqXHR) {
                     this.set('model', data);
+                    this.get('controllers.application').set('model', data);
                 })
                .fail(function (jqXHR, status, error) {
                     this.alert('Unknown Error', 'error');
