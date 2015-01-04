@@ -1,8 +1,7 @@
 import App from 'app';
 import Validator from '../mixins/validator';
-import Api from '../mixins/api';
 
-App.SignupController = Ember.ObjectController.extend(Validator, Api, {
+App.SignupController = Ember.ObjectController.extend(Validator, {
     error             : {}
   , createUserPending : false
   , needs             : ['application']
@@ -29,9 +28,9 @@ App.SignupController = Ember.ObjectController.extend(Validator, Api, {
             if (!this.validate()) { return; }
 
             this.set('createUserPending', true);
-            this.apiSignup()
+            this.api.signup(this.get('model'))
                .then(function () {
-                    return this.apiLogin();
+                    return this.api.login(this.get('model'));
                 }.bind(this))
                .then(function (response) {
                     localStorage.jwt = response.data.token;
@@ -51,6 +50,12 @@ App.SignupController = Ember.ObjectController.extend(Validator, Api, {
                .finally(function () {
                     this.set('createUserPending', false);
                 }.bind(this));
+        }
+
+      , updateKey : function (keyCode) {
+            if (keyCode === 13) {
+                this.send('createUser');
+            }
         }
     }
 });

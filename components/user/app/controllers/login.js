@@ -1,8 +1,7 @@
 import App from 'app';
 import Validator from '../mixins/validator';
-import Api from '../mixins/api';
 
-App.LoginController = Ember.ObjectController.extend(Validator, Api, {
+App.LoginController = Ember.ObjectController.extend(Validator, {
     authenticatePending : false
   , prevTransition      : null
   , needs               : ['application']
@@ -28,7 +27,7 @@ App.LoginController = Ember.ObjectController.extend(Validator, Api, {
             if (!this.validate()) { return; }
 
             this.set('authenticatePending', true);
-            this.apiLogin()
+            this.api.login(this.get('model'))
                .then(function (response) {
                     localStorage.jwt = response.data.token;
                     this.get('appCtrl').set('loggedIn', true);

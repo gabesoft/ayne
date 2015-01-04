@@ -1,7 +1,6 @@
 import App from 'app';
-import Api from '../../mixins/api';
 
-App.ProfileEditRoute = Ember.Route.extend(Api, {
+App.ProfileEditRoute = Ember.Route.extend({
     beforeModel : function (transition) {
         if (!this.controllerFor('application').get('loggedIn')) {
             this.controllerFor('login').set('prevTransition', transition);
@@ -9,7 +8,7 @@ App.ProfileEditRoute = Ember.Route.extend(Api, {
         }
     }
   , model : function () {
-        return this.apiGet('/api/profile')
+        return this.api.getProfile()
            .then(function (response) { return response.data; })
            .catch(function (response) {
                 if (response.json.statusCode === 401) {

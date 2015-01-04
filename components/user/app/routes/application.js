@@ -1,14 +1,13 @@
 import App from 'app';
-import Api from '../mixins/api';
 
-App.ApplicationRoute = Ember.Route.extend(Api, {
+App.ApplicationRoute = Ember.Route.extend({
     beforeModel: function (transition) {
         this.controllerFor('application').set('loggedIn', Boolean(localStorage.jwt));
     }
   , model: function () {
         var loggedIn = this.controllerFor('application').get('loggedIn');
         if (loggedIn) {
-            return this.apiGetProfile()
+            return this.api.getProfile()
                .then(function (response) { return response.data; })
                .catch(function () { return {}; });
         } else {
@@ -17,7 +16,7 @@ App.ApplicationRoute = Ember.Route.extend(Api, {
     }
   , actions : {
         logout: function () {
-            this.apiLogout().finally(function () {
+            this.api.logout().finally(function () {
                 delete localStorage.jwt;
                 this.controllerFor('application').set('loggedIn', false);
                 this.transitionTo('login');

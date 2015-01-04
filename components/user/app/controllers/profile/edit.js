@@ -1,9 +1,8 @@
 import App from 'app';
-import Api from '../../mixins/api';
 import Validator from '../../mixins/validator';
 import Gravatar from '../../mixins/gravatar';
 
-App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, Validator, {
+App.ProfileEditController = Ember.ObjectController.extend(Gravatar, Validator, {
     savePending      : false
   , profilePhotoSize : 200
   , legendText       : 'Name and Details'
@@ -46,7 +45,7 @@ App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, Validat
 
   , actions: {
         save: function () {
-            this.apiSaveProfile()
+            this.api.saveProfile(this.get('model'))
                .then(function (response) {
                     this.set('model', response.data);
                     this.get('controllers.application').set('model', response.data);
@@ -62,7 +61,7 @@ App.ProfileEditController = Ember.ObjectController.extend(Api, Gravatar, Validat
                 }.bind(this));
         }
       , cancel : function () {
-            this.apiGetProfile()
+            this.api.getProfile()
                .then(function (response) {
                     this.set('model', response.data);
                     this.get('controllers.application').set('model', response.data);

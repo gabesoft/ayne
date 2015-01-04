@@ -1,14 +1,4 @@
-Ember.$.ajaxSetup({
-    beforeSend: function (xhr) {
-        var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
-          , token = localStorage.jwt;
-
-        xhr.setRequestHeader('Browser-Fingerprint', fp.get());
-        if (token) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-        }
-    }
-});
+import Api from './services/api';
 
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
@@ -31,4 +21,11 @@ Ember.Application.initializer({
     }
 });
 
-export default Ember.Application.create({});
+var App = Ember.Application.create();
+
+App.register('services:api', Api);
+
+App.inject('route', 'api', 'services:api');
+App.inject('controller', 'api', 'services:api');
+
+export default App;
