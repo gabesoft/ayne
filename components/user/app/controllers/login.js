@@ -10,8 +10,8 @@ App.LoginController = Ember.ObjectController.extend(Validator, Api, {
 
   , init : function () {
         this._super();
-        this.requiredField('email');
         this.emailField('email');
+        this.requiredField('email');
         this.invalidate('server');
     }
 

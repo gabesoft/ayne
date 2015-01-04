@@ -15,6 +15,11 @@ export default Ember.Mixin.create({
         return regex.test(email);
     }
 
+  , validAlphaNumeric : function (text) {
+        var regex = /^[a-zA-Z0-9\-]*$/;
+        return regex.test(text);
+    }
+
   , validate: function () {
         Ember.$.each(this.get('validators'), function (key, runValidator) {
             runValidator(true);
@@ -39,21 +44,24 @@ export default Ember.Mixin.create({
     }
 
   , addValidator: function (name, fn) {
-        var self = this;
-        this.set('validators.' + name, function () {
-            fn.apply(self, arguments);
-        });
+        this.set('validators.' + name, fn.bind(this));
     }
 
   , getValidator: function (name) {
         return this.get('validators.' + name);
     }
 
-  , requiredField : function (name) {
-        var key = 'requiredField:' + name;
-
+  , validateField : function (type, name, validator) {
+        var key = type + ':' + name;
         this.invalidate(name);
-        this.addValidator(key, function (force) {
+        this.addValidator(key, validator);
+        this.addObserver(name, this, function () {
+            this.getValidator(key)();
+        });
+    }
+
+  , requiredField : function (name) {
+        this.validateField('requiredField', name, function (force) {
             var value = this.get(name);
             if (!force && typeof value === 'undefined') {
                 return;
@@ -63,15 +71,25 @@ export default Ember.Mixin.create({
                 this.set('error.' + name, null);
             }
         });
-        this.addObserver(name, this, function () {
-            this.getValidator(key)();
+    }
+
+  , alphaNumericField: function (name) {
+        this.validateField('alphaNumericField', name, function () {
+            var value = this.get(name)
+              , valid = this.validAlphaNumeric(value);
+
+            if (!value) {
+                return;
+            } else if (!valid) {
+                this.set('error.' + name, 'Please enter only letters or numbers in this field');
+            } else {
+                this.set('error.' + name, null);
+            }
         });
     }
 
   , emailField: function (name) {
-        var key = 'emailField:' + name;
-
-        this.addValidator(key, function () {
+        this.validateField('emailField', name, function () {
             var value = this.get(name)
               , valid = this.validEmail(value);
 
@@ -82,10 +100,6 @@ export default Ember.Mixin.create({
             } else {
                 this.set('error.' + name, null);
             }
-        });
-        this.invalidate(name);
-        this.addObserver(name, this, function () {
-            this.getValidator(key)();
         });
     }
 

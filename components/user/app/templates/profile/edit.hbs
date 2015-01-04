@@ -23,6 +23,9 @@
                 type="text"
                 name="displayName"
                 placeholder="Display Name"}}
+                {{#if error.displayName}}
+                    <small class="error">{{error.displayName}}</small>
+                {{/if}}
 
                 {{input
                 value=location
