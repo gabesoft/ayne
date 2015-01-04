@@ -1,5 +1,5 @@
 import App from 'app';
-import Validator from '../mixins/validator';
+import Validator from 'mixins/validator';
 
 App.SignupController = Ember.ObjectController.extend(Validator, {
     error             : {}

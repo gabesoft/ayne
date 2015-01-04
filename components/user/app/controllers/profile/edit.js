@@ -1,6 +1,6 @@
 import App from 'app';
-import Validator from '../../mixins/validator';
-import Gravatar from '../../mixins/gravatar';
+import Validator from 'mixins/validator';
+import Gravatar from 'mixins/gravatar';
 
 App.ProfileEditController = Ember.ObjectController.extend(Gravatar, Validator, {
     savePending      : false
