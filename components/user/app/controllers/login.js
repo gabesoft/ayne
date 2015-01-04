@@ -29,12 +29,12 @@ App.LoginController = Ember.ObjectController.extend(Validator, {
             this.set('authenticatePending', true);
             this.api.login(this.get('model'))
                .then(function (response) {
+                    var prev = this.get('prevTransition');
+
                     localStorage.jwt = response.data.token;
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').get('target').send('invalidateModel');
 
-
-                    var prev = this.get('prevTransition');
                     if (prev) {
                         this.set('prevTransition', null);
                         prev.retry();

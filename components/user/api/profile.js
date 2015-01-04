@@ -22,4 +22,4 @@ function read (userId, cb) {
 module.exports = {
     save : save
   , read : read
-}
+};

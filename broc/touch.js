@@ -1,3 +1,5 @@
+'use strict';
+
 var fs     = require('fs')
   , util   = require('util')
   , mkdirp = require('mkdirp')

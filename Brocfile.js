@@ -25,6 +25,6 @@ dirs.forEach(function (dir) {
         buildJS(opts)
       , buildSASS(opts)
     ]));
-})
+});
 
 module.exports = mergeTrees(trees);

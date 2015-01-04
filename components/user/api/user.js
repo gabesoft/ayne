@@ -26,7 +26,7 @@ function create (data, cb) {
                 cb(null, body);
             });
         });
-    })
+    });
 }
 
 function login (data, cb) {
@@ -63,4 +63,4 @@ module.exports = {
   , login  : login
   , get    : read
   , update : update
-}
+};
