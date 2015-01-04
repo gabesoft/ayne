@@ -16,7 +16,9 @@ logs
 node_modules
 bower_components
 npm-debug.log
+testem.log
 pids
 results
 tmp
+dist
 public
