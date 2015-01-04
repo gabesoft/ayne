@@ -22,6 +22,8 @@
     "font-awesome": "~4.2.0",
     "fingerprint": "~0.5.4",
     "blueimp-md5": "~1.1.0",
-    "modernizr": "~2.8.3"
+    "modernizr": "~2.8.3",
+    "ember-resolver": "~0.1.11",
+    "loader.js": "~2.1.1"
   }
 }

@@ -1,4 +1,6 @@
-import Api from './services/api';
+import Api from 'services/api';
+//import Resolver from 'ember/resolver';
+import Resolver from 'shim';
 
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
@@ -21,11 +23,14 @@ Ember.Application.initializer({
     }
 });
 
-var App = Ember.Application.create();
+var App = Ember.Application.extend({
+        Resolver     : Resolver
+      , modulePrefix : 'app'
+    });
 
-App.register('services:api', Api);
+//App.register('services:api', Api);
 
-App.inject('route', 'api', 'services:api');
-App.inject('controller', 'api', 'services:api');
+//App.inject('route', 'api', 'services:api');
+//App.inject('controller', 'api', 'services:api');
 
 export default App;

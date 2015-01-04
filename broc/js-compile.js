@@ -6,6 +6,7 @@ var pickFiles        = require('broccoli-static-compiler')
   , glob             = require('glob')
   , touch            = require('./touch')
   , moduleCompiler   = require('broccoli-es6-module-transpiler')
+  , AMDFormatter     = require('es6-module-transpiler-amd-formatter')
   , concatenate      = require('broccoli-concat')
   , uglifyJs         = require('broccoli-uglify-js')
   , mergeTrees       = require('broccoli-merge-trees');
@@ -55,10 +56,24 @@ module.exports = function (opts) {
               , files   : [ '**/*.js' ]
             });
 
-        return moduleCompiler(modules, {
-            formatter : 'bundle'
-          , output    : '/app-compiled.js'
-        });
+        var amd = moduleCompiler(modules, {
+                //formatter : 'bundle'
+                formatter : new AMDFormatter()
+                //, output    : '/app-compiled.js'
+            });
+
+        var js = concatenate(amd, {
+                outputFile : '/app-compiled.js'
+              , inputFiles : [ '**/*.js' ]
+            });
+
+        var map = pickFiles(amd, {
+                srcDir  : '/'
+              , destDir : '/'
+              , files   : [ '**/*.map' ]
+            });
+
+        return mergeTrees([ js, map ]);
     }
 
     function compileJsVendor () {
@@ -73,8 +88,11 @@ module.exports = function (opts) {
               , 'fastclick/lib/fastclick.js'
               , 'modernizr/modernizr.js'
               , 'foundation/js/foundation' + ext
+
               , 'handlebars/handlebars' + ext
+              , 'loader.js/loader.js'
               , 'ember/ember' + ext
+              , 'ember-resolver/dist/ember-resolver' + ext
             ]
         });
     }
@@ -116,6 +134,7 @@ module.exports = function (opts) {
         }
 
         return mergeTrees([ vendor, lib, map ]);
+        //return mergeTrees([ vendor, lib ]);
     }
 
     return pickFiles(combineJsAssets(), {
