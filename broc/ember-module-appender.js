@@ -21,7 +21,7 @@ function EmberModuleAppender (inputTree, options) {
         controllers : { postfix: 'Controller', dir: 'controllers' }
       , views       : { postfix: 'View', dir: 'views' }
       , routes      : { postfix: 'Route', dir: 'routes' }
-      , router      : { postfix: 'Router', dir: '', files: 'router.js' }
+      , router      : { postfix: '', dir: '', files: 'router.js' }
     };
 }
 

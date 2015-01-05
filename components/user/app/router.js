@@ -1,5 +1,3 @@
-import App from 'app';
-
 var Router = Ember.Router.extend({
     rootURL  : '/user/'
   , location : 'history'
@@ -13,7 +11,5 @@ Router.map(function () {
         this.route('view');
     });
 });
-
-App.Router = Router;
 
 export default Router;
