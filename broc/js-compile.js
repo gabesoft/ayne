@@ -8,7 +8,7 @@ var pickFiles        = require('broccoli-static-compiler')
   , moduleAppender   = require('./ember-module-appender')
   , moduleCompiler   = require('broccoli-es6-module-transpiler')
   , concatenate      = require('broccoli-concat')
-  , uglifyJs         = require('broccoli-uglify-js')
+  , uglifyJs         = require('broccoli-uglify-sourcemap')
   , mergeTrees       = require('broccoli-merge-trees');
 
 module.exports = function (opts) {
@@ -112,11 +112,19 @@ module.exports = function (opts) {
                   , drop_console  : true
                   , drop_debugger : true
                 }
+              , sourceMapConfig : {
+                    enabled    : !opts.minify
+                  , extensions : ['js']
+                }
             });
 
             vendor = uglifyJs(vendor, {
                 mangle   : false
               , compress : false
+              , sourceMapConfig: {
+                    enabled    : !opts.minify
+                  , extensions : ['js']
+                }
             });
         }
 
