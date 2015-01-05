@@ -32,7 +32,7 @@
         </ul>
         <ul class="right show-for-medium-up">
             {{#if loggedIn}}
-            <li class="has-dropdown not-click">
+            <li class="has-dropdown not-click width-100">
                 <a href="#">
                     <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
                 </a>
@@ -47,7 +47,9 @@
                 </ul>
             </li>
             {{else}}
-                <li>{{#link-to 'login'}}<i class="fa fa-sign-in" title="Log In"></i>{{/link-to}}</li>
+                <li class="has-form">
+                    {{#link-to 'login' class="button"}}Log In{{/link-to}}
+                </li>
             {{/if}}
         </ul>
     </section>
