@@ -1,7 +1,7 @@
 'use strict';
 
 var mergeTrees    = require('broccoli-merge-trees')
-  , minify        = process.env.BROCCOLI_ENV === 'production'
+  , minify        = process.env.NODE_ENV === 'production' || process.env.BROCCOLI_ENV === 'production'
   , path          = require('path')
   , async         = require('async')
   , unwatchedTree = require('broccoli-unwatched-tree')
