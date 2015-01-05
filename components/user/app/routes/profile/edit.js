@@ -1,7 +1,6 @@
 export default Ember.Route.extend({
     beforeModel : function (transition) {
         if (!this.controllerFor('application').get('loggedIn')) {
-            console.log('TRANSITION', transition);
             this.controllerFor('login').set('prevTransition', transition);
             this.transitionTo('login');
         }
