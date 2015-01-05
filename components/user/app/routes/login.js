@@ -1,6 +1,4 @@
-import App from 'app';
-
-App.LoginRoute = Ember.Route.extend({
+export default Ember.Route.extend({
     model: function () {
         return {};
     }
@@ -9,5 +7,3 @@ App.LoginRoute = Ember.Route.extend({
         controller.set('model', model);
     }
 });
-
-export default App.LoginRoute;

@@ -5,6 +5,7 @@ var pickFiles        = require('broccoli-static-compiler')
   , path             = require('path')
   , glob             = require('glob')
   , touch            = require('./touch')
+  , moduleAppender   = require('./ember-module-appender')
   , moduleCompiler   = require('broccoli-es6-module-transpiler')
   , concatenate      = require('broccoli-concat')
   , uglifyJs         = require('broccoli-uglify-js')
@@ -53,9 +54,13 @@ module.exports = function (opts) {
                 srcDir  : path.join(opts.name, 'app')
               , destDir : '/'
               , files   : [ '**/*.js' ]
-            });
+            })
+          , moduleSetup = moduleAppender(modules, {
+                destFile: 'app-module-setup.js'
+            })
+          , all = mergeTrees([ modules, moduleSetup ]);
 
-        return moduleCompiler(modules, {
+        return moduleCompiler(all, {
             formatter : 'bundle'
           , output    : '/app-compiled.js'
         });

@@ -1,7 +1,6 @@
-import App from 'app';
 import Validator from 'mixins/validator';
 
-App.SignupController = Ember.ObjectController.extend(Validator, {
+export default Ember.ObjectController.extend(Validator, {
     error             : {}
   , createUserPending : false
   , needs             : ['application']

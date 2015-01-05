@@ -1,11 +1,11 @@
 import App from 'app';
 
-App.Router.reopen({
+var Router = Ember.Router.extend({
     rootURL  : '/user/'
   , location : 'history'
 });
 
-App.Router.map(function () {
+Router.map(function () {
     this.route('login');
     this.route('signup');
     this.resource('profile', function () {
@@ -14,4 +14,6 @@ App.Router.map(function () {
     });
 });
 
-export default App.Router;
+App.Router = Router;
+
+export default Router;

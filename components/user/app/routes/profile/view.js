@@ -1,6 +1,4 @@
-import App from 'app';
-
-App.ProfileViewRoute = Ember.Route.extend({
+export default Ember.Route.extend({
     beforeModel : function (transition) {
         if (!this.controllerFor('application').get('loggedIn')) {
             this.controllerFor('login').set('prevTransition', transition);

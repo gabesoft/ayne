@@ -1,6 +1,4 @@
-import App from 'app';
-
-App.ApplicationRoute = Ember.Route.extend({
+export default Ember.Route.extend({
     beforeModel: function (transition) {
         this.controllerFor('application').set('loggedIn', Boolean(localStorage.jwt));
     }
@@ -27,5 +25,3 @@ App.ApplicationRoute = Ember.Route.extend({
         }
     }
 });
-
-export default App.ApplicationRoute;
