@@ -39,13 +39,19 @@ function profileSaveHandler (request, reply) {
     var userId = request.auth.credentials.id
       , input  = request.payload;
     profile.save(userId, input, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        if (err) { return reply(fail); }
+
+        data.userEmail = request.auth.credentials.email;
+        reply(data);
     });
 }
 
 function profileReadHandler (request, reply) {
     profile.read(request.auth.credentials.id, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        if (err) { return reply.fail(err); }
+
+        data.userEmail = request.auth.credentials.email;
+        reply(data);
     });
 }
 

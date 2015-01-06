@@ -9,6 +9,7 @@ export default Ember.ObjectController.extend(Gravatar, Validator, {
   , legendIcon       : ''
   , model            : {}
   , needs            : [ 'application' ]
+  , appCtrl          : Ember.computed.alias('controllers.application')
 
   , init: function () {
         this._super();
@@ -47,7 +48,7 @@ export default Ember.ObjectController.extend(Gravatar, Validator, {
             this.api.saveProfile(this.get('model'))
                .then(function (response) {
                     this.set('model', response.data);
-                    this.get('controllers.application').set('model', response.data);
+                    this.get('appCtrl').get('target').send('invalidateModel');
                     this.alert('Settings Updated', 'success', 5000);
                 }.bind(this))
                .catch(function (response) {
@@ -63,7 +64,7 @@ export default Ember.ObjectController.extend(Gravatar, Validator, {
             this.api.getProfile()
                .then(function (response) {
                     this.set('model', response.data);
-                    this.get('controllers.application').set('model', response.data);
+                    this.get('appCtrl').get('target').send('invalidateModel');
                 }.bind(this))
                .catch(function (response) {
                     this.alert(response.json.message || 'Unknown Error', 'error');
