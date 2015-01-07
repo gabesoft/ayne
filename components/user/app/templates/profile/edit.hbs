@@ -1,15 +1,12 @@
-<div class="row">
-    <div class="small-12 medium-6 large-4 columns">
-        <ds class="sub-nav margin-top-15">
-            <dt>profile edit</dt>
-            {{#link-to 'profile.edit.details' tagName="dd"}}
-                <a {{bind-attr href="view.href"}}>Details</a>
-            {{/link-to}}
-            {{#link-to 'profile.edit.password' tagName="dd"}}
-                <a {{bind-attr href="view.href"}}>Password</a>
-            {{/link-to}}
-        </ds>
-    </div>
+<div data-magellan-expedition="">
+    <ds class="sub-nav">
+        {{#link-to 'profile.edit.details' tagName="dd"}}
+            <a {{bind-attr href="view.href"}}>Details</a>
+        {{/link-to}}
+        {{#link-to 'profile.edit.password' tagName="dd"}}
+            <a {{bind-attr href="view.href"}}>Password</a>
+        {{/link-to}}
+    </ds>
 </div>
 <form action="" class="profile-edit">
     {{outlet}}
