@@ -15,14 +15,12 @@
                 name="email"
                 aria-label="email"
                 required=true
+                class=error.email:error
                 placeholder="Enter your email" }}
-            </div>
-            {{#if error.email}}
-                <small class="error">{{error.email}}</small>
-            {{/if}}
-        </div>
-        <div class="row">
-            <div class="small-12 medium-6 large-4 columns">
+                {{#if error.email}}
+                    <small class="error">{{error.email}}</small>
+                {{/if}}
+
                 {{input
                 value=password
                 type="password"

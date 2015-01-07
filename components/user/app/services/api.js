@@ -48,7 +48,7 @@ export default Ember.Object.extend({
     }
 
   , setPassword: function (data) {
-        return this.runPost('/api/password');
+        return this.runPost('/api/password', data);
     }
 
   , getProfile: function () {

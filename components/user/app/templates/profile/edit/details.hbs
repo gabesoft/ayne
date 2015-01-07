@@ -7,28 +7,25 @@
         <div class="medium-6 large-4 columns">
             <label>First Name
                 {{input
-                value=firstName
-                type="text"
                 name="firstName"
-                placeholder="First Name"}}
+                type="text"
+                value=firstName}}
             </label>
 
             <label>Last Name
                 {{input
-                value=lastName
-                type="text"
                 name="lastName"
-                placeholder="Last Name"}}
+                type="text"
+                value=lastName}}
             </label>
 
 
-            <label>Display Name
+            <label {{bind-attr class="error.displayName:error"}}>Display Name
                 {{input
-                value=displayName
-                type="text"
-                name="displayName"
                 class=error.displayName:error
-                placeholder="Display Name"}}
+                name="displayName"
+                type="text"
+                value=displayName}}
                 {{#if error.displayName}}
                     <small class="error">{{error.displayName}}</small>
                 {{/if}}
@@ -36,19 +33,16 @@
 
             <label>Location
                 {{input
-                value=location
-                type="text"
                 name="location"
-                placeholder="Location"}}
+                type="text"
+                value=location}}
             </label>
 
             <label>Gravatar Email
                 {{input
-                value=gravatarEmail
-                type="email"
                 name="gravatarEmail"
-                aria-label="email"
-                placeholder="Gravatar Email"}}
+                type="email"
+                value=gravatarEmail}}
             </label>
         </div>
         <div class="show-for-medium-up medium-6 large-8 columns profile-photo-wrapper">
