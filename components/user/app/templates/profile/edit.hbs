@@ -1,12 +1,13 @@
-<div data-magellan-expedition="">
-    <ds class="sub-nav">
+<div data-magellan-expedition="fixed">
+    <dl class="sub-nav">
+        <dt>Account</dt>
         {{#link-to 'profile.edit.details' tagName="dd"}}
             <a {{bind-attr href="view.href"}}>Details</a>
         {{/link-to}}
         {{#link-to 'profile.edit.password' tagName="dd"}}
             <a {{bind-attr href="view.href"}}>Password</a>
         {{/link-to}}
-    </ds>
+    </dl>
 </div>
 <form action="" class="profile-edit">
     {{outlet}}
