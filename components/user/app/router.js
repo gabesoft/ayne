@@ -7,7 +7,10 @@ Router.map(function () {
     this.route('login');
     this.route('signup');
     this.resource('profile', function () {
-        this.route('edit');
+        this.resource('profile.edit', { path: '/edit' }, function () {
+            this.route('details');
+            this.route('password');
+        });
         this.route('view');
     });
 });

@@ -56,7 +56,7 @@ EmberModuleAppender.prototype.appendModules = function (type, dir, imports, stat
             var name = file
                    .replace(new RegExp(type.dir + '/'), '')
                    .replace(/\.js$/, '')
-                   .replace(/\//, '-');
+                   .replace(/\//g, '-');
             return {
                 file: file
               , name: ember.string.classify(name) + type.postfix

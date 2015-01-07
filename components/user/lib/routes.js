@@ -7,6 +7,8 @@ var paths = [
       , '/user/profile'
       , '/user/profile/view'
       , '/user/profile/edit'
+      , '/user/profile/edit/details'
+      , '/user/profile/edit/password'
     ];
 
 function userHandler (request, reply) {

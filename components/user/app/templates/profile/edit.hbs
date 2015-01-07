@@ -1,60 +1,16 @@
+<div class="row">
+    <div class="small-12 medium-6 large-4 columns">
+        <ds class="sub-nav margin-top-15">
+            <dt>profile edit</dt>
+            {{#link-to 'profile.edit.details' tagName="dd"}}
+                <a {{bind-attr href="view.href"}}>Details</a>
+            {{/link-to}}
+            {{#link-to 'profile.edit.password' tagName="dd"}}
+                <a {{bind-attr href="view.href"}}>Password</a>
+            {{/link-to}}
+        </ds>
+    </div>
+</div>
 <form action="" class="profile-edit">
-    <fieldset>
-        <legend {{bind-attr class="legendClass"}}>
-            <i {{bind-attr class="legendIcon :fa"}}></i>
-            {{legendText}}
-        </legend>
-        <div class="row">
-            <div class="medium-6 large-4 columns">
-                {{input
-                value=firstName
-                type="text"
-                name="firstName"
-                placeholder="First Name"}}
-
-                {{input
-                value=lastName
-                type="text"
-                name="lastName"
-                placeholder="Last Name"}}
-
-                {{input
-                value=displayName
-                type="text"
-                name="displayName"
-                placeholder="Display Name"}}
-                {{#if error.displayName}}
-                    <small class="error">{{error.displayName}}</small>
-                {{/if}}
-
-                {{input
-                value=location
-                type="text"
-                name="location"
-                placeholder="Location"}}
-
-                {{input
-                value=gravatarEmail
-                type="email"
-                name="gravatarEmail"
-                aria-label="email"
-                placeholder="Gravatar Email"}}
-            </div>
-            <div class="show-for-medium-up medium-6 large-8 columns profile-photo-wrapper">
-                <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
-            </div>
-        </div>
-        <div class="row">
-            <div class="medium-6 large-4 columns">
-                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
-                    <i class="fa fa-save"></i>
-                    Save
-                </button>
-                <button class="button small" type="button" {{bind-attr disabled=disableCancel}} {{action 'cancel'}}>
-                    <i class="fa fa-undo"></i>
-                    Cancel
-                </button>
-            </div>
-        </div>
-    </fieldset>
+    {{outlet}}
 </form>

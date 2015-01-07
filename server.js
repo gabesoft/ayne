@@ -52,12 +52,10 @@ function setupServer (cb) {
     });
 
     server.ext('onRequest', function (request, reply) {
-        console.log('ON_REQUEST');
         return reply.continue();
     });
 
     server.ext('onPreResponse', function (request, reply) {
-        console.log('ON_PRE_RESPONSE');
         if (request.response.isBoom) {
             return reply.continue();
         }
