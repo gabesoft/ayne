@@ -1,11 +1,10 @@
 import Validator from 'mixins/validator';
+import Legend from 'mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, {
-    savePending : false
-  , legendText  : 'Change Password'
-  , legendClass : ''
-  , legendIcon  : ''
-  , model       : {}
+export default Ember.ObjectController.extend(Validator, Legend, {
+    savePending   : false
+  , legendDefault : 'Change Password'
+  , model         : {}
 
   , init: function () {
         this._super();
@@ -21,13 +20,13 @@ export default Ember.ObjectController.extend(Validator, {
             this.api.setPassword(this.get('model'))
                .then(function (response) {
                     return this.api.login(this.get('model'));
-                })
+                }.bind(this))
                .then(function (response) {
-                    console.log('change password succeeded');
-                })
+                    this.legend('Password Updated', 'success', 5000);
+                }.bind(this))
                .catch(function (response) {
-                    console.log('change password failed');
-                });
+                    this.legend('Failed to update password', 'error');
+                }.bind(this));
         }
     }
 });

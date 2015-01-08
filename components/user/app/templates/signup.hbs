@@ -1,12 +1,6 @@
 <form action="">
     <fieldset>
-        <legend {{bind-attr class="error.server:error"}}>
-            {{#if error.server}}
-                {{error.server}}
-            {{else}}
-                Create an account
-            {{/if}}
-        </legend>
+        {{partial 'partials/legend'}}
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
                 {{input

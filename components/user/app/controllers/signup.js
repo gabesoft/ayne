@@ -1,8 +1,10 @@
 import Validator from 'mixins/validator';
+import Legend from 'mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, {
-    error             : {}
-  , createUserPending : false
+export default Ember.ObjectController.extend(Validator, Legend, {
+    createUserPending : false
+  , error             : {}
+  , legendDefault     : 'Create an account'
   , needs             : ['application']
   , appCtrl           : Ember.computed.alias('controllers.application')
 
@@ -12,15 +14,16 @@ export default Ember.ObjectController.extend(Validator, {
         this.requiredField('email');
         this.passwordFields('password', 'passwordVerify');
         this.invalidate('server');
+        this.legendResetFields('email', 'password', 'passwordVerify');
     }
 
   , disableSubmit : function () {
         return this.get('invalid') || this.get('createUserPending');
     }.property('invalid', 'createUserPending')
 
-  , onModelChanged: function () {
-        this.set('error.server', null);
-    }.observes('email', 'password', 'passwordVerify')
+    //, onModelChanged: function () {
+    //this.set('error.server', null);
+    //}.observes('email', 'password', 'passwordVerify')
 
   , actions : {
         createUser: function () {
@@ -41,9 +44,9 @@ export default Ember.ObjectController.extend(Validator, {
                     var json = response.json;
 
                     if (json.statusCode === 409) {
-                        this.set('error.server', json.message);
+                        this.legend(json.message, 'error');
                     } else {
-                        this.set('error.server', 'An unknown error occurred');
+                        this.legend('An unknown error occurred', 'error');
                     }
                 }.bind(this))
                .finally(function () {
