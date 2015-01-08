@@ -4,7 +4,7 @@ Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
 });
 
-Ember.RSVP.configure('oneerror', function (error) {
+Ember.RSVP.configure('onerror', function (error) {
     if (error instanceof Error) {
         Ember.Logger.assert(false, error);
         Ember.Logger.error(error.stack);
