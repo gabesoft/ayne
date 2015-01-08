@@ -3,7 +3,6 @@ import Legend from 'mixins/legend';
 
 export default Ember.ObjectController.extend(Validator, Legend, {
     createUserPending : false
-  , error             : {}
   , legendDefault     : 'Create an account'
   , needs             : ['application']
   , appCtrl           : Ember.computed.alias('controllers.application')
@@ -20,10 +19,6 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , disableSubmit : function () {
         return this.get('invalid') || this.get('createUserPending');
     }.property('invalid', 'createUserPending')
-
-    //, onModelChanged: function () {
-    //this.set('error.server', null);
-    //}.observes('email', 'password', 'passwordVerify')
 
   , actions : {
         createUser: function () {

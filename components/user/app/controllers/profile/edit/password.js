@@ -8,6 +8,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , init: function () {
         this._super();
+        this.legendResetFields('password', 'passwordVerify');
         this.passwordFields('password', 'passwordVerify');
     }
 

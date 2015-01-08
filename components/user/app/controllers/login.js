@@ -1,7 +1,9 @@
 import Validator from 'mixins/validator';
+import Legend from 'mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, {
+export default Ember.ObjectController.extend(Validator, Legend, {
     authenticatePending : false
+  , legendDefault       : 'Enter your credentials'
   , prevTransition      : null
   , needs               : ['application']
   , appCtrl             : Ember.computed.alias('controllers.application')
@@ -11,15 +13,12 @@ export default Ember.ObjectController.extend(Validator, {
         this.emailField('email');
         this.requiredField('email');
         this.invalidate('server');
+        this.legendResetFields('email', 'password');
     }
 
   , disableSubmit : function () {
         return this.get('invalid') || this.get('authenticatePending');
     }.property('invalid', 'authenticatePending')
-
-  , onModelChanged: function () {
-        this.set('error.server', null);
-    }.observes('password', 'email')
 
   , actions : {
         authenticate: function () {
@@ -45,9 +44,9 @@ export default Ember.ObjectController.extend(Validator, {
                     var json = response.json;
 
                     if (json.statusCode === 401) {
-                        this.set('error.server', 'Invalid credentials');
+                        this.legend('Invalid credentials', 'error');
                     } else {
-                        this.set('error.server', json.message);
+                        this.legend(json.message, 'error');
                     }
                 }.bind(this))
                .finally(function () {
