@@ -39,20 +39,18 @@ function profileSaveHandler (request, reply) {
     var userId = request.auth.credentials.id
       , input  = request.payload;
     profile.save(userId, input, function (err, data) {
-        if (err) { return reply(fail); }
-
-        data.userEmail = request.auth.credentials.email;
-        reply(data);
+        return err ? reply.fail(err) : reply(data);
     });
 }
 
 function profileReadHandler (request, reply) {
     profile.read(request.auth.credentials.id, function (err, data) {
-        if (err) { return reply.fail(err); }
-
-        data.userEmail = request.auth.credentials.email;
-        reply(data);
+        return err ? reply.fail(err) : reply(data);
     });
+}
+
+function passwordHandler (request, reply) {
+    reply({ data: 'NOT IMPLEMENTED' });
 }
 
 module.exports = [{
@@ -68,7 +66,11 @@ module.exports = [{
     method  : 'POST'
   , path    : '/api/signup'
   , handler : signupHandler
-}, , {
+}, ,{
+    method  : 'POST'
+  , path    : '/api/password'
+  , handler : passwordHandler
+}, {
     method  : 'POST'
   , path    : '/api/profile'
   , handler : profileSaveHandler

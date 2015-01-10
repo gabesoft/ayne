@@ -12,7 +12,6 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this.emailField('email');
         this.requiredField('email');
         this.passwordFields('password', 'passwordVerify');
-        this.invalidate('server');
         this.legendResetFields('email', 'password', 'passwordVerify');
     }
 
@@ -31,6 +30,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                 }.bind(this))
                .then(function (response) {
                     localStorage.jwt = response.data.token;
+                    localStorage.user = JSON.stringify(response.data.user);
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');
@@ -47,6 +47,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .finally(function () {
                     this.set('createUserPending', false);
                 }.bind(this));
+        }
+
+      , redirectToLogin: function () {
+            this.transitionToRoute('login');
         }
 
       , updateKey : function (keyCode) {

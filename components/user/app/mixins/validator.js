@@ -27,20 +27,39 @@ export default Ember.Mixin.create({
         return !this.get('invalid');
     }
 
-  , invalidate : function (name) {
+  , addErrorObserver : function (name) {
         this.addObserver('error.' + name, this, function () {
-            this.set('invalid', this.hasErrors());
+            this.set('invalid', this.hasErrors(this.get('error')));
         });
     }
 
-  , hasErrors : function () {
+  , hasErrors : function (obj) {
+        if (!obj) { return false; }
+
         var has = false;
-        Ember.$.each(this.get('error'), function (key, value) {
-            if (value) {
+
+        Ember.$.each(obj, function (key, value) {
+            if (has) {
+                return;
+            } else if (typeof value === 'string') {
                 has = true;
+            } else if (value) {
+                has = this.hasErrors(obj[key]);
             }
-        });
+        }.bind(this));
+
         return has;
+    }
+
+  , setSafe: function (path, value) {
+        var name   = path.slice(path.lastIndexOf('.') + 1)
+          , parent = (path === name) ? name : path.slice(0, path.length - (name.length + 1));
+
+        if (parent != name && !this.get(parent)) {
+            this.setSafe(parent, {});
+        }
+
+        this.set(path, value);
     }
 
   , addValidator: function (name, fn) {
@@ -52,8 +71,8 @@ export default Ember.Mixin.create({
     }
 
   , validateField : function (type, name, validator) {
-        var key = type + ':' + name;
-        this.invalidate(name);
+        var key = type + ':' + name.replace(/\./, ':');
+        this.addErrorObserver(name);
         this.addValidator(key, validator);
         this.addObserver(name, this, function () {
             this.getValidator(key)();
@@ -66,9 +85,9 @@ export default Ember.Mixin.create({
             if (!force && typeof value === 'undefined') {
                 return;
             } else if (!value) {
-                this.set('error.' + name, 'This is a required field');
+                this.setSafe('error.' + name, 'This is a required field');
             } else {
-                this.set('error.' + name, null);
+                this.setSafe('error.' + name, null);
             }
         });
     }
@@ -81,9 +100,9 @@ export default Ember.Mixin.create({
             if (!value) {
                 return;
             } else if (!valid) {
-                this.set('error.' + name, 'Please enter only letters or numbers in this field');
+                this.setSafe('error.' + name, 'Please enter only letters or numbers in this field');
             } else {
-                this.set('error.' + name, null);
+                this.setSafe('error.' + name, null);
             }
         });
     }
@@ -96,9 +115,9 @@ export default Ember.Mixin.create({
             if (!value) {
                 return;
             } else if (!valid) {
-                this.set('error.' + name, 'Please enter a valid email address');
+                this.setSafe('error.' + name, 'Please enter a valid email address');
             } else {
-                this.set('error.' + name, null);
+                this.setSafe('error.' + name, null);
             }
         });
     }
@@ -111,13 +130,13 @@ export default Ember.Mixin.create({
               , value2 = this.getWithDefault(name2, '');
 
             if (value1 === value2) {
-                this.set('error.passwords', null);
+                this.setSafe('error.passwords', null);
             } else {
-                this.set('error.passwords', 'Passwords don\'t match');
+                this.setSafe('error.passwords', 'Passwords don\'t match');
             }
         });
 
-        this.invalidate('passwords');
+        this.addErrorObserver('passwords');
         this.addObserver(name1, this, function () {
             this.getValidator(key)();
         });

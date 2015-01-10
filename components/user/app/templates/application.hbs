@@ -34,7 +34,7 @@
             {{#if loggedIn}}
             <li class="has-dropdown not-click">
                 <a href="#">
-                    <span class="margin-right-15">{{userEmail}}</span>
+                    <span class="margin-right-15">{{user.email}}</span>
                     <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
                 </a>
                 <ul class="dropdown">
@@ -48,8 +48,13 @@
                 </ul>
             </li>
             {{else}}
+                <li class="divider"></li>
                 <li class="has-form">
                     {{#link-to 'login' class="button"}}Log In{{/link-to}}
+                </li>
+                <li class="divider"></li>
+                <li class="has-form">
+                    {{#link-to 'signup' class="button"}}Register{{/link-to}}
                 </li>
             {{/if}}
         </ul>

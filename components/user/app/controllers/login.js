@@ -12,7 +12,6 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this._super();
         this.emailField('email');
         this.requiredField('email');
-        this.invalidate('server');
         this.legendResetFields('email', 'password');
     }
 
@@ -30,6 +29,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     var prev = this.get('prevTransition');
 
                     localStorage.jwt = response.data.token;
+                    localStorage.user = JSON.stringify(response.data.user);
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').get('target').send('invalidateModel');
 

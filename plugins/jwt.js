@@ -15,31 +15,36 @@ module.exports.register.attributes = {
   , version : '0.0.1'
 };
 
-function authenticate (request, reply) {
+function extractUser (request, cb) {
     var authHeader = request.headers.authorization
       , parts      = (authHeader || '').split(/\s+/);
 
     if (!authHeader) {
-        return reply(Boom.unauthorized(null, 'Bearer'));
+        return cb(Boom.unauthorized(null, 'Bearer'));
     }
     if (parts.length !== 2) {
-        return reply(Boom.badRequest('Bad HTTP authentication header format', 'Bearer'));
+        return cb(Boom.badRequest('Bad HTTP authentication header format', 'Bearer'));
     }
     if (parts[0].toLowerCase() !== 'bearer') {
-        return reply(Boom.unauthorized(null, 'Bearer'));
+        return cb(Boom.unauthorized(null, 'Bearer'));
     }
     if (parts[1].split('.').length !== 3) {
-        return reply(Boom.badRequest('Bad HTTP authentication header format', 'Bearer'));
+        return cb(Boom.badRequest('Bad HTTP authentication header format', 'Bearer'));
     }
 
     token.verify(parts[1], request.headers, function (err, payload) {
         if (err && err.name === 'TokenExpiredError') {
-            reply(Boom.unauthorized('Expired token received from JSON Web Token validation', 'Bearer'));
+            cb(Boom.unauthorized('Expired token received from JSON Web Token validation', 'Bearer'));
         } else if (err) {
-            reply(Boom.unauthorized('Invalid signature received for JSON Web Token validation', 'Bearer'));
+            cb(Boom.unauthorized('Invalid signature received for JSON Web Token validation', 'Bearer'));
         } else {
-            reply.continue({ credentials: payload.user, artifacts: parts[1] });
+            cb(null, { credentials: payload.user, artifacts: parts[1] });
         }
     });
+}
 
+function authenticate (request, reply) {
+    extractUser(request, function (err, credentials) {
+        return err ? reply(err) : reply.continue(credentials)
+    });
 }

@@ -16,7 +16,6 @@
                 value=lastName}}
             </label>
 
-
             <label {{bind-attr class="error.displayName:error"}}>Display Name
                 {{input
                 class=error.displayName:error
@@ -52,7 +51,7 @@
                 <i class="fa fa-save"></i>
                 Save
             </button>
-            <button class="button small" type="button" {{bind-attr disabled=disableCancel}} {{action 'cancel'}}>
+            <button class="button secondary small" type="button" {{bind-attr disabled=disableCancel}} {{action 'cancel'}}>
                 <i class="fa fa-undo"></i>
                 Cancel
             </button>
