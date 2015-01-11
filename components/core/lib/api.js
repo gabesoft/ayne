@@ -4,6 +4,15 @@ var request = require('request')
   , conf    = require('../../../config/store')
   , baseUrl = conf.get('api:url');
 
+function partsToUrlPath (parts) {
+    parts = parts || [];
+    return '/' + parts
+       .map(function (p) {
+            return p.replace(/^\/|\/$/g, '')
+        })
+       .join('/');
+}
+
 function options (path, method, data) {
     var opts = {
             uri    : baseUrl + path
@@ -37,6 +46,9 @@ function makeRequest(path, method, data, cb) {
         cb   = data;
         data = {};
     }
+    if (Array.isArray(path)) {
+        path = partsToUrlPath(path);
+    }
     request(options(path, method, data), function (err, response, body) {
         if (body.statusCode && +body.statusCode >= 400) {
             cb(err || body, response, null);
@@ -47,8 +59,9 @@ function makeRequest(path, method, data, cb) {
 }
 
 module.exports = {
-    post : function (path, data, cb) { makeRequest(path, 'POST', data, cb); }
-  , put  : function (path, data, cb) { makeRequest(path, 'PUT', data, cb); }
-  , get  : function (path, data, cb) { makeRequest(path, 'GET', data, cb); }
-  , del  : function (path, data, cb) { makeRequest(path, 'DELETE', data, cb); }
+    post  : function (path, data, cb) { makeRequest(path, 'POST', data, cb); }
+  , put   : function (path, data, cb) { makeRequest(path, 'PUT', data, cb); }
+  , get   : function (path, data, cb) { makeRequest(path, 'GET', data, cb); }
+  , del   : function (path, data, cb) { makeRequest(path, 'DELETE', data, cb); }
+  , patch : function (path, data, cb) { makeRequest(path, 'PATCH', data, cb); }
 };
