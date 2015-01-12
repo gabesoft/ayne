@@ -9,11 +9,7 @@
     "evil": true,
     "forin": false,
     "globals": {
-        "$": true,
-        "Ember": true,
-        "Fingerprint": true,
-        "ayne": true,
-        "md5": true
+        "Ember": true
     },
     "globalstrict": true,
     "immed": false,
