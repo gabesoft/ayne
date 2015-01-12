@@ -55,7 +55,7 @@ export default Ember.Mixin.create({
         var name   = path.slice(path.lastIndexOf('.') + 1)
           , parent = (path === name) ? name : path.slice(0, path.length - (name.length + 1));
 
-        if (parent != name && !this.get(parent)) {
+        if (parent !== name && !this.get(parent)) {
             this.setSafe(parent, {});
         }
 

@@ -8,7 +8,7 @@ function partsToUrlPath (parts) {
     parts = parts || [];
     return '/' + parts
        .map(function (p) {
-            return p.replace(/^\/|\/$/g, '')
+            return p.replace(/^\/|\/$/g, '');
         })
        .join('/');
 }

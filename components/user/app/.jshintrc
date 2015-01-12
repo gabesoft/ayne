@@ -1,5 +1,35 @@
 {
-    "esnext": true,
+    "boss": true,
     "browser": true,
-    "laxcomma": true
+    "curly": true,
+    "debug": false,
+    "devel": true,
+    "eqeqeq": true,
+    "eqnull": true,
+    "esnext": true,
+    "evil": true,
+    "forin": false,
+    "globals": {
+        "$": true,
+        "Ember": true,
+        "Fingerprint": true,
+        "ayne": true,
+        "md5": true
+    },
+    "globalstrict": true,
+    "immed": false,
+    "laxbreak": true,
+    "laxcomma": true,
+    "newcap": true,
+    "noarg": true,
+    "noempty": false,
+    "nomen": false,
+    "nonew": false,
+    "onevar": false,
+    "plusplus": false,
+    "regexp": false,
+    "strict": false,
+    "sub": true,
+    "undef": true,
+    "white": false
 }

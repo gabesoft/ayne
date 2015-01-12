@@ -45,6 +45,6 @@ function extractUser (request, cb) {
 
 function authenticate (request, reply) {
     extractUser(request, function (err, credentials) {
-        return err ? reply(err) : reply.continue(credentials)
+        return err ? reply(err) : reply.continue(credentials);
     });
 }

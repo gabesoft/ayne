@@ -8,6 +8,13 @@
     "esnext": true,
     "evil": true,
     "forin": false,
+    "globals": {
+        "$": true,
+        "Ember": true,
+        "Fingerprint": true,
+        "ayne": true,
+        "md5": true
+    },
     "globalstrict": true,
     "immed": false,
     "laxbreak": true,

@@ -10,7 +10,7 @@ export default Ember.Route.extend({
                     return {
                         profile : response.data
                       , user    : localStorage.user ? JSON.parse(localStorage.user) : null
-                    }
+                    };
                 })
                .catch(function () { return {}; });
         } else {
