@@ -154,6 +154,20 @@ export default Ember.Mixin.create({
         });
     }
 
+  , minLengthField: function (field, min, dstField) {
+        dstField = dstField || field;
+
+        this.setValidator('minLengthField', field, dstField, function (force) {
+            var value = this.get(field);
+
+            if ((!force && typeof value === 'undefined') || (value || '').length >= min) {
+                return null;
+            } else {
+                return 'enter at least ' + min + ' characters in this field';
+            }
+        });
+    }
+
   , emailField : function (field) {
         this.setValidator('emailField', field, field, function () {
             var value = this.get(field)

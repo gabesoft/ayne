@@ -1,8 +1,8 @@
 export default Ember.Route.extend({
     model: function () {
         return {
-            password       : ''
-          , passwordVerify : ''
-        }
+            password       : undefined
+          , passwordVerify : undefined
+        };
     }
 });

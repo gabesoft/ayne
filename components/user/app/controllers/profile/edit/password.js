@@ -10,6 +10,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this._super();
         this.legendResetFields('password', 'passwordVerify');
         this.passwordFields('password', 'passwordVerify', 'passwords');
+        this.minLengthField('password', 8, 'passwords');
     }
 
   , disableSubmit : function () {
