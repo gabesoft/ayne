@@ -1,5 +1,5 @@
 import Legend from 'mixins/legend';
-import Validator from 'mixins/validator';
+import Validator from 'mixins/validator-new';
 import Gravatar from 'mixins/gravatar';
 
 export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
@@ -12,7 +12,24 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
 
   , init: function () {
         this._super();
+        this.addObserver('model', function () {
+            this.set('_model', Ember.copy(this.get('model')));
+        });
+
         this.alphaNumericField('displayName');
+        this.setValidator('uniqueDisplayName', 'displayName', 'displayName', function () {
+            var value    = this.get('displayName')
+              , orig     = this.get('_model.displayName');
+
+            if (!value || !orig || value === orig) {
+                return null;
+            }
+
+            return this.api.checkDisplayName(value)
+               .then(function (response) {
+                    return response.data.exists ? 'display name not available' : null;
+                });
+        }, 300);
     }
 
   , disableSubmit : function () {

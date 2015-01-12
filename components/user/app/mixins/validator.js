@@ -70,12 +70,35 @@ export default Ember.Mixin.create({
         return this.get('validators.' + name);
     }
 
-  , validateField : function (type, name, validator) {
+  , setError : function (type, name, value) {
+        if (!value) {
+            // TODO: remove error
+        } else if (typeof value === 'string') {
+            // TODO: set error to value
+        } else if (value.then) {
+            // TODO: handle promise
+            value
+               .then(function (val) {
+                    // TODO: set error to val
+                })
+               .catch(function () {
+                    // TODO: set error to null
+                });
+        }
+    }
+
+  , validateField : function (type, name, validator, wait) {
         var key = type + ':' + name.replace(/\./, ':');
         this.addErrorObserver(name);
-        this.addValidator(key, validator);
+        this.addValidator(key, function () {
+
+        });
         this.addObserver(name, this, function () {
-            this.getValidator(key)();
+            var validate = this.getValidator(key);
+
+            Ember.run.debounce(this, function () {
+                this.setError(type, name, validate());
+            }, wait || 0);
         });
     }
 

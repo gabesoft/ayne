@@ -32,4 +32,8 @@ module.exports = [{
   , path    : '/api/profile'
   , handler : profile.read
   , config  : { auth: 'token' }
+}, {
+    method  : 'GET'
+  , path    : '/api/username/check/{username}'
+  , handler : profile.checkDisplayName
 }];

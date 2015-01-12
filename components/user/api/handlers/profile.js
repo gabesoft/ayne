@@ -33,7 +33,24 @@ function read (request, reply) {
     });
 }
 
+function checkDisplayName (request, reply) {
+    var displayName = request.params.username || '';
+
+    if (!displayName) {
+        return reply.failBadRequest('No username specified');
+    }
+
+    api.get('/profiles', { displayName: displayName }, function (err, response, body) {
+        if (err) {
+            reply.fail(err);
+        } else {
+            reply({ exists: body.length > 0 });
+        }
+    });
+}
+
 module.exports = {
-    save : save
-  , read : read
+    save             : save
+  , read             : read
+  , checkDisplayName : checkDisplayName
 };

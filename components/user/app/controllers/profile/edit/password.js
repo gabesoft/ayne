@@ -1,4 +1,4 @@
-import Validator from 'mixins/validator';
+import Validator from 'mixins/validator-new';
 import Legend from 'mixins/legend';
 
 export default Ember.ObjectController.extend(Validator, Legend, {
@@ -9,7 +9,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , init: function () {
         this._super();
         this.legendResetFields('password', 'passwordVerify');
-        this.passwordFields('password', 'passwordVerify');
+        this.passwordFields('password', 'passwordVerify', 'passwords');
     }
 
   , disableSubmit : function () {
@@ -32,6 +32,12 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .catch(function (response) {
                     this.legend('Failed to update password', 'error');
                 }.bind(this));
+        }
+
+      , updateKey : function (keyCode) {
+            if (keyCode === 13) {
+                this.send('save');
+            }
         }
     }
 });

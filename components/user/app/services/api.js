@@ -66,4 +66,8 @@ export default Ember.Object.extend({
   , signup : function (data) {
         return this.runPost('/api/signup', data);
     }
+
+  , checkDisplayName: function (name) {
+        return this.runGet('/api/username/check/' + encodeURIComponent(name));
+    }
 });

@@ -3,39 +3,45 @@
         {{partial 'partials/legend'}}
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                {{input
-                aria-label="email"
-                class=error.email:error
-                name="email"
-                placeholder="Enter your email"
-                required=true
-                type="email"
-                value=email}}
-                {{#if error.email}}
-                    <small class="error">{{error.email}}</small>
-                {{/if}}
-                {{input
+                <label>
+                    {{input
+                    aria-label="email"
+                    class=error.email:error
+                    name="email"
+                    placeholder="Enter your email"
+                    required=true
+                    type="email"
+                    value=email}}
+                    {{#if error.email}}
+                        <small class="error">{{error.email}}</small>
+                    {{/if}}
+                </label>
 
-                aria-label="password"
-                class=error.passwords:error
-                name="password"
-                placeholder="Enter your password"
-                type="password"
-                value=password}}
-                {{#if error.passwords}}
-                    <small class="error">{{error.passwords}}</small>
-                {{/if}}
-                {{input
+                <label>
+                    {{input
+                    aria-label="password"
+                    class=error.passwords:error
+                    name="password"
+                    placeholder="Enter your password"
+                    type="password"
+                    value=password}}
+                    {{#if error.passwords}}
+                        <small class="error">{{error.passwords}}</small>
+                    {{/if}}
+                </label>
 
-                aria-label="password"
-                class=error.passwords:error
-                name="password-verify"
-                placeholder="Re-enter password"
-                type="password"
-                value=passwordVerify}}
-                {{#if error.passwords}}
-                    <small class="error">{{error.passwords}}</small>
-                {{/if}}
+                <label>
+                    {{input
+                    aria-label="password"
+                    class=error.passwords:error
+                    name="password-verify"
+                    placeholder="Re-enter password"
+                    type="password"
+                    value=passwordVerify}}
+                    {{#if error.passwords}}
+                        <small class="error">{{error.passwords}}</small>
+                    {{/if}}
+                </label>
             </div>
         </div>
         <div class="row">

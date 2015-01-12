@@ -1,4 +1,4 @@
-import Validator from 'mixins/validator';
+import Validator from 'mixins/validator-new';
 import Legend from 'mixins/legend';
 
 export default Ember.ObjectController.extend(Validator, Legend, {
@@ -21,37 +21,39 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions : {
         authenticate: function () {
-            if (!this.validate()) { return; }
+            this.validate().then(function (valid) {
+                if (!valid) { return; }
 
-            this.set('authenticatePending', true);
-            this.api.login(this.get('model'))
-               .then(function (response) {
-                    var prev = this.get('prevTransition');
+                this.set('authenticatePending', true);
+                this.api.login(this.get('model'))
+                   .then(function (response) {
+                        var prev = this.get('prevTransition');
 
-                    localStorage.jwt = response.data.token;
-                    localStorage.user = JSON.stringify(response.data.user);
-                    this.get('appCtrl').set('loggedIn', true);
-                    this.get('appCtrl').get('target').send('invalidateModel');
+                        localStorage.jwt = response.data.token;
+                        localStorage.user = JSON.stringify(response.data.user);
+                        this.get('appCtrl').set('loggedIn', true);
+                        this.get('appCtrl').get('target').send('invalidateModel');
 
-                    if (prev) {
-                        this.set('prevTransition', null);
-                        prev.retry();
-                    } else {
-                        this.transitionToRoute('profile.view');
-                    }
-                }.bind(this))
-               .catch(function (response) {
-                    var json = response.json;
+                        if (prev) {
+                            this.set('prevTransition', null);
+                            prev.retry();
+                        } else {
+                            this.transitionToRoute('profile.view');
+                        }
+                    }.bind(this))
+                   .catch(function (response) {
+                        var json = response.json;
 
-                    if (json.statusCode === 401) {
-                        this.legend('Invalid credentials', 'error');
-                    } else {
-                        this.legend(json.message, 'error');
-                    }
-                }.bind(this))
-               .finally(function () {
-                    this.set('authenticatePending', false);
-                }.bind(this));
+                        if (json.statusCode === 401) {
+                            this.legend('Invalid credentials', 'error');
+                        } else {
+                            this.legend(json.message, 'error');
+                        }
+                    }.bind(this))
+                   .finally(function () {
+                        this.set('authenticatePending', false);
+                    }.bind(this));
+            }.bind(this));
         }
 
       , redirectToSignup: function () {
