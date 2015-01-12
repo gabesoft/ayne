@@ -16,7 +16,8 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
             this.set('_model', Ember.copy(this.get('model')));
         });
 
-        this.alphaNumericField('displayName');
+        this.requiredField('displayName');
+        this.alphaNumericField('displayName', true);
         this.setValidator('uniqueDisplayName', 'displayName', 'displayName', function () {
             var value    = this.get('displayName')
               , orig     = this.get('_model.displayName');

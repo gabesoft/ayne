@@ -128,17 +128,20 @@ export default Ember.Mixin.create({
         return regex.test(email);
     }
 
-  , validAlphaNumeric : function (text) {
-        var regex = /^[a-zA-Z0-9\-]*$/;
+  , validAlphaNumeric : function (text, lower) {
+        var regex = lower ? /^[a-z0-9\-]*$/ : /^[a-zA-Z0-9\-]*$/;
         return regex.test(text);
     }
 
-  , alphaNumericField: function (field) {
+  , alphaNumericField: function (field, onlyLowercase) {
         this.setValidator('alphaNumericField', field, field, function () {
             var value = this.get(field)
-              , valid = this.validAlphaNumeric(value);
+              , valid = this.validAlphaNumeric(value, onlyLowercase)
+              , msg   = onlyLowercase
+                    ? 'please enter only lowercase letters or numbers in this field'
+                    : 'please enter only letters or numbers in this field';
 
-            return valid ? null : 'please enter only letters or numbers in this field';
+            return valid ? null : msg;
         });
     }
 
