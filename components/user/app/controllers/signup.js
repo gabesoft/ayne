@@ -11,8 +11,8 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this._super();
         this.emailField('email');
         this.requiredField('email');
-        this.passwordFields('password', 'passwordVerify', 'passwords');
         this.minLengthField('password', 8, 'passwords');
+        this.passwordFields('password', 'passwordVerify', 'passwords');
         this.legendResetFields('email', 'password', 'passwordVerify');
     }
 

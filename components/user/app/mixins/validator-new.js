@@ -1,3 +1,5 @@
+import PSW_COMMON from 'data/common-passwords';
+
 export default Ember.Mixin.create({
     init: function () {
         this._super();
@@ -50,10 +52,10 @@ export default Ember.Mixin.create({
         this.addObserver(current._errorTypeField, this, function () {
             var errors = this.get(current._errorField) || {};
 
-            errors = Object.keys(errors)
-               .map(function (t) { return errors[t]; })
-               .filter(Boolean)
-               .sort(function (e1, e2) { return e1.id - e2.id; });
+            errors = Ember.$
+                .map(errors, function (v, k) { return v; })
+                .filter(Boolean)
+                .sort(function (e1, e2) { return e1.id - e2.id; });
 
             this.set(current.errorField, (errors[0] || {}).value);
         });
@@ -181,6 +183,14 @@ export default Ember.Mixin.create({
             } else if (!valid) {
                 return 'please enter a valid email address';
             }
+        });
+    }
+
+  , uncommonPasswordField: function (field, dstField) {
+        this.setValidator('uncommonPasswordField', field, dstField, function () {
+            var value = this.get(field)
+              , hash  = md5(value);
+            return PSW_COMMON[hash] ? 'password too common' : null;
         });
     }
 
