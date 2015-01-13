@@ -3,46 +3,9 @@
         {{partial 'partials/legend'}}
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                <label {{bind-attr class="error.email:error"}}>
-                    Email
-                    {{input
-                    aria-label="email"
-                    class=error.email:error
-                    name="email"
-                    required=true
-                    type="email"
-                    value=email}}
-                    {{#if error.email}}
-                        <small class="error">{{error.email}}</small>
-                    {{/if}}
-                </label>
-
-                <label {{bind-attr class="error.passwords:error"}}>
-                    Password
-                    {{input
-                    aria-label="password"
-                    class=error.passwords:error
-                    name="password"
-                    placeholder="Enter at least 8 characters"
-                    type="password"
-                    value=password}}
-                    {{#if error.passwords}}
-                        <small class="error">{{error.passwords}}</small>
-                    {{/if}}
-                </label>
-
-                <label {{bind-attr class="error.passwords:error"}}>
-                    Password Verify
-                    {{input
-                    aria-label="password"
-                    class=error.passwords:error
-                    name="password-verify"
-                    type="password"
-                    value=passwordVerify}}
-                    {{#if error.passwords}}
-                        <small class="error">{{error.passwords}}</small>
-                    {{/if}}
-                </label>
+                {{partial 'partials/email-input'}}
+                {{partial 'partials/password-input' myfield="abcd"}}
+                {{partial 'partials/password-verify-input' myfield="abcd"}}
             </div>
         </div>
         <div class="row">

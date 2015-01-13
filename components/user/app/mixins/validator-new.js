@@ -1,7 +1,9 @@
 import PSW_COMMON from 'data/common-passwords';
 
 export default Ember.Mixin.create({
-    init: function () {
+    invalid: false
+
+  , init: function () {
         this._super();
         this.set('_validators', {});
         this.set('_errors', {});
@@ -11,6 +13,7 @@ export default Ember.Mixin.create({
 
   , resetErrors : function () {
         this.set('error', {});
+        this.set('invalid', false);
     }
 
   , setValidator: function (type, srcField, dstField, validator, wait) {
@@ -53,9 +56,9 @@ export default Ember.Mixin.create({
             var errors = this.get(current._errorField) || {};
 
             errors = Ember.$
-                .map(errors, function (v, k) { return v; })
-                .filter(Boolean)
-                .sort(function (e1, e2) { return e1.id - e2.id; });
+               .map(errors, function (v, k) { return v; })
+               .filter(Boolean)
+               .sort(function (e1, e2) { return e1.id - e2.id; });
 
             this.set(current.errorField, (errors[0] || {}).value);
         });

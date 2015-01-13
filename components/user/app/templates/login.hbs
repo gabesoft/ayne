@@ -3,24 +3,8 @@
         {{partial 'partials/legend'}}
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                {{input
-                value=email
-                type="email"
-                name="email"
-                aria-label="email"
-                required=true
-                class=error.email:error
-                placeholder="Enter your email" }}
-                {{#if error.email}}
-                    <small class="error">{{error.email}}</small>
-                {{/if}}
-
-                {{input
-                value=password
-                type="password"
-                name="password"
-                aria-label="password"
-                placeholder="Enter your password"}}
+                {{partial 'partials/email-input'}}
+                {{partial 'partials/password-input'}}
             </div>
         </div>
         <div class="row">

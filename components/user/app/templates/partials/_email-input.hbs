@@ -1,0 +1,14 @@
+<label {{bind-attr class="error.email:error"}}>
+    Email
+    {{input
+    value=email
+    type="email"
+    name="email"
+    required=true
+    class=error.email:error}}
+    {{#if error.email}}
+        <small class="error">{{error.email}}</small>
+    {{/if}}
+</label>
+
+

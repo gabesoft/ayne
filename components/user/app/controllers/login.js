@@ -43,7 +43,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                    .catch(function (response) {
                         var json = response.json || response;
 
-                        if (json.statusCode === 401) {
+                        if (json.statusCode === 401 || json.statusCode === 404) {
                             this.legend('Invalid credentials', 'error');
                         } else {
                             this.legend(json.message, 'error');
