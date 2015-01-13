@@ -185,6 +185,7 @@ $large: $large-up;
 
 // We use this as cursors values for enabling the option of having custom cursors in the whole site's stylesheet
 $cursor-crosshair-value: crosshair;
+$cursor-not-allowed-value: not-allowed;
 $cursor-default-value: default;
 $cursor-pointer-value: pointer;
 $cursor-help-value: help;
@@ -464,7 +465,7 @@ $button-round: $global-rounded;
 
 // We use this to set default opacity and cursor for disabled buttons.
 $button-disabled-opacity: 0.7;
-$button-disabled-cursor: $cursor-default-value;
+$button-disabled-cursor: $cursor-not-allowed-value;
 
 // 06. Button Groups
 // - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -634,7 +635,7 @@ $input-border-style: solid;
 $input-border-width: 1px;
 $input-border-radius: $global-radius;
 $input-disabled-bg: $gainsboro;
-$input-disabled-cursor: $cursor-default-value;
+$input-disabled-cursor: $cursor-not-allowed-value;
 $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 
 // We use these to style the fieldset border and spacing.

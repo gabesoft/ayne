@@ -31,8 +31,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                         return this.api.login(this.get('model'));
                     }.bind(this))
                    .then(function (response) {
-                        localStorage.jwt = response.data.token;
-                        localStorage.user = JSON.stringify(response.data.user);
+                        this.local.set('credentials', response.data);
                         this.get('appCtrl').set('loggedIn', true);
                         this.get('appCtrl').target.send('invalidateModel');
                         this.transitionToRoute('profile.view');

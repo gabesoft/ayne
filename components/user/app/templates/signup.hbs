@@ -3,12 +3,12 @@
         {{partial 'partials/legend'}}
         <div class="row">
             <div class="small-12 medium-6 large-4 columns">
-                <label>
+                <label {{bind-attr class="error.email:error"}}>
+                    Email
                     {{input
                     aria-label="email"
                     class=error.email:error
                     name="email"
-                    placeholder="Enter your email"
                     required=true
                     type="email"
                     value=email}}
@@ -17,12 +17,13 @@
                     {{/if}}
                 </label>
 
-                <label>
+                <label {{bind-attr class="error.passwords:error"}}>
+                    Password
                     {{input
                     aria-label="password"
                     class=error.passwords:error
                     name="password"
-                    placeholder="Enter your password (at least 8 characters)"
+                    placeholder="Enter at least 8 characters"
                     type="password"
                     value=password}}
                     {{#if error.passwords}}
@@ -30,12 +31,12 @@
                     {{/if}}
                 </label>
 
-                <label>
+                <label {{bind-attr class="error.passwords:error"}}>
+                    Password Verify
                     {{input
                     aria-label="password"
                     class=error.passwords:error
                     name="password-verify"
-                    placeholder="Re-enter password"
                     type="password"
                     value=passwordVerify}}
                     {{#if error.passwords}}

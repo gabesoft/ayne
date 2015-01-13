@@ -1,9 +1,13 @@
+import Local from 'services/local';
+
 export default Ember.Object.extend({
     init: function () {
+        var local = new Local();
+
         Ember.$.ajaxSetup({
             beforeSend: function (xhr) {
                 var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
-                  , token = localStorage.jwt;
+                  , token = local.getDefaultValue('credentials', {}).token;
 
                 xhr.setRequestHeader('Browser-Fingerprint', fp.get());
                 if (token) {

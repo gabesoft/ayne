@@ -22,9 +22,9 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         save: function () {
             this.api.setPassword(this.get('model'))
                .then(function (response) {
+                    var cred = this.local.getDefaultValue('credentials', { user: {} });
                     return this.api.login({
-                        // TODO  : centralize localStorage ops
-                        email    : JSON.parse(localStorage.user).email
+                        email    : cred.user.email
                       , password : this.get('password')
                     });
                 }.bind(this))

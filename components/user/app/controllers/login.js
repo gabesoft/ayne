@@ -29,8 +29,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                    .then(function (response) {
                         var prev = this.get('prevTransition');
 
-                        localStorage.jwt = response.data.token;
-                        localStorage.user = JSON.stringify(response.data.user);
+                        this.local.set('credentials', response.data);
                         this.get('appCtrl').set('loggedIn', true);
                         this.get('appCtrl').get('target').send('invalidateModel');
 
@@ -42,7 +41,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                         }
                     }.bind(this))
                    .catch(function (response) {
-                        var json = response.json;
+                        var json = response.json || response;
 
                         if (json.statusCode === 401) {
                             this.legend('Invalid credentials', 'error');
