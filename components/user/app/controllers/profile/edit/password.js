@@ -20,20 +20,25 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions: {
         save: function () {
-            this.api.setPassword(this.get('model'))
-               .then(function (response) {
-                    var cred = this.local.getDefaultValue('credentials', { user: {} });
-                    return this.api.login({
-                        email    : cred.user.email
-                      , password : this.get('password')
-                    });
-                }.bind(this))
-               .then(function (response) {
-                    this.legend('Password Updated', 'success', 5000);
-                }.bind(this))
-               .catch(function (response) {
-                    this.legend('Failed to update password', 'error');
-                }.bind(this));
+            this.validate().then(function (valid) {
+                if (!valid) { return; }
+
+                this.api.setPassword(this.get('model'))
+                   .then(function (response) {
+                        var cred = this.local.getDefaultValue('credentials', { user: {} });
+                        return this.api.login({
+                            email    : cred.user.email
+                          , password : this.get('password')
+                        });
+                    }.bind(this))
+                   .then(function (response) {
+                        this.legend('Password Updated', 'success', 5000);
+                    }.bind(this))
+                   .catch(function (response) {
+                        this.legend('Failed to update password', 'error');
+                    }.bind(this));
+
+            }.bind(this));
         }
 
       , updateKey : function (keyCode) {
