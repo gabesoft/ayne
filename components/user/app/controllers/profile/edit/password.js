@@ -20,25 +20,32 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions: {
         save: function () {
-            this.validate().then(function (valid) {
-                if (!valid) { return; }
+            this.set('savePending', true);
 
-                this.api.setPassword(this.get('model'))
-                   .then(function (response) {
-                        var cred = this.local.getDefaultValue('credentials', { user: {} });
-                        return this.api.login({
-                            email    : cred.user.email
-                          , password : this.get('password')
-                        });
-                    }.bind(this))
-                   .then(function (response) {
+            this.validate()
+               .then(function (valid) {
+                    return valid ? this.api.setPassword(this.get('model')) : false;
+                }.bind(this))
+               .then(function (response) {
+                    if (!response) { return false; }
+
+                    var cred = this.local.get('credentials') || { user: {} };
+                    return this.api.login({
+                        email    : cred.user.email
+                      , password : this.get('password')
+                    });
+                }.bind(this))
+               .then(function (response) {
+                    if (response) {
                         this.legend('Password Updated', 'success', 5000);
-                    }.bind(this))
-                   .catch(function (response) {
-                        this.legend('Failed to update password', 'error');
-                    }.bind(this));
-
-            }.bind(this));
+                    }
+                }.bind(this))
+               .catch(function (response) {
+                    this.legend('Failed to update password', 'error');
+                }.bind(this))
+               .finally(function () {
+                    this.set('savePending', false);
+                }.bind(this));
         }
 
       , updateKey : function (keyCode) {

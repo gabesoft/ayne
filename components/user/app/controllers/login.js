@@ -21,38 +21,39 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions : {
         authenticate: function () {
-            this.validate().then(function (valid) {
-                if (!valid) { return; }
+            this.set('authenticatePending', true);
+            this.validate()
+               .then(function (valid) {
+                    return valid ? this.api.login(this.get('model')) : false;
+                }.bind(this))
+               .then(function (response) {
+                    if (!response) { return; }
 
-                this.set('authenticatePending', true);
-                this.api.login(this.get('model'))
-                   .then(function (response) {
-                        var prev = this.get('prevTransition');
+                    var prev = this.get('prevTransition');
 
-                        this.local.set('credentials', response.data);
-                        this.get('appCtrl').set('loggedIn', true);
-                        this.get('appCtrl').get('target').send('invalidateModel');
+                    this.local.set('credentials', response.data);
+                    this.get('appCtrl').set('loggedIn', true);
+                    this.get('appCtrl').get('target').send('invalidateModel');
 
-                        if (prev) {
-                            this.set('prevTransition', null);
-                            prev.retry();
-                        } else {
-                            this.transitionToRoute('profile.view');
-                        }
-                    }.bind(this))
-                   .catch(function (response) {
-                        var json = response.json || response;
+                    if (prev) {
+                        this.set('prevTransition', null);
+                        prev.retry();
+                    } else {
+                        this.transitionToRoute('profile.view');
+                    }
+                }.bind(this))
+               .catch(function (response) {
+                    var json = response.json || response;
 
-                        if (json.statusCode === 401 || json.statusCode === 404) {
-                            this.legend('Invalid credentials', 'error');
-                        } else {
-                            this.legend(json.message, 'error');
-                        }
-                    }.bind(this))
-                   .finally(function () {
-                        this.set('authenticatePending', false);
-                    }.bind(this));
-            }.bind(this));
+                    if (json.statusCode === 401 || json.statusCode === 404) {
+                        this.legend('Invalid credentials', 'error');
+                    } else {
+                        this.legend(json.message, 'error');
+                    }
+                }.bind(this))
+               .finally(function () {
+                    this.set('authenticatePending', false);
+                }.bind(this));
         }
 
       , redirectToSignup: function () {

@@ -102,6 +102,7 @@ function password (request, reply) {
         if (err) { return reply.fail(err); }
 
         api.patch('/users/' + userId, { password: hash, userId: userId }, function (err, response, body) {
+            delete body.password;
             reply(body);
         });
     });

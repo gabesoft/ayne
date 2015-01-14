@@ -23,33 +23,34 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions : {
         createUser: function () {
-            this.validate().then(function (valid) {
-                if (!valid) { return; }
+            this.set('createUserPending', true);
+            this.validate()
+               .then(function (valid) {
+                    return valid ? this.api.signup(this.get('model')) : false;
+                }.bind(this))
+               .then(function (response) {
+                    return response ? this.api.login(this.get('model')) : false;
+                }.bind(this))
+               .then(function (response) {
+                    if (!response) { return; }
 
-                this.set('createUserPending', true);
-                this.api.signup(this.get('model'))
-                   .then(function () {
-                        return this.api.login(this.get('model'));
-                    }.bind(this))
-                   .then(function (response) {
-                        this.local.set('credentials', response.data);
-                        this.get('appCtrl').set('loggedIn', true);
-                        this.get('appCtrl').target.send('invalidateModel');
-                        this.transitionToRoute('profile.view');
-                    }.bind(this))
-                   .catch(function (response) {
-                        var json = response.json;
+                    this.local.set('credentials', response.data);
+                    this.get('appCtrl').set('loggedIn', true);
+                    this.get('appCtrl').target.send('invalidateModel');
+                    this.transitionToRoute('profile.view');
+                }.bind(this))
+               .catch(function (response) {
+                    var json = response.json;
 
-                        if (json.statusCode === 409) {
-                            this.legend(json.message, 'error');
-                        } else {
-                            this.legend('An unknown error occurred', 'error');
-                        }
-                    }.bind(this))
-                   .finally(function () {
-                        this.set('createUserPending', false);
-                    }.bind(this));
-            }.bind(this));
+                    if (json.statusCode === 409) {
+                        this.legend(json.message, 'error');
+                    } else {
+                        this.legend('An unknown error occurred', 'error');
+                    }
+                }.bind(this))
+               .finally(function () {
+                    this.set('createUserPending', false);
+                }.bind(this));
         }
 
       , redirectToLogin: function () {
