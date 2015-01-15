@@ -5,6 +5,7 @@ var paths = [
       , '/user/login'
       , '/user/signup'
       , '/user/profile'
+      , '/user/forgot'
       , '/user/profile/view'
       , '/user/profile/edit'
       , '/user/profile/edit/details'
