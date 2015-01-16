@@ -3,7 +3,6 @@ export default Ember.Route.extend({
         return this.controllerFor('login').get('model') || {};
     }
   , setupController : function (controller, model) {
-        controller.resetErrors();
-        controller.set('model', model);
+        controller.setup(model);
     }
 });

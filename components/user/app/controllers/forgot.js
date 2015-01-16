@@ -4,12 +4,13 @@ import Legend from 'mixins/legend';
 export default Ember.ObjectController.extend(Validator, Legend, {
     resetPending  : false
   , legendDefault : 'Forgot password'
-  , alertText     : 'Enter your email address and we\'ll send you a password reset email.'
+  , alertText     : ''
 
   , init: function () {
         this._super();
         this.requiredField('email');
         this.emailField('email');
+        this.alert();
     }
 
   , disableSubmit: function () {
@@ -17,8 +18,15 @@ export default Ember.ObjectController.extend(Validator, Legend, {
     }.property('invalid', 'resetPending')
 
   , alert: function (msg, cls) {
+        msg = msg || 'Enter your email address and we\'ll send you a password reset email.';
         this.set('alertClass', cls === 'error' ? 'alert' : cls);
         this.set('alertText', msg);
+    }
+
+  , setup: function (model) {
+        this.resetErrors();
+        this.alert();
+        this.set('model', model);
     }
 
   , alertSuccess: function () {
@@ -32,11 +40,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , alertFailed: function (response) {
         if (response && response.json.statusCode === 404) {
-            this.alert([
-                'An account that matches',
-                '<b>' + this.get('model').email + '</b>',
-                'was not found.'
-            ].join(' '), 'error');
+            this.alert('No account matches <b>' + this.get('model').email + '</b>', 'error');
         } else {
             this.alert('Failed to send a reset password email', 'error');
         }

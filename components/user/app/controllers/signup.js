@@ -17,6 +17,12 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this.legendResetFields('email', 'password', 'passwordVerify');
     }
 
+  , setup: function (model) {
+        this.resetErrors();
+        this.legend();
+        this.set('model', model);
+    }
+
   , disableSubmit : function () {
         return this.get('invalid') || this.get('createUserPending');
     }.property('invalid', 'createUserPending')
