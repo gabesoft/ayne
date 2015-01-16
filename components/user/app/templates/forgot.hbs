@@ -1,16 +1,17 @@
-<form action="">
+<form>
     <fieldset>
         {{partial 'partials/legend'}}
         <div class="row">
-            <div class="small-12 medium-6 large-4 columns">
-                <div class="alert-box">
-                    Enter your email address and we'll send you a password reset email.
+            <div class="medium-6 large-4 columns">
+                <div {{bind-attr class="alertClass :alert-box"}}>
+                    {{{alertText}}}
                 </div>
                 {{partial 'partials/email-input'}}
+                <input class="hide" type="text">
             </div>
         </div>
         <div class="row">
-            <div class="small-12 medium-6 large-4 columns">
+            <div class="medium-6 large-4 columns">
                 <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'reset'}}>
                     {{#if resetPending}}
                         <i class="fa fa-spin fa-cog"></i>

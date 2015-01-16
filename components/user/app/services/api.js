@@ -47,6 +47,10 @@ export default Ember.Object.extend({
         return this.run({ url: path, type: 'GET', qs: query });
     }
 
+    , resetPassword: function (data) {
+          return this.runPost('/api/email/reset-password', data);
+    }
+
   , saveProfile: function (data) {
         return this.runPost('/api/profile', data);
     }

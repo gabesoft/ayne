@@ -108,10 +108,24 @@ function password (request, reply) {
     });
 }
 
+function emailResetPassword (request, reply) {
+    var data = request.payload;
+
+    api.get('/users', { email: data.email }, function (err, response, body) {
+        if (err) {
+            reply.fail(err);
+        } else if (!body || body.length === 0) {
+            reply.fail(new UserNotFoundError(data.email, 'email'));
+        } else {
+            reply('ok');
+        }
+    });
+}
 
 module.exports = {
-    logout   : logout
-  , signup   : signup
-  , login    : login
-  , password : password
+    logout             : logout
+  , signup             : signup
+  , login              : login
+  , password           : password
+  , emailResetPassword : emailResetPassword
 };

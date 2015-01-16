@@ -36,4 +36,8 @@ module.exports = [{
     method  : 'GET'
   , path    : '/api/username/check/{username}'
   , handler : profile.checkDisplayName
+}, {
+    method  : 'POST'
+  , path    : '/api/email/reset-password'
+  , handler : user.emailResetPassword
 }];
