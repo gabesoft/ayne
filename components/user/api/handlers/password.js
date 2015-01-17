@@ -1,6 +1,5 @@
 var api               = require('../../../core/lib/api')
   , UserNotFoundError = require('../../api-errors/user-not-found')
-    //, nodemailer        = require('nodemailer')
   , userHelper        = require('../helpers/user');
 
 function updateUser (request, reply, user) {
@@ -27,6 +26,11 @@ function update (request, reply) {
     });
 }
 
+function sendEmail (user, cb) {
+    // TODO: implement using the google api
+    cb(new Error('Not Implemented'));
+}
+
 function sendResetEmail (request, reply) {
     var data = request.payload;
 
@@ -36,7 +40,9 @@ function sendResetEmail (request, reply) {
         } else if (!body || body.length === 0) {
             reply.fail(new UserNotFoundError(data.email, 'email'));
         } else {
-            reply('ok');
+            sendEmail(body, function (err, info) {
+                return err ? reply.fail(err) : reply(info.response);
+            });
         }
     });
 }

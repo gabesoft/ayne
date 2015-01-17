@@ -56,7 +56,7 @@ export default Ember.Mixin.create({
             var errors = this.get(current._errorField) || {};
 
             errors = Ember.$
-               .map(errors, function (v, k) { return v; })
+               .map(errors, function (v) { return v; })
                .filter(Boolean)
                .sort(function (e1, e2) { return e1.id - e2.id; });
 
@@ -76,9 +76,7 @@ export default Ember.Mixin.create({
     }
 
   , setError: function (validator, value) {
-        var field  = validator.dstField
-          , type   = validator.type
-          , result = null;
+        var result = null;
 
         if (value) {
             result = {
@@ -122,7 +120,7 @@ export default Ember.Mixin.create({
                     return this.setError(validator, null);
                 }.bind(this));
         } else {
-            return new Ember.RSVP.Promise(function (resolve, reject) {
+            return new Ember.RSVP.Promise(function (resolve) {
                 resolve(this.setError(validator, value));
             }.bind(this));
         }
@@ -198,7 +196,7 @@ export default Ember.Mixin.create({
     }
 
   , passwordFields: function (field1, field2, errorField) {
-        this.setValidator('passwordFields', [field1, field2], errorField, function (force) {
+        this.setValidator('passwordFields', [field1, field2], errorField, function () {
             var value1 = this.getWithDefault(field1, '')
               , value2 = this.getWithDefault(field2, '');
 
