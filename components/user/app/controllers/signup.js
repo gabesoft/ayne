@@ -62,11 +62,5 @@ export default Ember.ObjectController.extend(Validator, Legend, {
       , redirectToLogin: function () {
             this.transitionToRoute('login');
         }
-
-      , updateKey : function (keyCode) {
-            if (keyCode === 13) {
-                this.send('createUser');
-            }
-        }
     }
 });

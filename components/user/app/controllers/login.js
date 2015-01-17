@@ -65,11 +65,5 @@ export default Ember.ObjectController.extend(Validator, Legend, {
       , redirectToSignup: function () {
             this.transitionToRoute('signup');
         }
-
-      , updateKey : function (keyCode) {
-            if (keyCode === 13) {
-                this.send('authenticate');
-            }
-        }
     }
 });

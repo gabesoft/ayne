@@ -1,5 +1,7 @@
 export default Ember.View.extend({
     keyDown: function (e) {
-        this.get('controller').send('updateKey', e.keyCode);
+        if (e.keyCode === 13) {
+            this.get('controller').send('authenticate', e.keyCode);
+        }
     }
 });

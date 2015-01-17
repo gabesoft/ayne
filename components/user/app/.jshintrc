@@ -27,6 +27,12 @@
     "nonew": false,
     "onevar": false,
     "plusplus": false,
+    "predef": [
+        "Ember",
+        "ayne",
+        "Fingerprint",
+        "md5"
+    ],
     "regexp": false,
     "strict": false,
     "sub": true,

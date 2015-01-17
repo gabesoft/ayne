@@ -5,10 +5,12 @@ var pickFiles        = require('broccoli-static-compiler')
   , path             = require('path')
   , glob             = require('glob')
   , touch            = require('./touch')
+  , jshintTree       = require('broccoli-jshint')
   , moduleAppender   = require('./ember-module-appender')
   , moduleCompiler   = require('broccoli-es6-module-transpiler')
   , concatenate      = require('broccoli-concat')
   , uglifyJs         = require('broccoli-uglify-sourcemap')
+  , empty            = require('./empty')
   , mergeTrees       = require('broccoli-merge-trees');
 
 module.exports = function (opts) {
@@ -45,6 +47,17 @@ module.exports = function (opts) {
         });
     }
 
+    function jshintModules () {
+        if (!hasModules() || opts.minify) { return empty(); }
+
+        var modules = pickFiles(opts.root, {
+                srcDir  : path.join(opts.name, 'app')
+              , destDir : '/'
+            });
+
+        return jshintTree(modules, { log: true, disableTestGenerator: true })
+    }
+
     function compileJsModules () {
         if (!hasModules()) {
             return touch([ '/app-compiled.js', '/app-compiled.js.map' ]);
@@ -53,7 +66,7 @@ module.exports = function (opts) {
         var modules = pickFiles(opts.root, {
                 srcDir  : path.join(opts.name, 'app')
               , destDir : '/'
-              , files   : [ '**/*.js' ]
+              , files   : [ '**/*.js', '.jshintrc' ]
             })
           , moduleSetup = moduleAppender(modules, {
                 destFile: 'app-module-setup.js'
@@ -87,6 +100,7 @@ module.exports = function (opts) {
     function combineJsAssets () {
         var templ   = compileTemplates()
           , modules = compileJsModules()
+          , jshint  = jshintModules()
           , vendor  = compileJsVendor()
           , lib     = concatenate(mergeTrees([ templ, modules ]), {
                 inputFiles : [ '**/*.js' ]
@@ -128,7 +142,7 @@ module.exports = function (opts) {
             });
         }
 
-        return mergeTrees([ vendor, lib, map ]);
+        return mergeTrees([ vendor, lib, map, jshint ]);
     }
 
     return pickFiles(combineJsAssets(), {
