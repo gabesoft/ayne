@@ -1,8 +1,8 @@
 'use strict';
 
-var user    = require('./handlers/user')
-  , profile = require('./handlers/profile')
-  , token   = require('../../core/lib/token');
+var user     = require('./handlers/user')
+  , profile  = require('./handlers/profile')
+  , password = require('./handlers/password');
 
 module.exports = [{
     method  : 'POST'
@@ -17,11 +17,6 @@ module.exports = [{
     method  : 'POST'
   , path    : '/api/signup'
   , handler : user.signup
-}, ,{
-    method  : 'POST'
-  , path    : '/api/password'
-  , handler : user.password
-  , config  : { auth: 'token' }
 }, {
     method  : 'POST'
   , path    : '/api/profile'
@@ -38,6 +33,11 @@ module.exports = [{
   , handler : profile.checkDisplayName
 }, {
     method  : 'POST'
+  , path    : '/api/password'
+  , handler : password.update
+  , config  : { auth: 'token' }
+}, {
+    method  : 'POST'
   , path    : '/api/email/reset-password'
-  , handler : user.emailResetPassword
+  , handler : password.sendResetEmail
 }];
