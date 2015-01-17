@@ -9,10 +9,12 @@ export default Ember.Route.extend({
         return this.api.getProfile()
            .then(function (response) { return response.data; })
            .catch(function (response) {
+                response = response || { json: {} };
                 if (response.json.statusCode === 401) {
                     this.transitionTo('login');
                 } else {
-                    throw response.json;
+                    console.log('failed to get profile');
+                    return {};
                 }
             }.bind(this));
     }

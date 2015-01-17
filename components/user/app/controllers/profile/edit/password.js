@@ -42,7 +42,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     }
                 }.bind(this))
                .catch(function (response) {
-                    this.legend('Failed to update password', 'error');
+                    this.legend(response.json.message || 'Failed to update password', 'error');
                 }.bind(this))
                .finally(function () {
                     this.set('savePending', false);

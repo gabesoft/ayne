@@ -94,17 +94,28 @@ function signup (request, reply) {
     });
 }
 
-function password (request, reply) {
-    var data   = request.payload
-      , userId = request.auth.credentials.id;
-
-    hashPassword(data.password, function (err, hash) {
+function updatePassword (request, reply, user) {
+    hashPassword(request.payload.password, function (err, hash) {
         if (err) { return reply.fail(err); }
 
-        api.patch('/users/' + userId, { password: hash, userId: userId }, function (err, response, body) {
+        api.patch('/users/' + user.id, { password: hash }, function (err, response, body) {
             delete body.password;
             reply(body);
         });
+    });
+}
+
+function password (request, reply) {
+    var data   = request.payload
+      , userId = request.auth.credentials.id
+      , email  = request.auth.credentials.email;
+
+    loginUser({ email: email, password: data.oldPassword }, function (err, user) {
+        if (err) {
+            reply.fail(err);
+        } else {
+            updatePassword(request, reply, user);
+        }
     });
 }
 
