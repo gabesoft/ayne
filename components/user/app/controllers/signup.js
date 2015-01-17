@@ -4,6 +4,7 @@ import Legend from 'mixins/legend';
 export default Ember.ObjectController.extend(Validator, Legend, {
     createUserPending : false
   , legendDefault     : 'Create an account'
+  , onEnterAction     : 'createUser'
   , needs             : ['application']
   , appCtrl           : Ember.computed.alias('controllers.application')
 

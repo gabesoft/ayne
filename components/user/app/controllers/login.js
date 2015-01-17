@@ -4,6 +4,7 @@ import Legend from 'mixins/legend';
 export default Ember.ObjectController.extend(Validator, Legend, {
     authenticatePending : false
   , legendDefault       : 'Enter your credentials'
+  , onEnterAction       : 'authenticate'
   , prevTransition      : null
   , needs               : ['application']
   , appCtrl             : Ember.computed.alias('controllers.application')

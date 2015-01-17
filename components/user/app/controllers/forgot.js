@@ -4,6 +4,7 @@ import Legend from 'mixins/legend';
 export default Ember.ObjectController.extend(Validator, Legend, {
     resetPending  : false
   , legendDefault : 'Forgot password'
+  , onEnterAction : 'reset'
   , alertText     : ''
 
   , init: function () {

@@ -1,7 +1,3 @@
-export default Ember.View.extend({
-    keyDown: function (e) {
-        if (e.keyCode === 13) {
-            this.get('controller').send('authenticate', e.keyCode);
-        }
-    }
-});
+import EnterKey from 'mixins/enter-key';
+
+export default Ember.View.extend(EnterKey, {});

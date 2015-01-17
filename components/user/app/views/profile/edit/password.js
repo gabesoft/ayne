@@ -1,5 +1,2 @@
-export default Ember.View.extend({
-    keyDown: function (e) {
-        this.get('controller').send('updateKey', e.keyCode);
-    }
-});
+import EnterKey from 'mixins/enter-key';
+export default Ember.View.extend(EnterKey, {});

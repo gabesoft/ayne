@@ -6,6 +6,7 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
     savePending      : false
   , profilePhotoSize : 200
   , legendDefault    : 'Name and Details'
+  , onEnterAction    : 'save'
   , model            : {}
   , needs            : [ 'application' ]
   , appCtrl          : Ember.computed.alias('controllers.application')
