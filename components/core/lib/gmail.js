@@ -29,7 +29,7 @@ function GmailApi (options) {
     this.clientSecret = this.conf.get('clientSecret');
     this.redirectUrl  = this.conf.get('redirectUrl');
     this.scopes       = this.conf.get('scopes');
-    this.refreshToken = this.conf.get('refreshToken');
+    this.accessCode   = this.conf.get('accessCode');
 
     this.oauth2Client = new OAuth2Client(
         this.clientId
@@ -39,10 +39,10 @@ function GmailApi (options) {
 }
 
 /**
- * Creates a token url that can be used to get a refresh token
+ * Creates an auth url that can be used to get an access code
  * @param {Function} callback - Callback to return the results
  */
-GmailApi.prototype.getTokenUrl = function (cb) {
+GmailApi.prototype.getAuthUrl = function (cb) {
     cb(null, this.oauth2Client.generateAuthUrl({
         access_type : 'offline'
       , scope       : this.scopes
@@ -54,7 +54,7 @@ GmailApi.prototype.getTokenUrl = function (cb) {
  * @param {Function} callback - Callback to return the results
  */
 GmailApi.prototype.getAccessToken = function (cb) {
-    this.oauth2Client.getToken(this.refreshToken, function (err, token) {
+    this.oauth2Client.getToken(this.accessCode, function (err, token) {
         if (err) { return cb(err); }
 
         this.conf.set('accesToken', token);
