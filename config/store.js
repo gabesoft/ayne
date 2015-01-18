@@ -16,6 +16,6 @@ nconf.overrides({
 nconf.env();
 nconf.argv();
 nconf.defaults(require('./default.json'));
-nconf.file(nconf.get('path:config'));
+nconf.file(env, nconf.get('path:config'));
 
 module.exports = nconf;

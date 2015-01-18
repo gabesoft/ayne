@@ -1,4 +1,6 @@
 var api               = require('../../../core/lib/api')
+  , GmailApi          = require('../../../core/lib/gmail').GmailApi
+  , gapi              = new GmailApi()
   , UserNotFoundError = require('../../api-errors/user-not-found')
   , userHelper        = require('../helpers/user');
 
@@ -27,8 +29,12 @@ function update (request, reply) {
 }
 
 function sendEmail (user, cb) {
-    // TODO: implement using the google api
-    cb(new Error('Not Implemented'));
+    // TODO: use a template for the body
+    gapi.sendEmail({
+        to      : user.email
+      , subject : 'Reset Password'
+      , body    : '<html><h2>This is your reset password email</h2>Click the link below:</html>'
+    }, cb);
 }
 
 function sendResetEmail (request, reply) {
@@ -40,8 +46,9 @@ function sendResetEmail (request, reply) {
         } else if (!body || body.length === 0) {
             reply.fail(new UserNotFoundError(data.email, 'email'));
         } else {
-            sendEmail(body, function (err, info) {
-                return err ? reply.fail(err) : reply(info.response);
+            body = body[0];
+            sendEmail(body, function (err, data) {
+                return err ? reply.fail(err) : reply(data);
             });
         }
     });

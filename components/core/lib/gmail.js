@@ -6,6 +6,12 @@ var google       = require('googleapis')
   , path         = require('path')
   , configFile   = path.join(process.cwd(), 'gmail.json');
 
+/**
+ * Creates a new GmailApi object that can be used to
+ * interact with the gmail api
+ * @param {object} options - Object options
+ * @param {string} options.configFile - Config file path
+ */
 function GmailApi (options) {
     if (!(this instanceof GmailApi)) {
         return new GmailApi(options);
@@ -23,6 +29,7 @@ function GmailApi (options) {
     this.clientSecret = this.conf.get('clientSecret');
     this.redirectUrl  = this.conf.get('redirectUrl');
     this.scopes       = this.conf.get('scopes');
+    this.refreshToken = this.conf.get('refreshToken');
 
     this.oauth2Client = new OAuth2Client(
         this.clientId
@@ -31,46 +38,80 @@ function GmailApi (options) {
     );
 }
 
-GmailApi.prototype.tokenUrl = function (cb) {
+/**
+ * Creates a token url that can be used to get a refresh token
+ * @param {Function} callback - Callback to return the results
+ */
+GmailApi.prototype.getTokenUrl = function (cb) {
     cb(null, this.oauth2Client.generateAuthUrl({
         access_type : 'offline'
       , scope       : this.scopes
     }));
 };
 
-GmailApi.prototype.getTokens = function (cb) {
-    this.refreshToken = this.refreshToken || this.conf.get('refreshToken');
-    this.oauth2Client.getToken(this.refreshToken, function (err, tokens) {
+/**
+ * Gets the oauth access token and stores it in config
+ * @param {Function} callback - Callback to return the results
+ */
+GmailApi.prototype.getAccessToken = function (cb) {
+    this.oauth2Client.getToken(this.refreshToken, function (err, token) {
         if (err) { return cb(err); }
 
-        this.conf.set('tokens', tokens);
+        this.conf.set('accesToken', token);
         this.conf.save();
-        cb(null, tokens);
-    });
+        cb(null, token);
+    }.bind(this));
 };
 
+/**
+ * Sends an email
+ * @param {object} options - Email options
+ * @param {string} options.to - Destination email
+ * @param {string} options.subject - Email subject
+ * @param {string} options.contentType - Email content type (text/plain or text/html)
+ * @param {string} options.body - Email body
+ */
 GmailApi.prototype.sendEmail = function (options, cb) {
     var message   = this.createMessage(options)
-      , message64 = this.encodeMessage(message);
+      , message64 = this.encodeMessage(message)
+      , data      = {
+            userId   : 'me'
+          , format   : 'RAW'
+          , resource : { raw: message64 }
+        };
 
-    this.oauth2Client.setCredentials(this.conf.get('tokens'));
-    gmail.users.messages.send({
-        userId: 'me'
-      , auth: this.oauth2Client
-      , format: 'RAW'
-      , resource: { raw: message64 }
-    }, cb);
+    if (this.conf.get('accessToken')) {
+        this._sendEmail(data, cb);
+    } else {
+        this.getAccessToken(function (err) {
+            if (err) {
+                return cb(err);
+            } else {
+                this._sendEmail(data, cb);
+            }
+        }.bind(this));
+    }
+};
+
+GmailApi.prototype._sendEmail = function  (data, cb) {
+    this.oauth2Client.setCredentials(this.conf.get('accessToken'));
+    data.auth = this.oauth2Client;
+    gmail.users.messages.send(data, cb)
 };
 
 GmailApi.prototype.createMessage = function (data) {
     var lines = [];
 
+    if (!data.to) {
+        throw new Error('No email address specified');
+    }
+
     lines.push('From: ' + '"me"');
     lines.push('To: ' + data.to);
-    lines.push('Subject: ' + data.subject);
+    lines.push('Subject: ' + (data.subject || ''));
     lines.push('Content-Type: ' + (data.contentType || 'text/html; charset=utf-8'));
     lines.push('');
-    lines.push(data.body);
+    lines.push(data.body || '');
 
     return lines.join('\r\n');
 };

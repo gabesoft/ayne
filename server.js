@@ -61,7 +61,7 @@ function setupServer (cb) {
         }
 
         var response = request.response
-          , context  = response.source.context || {};
+          , context  = (response.source || {}).context || {};
 
         context.ayne = context.ayne || {};
         context.ayne.assets = conf.get('assets');
