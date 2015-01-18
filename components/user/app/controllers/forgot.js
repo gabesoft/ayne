@@ -49,13 +49,16 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , actions:{
         reset: function () {
+            if (this.get('resetPending')) { return; }
+
             this.set('resetPending', true);
             this.validate()
                .then(function (valid) {
                     return valid ? this.api.resetPassword(this.get('model')) : false;
                 }.bind(this))
                .then(function (response) {
-                    if (response) {
+                    var email = Ember.get(response, 'data.email');
+                    if (email === this.get('email')) {
                         this.alertSuccess();
                     }
                 }.bind(this))
@@ -66,6 +69,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     this.set('resetPending', false);
                 }.bind(this));
         }
+
       , redirectToLogin: function () {
             this.transitionToRoute('login');
         }

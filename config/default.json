@@ -5,6 +5,9 @@
     "assets": {
         "host": "//localhost:4300"
     },
+    "app": {
+        "host": "http://localhost:8005"
+    },
     "token": {
         "lifetime": {
             "unit": "days",

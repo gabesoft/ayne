@@ -28,13 +28,18 @@ function update (request, reply) {
     });
 }
 
-function sendEmail (user, cb) {
-    // TODO: use a template for the body
-    gapi.sendEmail({
-        to      : user.email
-      , subject : 'Reset Password'
-      , body    : '<html><h2>This is your reset password email</h2>Click the link below:</html>'
-    }, cb);
+function sendEmail (request, reply, user, cb) {
+    // TODO: set up the reset url
+    request.server.render('user/templates/reset-password-email.jade', {
+        host     : reply.conf('app:host')
+      , resetUrl : [ reply.conf('app:host'), 'user', 'reset-password' ].join('/')
+    }, function (err, body) {
+        gapi.sendEmail({
+            to      : user.email
+          , subject : 'Reset password'
+          , body    : body
+        }, cb);
+    });
 }
 
 function sendResetEmail (request, reply) {
@@ -47,8 +52,11 @@ function sendResetEmail (request, reply) {
             reply.fail(new UserNotFoundError(data.email, 'email'));
         } else {
             body = body[0];
-            sendEmail(body, function (err, data) {
-                return err ? reply.fail(err) : reply(data);
+            sendEmail(request, reply, body, function (err) {
+                return err ? reply.fail(err) : reply({
+                    status : 'email_sent'
+                  , email  : body.email
+                });
             });
         }
     });

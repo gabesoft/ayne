@@ -64,6 +64,21 @@ GmailApi.prototype.getAccessToken = function (cb) {
 };
 
 /**
+* Refreshes the access token
+* @param {Function} callback - Callback to return the results
+*/
+GmailApi.prototype.refreshAccessToken = function (cb) {
+    this.oauth2Client.refreshToken(function (err, token) {
+        if (err) { return cb(err); }
+
+        token.refresh_token = token.refresh_token || this.oauth2Client.credentials.refresh_token;
+        this.conf.set('accessToken', token);
+        this.conf.save();
+        cb(null, token);
+    });
+};
+
+/**
  * Sends an email
  * @param {object} options - Email options
  * @param {string} options.to - Destination email
@@ -96,7 +111,19 @@ GmailApi.prototype.sendEmail = function (options, cb) {
 GmailApi.prototype._sendEmail = function  (data, cb) {
     this.oauth2Client.setCredentials(this.conf.get('accessToken'));
     data.auth = this.oauth2Client;
-    gmail.users.messages.send(data, cb)
+    gmail.users.messages.send(data, function (err, body, response) {
+        if (err && err.code === 401) {
+            this.refreshAccessToken(function (err) {
+                if (err) {
+                    return cb(err)
+                } else {
+                    this._sendEmail(data, cb);
+                }
+            }.bind(this));
+        }  else {
+            cb(err, body, response);
+        }
+    }.bind(this));
 };
 
 GmailApi.prototype.createMessage = function (data) {
