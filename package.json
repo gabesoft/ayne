@@ -13,6 +13,7 @@
     "glob": "^4.3.2",
     "good": "^5.1.0",
     "good-console": "git+https://github.com/gabesoft/good-console.git",
+    "googleapis": "^1.1.0",
     "hapi": "^8.0.0",
     "jade": "^1.8.2",
     "jsonwebtoken": "^3.2.0",
