@@ -4,7 +4,7 @@ var Boom  = require('boom')
   , token = require('../components/core/lib/token');
 
 module.exports.register = function (server, options, next) {
-    server.auth.scheme('jwt', function (server, options) {
+    server.auth.scheme('jwt', function () {
         return { authenticate : authenticate };
     });
     next();

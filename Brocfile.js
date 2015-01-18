@@ -3,7 +3,6 @@
 var mergeTrees    = require('broccoli-merge-trees')
   , minify        = process.env.NODE_ENV === 'production' || process.env.BROCCOLI_ENV === 'production'
   , path          = require('path')
-  , async         = require('async')
   , unwatchedTree = require('broccoli-unwatched-tree')
   , glob          = require('glob')
   , buildJS       = require('./broc/js-compile')

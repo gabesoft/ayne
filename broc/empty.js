@@ -1,9 +1,6 @@
 'use strict';
 
-var fs     = require('fs')
-  , util   = require('util')
-  , mkdirp = require('mkdirp')
-  , path   = require('path')
+var util   = require('util')
   , Writer = require('broccoli-writer');
 
 util.inherits(Empty, Writer);
@@ -14,6 +11,6 @@ function Empty () {
     }
 }
 
-Empty.prototype.write = function (readTree, destDir) {};
+Empty.prototype.write = function () {};
 
 module.exports = Empty;

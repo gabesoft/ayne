@@ -2,7 +2,6 @@ var api               = require('../../../core/lib/api')
   , UnauthorizedError = require('../../api-errors/unauthorized')
   , EmailExistsError  = require('../../api-errors/email-exists')
   , UserNotFoundError = require('../../api-errors/user-not-found')
-  , token             = require('../../../core/lib/token')
   , bcrypt            = require('bcrypt');
 
 function hashPassword (password, cb) {

@@ -4,7 +4,6 @@ var fs     = require('fs')
   , util   = require('util')
   , ember  = require('./ember-utils')
   , glob   = require('glob')
-  , mkdirp = require('mkdirp')
   , path   = require('path')
   , Writer = require('broccoli-writer');
 

@@ -55,7 +55,7 @@ module.exports = function (opts) {
               , destDir : '/'
             });
 
-        return jshintTree(modules, { log: true, disableTestGenerator: true })
+        return jshintTree(modules, { log: true, disableTestGenerator: true });
     }
 
     function compileJsModules () {

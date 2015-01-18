@@ -115,7 +115,7 @@ GmailApi.prototype._sendEmail = function  (data, cb) {
         if (err && err.code === 401) {
             this.refreshAccessToken(function (err) {
                 if (err) {
-                    return cb(err)
+                    return cb(err);
                 } else {
                     this._sendEmail(data, cb);
                 }
@@ -135,6 +135,15 @@ GmailApi.prototype.createMessage = function (data) {
 
     lines.push('From: ' + '"me"');
     lines.push('To: ' + data.to);
+
+    if (data.cc) {
+        lines.push('Cc: ' + data.cc);
+    }
+
+    if (data.bcc) {
+        lines.push('Bcc: ' + data.bcc);
+    }
+
     lines.push('Subject: ' + (data.subject || ''));
     lines.push('Content-Type: ' + (data.contentType || 'text/html; charset=utf-8'));
     lines.push('');
