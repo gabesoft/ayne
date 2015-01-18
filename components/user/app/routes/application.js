@@ -1,5 +1,5 @@
 export default Ember.Route.extend({
-    beforeModel: function (transition) {
+    beforeModel: function () {
         this.controllerFor('application').set('loggedIn', this.local.has('credentials'));
     }
   , model: function () {

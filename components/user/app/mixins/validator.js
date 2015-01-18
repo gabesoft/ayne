@@ -1,13 +1,129 @@
+import PSW_COMMON from 'data/common-passwords';
+
 export default Ember.Mixin.create({
-    init: function () {
+    invalid: false
+
+  , init: function () {
         this._super();
+        this.set('_validators', {});
+        this.set('_errors', {});
+        this.set('_haveErrors', {});
         this.set('error', {});
-        this.set('validators', {});
-        this.set('invalid', false);
     }
 
   , resetErrors : function () {
         this.set('error', {});
+        this.set('invalid', false);
+    }
+
+  , setValidator: function (type, srcField, dstField, validator, wait) {
+        if (Array.isArray(srcField)) {
+            srcField.forEach(function (field) {
+                this.setValidator(type, field, dstField, validator, wait);
+            }.bind(this));
+            return;
+        }
+
+        var validators = this.get('_validators.' + dstField) || []
+          , current    = {
+                type                 : type
+              , srcField             : srcField
+              , dstField             : dstField
+              , errorField           : 'error.' + dstField
+              , _errorField          : '_errors.' + dstField
+              , _errorTypeField      : '_errors.' + dstField + '.' + type
+              , _validatorsField     : '_validators.' + dstField
+              , _haveErrorsField     : '_haveErrors.' + dstField + '-' + type
+              , id                   : validators.length + 1
+              , fn                   : validator.bind(this)
+              , toString             : function () { return type + '.' + dstField; }
+            };
+
+        validators.push(current);
+
+        this.set(current._validatorsField, validators);
+        this.set(current._errorField, this.get(current._errorField) || {});
+
+        this.addObserver(srcField, this, function () {
+            if (wait) {
+                Ember.run.debounce(this, this.runValidator, current, wait);
+            } else {
+                this.runValidator(current);
+            }
+        });
+
+        this.addObserver(current._errorTypeField, this, function () {
+            var errors = this.get(current._errorField) || {};
+
+            errors = Ember.$
+               .map(errors, function (v) { return v; })
+               .filter(Boolean)
+               .sort(function (e1, e2) { return e1.id - e2.id; });
+
+            this.set(current.errorField, (errors[0] || {}).value);
+        });
+
+        this.addObserver(current._haveErrorsField, this, function () {
+            var have = this.get('_haveErrors')
+              , any  = false;
+
+            Ember.$.each(have, function (k, has) {
+                any = any || has;
+            });
+
+            this.set('invalid', any);
+        });
+    }
+
+  , setError: function (validator, value) {
+        var result = null;
+
+        if (value) {
+            result = {
+                id    : validator.id
+              , value : value
+            };
+        }
+
+        this.set(validator._errorTypeField, result);
+        this.set(validator._haveErrorsField, Boolean(result));
+
+        return result;
+    }
+
+  , validate: function () {
+        var validators = this.get('_validators')
+          , each       = Ember.$.each
+          , promises   = [];
+
+        each(validators, function (field, obj) {
+            each(obj || {}, function (type, validator) {
+                promises.push(this.runValidator(validator, true));
+            }.bind(this));
+        }.bind(this));
+
+        return Ember.RSVP.all(promises).then(function (results) {
+            this.set('invalid', results.filter(Boolean).length > 0);
+            return !this.get('invalid');
+        }.bind(this));
+    }
+
+  , runValidator: function (validator) {
+        var args  = Array.prototype.slice.call(arguments, 1)
+          , value = validator.fn.apply(this, args);
+
+        if (value && value.then) {
+            return value
+               .then(function (v) { this.setError(validator, v); }.bind(this))
+               .catch(function (err) {
+                    console.log('validator failed ' + validator.toString(), err);
+                    return this.setError(validator, null);
+                }.bind(this));
+        } else {
+            return new Ember.RSVP.Promise(function (resolve) {
+                resolve(this.setError(validator, value));
+            }.bind(this));
+        }
     }
 
   , validEmail : function (email) {
@@ -15,156 +131,80 @@ export default Ember.Mixin.create({
         return regex.test(email);
     }
 
-  , validAlphaNumeric : function (text) {
-        var regex = /^[a-zA-Z0-9\-]*$/;
+  , validAlphaNumeric : function (text, lower) {
+        var regex = lower ? /^[a-z0-9\-]*$/ : /^[a-zA-Z0-9\-]*$/;
         return regex.test(text);
     }
 
-  , validate: function () {
-        Ember.$.each(this.get('validators'), function (key, runValidator) {
-            runValidator(true);
-        });
-        return !this.get('invalid');
-    }
+  , alphaNumericField: function (field, onlyLowercase) {
+        this.setValidator('alphaNumericField', field, field, function () {
+            var value = this.get(field)
+              , valid = this.validAlphaNumeric(value, onlyLowercase)
+              , msg   = onlyLowercase
+                    ? 'please enter only lowercase letters or numbers in this field'
+                    : 'please enter only letters or numbers in this field';
 
-  , addErrorObserver : function (name) {
-        this.addObserver('error.' + name, this, function () {
-            this.set('invalid', this.hasErrors(this.get('error')));
-        });
-    }
-
-  , hasErrors : function (obj) {
-        if (!obj) { return false; }
-
-        var has = false;
-
-        Ember.$.each(obj, function (key, value) {
-            if (has) {
-                return;
-            } else if (typeof value === 'string') {
-                has = true;
-            } else if (value) {
-                has = this.hasErrors(obj[key]);
-            }
-        }.bind(this));
-
-        return has;
-    }
-
-  , setSafe: function (path, value) {
-        var name   = path.slice(path.lastIndexOf('.') + 1)
-          , parent = (path === name) ? name : path.slice(0, path.length - (name.length + 1));
-
-        if (parent !== name && !this.get(parent)) {
-            this.setSafe(parent, {});
-        }
-
-        this.set(path, value);
-    }
-
-  , addValidator: function (name, fn) {
-        this.set('validators.' + name, fn.bind(this));
-    }
-
-  , getValidator: function (name) {
-        return this.get('validators.' + name);
-    }
-
-  , setError : function (type, name, value) {
-        if (!value) {
-            // TODO: remove error
-        } else if (typeof value === 'string') {
-            // TODO: set error to value
-        } else if (value.then) {
-            // TODO: handle promise
-            value
-               .then(function (val) {
-                    // TODO: set error to val
-                })
-               .catch(function () {
-                    // TODO: set error to null
-                });
-        }
-    }
-
-  , validateField : function (type, name, validator, wait) {
-        var key = type + ':' + name.replace(/\./, ':');
-        this.addErrorObserver(name);
-        this.addValidator(key, function () {
-
-        });
-        this.addObserver(name, this, function () {
-            var validate = this.getValidator(key);
-
-            Ember.run.debounce(this, function () {
-                this.setError(type, name, validate());
-            }, wait || 0);
+            return valid ? null : msg;
         });
     }
 
-  , requiredField : function (name) {
-        this.validateField('requiredField', name, function (force) {
-            var value = this.get(name);
-            if (!force && typeof value === 'undefined') {
-                return;
-            } else if (!value) {
-                this.setSafe('error.' + name, 'This is a required field');
+  , requiredField: function (field) {
+        this.setValidator('requiredField', field, field, function (force) {
+            var value = this.get(field);
+
+            if ((!force && typeof value === 'undefined') || value) {
+                return null;
             } else {
-                this.setSafe('error.' + name, null);
+                return 'this is a required field';
             }
         });
     }
 
-  , alphaNumericField: function (name) {
-        this.validateField('alphaNumericField', name, function () {
-            var value = this.get(name)
-              , valid = this.validAlphaNumeric(value);
+  , minLengthField: function (field, min, dstField) {
+        dstField = dstField || field;
 
-            if (!value) {
-                return;
-            } else if (!valid) {
-                this.setSafe('error.' + name, 'Please enter only letters or numbers in this field');
+        this.setValidator('minLengthField', field, dstField, function (force) {
+            var value = this.get(field);
+
+            if ((!force && typeof value === 'undefined') || (value || '').length >= min) {
+                return null;
             } else {
-                this.setSafe('error.' + name, null);
+                return 'enter at least ' + min + ' characters in this field';
             }
         });
     }
 
-  , emailField: function (name) {
-        this.validateField('emailField', name, function () {
-            var value = this.get(name)
+  , emailField : function (field) {
+        this.setValidator('emailField', field, field, function () {
+            var value = this.get(field)
               , valid = this.validEmail(value);
 
-            if (!value) {
-                return;
+            if (!value || valid) {
+                return null;
             } else if (!valid) {
-                this.setSafe('error.' + name, 'Please enter a valid email address');
-            } else {
-                this.setSafe('error.' + name, null);
+                return 'please enter a valid email address';
             }
         });
     }
 
-  , passwordFields: function (name1, name2) {
-        var key  = 'passwordFields:' + name1 + ':' + name2;
+  , uncommonPasswordField: function (field, dstField) {
+        this.setValidator('uncommonPasswordField', field, dstField, function () {
+            var value = this.get(field)
+              , hash  = md5(value);
+            return PSW_COMMON[hash] ? 'password too common' : null;
+        });
+    }
 
-        this.addValidator(key, function (force) {
-            var value1 = this.getWithDefault(name1, '')
-              , value2 = this.getWithDefault(name2, '');
+  , passwordFields: function (field1, field2, errorField) {
+        this.setValidator('passwordFields', [field1, field2], errorField, function () {
+            var value1 = this.getWithDefault(field1, '')
+              , value2 = this.getWithDefault(field2, '');
 
             if (value1 === value2) {
-                this.setSafe('error.passwords', null);
+                return null;
             } else {
-                this.setSafe('error.passwords', 'Passwords don\'t match');
+                return 'passwords don\'t match';
             }
-        });
-
-        this.addErrorObserver('passwords');
-        this.addObserver(name1, this, function () {
-            this.getValidator(key)();
-        });
-        this.addObserver(name2, this, function () {
-            this.getValidator(key)();
         });
     }
 });

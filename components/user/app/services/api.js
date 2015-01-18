@@ -63,7 +63,7 @@ export default Ember.Object.extend({
         return this.runGet('/api/profile');
     }
 
-  , logout: function (data) {
+  , logout: function () {
         return this.runPost('/api/logout');
     }
 
