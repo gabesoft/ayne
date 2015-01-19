@@ -17,18 +17,19 @@ var auth   = require('../../core/lib/auth')
 function userHandler (request, reply) {
     return reply.view('user/templates/index.jade', {
         title   : 'User'
-      , $locals : { data: 'page data goes here' }
     });
 }
 
 function resetPassword (request, reply) {
     auth.loginUserWithGuid(request.params.guid, function (err, data) {
-        if (err) { return reply.fail(err); }
+        if (err && err.statusCode !== 401) { return reply.fail(err); }
 
-        data.noVerify = true;
         return reply.view('user/templates/index.jade', {
             title   : 'User - Password Reset'
-          , $locals : data
+          , $locals : {
+                error : err
+              , data  : data
+            }
         });
     });
 }

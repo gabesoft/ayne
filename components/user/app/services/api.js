@@ -6,10 +6,14 @@ export default Ember.Object.extend({
 
         Ember.$.ajaxSetup({
             beforeSend: function (xhr) {
-                var fp    = new Fingerprint({ canvas: true, screen_resolution : true })
-                  , token = local.getDefaultValue('credentials', {}).token;
+                var fp          = new Fingerprint({ canvas: true, screen_resolution : true })
+                  , credentials = local.getDefaultValue('credentials', {})
+                  , token       = credentials.token
+                  , fingerprint = !credentials.noFingerprint;
 
-                xhr.setRequestHeader('Browser-Fingerprint', fp.get());
+                if (fingerprint) {
+                    xhr.setRequestHeader('Browser-Fingerprint', fp.get());
+                }
                 if (token) {
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
@@ -47,8 +51,8 @@ export default Ember.Object.extend({
         return this.run({ url: path, type: 'GET', qs: query });
     }
 
-    , resetPassword: function (data) {
-          return this.runPost('/api/email/reset-password', data);
+  , resetPassword: function (data) {
+        return this.runPost('/api/email/reset-password', data);
     }
 
   , saveProfile: function (data) {

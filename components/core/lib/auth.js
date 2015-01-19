@@ -17,6 +17,13 @@ function hashPassword (password, cb) {
     });
 }
 
+function makeClientUser (user) {
+    return {
+        id    : user.id
+      , email : user.email
+    }
+}
+
 function createUser (data, cb) {
     hashPassword(data.password, function (err, hash) {
         if (err) { return cb(err); }
@@ -30,8 +37,7 @@ function createUser (data, cb) {
                 return cb(err);
             }
 
-            delete body.password;
-            cb(null, body);
+            cb(null, makeClientUser(body));
         });
     });
 }
@@ -43,9 +49,10 @@ function loginUserWithGuid (guid, cb) {
 
     token.temp(user, function (err, tk) {
         return err ? cb(err) : cb(null, {
-            user          : user
+            user          : makeClientUser(user)
           , token         : tk
-          , noFingerprint : false
+          , noFingerprint : true
+          , noVerify      : true
         })
     });
 }
@@ -80,8 +87,7 @@ function verifyUser (data, cb) {
             if (err) { return cb(err); }
             if (!match) { return cb(new UnauthorizedError()); }
 
-            delete body.password;
-            cb(null, body);
+            cb(null, makeClientUser(body));
         });
     });
 }
@@ -98,9 +104,8 @@ function generateUUID(){
 
 function linkUser (user, cb) {
     var guid = generateUUID();
-    // TODO: get duration from config (see token)
-    //, ttlAsSeconds = moment.duration(30, 'minutes').asSeconds();
 
+    // TODO: use the api server
     userLink[guid] = user;
 
     cb(null, guid);

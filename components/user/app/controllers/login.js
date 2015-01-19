@@ -31,7 +31,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
             this.set('authenticatePending', true);
             this.validate()
                .then(function (valid) {
-                    return valid ? this.api.login(this.get('model')) : false;
+                    if (valid) {
+                        this.local.remove('credentials');
+                        return this.api.login(this.get('model'));
+                    }
                 }.bind(this))
                .then(function (response) {
                     if (!response) { return; }

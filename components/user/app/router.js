@@ -7,6 +7,7 @@ Router.map(function () {
     this.route('login');
     this.route('signup');
     this.route('forgot');
+    this.route('reset-password', { path: 'reset-password/:guid' });
     this.resource('profile', function () {
         this.resource('profile.edit', { path: '/edit' }, function () {
             this.route('details');

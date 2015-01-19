@@ -17,14 +17,23 @@ function updateUser (request, reply, user) {
 }
 
 function update (request, reply) {
-    var data  = request.payload
-      , email = request.auth.credentials.email;
+    var payload  = request.payload
+      , noVerify = request.auth.credentials.temp
+      , email    = request.auth.credentials.email
+      , userId   = request.auth.credentials.id;
 
-    auth.loginUser({ email: email, password: data.oldPassword }, function (err, user) {
+    if (noVerify) {
+        return updateUser(request, reply, { id: userId, email: email });
+    }
+
+    auth.loginUser({
+        user    : { email: email, password: payload.oldPassword }
+      , headers : request.headers
+    }, function (err, data) {
         if (err) {
             reply.fail(err);
         } else {
-            updateUser(request, reply, user);
+            updateUser(request, reply, data.user);
         }
     });
 }

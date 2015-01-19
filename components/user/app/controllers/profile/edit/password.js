@@ -16,6 +16,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         this.passwordFields('password', 'passwordVerify', 'passwords');
     }
 
+  , updateRequireOldPasswordFlag: function () {
+        this.set('requireOldPassword', !this.local.getDefaultValue('credentials', {}).noVerify);
+    }
+
   , disableSubmit : function () {
         return this.get('invalid') || this.get('savePending');
     }.property('invalid', 'createUserPending')
@@ -32,6 +36,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     if (!response) { return false; }
 
                     var cred = this.local.get('credentials') || { user: {} };
+                    this.local.remove('credentials');
                     return this.api.login({
                         email    : cred.user.email
                       , password : this.get('password')
@@ -39,6 +44,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                 }.bind(this))
                .then(function (response) {
                     if (response) {
+                        this.local.set('credentials', response.data);
                         this.legend('Password Updated', 'success', 5000);
                     }
                 }.bind(this))
