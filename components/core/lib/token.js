@@ -1,27 +1,46 @@
 'use strict';
 
-var moment   = require('moment')
-  , conf     = require('../../../config/store')
-  , util     = require('util')
-  , jwt      = require('jsonwebtoken')
-  , secret   = conf.get('token:secret')
-  , duration = conf.get('token:lifetime:value')
-  , unit     = conf.get('token:lifetime:unit')
-  , HEADER   = 'browser-fingerprint'
-  , invalid  = {};
+var moment            = require('moment')
+  , TokenInvalidError = require('./errors/token-invalid')
+  , conf              = require('../../../config/store')
+  , util              = require('util')
+  , jwt               = require('jsonwebtoken')
+  , secret            = conf.get('token:secret')
+  , ttl               = moment.duration(conf.get('token:ttl:value'), conf.get('token:ttl:unit'))
+  , ttlTemp           = moment.duration(conf.get('token:ttlTemp:value'), conf.get('token:ttlTemp:unit'))
+  , HEADER            = 'browser-fingerprint'
+  , invalid           = {};
 
-util.inherits(TokenInvalidError, Error);
-
-function TokenInvalidError () {
-    if (!(this instanceof TokenInvalidError)) {
-        return new TokenInvalidError();
-    }
-
-    this.message = 'The specified token is invalid';
-    this.name = 'TokenInvalidError';
-    this.statusCode = 404;
+function _make (user, options, cb) {
+    options.algorithm = 'HS512';
+    options.issuer = 'ayne';
+    cb(null, jwt.sign({ user : user }, secret, options));
 }
 
+/**
+ * Creates a temporary token
+ * @param {object} user - The user for which the token is created
+ * @param {function} cb - The callback to supply the results to
+ */
+function temp (user, cb) {
+    if (!user || !user.id) {
+        return cb(new Error('No user specified'));
+    }
+
+    _make({
+        id    : user.id
+      , email : user.email
+      , temp  : true
+    }, {
+        expiresInMinutes : ttlTemp.asMinutes()
+    }, cb);
+}
+
+/**
+ * Creates a longer lived token
+ * @param {object} user - The user for which the token will be created
+ * @param {function} cb - The callback to supply the results to
+ */
 function make (user, headers, cb) {
     if (!user || !user.id) {
         return cb(new Error('No user specified'));
@@ -30,14 +49,13 @@ function make (user, headers, cb) {
         return cb(new Error('No fingerprint specified'));
     }
 
-    cb(null, jwt.sign({
-        user : { id: user.id, email: user.email }
-    }, secret, {
-        algorithm        : 'HS512'
-      , issuer           : 'ayne'
+    _make({
+        id    : user.id
+      , email : user.email
+    }, {
+        expiresInMinutes : ttl.asMinutes()
       , audience         : headers[HEADER]
-      , expiresInMinutes : moment.duration(duration, unit).asMinutes()
-    }));
+    }, cb);
 }
 
 function remove (token, headers, cb) {
@@ -45,6 +63,13 @@ function remove (token, headers, cb) {
     cb();
 }
 
+/**
+ * Verifies the specified token
+ * @param {string} token - The token to be verified
+ * @param {object} headers - The http headers
+ * @param {function} cb - The callback to supply the result
+ * @return {object} payload - The token payload
+ */
 function verify (token, headers, cb) {
     var opts = { audience: headers[HEADER], issuer: 'ayne' };
 
@@ -65,6 +90,7 @@ function verify (token, headers, cb) {
 
 module.exports = {
     make   : make
+  , temp   : temp
   , remove : remove
   , verify : verify
 };

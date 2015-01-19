@@ -40,7 +40,7 @@ function GmailApi (options) {
 
 /**
  * Creates an auth url that can be used to get an access code
- * @param {Function} callback - Callback to return the results
+ * @param {function} callback - Callback to return the results
  */
 GmailApi.prototype.getAuthUrl = function (cb) {
     cb(null, this.oauth2Client.generateAuthUrl({
@@ -51,7 +51,7 @@ GmailApi.prototype.getAuthUrl = function (cb) {
 
 /**
  * Gets the oauth access token and stores it in config
- * @param {Function} callback - Callback to return the results
+ * @param {function} callback - Callback to return the results
  */
 GmailApi.prototype.getAccessToken = function (cb) {
     this.oauth2Client.getToken(this.accessCode, function (err, token) {
@@ -65,7 +65,7 @@ GmailApi.prototype.getAccessToken = function (cb) {
 
 /**
 * Refreshes the access token
-* @param {Function} callback - Callback to return the results
+* @param {function} callback - Callback to return the results
 */
 GmailApi.prototype.refreshAccessToken = function (cb) {
     this.oauth2Client.refreshToken(function (err, token) {

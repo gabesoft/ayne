@@ -3,7 +3,7 @@
         "command": "node-dev",
         "color": "blue",
         "args" : ["server.js", "--port", "8005"],
-        "env": {}
+        "env": { "NODE_PATH": "$NODE_PATH:." } // TODO: implement in mpr
     },
     "brocco" : {
         "command": "broccoli",

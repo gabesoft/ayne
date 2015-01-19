@@ -1,7 +1,7 @@
 'use strict';
 
 var api = require('../../../core/lib/api')
-  , UsernameExistsError = require('../../api-errors/username-exists-error');
+  , UsernameExistsError = require('../../../core/lib/errors/username-exists-error');
 
 function saveProfile (userId, data, cb) {
     api.post(['/users',  userId, 'profile'], data, function (err, response, body) {

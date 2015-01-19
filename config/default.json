@@ -2,17 +2,21 @@
     "api": {
         "url": "http://localhost:8006"
     },
-    "assets": {
-        "host": "//localhost:4300"
-    },
     "app": {
         "host": "http://localhost:8005"
     },
+    "assets": {
+        "host": "//localhost:4300"
+    },
     "token": {
-        "lifetime": {
+        "secret": "C3812FD7-F9BC-4868-A5E1-3FB751524501",
+        "ttl": {
             "unit": "days",
             "value": 10
         },
-        "secret": "C3812FD7-F9BC-4868-A5E1-3FB751524501"
+        "ttlTemp": {
+            "unit": "minutes",
+            "value": 20
+        }
     }
 }

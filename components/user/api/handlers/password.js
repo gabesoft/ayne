@@ -1,11 +1,12 @@
 var api               = require('../../../core/lib/api')
   , GmailApi          = require('../../../core/lib/gmail').GmailApi
   , gapi              = new GmailApi()
-  , UserNotFoundError = require('../../api-errors/user-not-found')
-  , userHelper        = require('../helpers/user');
+  , async             = require('async')
+  , UserNotFoundError = require('../../../core/lib/errors/user-not-found')
+  , auth              = require('../../../core/lib/auth');
 
 function updateUser (request, reply, user) {
-    userHelper.hashPassword(request.payload.password, function (err, hash) {
+    auth.hashPassword(request.payload.password, function (err, hash) {
         if (err) { return reply.fail(err); }
 
         api.patch('/users/' + user.id, { password: hash }, function (err, response, body) {
@@ -19,7 +20,7 @@ function update (request, reply) {
     var data  = request.payload
       , email = request.auth.credentials.email;
 
-    userHelper.loginUser({ email: email, password: data.oldPassword }, function (err, user) {
+    auth.loginUser({ email: email, password: data.oldPassword }, function (err, user) {
         if (err) {
             reply.fail(err);
         } else {
@@ -29,17 +30,28 @@ function update (request, reply) {
 }
 
 function sendEmail (request, reply, user, cb) {
-    // TODO: set up the reset url
-    request.server.render('user/templates/reset-password-email.jade', {
-        host     : reply.conf('app:host')
-      , resetUrl : [ reply.conf('app:host'), 'user', 'reset-password' ].join('/')
-    }, function (err, body) {
-        gapi.sendEmail({
-            to      : user.email
-          , subject : 'Reset password'
-          , body    : body
-        }, cb);
-    });
+    async.waterfall([
+        function (next) {
+            auth.linkUser(user, next);
+        }
+      , function (guid, next) {
+            var host = reply.conf('app:host')
+              , url  = [ host, 'user', 'reset-password', guid ].join('/');
+            request.server.render('user/templates/reset-password-email.jade', {
+                host     : host
+              , resetUrl : url
+            }, function (err, body) {
+                next(err, body);
+            });
+        }
+      , function (body, next) {
+            gapi.sendEmail({
+                to      : user.email
+              , subject : 'Reset password'
+              , body    : body
+            }, next);
+        }
+    ], cb);
 }
 
 function sendResetEmail (request, reply) {
@@ -54,7 +66,7 @@ function sendResetEmail (request, reply) {
             body = body[0];
             sendEmail(request, reply, body, function (err) {
                 return err ? reply.fail(err) : reply({
-                    status : 'email_sent'
+                    status : 'email-sent'
                   , email  : body.email
                 });
             });

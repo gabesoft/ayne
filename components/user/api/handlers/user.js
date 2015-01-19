@@ -1,35 +1,27 @@
 'use strict';
 
-var userHelper = require('../helpers/user')
-  , token      = require('../../../core/lib/token');
+var auth = require('../../../core/lib/auth');
 
 function login (request, reply) {
-    userHelper.loginUser(request.payload, function (err, data) {
-        if (err) { return reply.fail(err); }
-
-        token.make(data, request.headers, function (err, tk) {
-            if (err) { return reply.fail(err); }
-
-            reply({
-                user  : data
-              , token : tk
-            });
-        });
+    auth.loginUser({
+        user    : request.payload
+      , headers : request.headers
+    }, function (err, data) {
+        return err ? reply.fail(err) : reply(data);
     });
 }
 
 function logout (request, reply) {
-    token.remove(request.auth.artifacts, request.headers, function (err) {
-        if (err) {
-            reply.fail(err);
-        } else {
-            reply({ status: 'token-invalidated' });
-        }
+    auth.logoutUser({
+        user    : request.auth.artifacts
+      , headers : request.headers
+    }, function (err) {
+        return err ? reply.fail(err) : reply({ status: 'token-invalidated' });
     });
 }
 
 function signup (request, reply) {
-    userHelper.createUser(request.payload, function (err, data) {
+    auth.createUser(request.payload, function (err, data) {
         return err ? reply.fail(err) : reply(data);
     });
 }

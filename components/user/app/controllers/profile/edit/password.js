@@ -2,10 +2,11 @@ import Validator from 'mixins/validator';
 import Legend from 'mixins/legend';
 
 export default Ember.ObjectController.extend(Validator, Legend, {
-    savePending   : false
-  , legendDefault : 'Change Password'
-  , onEnterAction : 'save'
-  , model         : {}
+    savePending        : false
+  , legendDefault      : 'Change Password'
+  , requireOldPassword : true
+  , onEnterAction      : 'save'
+  , model              : {}
 
   , init: function () {
         this._super();
