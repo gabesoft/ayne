@@ -9,7 +9,14 @@ export default Ember.Route.extend({
                       , user    : this.auth.get('user')
                     };
                 }.bind(this))
-               .catch(function () { return {}; });
+               .catch(function (response) {
+                    if (Ember.get(response, 'error') === 'Unauthorized') {
+                        this.auth.logout();
+                        this.transitionTo('login');
+                    } else {
+                        return {};
+                    }
+                }.bind(this));
         } else {
             return {};
         }

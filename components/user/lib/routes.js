@@ -12,6 +12,8 @@ var auth   = require('../../core/lib/auth')
       , '/user/profile/edit'
       , '/user/profile/edit/details'
       , '/user/profile/edit/password'
+      , '/user/reset-password-success'
+      , '/user/reset-password-failure'
     ];
 
 function userHandler (request, reply) {
@@ -27,8 +29,8 @@ function resetPassword (request, reply) {
         return reply.view('user/templates/index.jade', {
             title   : 'User - Password Reset'
           , $locals : {
-                error : err
-              , data  : data
+                resetPasswordError       : err
+              , resetPasswordCredentials : data
             }
         });
     });

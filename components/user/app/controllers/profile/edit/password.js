@@ -6,6 +6,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , legendDefault      : 'Change Password'
   , requireOldPassword : true
   , onEnterAction      : 'save'
+  , nextRoute          : null
   , model              : {}
 
   , init: function () {
@@ -47,6 +48,12 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     if (response) {
                         this.auth.login(response.data);
                         this.legend('Password Updated', 'success', 5000);
+                    }
+
+                    var nextRoute = this.get('nextRoute');
+                    if (nextRoute) {
+                        this.set('redirectTo', null);
+                        this.transitionToRoute(nextRoute);
                     }
                 }.bind(this))
                .catch(function (response) {
