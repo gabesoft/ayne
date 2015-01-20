@@ -7,7 +7,7 @@ var auth   = require('../../core/lib/auth')
       , '/user/login'
       , '/user/signup'
       , '/user/profile'
-      , '/user/forgot'
+      , '/user/forgot-password'
       , '/user/profile/view'
       , '/user/profile/edit'
       , '/user/profile/edit/details'

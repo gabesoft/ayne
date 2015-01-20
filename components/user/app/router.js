@@ -6,7 +6,7 @@ var Router = Ember.Router.extend({
 Router.map(function () {
     this.route('login');
     this.route('signup');
-    this.route('forgot');
+    this.route('forgot-password');
     this.route('reset-password', { path: 'reset-password/*guid' });
     this.route('reset-password-success');
     this.route('reset-password-failure');
