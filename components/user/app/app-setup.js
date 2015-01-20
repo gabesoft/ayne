@@ -1,3 +1,4 @@
+import Auth from 'services/auth';
 import Api from 'services/api';
 import LocalStore from 'services/local';
 
@@ -33,5 +34,11 @@ Ember.Application.initializer({
         app.register('services:api', Api);
         app.inject('route', 'api', 'services:api');
         app.inject('controller', 'api', 'services:api');
+
+        app.register('services:auth', Auth);
+        app.inject('route', 'auth', 'services:auth');
+        app.inject('controller', 'auth', 'services:auth');
+
+        app.inject('services:api', 'auth', 'services:auth');
     }
 });

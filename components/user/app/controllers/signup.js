@@ -36,12 +36,15 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     return valid ? this.api.signup(this.get('model')) : false;
                 }.bind(this))
                .then(function (response) {
-                    return response ? this.api.login(this.get('model')) : false;
+                    if (response) {
+                        this.auth.logout();
+                        return this.api.login(this.get('model'));
+                    }
                 }.bind(this))
                .then(function (response) {
                     if (!response) { return; }
 
-                    this.local.set('credentials', response.data);
+                    this.auth.logIn(response.data);
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');

@@ -32,7 +32,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
             this.validate()
                .then(function (valid) {
                     if (valid) {
-                        this.local.remove('credentials');
+                        this.auth.logout();
                         return this.api.login(this.get('model'));
                     }
                 }.bind(this))
@@ -41,10 +41,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
                     var prev = this.get('prevTransition');
 
-                    this.local.set('credentials', response.data);
-                    this.get('appCtrl').set('loggedIn', true);
-                    this.get('appCtrl').get('target').send('invalidateModel');
-
+                    this.auth.login(response.data);
                     if (prev) {
                         this.set('prevTransition', null);
                         prev.retry();
