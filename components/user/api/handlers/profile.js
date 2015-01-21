@@ -23,13 +23,13 @@ function save (request, reply) {
     var userId = request.auth.credentials.id
       , input  = request.payload;
     saveProfile(userId, input, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        return err ? reply.boom(err) : reply(data);
     });
 }
 
 function read (request, reply) {
     readProfile(request.auth.credentials.id, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        return err ? reply.boom(err) : reply(data);
     });
 }
 
@@ -37,12 +37,12 @@ function checkDisplayName (request, reply) {
     var displayName = request.params.username || '';
 
     if (!displayName) {
-        return reply.failBadRequest('No username specified');
+        return reply.badRequest('No username specified');
     }
 
     api.get('/profiles', { displayName: displayName }, function (err, response, body) {
         if (err) {
-            reply.fail(err);
+            reply.boom(err);
         } else {
             reply({ exists: body.length > 0 });
         }

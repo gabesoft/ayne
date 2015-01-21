@@ -40,17 +40,23 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
 
   , actions: {
         save: function () {
-            this.api.saveProfile(this.get('model'))
+            this.validate()
+               .then(function (valid) {
+                    return valid ? this.api.saveProfile(this.get('model')) : false;
+                }.bind(this))
                .then(function (response) {
-                    this.set('model', response.data);
-                    this.get('appCtrl').get('target').send('invalidateModel');
-                    this.legend('Settings Updated', 'success', 5000);
+                    if (response) {
+                        this.set('model', response.data);
+                        this.get('appCtrl').get('target').send('invalidateModel');
+                        this.legend('Settings Updated', 'success', 5000);
+                    }
                 }.bind(this))
                .catch(function (response) {
-                    var json = response.json;
+                    var json = response.json || {};
                     if (json.statusCode === 409) {
                         this.legend(json.message, 'error');
                     } else {
+                        console.log(response);
                         this.legend('Failed to Update Settings', 'error');
                     }
                 }.bind(this));

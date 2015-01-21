@@ -77,7 +77,7 @@ function setupServer (cb) {
 
 function registerPlugins (cb) {
     server.register([
-        require('boom-decorate')
+        require('http-status-decorator')
       , require('./plugins/jwt')
       , {
             register : require('good')

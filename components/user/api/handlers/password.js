@@ -7,7 +7,7 @@ var api               = require('../../../core/lib/api')
 
 function updateUser (request, reply, user) {
     auth.hashPassword(request.payload.password, function (err, hash) {
-        if (err) { return reply.fail(err); }
+        if (err) { return reply.boom(err); }
 
         api.patch('/users/' + user.id, { password: hash }, function (err, response, body) {
             delete body.password;
@@ -31,7 +31,7 @@ function update (request, reply) {
       , headers : request.headers
     }, function (err, data) {
         if (err) {
-            reply.fail(err);
+            reply.boom(err);
         } else {
             updateUser(request, reply, data.user);
         }
@@ -68,13 +68,13 @@ function sendResetEmail (request, reply) {
 
     api.get('/users', { email: data.email }, function (err, response, body) {
         if (err) {
-            reply.fail(err);
+            reply.boom(err);
         } else if (!body || body.length === 0) {
-            reply.fail(new UserNotFoundError(data.email, 'email'));
+            reply.boom(new UserNotFoundError(data.email, 'email'));
         } else {
             body = body[0];
             sendEmail(request, reply, body, function (err) {
-                return err ? reply.fail(err) : reply({
+                return err ? reply.boom(err) : reply({
                     status : 'email-sent'
                   , email  : body.email
                 });

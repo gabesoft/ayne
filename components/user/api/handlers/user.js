@@ -7,7 +7,7 @@ function login (request, reply) {
         user    : request.payload
       , headers : request.headers
     }, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        return err ? reply.boom(err) : reply(data);
     });
 }
 
@@ -16,13 +16,13 @@ function logout (request, reply) {
         user    : request.auth.artifacts
       , headers : request.headers
     }, function (err) {
-        return err ? reply.fail(err) : reply({ status: 'token-invalidated' });
+        return err ? reply.boom(err) : reply({ status: 'token-invalidated' });
     });
 }
 
 function signup (request, reply) {
     auth.createUser(request.payload, function (err, data) {
-        return err ? reply.fail(err) : reply(data);
+        return err ? reply.boom(err) : reply(data);
     });
 }
 

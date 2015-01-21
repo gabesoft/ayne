@@ -24,7 +24,7 @@ function userHandler (request, reply) {
 
 function resetPassword (request, reply) {
     auth.loginUserWithGuid(request.params.guid, function (err, data) {
-        if (err && err.statusCode !== 401) { return reply.fail(err); }
+        if (err && err.statusCode !== 401) { return reply.boom(err); }
 
         return reply.view('user/templates/index.jade', {
             title   : 'User - Password Reset'

@@ -114,7 +114,7 @@ export default Ember.Mixin.create({
 
         if (value && value.then) {
             return value
-               .then(function (v) { this.setError(validator, v); }.bind(this))
+               .then(function (v) { return this.setError(validator, v); }.bind(this))
                .catch(function (err) {
                     console.log('validator failed ' + validator.toString(), err);
                     return this.setError(validator, null);
