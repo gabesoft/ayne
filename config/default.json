@@ -3,7 +3,8 @@
         "url": "http://localhost:8006"
     },
     "app": {
-        "host": "http://localhost:8005"
+        "url": "http://localhost:8005",
+        "port": 8005
     },
     "assets": {
         "host": "//localhost:4300"

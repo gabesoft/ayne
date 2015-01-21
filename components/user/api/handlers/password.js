@@ -44,7 +44,7 @@ function sendEmail (request, reply, user, cb) {
             auth.linkUser(user, next);
         }
       , function (guid, next) {
-            var host = reply.conf('app:host')
+            var host = reply.conf('app:url')
               , url  = [ host, 'user', 'reset-password', guid ].join('/');
             request.server.render('user/templates/reset-password-email.jade', {
                 host     : host

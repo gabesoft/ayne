@@ -40,7 +40,7 @@ function loadRoutes (cb) {
 }
 
 function setupServer (cb) {
-    server.connection({ port : conf.get('port') || 8005 });
+    server.connection({ port : conf.get('app:port') || 8005 });
     server.views({
         engines        : { jade : require('jade') }
       , compileOptions : { pretty: true }
