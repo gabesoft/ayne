@@ -4,7 +4,7 @@ var google       = require('googleapis')
   , gmail        = google.gmail('v1')
   , OAuth2Client = google.auth.OAuth2
   , path         = require('path')
-  , configFile   = path.join(process.cwd(), 'gmail.json');
+  , configFile   = path.join(process.cwd(), 'config', 'gmail.json');
 
 /**
  * Creates a new GmailApi object that can be used to
@@ -64,9 +64,9 @@ GmailApi.prototype.getAccessToken = function (cb) {
 };
 
 /**
-* Refreshes the access token
-* @param {function} callback - Callback to return the results
-*/
+ * Refreshes the access token
+ * @param {function} callback - Callback to return the results
+ */
 GmailApi.prototype.refreshAccessToken = function (cb) {
     this.oauth2Client.refreshToken(function (err, token) {
         if (err) { return cb(err); }
