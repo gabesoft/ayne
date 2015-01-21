@@ -23,4 +23,5 @@ tmp
 dist
 public
 
-gmail.json
+config/production.json
+config/gmail.json
