@@ -4,7 +4,9 @@ var api               = require('./api')
   , EmailExistsError  = require('./errors/email-exists')
   , UserNotFoundError = require('./errors/user-not-found')
   , TokenExpiredError = require('./errors/token-expired')
-  , userLink          = {} // TODO: move to api server
+  , moment            = require('moment')
+  , conf              = require('../../../config/store')
+  , ttlGuid           = moment.duration(conf.get('user-guid:ttl:value'), conf.get('user-guid:ttl:unit'))
   , bcrypt            = require('bcrypt');
 
 function hashPassword (password, cb) {
@@ -21,7 +23,7 @@ function makeClientUser (user) {
     return {
         id    : user.id
       , email : user.email
-    }
+    };
 }
 
 function createUser (data, cb) {
@@ -43,17 +45,17 @@ function createUser (data, cb) {
 }
 
 function loginUserWithGuid (guid, cb) {
-    var user = userLink[guid];
+    api.get('/users', { guid: guid }, function (err, response, user) {
+        if (err || !user) { return cb(new TokenExpiredError()); }
 
-    if (!user) { return cb(new TokenExpiredError()); }
-
-    token.temp(user, function (err, tk) {
-        return err ? cb(err) : cb(null, {
-            user          : makeClientUser(user)
-          , token         : tk
-          , noFingerprint : true
-          , noVerify      : true
-        })
+        token.temp(user, function (err, tk) {
+            return err ? cb(err) : cb(null, {
+                user          : makeClientUser(user)
+              , token         : tk
+              , noFingerprint : true
+              , noVerify      : true
+            });
+        });
     });
 }
 
@@ -104,11 +106,13 @@ function generateUUID(){
 
 function linkUser (user, cb) {
     var guid = generateUUID();
-
-    // TODO: use the api server
-    userLink[guid] = user;
-
-    cb(null, guid);
+    api.put('/users/link', {
+        guid         : guid
+      , ttlInSeconds : ttlGuid.asSeconds()
+      , userId       : user.id
+    }, function (err) {
+        cb(err, guid);
+    });
 }
 
 

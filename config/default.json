@@ -18,5 +18,11 @@
             "unit": "minutes",
             "value": 20
         }
+    },
+    "user-guid": {
+        "ttl": {
+            "unit": "minutes",
+            "value": 30
+        }
     }
 }
