@@ -44,17 +44,18 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .then(function (response) {
                     if (!response) { return; }
 
-                    this.auth.logIn(response.data);
+                    this.auth.login(response.data);
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');
                 }.bind(this))
                .catch(function (response) {
-                    var json = response.json;
+                    var json = response.json || {};
 
                     if (json.statusCode === 409) {
                         this.legend(json.message, 'error');
                     } else {
+                        console.log(response);
                         this.legend('An unknown error occurred', 'error');
                     }
                 }.bind(this))

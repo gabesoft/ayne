@@ -44,18 +44,6 @@ fieldset {
     width: 35px;
 }
 
-.reset-password {
-    .alert-box {
-        a {
-            color: $smoke;
-
-            &:hover {
-                color: $gainsboro;
-            }
-        }
-    }
-}
-
 .profile-edit,.profile-view {
     .profile-photo-wrapper {
         padding: 30px 0 0 30px;

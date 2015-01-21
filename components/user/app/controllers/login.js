@@ -6,6 +6,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , legendDefault       : 'Enter your credentials'
   , onEnterAction       : 'authenticate'
   , prevTransition      : null
+  , showForgotPassword  : false
   , needs               : ['application']
   , appCtrl             : Ember.computed.alias('controllers.application')
 
@@ -42,6 +43,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     var prev = this.get('prevTransition');
 
                     this.auth.login(response.data);
+                    this.set('showForgotPassword', false);
                     if (prev) {
                         this.set('prevTransition', null);
                         prev.retry();
@@ -53,6 +55,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                     var json = response.json || response;
 
                     if (json.statusCode === 401 || json.statusCode === 404) {
+                        this.set('showForgotPassword', true);
                         this.legend('Invalid credentials', 'error');
                     } else {
                         this.legend(json.message, 'error');
