@@ -99,11 +99,7 @@ GmailApi.prototype.sendEmail = function (options, cb) {
         this._sendEmail(data, cb);
     } else {
         this.getAccessToken(function (err) {
-            if (err) {
-                return cb(err);
-            } else {
-                this._sendEmail(data, cb);
-            }
+            return err ? cb(err) : this._sendEmail(data, cb);
         }.bind(this));
     }
 };
