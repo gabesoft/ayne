@@ -53,7 +53,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
             this.set('resetPending', true);
             this.validate()
-               .thenIf(function (valid) {
+               .thenIf(function () {
                     return this.api.resetPassword(this.get('model'));
                 }.bind(this))
                .thenIf(function (response) {

@@ -33,7 +33,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .thenIf(function () {
                     return this.api.setPassword(this.get('model'));
                 }.bind(this))
-               .thenIf(function (response) {
+               .thenIf(function () {
                     var user = this.auth.get('user') || {};
 
                     this.auth.logout();
