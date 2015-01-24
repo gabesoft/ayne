@@ -57,6 +57,11 @@ function make (user, headers, cb) {
     }, cb);
 }
 
+/**
+ * Invalidates the given token
+ * @param {string} token - the token to invalidate
+ * @param {function} cb  - the callback to call when the operation is complete
+ */
 function remove (token, headers, cb) {
     invalid[token] = true;
     cb();
@@ -64,9 +69,9 @@ function remove (token, headers, cb) {
 
 /**
  * Verifies the specified token
- * @param {string} token - The token to be verified
- * @param {object} headers - The http headers
- * @param {function} cb - The callback to supply the result
+ * @param {string} token    - The token to be verified
+ * @param {object} headers  - The http headers
+ * @param {function} cb     - The callback to supply the result
  * @return {object} payload - The token payload
  */
 function verify (token, headers, cb) {

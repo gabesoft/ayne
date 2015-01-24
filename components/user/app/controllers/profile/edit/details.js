@@ -41,15 +41,13 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
   , actions: {
         save: function () {
             this.validate()
-               .then(function (valid) {
-                    return valid ? this.api.saveProfile(this.get('model')) : false;
+               .thenIf(function () {
+                    return this.api.saveProfile(this.get('model'));
                 }.bind(this))
-               .then(function (response) {
-                    if (response) {
-                        this.set('model', response.data);
-                        this.get('appCtrl').get('target').send('invalidateModel');
-                        this.legend('Settings Updated', 'success', 5000);
-                    }
+               .thenIf(function (response) {
+                    this.set('model', response.data);
+                    this.get('appCtrl').get('target').send('invalidateModel');
+                    this.legend('Settings Updated', 'success', 5000);
                 }.bind(this))
                .catch(function (response) {
                     var json = response.json || {};

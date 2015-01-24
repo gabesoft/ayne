@@ -11,11 +11,11 @@ Router.map(function () {
     this.route('reset-password-success');
     this.route('reset-password-failure');
     this.resource('profile', function () {
+        this.route('view');
         this.resource('profile.edit', { path: '/edit' }, function () {
             this.route('details');
             this.route('password');
         });
-        this.route('view');
     });
 });
 

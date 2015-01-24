@@ -30,12 +30,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
             this.set('savePending', true);
 
             this.validate()
-               .then(function (valid) {
-                    return valid ? this.api.setPassword(this.get('model')) : false;
+               .thenIf(function () {
+                    return this.api.setPassword(this.get('model'));
                 }.bind(this))
-               .then(function (response) {
-                    if (!response) { return false; }
-
+               .thenIf(function (response) {
                     var user = this.auth.get('user') || {};
 
                     this.auth.logout();
@@ -44,15 +42,13 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                       , password : this.get('password')
                     });
                 }.bind(this))
-               .then(function (response) {
-                    if (response) {
-                        this.auth.login(response.data);
-                        this.legend('Password Updated', 'success', 5000);
-                    }
+               .thenIf(function (response) {
+                    this.auth.login(response.data);
+                    this.legend('Password Updated', 'success', 5000);
 
                     var nextRoute = this.get('nextRoute');
                     if (nextRoute) {
-                        this.set('redirectTo', null);
+                        this.set('nextRoute', null);
                         this.transitionToRoute(nextRoute);
                     }
                 }.bind(this))

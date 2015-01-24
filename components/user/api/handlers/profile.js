@@ -3,33 +3,26 @@
 var api = require('../../../core/lib/api')
   , UsernameExistsError = require('../../../core/lib/errors/username-exists-error');
 
-function saveProfile (userId, data, cb) {
+function save (request, reply) {
+    var userId = request.auth.credentials.id
+      , data   = request.payload;
+
     api.post(['/users',  userId, 'profile'], data, function (err, response, body) {
         if (err && err.statusCode === 409) {
-            cb(new UsernameExistsError(data.displayName));
+            reply.boom(new UsernameExistsError(data.displayName));
+        } else if (err) {
+            reply.boom(err);
         } else {
-            cb(err, body);
+            reply(body);
         }
     });
 }
 
-function readProfile (userId, cb) {
-    api.get(['/users', userId, 'profile'], null, function (err, response, body) {
-        cb(err, body);
-    });
-}
-
-function save (request, reply) {
-    var userId = request.auth.credentials.id
-      , input  = request.payload;
-    saveProfile(userId, input, function (err, data) {
-        return err ? reply.boom(err) : reply(data);
-    });
-}
-
 function read (request, reply) {
-    readProfile(request.auth.credentials.id, function (err, data) {
-        return err ? reply.boom(err) : reply(data);
+    var userId = request.auth.credentials.id;
+
+    api.get(['/users', userId, 'profile'], null, function (err, response, body) {
+        return err ? reply.boom(err) : reply(body);
     });
 }
 

@@ -1,9 +1,5 @@
-import Local from 'services/local';
-
 export default Ember.Object.extend({
-    local : new Local()
-
-  , init: function () {
+    init: function () {
         this.set('credentials', this.local.get('credentials'));
         this.addObserver('credentials', this, function () {
             this.local.set('credentials', this.get('credentials'));

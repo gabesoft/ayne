@@ -32,18 +32,14 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         createUser: function () {
             this.set('createUserPending', true);
             this.validate()
-               .then(function (valid) {
-                    return valid ? this.api.signup(this.get('model')) : false;
+               .thenIf(function () {
+                    return this.api.signup(this.get('model'));
                 }.bind(this))
-               .then(function (response) {
-                    if (response) {
-                        this.auth.logout();
-                        return this.api.login(this.get('model'));
-                    }
+               .thenIf(function () {
+                    this.auth.logout();
+                    return this.api.login(this.get('model'));
                 }.bind(this))
-               .then(function (response) {
-                    if (!response) { return; }
-
+               .thenIf(function (response) {
                     this.auth.login(response.data);
                     this.get('appCtrl').set('loggedIn', true);
                     this.get('appCtrl').target.send('invalidateModel');

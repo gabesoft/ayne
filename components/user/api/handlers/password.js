@@ -9,7 +9,7 @@ function updateUser (request, reply, user) {
     auth.hashPassword(request.payload.password, function (err, hash) {
         if (err) { return reply.boom(err); }
 
-        api.patch('/users/' + user.id, { password: hash }, function (err, response, body) {
+        api.patch([ '/users', user.id ], { password: hash }, function (err, response, body) {
             delete body.password;
             reply(body);
         });

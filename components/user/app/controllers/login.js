@@ -31,15 +31,11 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         authenticate: function () {
             this.set('authenticatePending', true);
             this.validate()
-               .then(function (valid) {
-                    if (valid) {
-                        this.auth.logout();
-                        return this.api.login(this.get('model'));
-                    }
+               .thenIf(function () {
+                    this.auth.logout();
+                    return this.api.login(this.get('model'));
                 }.bind(this))
-               .then(function (response) {
-                    if (!response) { return; }
-
+               .thenIf(function (response) {
                     var prev = this.get('prevTransition');
 
                     this.auth.login(response.data);

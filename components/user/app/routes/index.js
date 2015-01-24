@@ -1,9 +1,10 @@
-import App from 'app';
-
-App.IndexRoute = Ember.Route.extend({
+export default Ember.Route.extend({
     beforeModel: function () {
-        this.transitionTo('login');
+        var loggedIn = this.auth.get('loggedIn');
+        if (loggedIn) {
+            this.transitionTo('profile.view');
+        } else {
+            this.transitionTo('login');
+        }
     }
 });
-
-export default App.IndexRoute;

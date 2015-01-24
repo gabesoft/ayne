@@ -5,7 +5,8 @@ export default Ember.Route.extend(ReqAuth, {
         return this.api.getProfile()
            .then(function (response) { return response.data; })
            .catch(function (response) {
-                if (response.json.statusCode === 401) {
+                var code = Ember.get(response, 'json.statusCode');
+                if (code === 401) {
                     this.transitionTo('login');
                 }
             }.bind(this));

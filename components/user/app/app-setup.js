@@ -2,6 +2,23 @@ import Auth from 'services/auth';
 import Api from 'services/api';
 import LocalStore from 'services/local';
 
+/**
+* Contine the promise chain only if the value returned from the
+* last then call is a non falsy value
+* @param {function} onFulfillment
+* @param {function} onRejection
+* @param {string} label - optional string for labeling the promise
+*/
+Ember.RSVP.Promise.prototype.thenIf = function (onFulfillment, onRejection, label) {
+    return this.then(function (value) {
+        if (value) {
+            return onFulfillment(value);
+        } else {
+            return false;
+        }
+    }, onRejection, label);
+};
+
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label' ]
 });
@@ -25,7 +42,8 @@ Ember.Route.reopen({
 Ember.Application.initializer({
     name       : 'setup'
   , initialize : function (container, app) {
-        ayne = ayne || {};
+        var ayne = window.ayne || {};
+
         app.LOG_TRANSITIONS          = ayne.env !== 'production';
         app.LOG_MODULE_RESOLVER      = ayne.env !== 'production';
         app.LOG_VIEW_LOOKUPS         = ayne.env !== 'production';
@@ -50,5 +68,6 @@ Ember.Application.initializer({
         app.inject('controller', 'auth', 'services:auth');
 
         app.inject('services:api', 'auth', 'services:auth');
+        app.inject('services:auth', 'local', 'services:local');
     }
 });
