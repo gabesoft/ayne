@@ -3,5 +3,7 @@ html
     include ./head.jade
     title #{title}
     body
+        script(src="#{ayne.assets.host}/user/js/vendor.js")
+        script(src="#{ayne.assets.host}/user/js/app.js")
         script.
             window.ayne = !{JSON.stringify(ayne)};
