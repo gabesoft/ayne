@@ -15,7 +15,6 @@ function EmberModuleAppender (inputTree, options) {
     }
     this.inputTree = inputTree;
     this.app       = options.app || 'app';
-    this.appObj    = 'Application';
     this.root      = options.root || '';
     this.destFile  = options.destFile || 'app-module-append.js';
     this.types     = options.types || {
@@ -33,10 +32,10 @@ EmberModuleAppender.prototype.write = function (readTree, destDir) {
               , statements = []
               , text       = null;
 
-            imports.push('import App from \'' + path.join(this.root, this.app) + '\';');
-            imports.push('import AppInit from \'' + path.join(this.root, 'app-init') + '\';');
-            statements.push('var ' + this.appObj + ' = App.create({});');
-            statements.push('AppInit.run(' + this.appObj + ');');
+            imports.push('import _App from \'' + path.join(this.root, this.app) + '\';');
+            imports.push('import appInit from \'' + path.join(this.root, 'app-init') + '\';');
+            statements.push('var App = _App.create({});');
+            statements.push('appInit(App);');
 
             Object.keys(this.types).forEach(function (type) {
                 this.appendModules(this.types[type], srcDir, imports, statements);
@@ -70,7 +69,7 @@ EmberModuleAppender.prototype.appendModules = function (type, dir, imports, stat
 
     names.forEach(function (x) {
         imports.push('import ' + x.name + ' from \'' + x.file + '\';');
-        statements.push(this.appObj + '.' + x.name + ' = ' + x.name + ';');
+        statements.push('App.' + x.name + ' = ' + x.name + ';');
     }.bind(this));
 };
 
