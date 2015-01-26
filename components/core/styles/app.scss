@@ -1,8 +1,18 @@
 @import "font-awesome/font-awesome";
 @import "core/styles/foundation-settings";
+@import "core/styles/mixins";
 @import "foundation/normalize";
 @import "foundation/foundation";
 
-pre {
-    background-color: $smoke;
+.acces-code {
+    padding: 5px;
+}
+
+.copy-button {
+    width: 170px;
+    outline: none;
+}
+
+.profile-photo-small {
+    @include profile-photo-small();
 }

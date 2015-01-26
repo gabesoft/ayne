@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="columns">
+        <fieldset>
+            <legend>Access Code</legend>
+            <code class="access-code">{{code}}</code>
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="columns">
+        <button id="copy-button"
+            class="copy-button button small"
+            type="button"
+            {{bind-attr data-clipboard-text=code disabled=disableCopy}}>
+            {{copyLabel}}
+        </button>
+    </div>
+</div>

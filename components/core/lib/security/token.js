@@ -1,8 +1,8 @@
 'use strict';
 
 var moment            = require('moment')
-  , TokenInvalidError = require('./errors/token-invalid')
-  , conf              = require('../../../config/store')
+  , TokenInvalidError = require('../errors/token-invalid')
+  , conf              = require('../../../../config/store')
   , jwt               = require('jsonwebtoken')
   , secret            = conf.get('token:secret')
   , ttl               = moment.duration(conf.get('token:ttl:value'), conf.get('token:ttl:unit'))

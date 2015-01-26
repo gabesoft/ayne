@@ -64,12 +64,13 @@ module.exports = function (opts) {
         }
 
         var modules = pickFiles(opts.root, {
-                srcDir  : path.join(opts.name, 'app')
+                srcDir  : '/'
               , destDir : '/'
-              , files   : [ '**/*.js', '.jshintrc' ]
+              , files   : [ '*/app/**/*.js', path.join(opts.name, 'app', '.jshintrc') ]
             })
           , moduleSetup = moduleAppender(modules, {
-                destFile: 'app-module-setup.js'
+                root     : path.join(opts.name, 'app')
+              , destFile : 'app-module-setup.js'
             })
           , all = mergeTrees([ modules, moduleSetup ]);
 
@@ -79,30 +80,37 @@ module.exports = function (opts) {
         });
     }
 
-    function compileJsVendor () {
-        var ext = opts.minify ? '.min.js' : '.js';
+    function compileVendorJs () {
+        var ext   = opts.minify ? '.min.js' : '.js'
+          , flash = pickFiles(opts.bower, {
+                srcDir  : 'zeroclipboard/dist'
+              , destDir : '/'
+              , files   : [ '*.swf']
+            })
+          , js = concatenate(opts.bower, {
+                outputFile : '/vendor.js'
+              , inputFiles : [
+                    'jquery/dist/jquery' + ext
+                  , 'blueimp-md5/js/md5' + ext
+                  , 'fingerprint/fingerprint.js'
+                  , 'fastclick/lib/fastclick.js'
+                  , 'modernizr/modernizr.js'
+                  , 'foundation/js/foundation' + ext
+                  , 'handlebars/handlebars' + ext
+                  , 'ember/ember' + ext
+                  , 'zeroclipboard/dist/ZeroClipboard' + ext
+                ]
+            });
 
-        return concatenate(opts.bower, {
-            outputFile : '/vendor.js'
-          , inputFiles : [
-                'jquery/dist/jquery' + ext
-              , 'blueimp-md5/js/md5' + ext
-              , 'fingerprint/fingerprint.js'
-              , 'fastclick/lib/fastclick.js'
-              , 'modernizr/modernizr.js'
-              , 'foundation/js/foundation' + ext
-              , 'handlebars/handlebars' + ext
-              , 'ember/ember' + ext
-            ]
-        });
+        return mergeTrees([ flash, js ]);
     }
 
-    function combineJsAssets () {
-        var templ   = compileTemplates()
-          , modules = compileJsModules()
-          , jshint  = jshintModules()
-          , vendor  = compileJsVendor()
-          , lib     = concatenate(mergeTrees([ templ, modules ]), {
+    function combineAssetsJs () {
+        var templ    = compileTemplates()
+          , modules  = compileJsModules()
+          , jshint   = jshintModules()
+          , vendorJs = compileVendorJs()
+          , lib      = concatenate(mergeTrees([ templ, modules ]), {
                 inputFiles : [ '**/*.js' ]
               , outputFile : '/app.js'
             })
@@ -132,7 +140,7 @@ module.exports = function (opts) {
                 }
             });
 
-            vendor = uglifyJs(vendor, {
+            vendorJs = uglifyJs(vendorJs, {
                 mangle   : false
               , compress : false
               , sourceMapConfig: {
@@ -142,10 +150,10 @@ module.exports = function (opts) {
             });
         }
 
-        return mergeTrees([ vendor, lib, map, jshint ]);
+        return mergeTrees([ vendorJs, lib, map, jshint ]);
     }
 
-    return pickFiles(combineJsAssets(), {
+    return pickFiles(combineAssetsJs(), {
         srcDir  : '/'
       , destDir : path.join(opts.name, 'js')
     });

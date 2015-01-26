@@ -1,6 +1,6 @@
 'use strict';
 
-var auth   = require('../../core/lib/auth')
+var auth   = require('../../core/lib/security/auth')
   , routes = []
   , paths  = [
         '/user'

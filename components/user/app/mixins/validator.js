@@ -1,4 +1,4 @@
-import PSW_COMMON from 'data/common-passwords';
+import PSW_COMMON from 'user/app/data/common-passwords';
 
 export default Ember.Mixin.create({
     invalid: false

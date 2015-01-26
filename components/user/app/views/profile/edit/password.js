@@ -1,4 +1,4 @@
-import EnterKey from 'mixins/enter-key';
+import EnterKey from 'user/app/mixins/enter-key';
 export default Ember.View.extend(EnterKey, {
     willInsertElement: function () {
         this.controller.updateRequireOldPasswordFlag();

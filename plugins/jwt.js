@@ -1,7 +1,7 @@
 'use strict';
 
 var Boom  = require('boom')
-  , token = require('../components/core/lib/token');
+  , token = require('../components/core/lib/security/token');
 
 module.exports.register = function (server, options, next) {
     server.auth.scheme('jwt', function () {

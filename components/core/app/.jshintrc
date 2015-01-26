@@ -1,5 +1,6 @@
 {
     "boss": true,
+    "browser": true,
     "curly": true,
     "debug": false,
     "devel": true,
@@ -8,8 +9,13 @@
     "esnext": true,
     "evil": true,
     "forin": false,
-    "predef": {
-        "Ember"
+    "globals": {
+        "$": true,
+        "Ember": true,
+        "Fingerprint": true,
+        "ayne": true,
+        "md5": true,
+        "ZeroClipboard": true
     },
     "globalstrict": true,
     "immed": false,
@@ -17,12 +23,18 @@
     "laxcomma": true,
     "newcap": true,
     "noarg": true,
-    "node": true,
     "noempty": false,
     "nomen": false,
     "nonew": false,
     "onevar": false,
     "plusplus": false,
+    "predef": [
+        "Ember",
+        "ayne",
+        "Fingerprint",
+        "md5",
+        "ZeroClipboard"
+    ],
     "regexp": false,
     "strict": false,
     "sub": true,
@@ -30,3 +42,4 @@
     "unused": true,
     "white": false
 }
+

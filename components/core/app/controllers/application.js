@@ -9,7 +9,7 @@ export default Ember.ObjectController.extend(Gravatar, {
             }
         });
     }
-  , headerIcon: 'fa-user'
+  , headerIcon: 'fa-wrench'
   , profilePhotoSize : 64
   , gravatarEmail    : function () {
         return this.get('profile.gravatarEmail');

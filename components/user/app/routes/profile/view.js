@@ -1,4 +1,4 @@
-import ReqAuth from 'mixins/req-auth';
+import ReqAuth from 'user/app/mixins/req-auth';
 
 export default Ember.Route.extend(ReqAuth, {
     model : function () {

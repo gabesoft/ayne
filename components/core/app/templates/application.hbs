@@ -1,0 +1,50 @@
+<nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+        <li class="name">
+            <h1>
+                <a href="/">
+                    <i {{bind-attr class="headerIcon :fa :fa-lg"}}></i>
+                </a>
+            </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+    </ul>
+    <section class="top-bar-section">
+        <ul class="right hide-for-medium-up">
+            {{#if loggedIn}}
+                <li><a href="/user/profile/edit/details">Profile Edit</a></li>
+                <li><a href="/user/profile/view">Profile View</a></li>
+                <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+            {{else}}
+                <li><a href="user/login">Log In</a></li>
+                <li><a href="user/signup">Register</a></li>
+            {{/if}}
+        </ul>
+        <ul class="right show-for-medium-up">
+            {{#if loggedIn}}
+            <li class="has-dropdown not-click">
+                <a href="#">
+                    <span class="margin-right-15">{{user.email}}</span>
+                    <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
+                </a>
+                <ul class="dropdown">
+                    <li><a href="/user/profile/edit/details">Profile Edit</a></li>
+                    <li><a href="/user/profile/view">Profile View</a></li>
+                    <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+                </ul>
+            </li>
+            {{else}}
+                <li class="divider"></li>
+                <li class="has-form">
+                    <a class="button" href="/user/login">Log In</a>
+                </li>
+                <li class="divider"></li>
+                <li class="has-form">
+                    <a class="button" href="/user/signup">Register</a>
+                </li>
+            {{/if}}
+        </ul>
+    </section>
+</nav>
+{{outlet}}
+

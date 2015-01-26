@@ -3,7 +3,7 @@ var api               = require('../../../core/lib/api')
   , gapi              = new GmailApi()
   , async             = require('async')
   , UserNotFoundError = require('../../../core/lib/errors/user-not-found')
-  , auth              = require('../../../core/lib/auth');
+  , auth              = require('../../../core/lib/security/auth');
 
 function updateUser (request, reply, user) {
     auth.hashPassword(request.payload.password, function (err, hash) {

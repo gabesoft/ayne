@@ -1,10 +1,10 @@
-var api               = require('./api')
-  , UnauthorizedError = require('./errors/unauthorized')
+var api               = require('../api')
+  , UnauthorizedError = require('../errors/unauthorized')
   , token             = require('./token')
-  , EmailExistsError  = require('./errors/email-exists')
-  , TokenExpiredError = require('./errors/token-expired')
+  , EmailExistsError  = require('../errors/email-exists')
+  , TokenExpiredError = require('../errors/token-expired')
   , moment            = require('moment')
-  , conf              = require('../../../config/store')
+  , conf              = require('../../../../config/store')
   , ttlGuid           = moment.duration(conf.get('user-guid:ttl:value'), conf.get('user-guid:ttl:unit'))
   , bcrypt            = require('bcrypt');
 

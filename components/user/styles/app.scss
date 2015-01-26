@@ -1,12 +1,11 @@
 @import "font-awesome/font-awesome";
 @import "core/styles/foundation-settings";
+@import "core/styles/mixins";
 @import "foundation/normalize";
 @import "foundation/foundation";
 
 fieldset {
     legend {
-        background-color: transparent;
-
         &.error {
             color: $alert-color;
         }
@@ -38,10 +37,7 @@ fieldset {
 }
 
 .profile-photo-small {
-    border-radius: 100%;
-    position: relative;
-    height: 35px;
-    width: 35px;
+    @include profile-photo-small();
 }
 
 .profile-edit,.profile-view {

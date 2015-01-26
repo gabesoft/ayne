@@ -1,6 +1,6 @@
-import Legend from 'mixins/legend';
-import Validator from 'mixins/validator';
-import Gravatar from 'mixins/gravatar';
+import Legend from 'user/app/mixins/legend';
+import Validator from 'user/app/mixins/validator';
+import Gravatar from 'core/app/mixins/gravatar';
 
 export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
     savePending      : false
