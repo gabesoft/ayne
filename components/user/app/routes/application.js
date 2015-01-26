@@ -1,12 +1,5 @@
 export default Ember.Route.extend({
-    activate: function () {
-        var name  = this.get('routeName')
-          , text  = Ember.String.classify(name.replace(/-/g, '.'))
-          , title = 'User - ' + text.replace(/\./g, ' ');
-        Ember.$(document).attr('title', title);
-    }
-
-  , model: function () {
+   model: function () {
         var loggedIn = this.auth.get('loggedIn');
         if (loggedIn) {
             return this.api.getProfile()

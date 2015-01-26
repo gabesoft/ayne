@@ -4,6 +4,15 @@ import Api from 'user/app/services/api';
 
 export default Ember.Object.create({
     run: function () {
+        Ember.Route.reopen({
+            activate: function () {
+                var name  = this.get('routeName')
+                  , text  = Ember.String.classify(name.replace(/-/g, '.'))
+                  , title = 'User - ' + text.replace(/\./g, ' ');
+                Ember.$(document).attr('title', title);
+            }
+        });
+
         Ember.Application.initializer({
             name       : 'services'
           , initialize : function (container, app) {
