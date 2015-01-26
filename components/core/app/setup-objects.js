@@ -1,5 +1,5 @@
 /**
-* Contine the promise chain only if the value returned from the
+* Continue the promise chain only if the value returned from the
 * last then call is a non falsy value
 * @param {function} onFulfillment
 * @param {function} onRejection
