@@ -9,6 +9,7 @@ export default Ember.View.extend({
 
         client.on('aftercopy', function () {
             this.controller.set('copyLabel', 'Copied');
+            this.controller.set('copyClass', 'fa-check-square-o');
             this.controller.set('disableCopy', true);
         }.bind(this));
     }.on('didInsertElement')
