@@ -1,5 +1,3 @@
-import Auth from 'core/app/security/auth';
-import Local from 'core/app/stores/local';
 import Api from 'user/app/services/api';
 
 export default function () {

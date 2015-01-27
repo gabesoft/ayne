@@ -35,13 +35,19 @@ module.exports = function (opts) {
             return touch('/templates/app-templates.js');
         }
 
-        var templ = pickFiles(opts.root, {
+        var partials = pickFiles(opts.root, {
+                srcDir  : '/'
+              , destDir : '/templates'
+              , files   : [ '**/partials/**/*.hbs']
+            })
+          , templ = pickFiles(opts.root, {
                 srcDir  : path.join(opts.name, 'app', 'templates')
               , destDir : '/templates'
               , files   : [ '**/*.hbs' ]
-            });
+            })
+          , all = mergeTrees([partials, templ]);
 
-        return concatenate(templateCompiler(templ), {
+        return concatenate(templateCompiler(all), {
             inputFiles : [ 'templates/**/*.js' ]
           , outputFile : '/app-templates.js'
         });
