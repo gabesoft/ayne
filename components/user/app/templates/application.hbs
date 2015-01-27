@@ -1,14 +1,5 @@
 <nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area">
-        <li class="name">
-            <h1>
-                <a href="/user">
-                    <i {{bind-attr class="headerIcon :fa :fa-lg"}}></i>
-                </a>
-            </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
-    </ul>
+    {{partial 'core/app/partials/header-title'}}
     <section class="top-bar-section">
         <ul class="right hide-for-medium-up">
             {{#if loggedIn}}
@@ -31,10 +22,7 @@
         <ul class="right show-for-medium-up">
             {{#if loggedIn}}
             <li class="has-dropdown not-click">
-                <a href="#">
-                    <span class="margin-right-15">{{profile.displayName}}</span>
-                    <img class="profile-photo-small" {{bind-attr src=gravatarUrl}}>
-                </a>
+                {{partial 'core/app/partials/header-profile-info'}}
                 <ul class="dropdown">
                     {{#link-to 'profile.edit' tagName="li" href=false}}
                         <a {{bind-attr href="view.href"}}>Profile Edit</a>
