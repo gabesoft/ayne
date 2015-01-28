@@ -1,18 +1,18 @@
 <div class="profile-view">
     <div class="row">
         <div class="medium-6 columns">
-            <div class="panel profile-info">
-                <p class="profile-name">
-                    {{firstName}} {{lastName}} ({{displayName}})
-                </p>
-                <p>
-                    {{location}}
-                </p>
-                <small class="right">{{#link-to 'profile.edit'}}Edit{{/link-to}}</small>
+            <div class="card profile-info">
+                <div class="text-center">
+                    <img {{bind-attr src=gravatarUrl}}>
+                </div>
+                <div class="card-divider">
+                    {{displayName}}
+                </div>
+                <div class="card-section">
+                    <p>{{firstName}} {{lastName}}</p>
+                    <p>{{location}}</p>
+                </div>
             </div>
-        </div>
-        <div class="medium-6 columns profile-photo-wrapper">
-            <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
         </div>
     </div>
 </div>

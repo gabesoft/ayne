@@ -117,12 +117,16 @@ $jet         : #222222;
 $black       : #000000;
 
 // We use these as default colors throughout
-$primary-color: #008CBA;
-$secondary-color: #e7e7e7;
+$primary-color: #00558b;
+$secondary-color: #f1f1f1;
 $alert-color: #f04124;
 $success-color: #43AC6A;
 $warning-color: #f08a24;
 $info-color: #a0d3e8;
+$dark-color: #232323;
+$gray: #dfdfdf;
+$gray-dark: darken($gray, 8);
+$gray-light: lighten($gray, 8);
 
 // We use these to control various global styles
 $body-bg: $white-smoke;
@@ -1366,7 +1370,7 @@ $tooltip-max-width: 300px;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-$topbar-bg-color: $charcoal;
+$topbar-bg-color: $oil;
 $topbar-bg: $topbar-bg-color;
 
 // Height and margin
@@ -1380,8 +1384,8 @@ $topbar-title-font-size: rem-calc(17);
 // Style the top bar dropdown elements
 $topbar-dropdown-bg: $topbar-bg;
 $topbar-dropdown-link-color: $white;
-$topbar-dropdown-link-bg: $steel;
-$topbar-dropdown-link-bg-hover: darken($steel, 2%);
+$topbar-dropdown-link-bg: $topbar-bg;
+$topbar-dropdown-link-bg-hover: darken($topbar-bg, 2%);
 $topbar-dropdown-link-weight: $font-weight-normal;
 $topbar-dropdown-toggle-size: 5px;
 $topbar-dropdown-toggle-color: $white;

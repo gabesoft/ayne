@@ -66,7 +66,8 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
                     this.get('appCtrl').get('target').send('invalidateModel');
                 }.bind(this))
                .catch(function (response) {
-                    this.legend(response.json.message || 'Unknown Error', 'error');
+                    console.log(response);
+                    this.legend('Unknown Error', 'error');
                 }.bind(this));
         }
     }

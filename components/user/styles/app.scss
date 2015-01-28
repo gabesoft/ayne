@@ -1,8 +1,7 @@
 @import "font-awesome/font-awesome";
 @import "core/styles/foundation-settings";
+@import "core/styles/foundation-imports";
 @import "core/styles/mixins";
-@import "foundation/normalize";
-@import "foundation/foundation";
 
 fieldset {
     legend {
@@ -17,6 +16,12 @@ fieldset {
         &.warning {
             color: $warning-color;
         }
+    }
+}
+
+.sub-nav {
+    dd {
+        cursor: $cursor-pointer-value;
     }
 }
 

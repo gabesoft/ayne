@@ -1,61 +1,60 @@
-<fieldset>
-    {{partial 'user/app/partials/legend'}}
-    <div class="row">
-        <div class="medium-6 large-4 columns">
-            <label>First Name
-                {{input
-                name="firstName"
-                type="text"
-                value=firstName}}
-            </label>
+<div class="grid-frame">
+    <div class="grid-block">
+        <div class="grid-content">
+            <fieldset>
+                {{partial 'user/app/partials/legend'}}
+                <label>First Name
+                    {{input
+                    name="firstName"
+                    type="text"
+                    value=firstName}}
+                </label>
 
-            <label>Last Name
-                {{input
-                name="lastName"
-                type="text"
-                value=lastName}}
-            </label>
+                <label>Last Name
+                    {{input
+                    name="lastName"
+                    type="text"
+                    value=lastName}}
+                </label>
 
-            <label {{bind-attr class="error.displayName:error"}}>Display Name
-                {{input
-                class=error.displayName:error
-                name="displayName"
-                type="text"
-                required=true
-                value=displayName}}
-                {{#if error.displayName}}
-                    <small class="error">{{error.displayName}}</small>
-                {{/if}}
-            </label>
+                <label {{bind-attr class="error.displayName:error"}}>Display Name
+                    {{input
+                    class=error.displayName:error
+                    name="displayName"
+                    type="text"
+                    required=true
+                    value=displayName}}
+                    {{#if error.displayName}}
+                        <small class="error">{{error.displayName}}</small>
+                    {{/if}}
+                </label>
 
-            <label>Location
-                {{input
-                name="location"
-                type="text"
-                value=location}}
-            </label>
+                <label>Location
+                    {{input
+                    name="location"
+                    type="text"
+                    value=location}}
+                </label>
 
-            <label>Gravatar Email
-                {{input
-                name="gravatarEmail"
-                type="email"
-                value=gravatarEmail}}
-            </label>
+                <label>Gravatar Email
+                    {{input
+                    name="gravatarEmail"
+                    type="email"
+                    value=gravatarEmail}}
+                </label>
+                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+                    <i class="fa fa-save"></i>
+                    Save
+                </button>
+                <button class="button secondary small" type="button" {{bind-attr disabled=disableCancel}} {{action 'cancel'}}>
+                    <i class="fa fa-undo"></i>
+                    Cancel
+                </button>
+            </fieldset>
         </div>
-        <div class="show-for-medium-up medium-6 large-8 columns profile-photo-wrapper">
+
+        <div class="grid-block show-for-medium-up profile-photo-wrapper">
             <img class="profile-photo" {{bind-attr src=gravatarUrl}}>
         </div>
     </div>
-    <div class="row">
-        <div class="medium-6 large-4 columns">
-            <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
-                <i class="fa fa-save"></i>
-                Save
-            </button>
-            <button class="button secondary small" type="button" {{bind-attr disabled=disableCancel}} {{action 'cancel'}}>
-                <i class="fa fa-undo"></i>
-                Cancel
-            </button>
-        </div>
-    </div>
-</fieldset>
+</div>

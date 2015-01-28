@@ -25,11 +25,15 @@ module.exports = function (opts) {
                 srcDir  : '/foundation/scss'
               , destDir : '/foundation'
             })
+          , foundationApps = pickFiles(opts.bower, {
+                srcDir  : '/foundation-apps/scss'
+              , destDir : '/foundation-apps'
+            })
           , fontAwesome = pickFiles(opts.bower, {
                 srcDir  : '/font-awesome/scss'
               , destDir : '/font-awesome'
             })
-          , compiled = compileSass([ foundation, fontAwesome, opts.root ]
+          , compiled = compileSass([ foundation, foundationApps, fontAwesome, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {

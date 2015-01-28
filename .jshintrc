@@ -8,9 +8,6 @@
     "esnext": true,
     "evil": true,
     "forin": false,
-    "predef": {
-        "Ember"
-    },
     "globalstrict": true,
     "immed": false,
     "laxbreak": true,
@@ -23,6 +20,9 @@
     "nonew": false,
     "onevar": false,
     "plusplus": false,
+    "predef": [
+        "Ember"
+    ],
     "regexp": false,
     "strict": false,
     "sub": true,

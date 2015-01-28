@@ -1,7 +1,7 @@
 <nav class="top-bar" data-topbar role="navigation">
     {{partial 'core/app/partials/header-title'}}
     <section class="top-bar-section">
-        <ul class="right hide-for-medium-up">
+        <ul class="pull-right hide-for-medium-up">
             {{#if loggedIn}}
                 {{#link-to 'profile.edit' tagName="li" href=false}}
                     <a {{bind-attr href="view.href"}}>Profile Edit</a>
@@ -19,7 +19,7 @@
                 {{/link-to}}
             {{/if}}
         </ul>
-        <ul class="right show-for-medium-up">
+        <ul class="pull-right show-for-medium-up">
             {{#if loggedIn}}
             <li class="has-dropdown not-click">
                 {{partial 'core/app/partials/header-profile-info'}}
