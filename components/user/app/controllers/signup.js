@@ -41,7 +41,6 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                 }.bind(this))
                .thenIf(function (response) {
                     this.auth.login(response.data);
-                    this.get('appCtrl').target.send('invalidateModel');
                     this.transitionToRoute('profile.view');
                 }.bind(this))
                .catch(function (response) {

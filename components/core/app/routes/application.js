@@ -28,6 +28,9 @@ export default Ember.Route.extend({
                 this.auth.logout();
             }.bind(this));
         }
+      , invalidateModel: function () {
+            this.refresh();
+        }
     }
   , loggedIn: function () {
         return this.auth.get('loggedIn');
