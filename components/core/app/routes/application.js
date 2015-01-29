@@ -1,6 +1,12 @@
 export default Ember.Route.extend({
-    model: function () {
-        if (!this.auth.get('loggedIn')) { return {}; }
+    init : function () {
+        this._super();
+        this.addObserver('loggedIn', this, function () {
+            this.refresh();
+        });
+    }
+  , model: function () {
+        if (!this.get('loggedIn')) { return {}; }
 
         return this.api.getProfile()
            .then(function (response) {
@@ -22,8 +28,8 @@ export default Ember.Route.extend({
                 this.auth.logout();
             }.bind(this));
         }
-      , invalidateModel: function () {
-            this.refresh();
-        }
     }
+  , loggedIn: function () {
+        return this.auth.get('loggedIn');
+    }.property('auth.loggedIn')
 });
