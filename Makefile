@@ -16,7 +16,12 @@ run:
 
 link-jshintrc:
 	@for i in `ls -d components/*/app`; do \
-		ln -s `pwd`/.jshintrc-client `pwd`/$$i/.jshintrc; \
+		ln -sv `pwd`/.jshintrc-client `pwd`/$$i/.jshintrc; \
+	done;
+
+link-jshintrc-clean:
+	@for i in `ls -d components/*/app`; do \
+		rm -v `pwd`/$$i/.jshintrc; \
 	done;
 
 serve: 
