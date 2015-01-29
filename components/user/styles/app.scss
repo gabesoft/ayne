@@ -45,7 +45,13 @@ fieldset {
     @include profile-photo-small();
 }
 
-.profile-edit,.profile-view {
+.profile-view {
+    max-width: 240px;
+    display: inline-block;
+    text-align: left;
+}
+
+.profile-edit {
     .profile-photo-wrapper {
         padding: 30px 0 0 50px;
         position: relative;

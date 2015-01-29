@@ -17,8 +17,9 @@ var auth   = require('../../core/lib/security/auth')
     ];
 
 function userHandler (request, reply) {
-    return reply.view('user/templates/index.jade', {
-        title   : 'User'
+    return reply.view('core/templates/index.jade', {
+        title : 'User'
+      , page  : 'user'
     });
 }
 
@@ -26,8 +27,9 @@ function resetPassword (request, reply) {
     auth.loginUserWithGuid(request.params.guid, function (err, data) {
         if (err && err.statusCode !== 401) { return reply.boom(err); }
 
-        return reply.view('user/templates/index.jade', {
+        return reply.view('core/templates/index.jade', {
             title   : 'User - Password Reset'
+          , page    : 'user'
           , $locals : {
                 resetPasswordError       : err
               , resetPasswordCredentials : data

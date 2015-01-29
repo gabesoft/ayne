@@ -1,7 +1,7 @@
 'use strict';
 
 function homeHandler (request, reply) {
-    return reply.view('home/templates/index.jade', { title: 'home' });
+    return reply.view('core/templates/index.jade', { title: 'home', page: 'home' });
 }
 
 module.exports = {

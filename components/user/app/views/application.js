@@ -1,5 +1,2 @@
-export default Ember.View.extend({
-    initFoundation: function () {
-        Ember.$(document).foundation();
-    }.on('didInsertElement')
-});
+import InitVendor from 'core/app/mixins/init-vendor';
+export default Ember.View.extend(InitVendor, {});

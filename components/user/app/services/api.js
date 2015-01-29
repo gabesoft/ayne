@@ -1,6 +1,6 @@
-import ApiBase from 'core/app/services/api-base';
+import Api from 'core/app/services/api';
 
-export default ApiBase.extend({
+export default Api.extend({
     resetPassword: function (data) {
         return this.runPost('/api/email/reset-password', data);
     }
