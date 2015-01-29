@@ -26,6 +26,12 @@ fieldset {
     max-width: 240px;
     display: inline-block;
     text-align: left;
+
+    .profile-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .profile-edit {
@@ -34,21 +40,11 @@ fieldset {
         position: relative;
     }
 
-    .profile-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
     .profile-photo {
         border-radius: 100%;
         display: inline-block;
         height: 200px;
         width: 200px;
-    }
-
-    .profile-info {
-        margin: 30px 30px 0 30px;
     }
 }
 
