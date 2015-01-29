@@ -14,6 +14,9 @@ help:
 run:
 	@mpr run ./mpr.json
 
+link-jshintrc:
+	@for i in `ls -d components/*/app`; do ln -s `pwd`/.jshintrc-client `pwd`/$i/.jshintrc; done
+
 serve: 
 	@node-dev server.js
 
