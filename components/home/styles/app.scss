@@ -1,8 +1,1 @@
-@import "font-awesome/font-awesome";
-@import "core/styles/foundation-settings";
-@import "core/styles/foundation-imports";
-@import "core/styles/mixins";
-
-.profile-photo-small {
-    @include profile-photo-small();
-}
+@import "core/styles/common";

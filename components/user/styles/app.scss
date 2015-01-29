@@ -1,7 +1,4 @@
-@import "font-awesome/font-awesome";
-@import "core/styles/foundation-settings";
-@import "core/styles/foundation-imports";
-@import "core/styles/mixins";
+@import "core/styles/common";
 
 fieldset {
     legend {
@@ -23,26 +20,6 @@ fieldset {
     dd {
         cursor: $cursor-pointer-value;
     }
-}
-
-.margin-top-30 {
-    margin-top: 30px;
-}
-
-.margin-top-15 {
-    margin-top: 15px;
-}
-
-.margin-right-15 {
-    margin-right: 15px;
-}
-
-.margin-left-15 {
-    margin-left: 15px;
-}
-
-.profile-photo-small {
-    @include profile-photo-small();
 }
 
 .profile-view {

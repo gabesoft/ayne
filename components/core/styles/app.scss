@@ -1,17 +1,1 @@
-@import "font-awesome/font-awesome";
-@import "core/styles/foundation-settings";
-@import "core/styles/foundation-imports";
-@import "core/styles/mixins";
-
-.acces-code {
-    padding: 5px;
-}
-
-.copy-button {
-    width: 180px;
-    outline: none;
-}
-
-.profile-photo-small {
-    @include profile-photo-small();
-}
+@import "core/styles/common.scss";
