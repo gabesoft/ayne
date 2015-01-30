@@ -1,10 +1,66 @@
-<div class="grid-block">
-    <div class="grid-content">
-        <fieldset>
-            <legend>Enter Url</legend>
+<div class="grid-frame">
+    <div class="grid-block">
+        <div class="grid-content">
+            <fieldset>
+                <legend>Enter Url</legend>
 
+                <label>Name
+                    {{input
+                    name="name"
+                    type="text"
+                    disabled=true
+                    value=name}}
+                </label>
 
+                <label>Url
+                    <span class="inline-label">
+                        {{input
+                        name="url"
+                        type="url"
+                        value=href}}
+                        <span class="form-label">
+                            <img class="pull-right" {{bind-attr src=favicon}} alt="favicon">
+                        </span>
+                    </span>
+                </label>
 
-        </fieldset>
+                <label>Title
+                    {{input
+                    name="title"
+                    type="text"
+                    value=title}}
+                </label>
+
+                <label>Tags
+                    {{input
+                    name="tags"
+                    type="text"
+                    value=tags}}
+                </label>
+
+                <label>Private
+                    <div class="switch radius">
+                        {{input
+                        name="private"
+                        type="checkbox"
+                        id="private-switch"
+                        checked=private}}
+                        <label for="private-switch"></label>
+                    </div>
+                </label>
+
+                <label>Notes
+                    {{textarea
+                    name="notes"
+                    rows="3"
+                    value=notes}}
+                </label>
+
+                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+                    <i class="fa fa-bookmark"></i>
+                    Save
+                </button>
+            </fieldset>
+        </div>
     </div>
 </div>
