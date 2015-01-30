@@ -1,5 +1,5 @@
 import Legend from 'user/app/mixins/legend';
-import Validator from 'user/app/mixins/validator';
+import Validator from 'core/app/mixins/validator';
 import Gravatar from 'core/app/mixins/gravatar';
 
 export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
