@@ -6,6 +6,7 @@
   "main": "./lib/index.js",
   "bin": {},
   "dependencies": {
+    "URIjs": "^1.14.1",
     "async": "^0.9.0",
     "bcrypt": "^0.8.0",
     "boom": "^2.6.1",
@@ -16,6 +17,7 @@
     "hapi": "^8.0.0",
     "http-status-decorator": "0.0.2",
     "jade": "^1.8.2",
+    "jsdom": "^3.1.0",
     "jsonwebtoken": "^3.2.0",
     "moment": "^2.8.4",
     "nconf": "^0.7.1",

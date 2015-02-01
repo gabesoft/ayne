@@ -4,6 +4,7 @@ var pickFiles   = require('broccoli-static-compiler')
   , path        = require('path')
   , glob        = require('glob')
   , touch       = require('./touch')
+  , renameFile  = require('./file-renamer')
   , compileSass = require('broccoli-sass')
   , mergeTrees  = require('broccoli-merge-trees');
 
@@ -33,7 +34,15 @@ module.exports = function (opts) {
                 srcDir  : '/font-awesome/scss'
               , destDir : '/font-awesome'
             })
-          , compiled = compileSass([ foundation, foundationApps, fontAwesome, opts.root ]
+          , bootstrapTagsinput = pickFiles(opts.bower, {
+                srcDir  : '/bootstrap-tagsinput/dist'
+              , destDir : '/'
+              , files   : [ 'bootstrap-tagsinput.css' ]
+            })
+          , tagsInput = renameFile(bootstrapTagsinput, {
+                'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
+            })
+          , compiled = compileSass([ foundation, foundationApps, fontAwesome, tagsInput, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {

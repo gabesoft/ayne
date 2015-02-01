@@ -1,4 +1,4 @@
-import Api from 'core/app/services/api';
+import Api from 'home/app/services/api';
 
 export default function () {
     Ember.Application.initializer({

@@ -1,5 +1,5 @@
 <div class="grid-frame">
-    <div class="grid-block">
+    <div class="medium-8 grid-block">
         <div class="grid-content">
             <fieldset>
                 <legend>Enter Url</legend>
@@ -31,10 +31,9 @@
                     value=title}}
                 </label>
 
-                <label>Tags
-                    {{input
+                <label>Tags (lowercase words, no spaces)
+                    {{tags-input
                     name="tags"
-                    type="text"
                     value=tags}}
                 </label>
 
@@ -62,5 +61,6 @@
                 </button>
             </fieldset>
         </div>
+        <!--<div class="grid-content show-for-medium-up"></div>-->
     </div>
 </div>

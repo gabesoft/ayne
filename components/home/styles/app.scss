@@ -1,1 +1,28 @@
 @import "core/styles/common";
+@import "bootstrap-tagsinput";
+
+.bootstrap-tagsinput {
+    width: 100%;
+    @include form-element();
+    @include side-radius($opposite-direction, 0);
+    @include side-radius($default-float, 0);
+
+    height: auto;
+    min-height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(1));
+
+    &.active {
+        border: 1px solid $input-focus-border-color;
+        box-shadow: 0 0 5px $input-focus-border-color;
+        background: none repeat scroll $input-focus-bg-color;
+    }
+
+    input {
+        display: inline;
+        height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(20));
+    }
+
+    .tag [data-role="remove"]:hover {
+        background-color: darken($primary-color, 5%);
+        box-shadow: none;
+    }
+}

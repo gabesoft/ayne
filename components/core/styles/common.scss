@@ -40,5 +40,5 @@ input[type=checkbox] + label {
 }
 
 input[type=checkbox]:focus + label {
-    box-shadow: 0 0 5px #999;
+    box-shadow: 0 0 5px $input-focus-border-color;
 }

@@ -1,3 +1,3 @@
 export default Ember.View.extend({
-    templateName: 'enter-url'
+    templateName  : 'enter-url'
 });

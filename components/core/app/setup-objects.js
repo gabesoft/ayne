@@ -23,5 +23,5 @@ Ember.RSVP.configure('onerror', function (error) {
 });
 
 Ember.TextField.reopen({
-    attributeBindings: [ 'aria-label' ]
+    attributeBindings: [ 'aria-label', 'data-role' ]
 });
