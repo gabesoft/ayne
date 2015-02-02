@@ -1,9 +1,5 @@
-var jsdom = require('jsdom')
-  , URI   = require('URIjs');
-
-function toName (title) {
-    return (title || '').toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-}
+var jsdom   = require('jsdom').jsdom
+  , URI     = require('URIjs');
 
 function urlMetadata (request, reply) {
     if (!request.params.href) {
@@ -22,10 +18,10 @@ function urlMetadata (request, reply) {
             var doc   = window.document
               , title = doc.title;
 
+            window.close();
             reply({
                 title : title
               , href  : href.toString()
-              , name  : toName(title)
             });
         }
     });

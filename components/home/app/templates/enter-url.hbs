@@ -1,16 +1,8 @@
 <div class="grid-frame">
-    <div class="medium-8 grid-block">
+    <div class="grid-block">
         <div class="grid-content">
             <fieldset>
                 <legend>Enter Url</legend>
-
-                <label>Name
-                    {{input
-                    name="name"
-                    type="text"
-                    disabled=true
-                    value=name}}
-                </label>
 
                 <label>Url
                     <span class="inline-label">
@@ -25,10 +17,17 @@
                 </label>
 
                 <label>Title
+                    <span class="inline-label">
                     {{input
                     name="title"
                     type="text"
                     value=title}}
+                    {{#if pendingMeta}}
+                        <span class="form-label">
+                            <i class="fa fa-cog fa-spin"></i>
+                        </span>
+                    {{/if}}
+                    </span>
                 </label>
 
                 <label>Tags (lowercase words, no spaces)
@@ -61,6 +60,12 @@
                 </button>
             </fieldset>
         </div>
-        <!--<div class="grid-content show-for-medium-up"></div>-->
+        <div class="grid-content show-for-medium-up">
+            <ul>
+                {{#each url in recentUrls}}
+                    <li>{{url.title}}</li>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 </div>
