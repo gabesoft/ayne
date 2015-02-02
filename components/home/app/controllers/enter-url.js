@@ -2,31 +2,36 @@ import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
 export default Ember.ObjectController.extend(Validator, Legend, {
-    model       : {}
-  , pendingMeta : false
-  , pendingSave : false
-  , recentUrls  : []
-  , init        : function () {
-        this._super();
-        this.addObserver('model.href', this, function () {
-            Ember.run.debounce(this, this.updateUrlMeta, 300);
-        });
-    }
+    model         : {}
+  , pendingMeta   : false
+  , pendingSave   : false
+  , displayHref   : ''
+  , recentUrls    : []
+  , recentUrlsIds : {}
 
   , updateUrlMeta : function () {
-        var href  = this.get('model.href')
-          , title = this.get('model.title');
+        var href = this.get('displayHref');
 
-        if (!href || title) { return; }
+        if (!href) { return; }
 
         this.set('pendingMeta', true);
         this.api.urlMeta(href).then(function (response) {
-            this.set('model.title', response.data.title);
+            this.set('model', response.data);
         }.bind(this)).catch(function (response) {
             console.log(response.error);
         }).finally(function () {
             this.set('pendingMeta', false);
         }.bind(this));
+    }
+
+  , addToRecentUrls: function (data) {
+        var id   = data.id
+          , urls = this.get('recentUrls')
+          , ids  = this.get('recentUrlsIds');
+        if (!ids[id]) {
+            ids[id] = true;
+            urls.pushObject(data);
+        }
     }
 
   , favicon: function () {
@@ -38,17 +43,22 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , actions: {
         save: function () {
             this.set('pendingSave', false);
-            this.api.createUrl(this.get('model'))
+            this.api.saveUrl(this.get('model'))
                .then(function (response) {
-                    this.get('recentUrls').pushObject(response.data);
+                    this.addToRecentUrls(response.data);
                     this.set('model', {});
+                    this.set('displayHref', null);
                 }.bind(this))
                .catch(function (response) {
+                    console.log(response);
                     console.log('failed to save url', response.json);
                 }.bind(this))
                .finally(function () {
                     this.set('pendingSave', false);
                 }.bind(this));
+        },
+        getUrlMeta: function () {
+            Ember.run.debounce(this, this.updateUrlMeta, 300);
         }
     }
 });

@@ -1,10 +1,10 @@
 /**
-* Continue the promise chain only if the value returned from the
-* last then call is a non falsy value
-* @param {function} onFulfillment
-* @param {function} onRejection
-* @param {string} label - optional string for labeling the promise
-*/
+ * Continue the promise chain only if the value returned from the
+ * last then call is a non falsy value
+ * @param {function} onFulfillment
+ * @param {function} onRejection
+ * @param {string} label - optional string for labeling the promise
+ */
 Ember.RSVP.Promise.prototype.thenIf = function (onFulfillment, onRejection, label) {
     return this.then(function (value) {
         if (value) {
@@ -24,4 +24,5 @@ Ember.RSVP.configure('onerror', function (error) {
 
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label', 'data-role' ]
+  , keyUp: function (e) { this.sendAction('keyUpAction', e); }
 });

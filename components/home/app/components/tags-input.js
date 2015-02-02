@@ -9,23 +9,16 @@ export default Ember.Component.extend({
 
   , init: function () {
         this._super();
+        this.set('value', []);
         this.addObserver('value', this, function () {
-            if (!this.get('updatingValue')) {
-                var val    = this.get('value') || []
-                  , $input = this.$();
+            var val    = this.get('value') || []
+              , $input = this.$();
 
-                $input.tagsinput('removeAll');
-                Ember.$.each(val, function (i, v) {
-                    $input.tagsinput('add', v);
-                }.bind(this));
-            }
+            $input.tagsinput('removeAll');
+            Ember.$.each(val, function (i, v) {
+                $input.tagsinput('add', v);
+            }.bind(this));
         });
-    }
-
-  , updateValue: function (items) {
-        this.set('updatingValue', true);
-        this.set('value', items);
-        this.set('updatingValue', false);
     }
 
   , didInsertElement: function ()  {
@@ -40,12 +33,12 @@ export default Ember.Component.extend({
           , allowDuplicates : false
         });
 
-        $input.on('itemAdded', function () {
-            this.updateValue($input.tagsinput('items'));
+        $input.on('itemAdded', function (e) {
+            this.get('value').pushObject(e.item);
         }.bind(this));
 
-        $input.on('itemRemoved', function () {
-            this.updateValue($input.tagsinput('items'));
+        $input.on('itemRemoved', function (e) {
+            this.get('value').removeObject(e.item);
         }.bind(this));
 
         $input.parent().find('.bootstrap-tagsinput > input').focus(function (e) {
