@@ -6,7 +6,6 @@
   "main": "./lib/index.js",
   "bin": {},
   "dependencies": {
-    "URIjs": "^1.14.1",
     "async": "^0.9.0",
     "bcrypt": "^0.8.0",
     "boom": "^2.6.1",

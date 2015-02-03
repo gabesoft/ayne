@@ -1,15 +1,16 @@
 var req     = require('request')
   , api     = require('../../../core/lib/api')
   , crypto  = require('crypto')
-  , cheerio = require('cheerio')
-  , URI     = require('URIjs');
+  , cheerio = require('cheerio');
 
 function fixUrl (href) {
     if (!href) { return null; }
 
-    var uri = URI(href || '');
-    uri.protocol(uri.protocol() || 'http');
-    return uri.toString();
+    if (href.match(/^http|ftp/)) {
+        return href;
+    } else {
+        return 'http://' + href.replace(/^\/+/, '');
+    }
 }
 
 function meta (href, title) {
@@ -44,6 +45,8 @@ function urlMetadata (request, reply) {
       , urlId  = makeUrlId(userId, href);
 
     if (!href) { return reply(meta()); }
+
+    console.log('HREF', href, request.params.href);
 
     api.get(['/users', userId, 'urls', urlId ], function (err, response, body) {
         if (err || !body) {
