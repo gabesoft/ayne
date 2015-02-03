@@ -28,16 +28,23 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         var id   = data.id
           , urls = this.get('recentUrls')
           , ids  = this.get('recentUrlsIds');
-        if (!ids[id]) {
-            ids[id] = true;
-            urls.pushObject(data);
+
+        if (ids[id]) {
+            urls.removeObject(ids[id]);
         }
+
+        data.favicon = this.faviconUrl(data.href);
+        ids[id] = data;
+        urls.unshiftObject(data);
+    }
+
+  , faviconUrl: function (href) {
+        var icon = 'http://www.google.com/s2/favicons?domain_url=';
+        return icon + encodeURIComponent(href);
     }
 
   , favicon: function () {
-        var href = this.get('model.href')
-          , icon = 'http://www.google.com/s2/favicons?domain_url=';
-        return icon + encodeURIComponent(href);
+        return this.faviconUrl(this.get('model.href'));
     }.property('model.href')
 
   , actions: {

@@ -104,6 +104,7 @@ module.exports = function (opts) {
                   , 'foundation/js/foundation' + ext
                   , 'handlebars/handlebars' + ext
                   , 'ember/ember' + ext
+                  , 'typeahead.js/dist/typeahead.bundle' + ext
                   , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
                   , 'zeroclipboard/dist/ZeroClipboard' + ext
                 ]

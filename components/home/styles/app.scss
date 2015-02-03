@@ -19,10 +19,53 @@
     input {
         display: inline;
         height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(20));
+        vertical-align: middle !important;
+    }
+
+    .tag {
+        padding: 0.25rem 0.5rem 0.3rem 0.5rem;
     }
 
     .tag [data-role="remove"]:hover {
         background-color: darken($primary-color, 5%);
         box-shadow: none;
+    }
+}
+
+.twitter-typeahead {
+    .tt-hint {
+        display: none !important;
+    }
+
+    .tt-dropdown-menu {
+        background-color: $input-focus-bg-color;
+        color: $body-font-color;
+        border: 1px solid $smoke;
+        border-radius: 5px;
+        font-size: 14px;
+
+        .tt-suggestion {
+            padding: 5px 10px;
+
+            &:first-child {
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+            }
+
+            &:last-child {
+                border-bottom-right-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            &.tt-cursor {
+                background-color: $primary-color;
+                color: $white;
+            }
+        }
     }
 }

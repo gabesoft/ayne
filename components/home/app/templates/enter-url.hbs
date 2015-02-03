@@ -62,9 +62,14 @@
             </fieldset>
         </div>
         <div class="grid-content show-for-medium-up">
-            <ul>
+            <ul class="side-nav">
                 {{#each url in recentUrls}}
-                    <li>{{url.title}}</li>
+                <li>
+                    <a {{bind-attr href=url.href}} target="_blank">
+                        <img {{bind-attr src=url.favicon}}>
+                        {{url.title}}
+                    </a>
+                </li>
                 {{/each}}
             </ul>
         </div>
