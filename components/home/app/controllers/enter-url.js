@@ -21,7 +21,9 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , updateUrlMeta : function () {
         var href = this.get('displayHref');
 
-        if (!href) { return; }
+        if (!href || this.get('pendingSave') || this.get('pendingDelete')) {
+            return;
+        }
 
         this.set('pendingMeta', true);
         this.api.urlMeta(href).then(function (response) {

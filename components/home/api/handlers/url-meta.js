@@ -64,10 +64,23 @@ function getExisting (href, userId, cb) {
     api.get(['/users', userId, 'urls', makeUrlId(href, userId) ], cb);
 }
 
+function requestOptions (href) {
+    return {
+        url: href
+      , rejectUnauthorized : false
+      , method             : 'GET'
+      , headers            : {
+            'User-Agent'      : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0) Gecko/20100101 Firefox/35.0'
+          , 'Accept'          : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+          , 'Accept-Language' : 'en-US,en;q=0.5'
+        }
+    }
+}
+
 function getMetadata (request, reply) {
     var href   = fixUrl(request.params.href)
       , userId = request.auth.credentials.id
-      , opts = { url: href, rejectUnauthorized: false, method: 'GET' };
+      , opts   = requestOptions(href);
 
     if (!href) { return reply(meta()); }
 
