@@ -12,7 +12,7 @@
                         keyUpAction="getUrlMeta"
                         value=displayHref}}
                         <span class="form-label">
-                            {{render 'favicon' this }}
+                            {{view 'favicon' src=favicon }}
                         </span>
                     </span>
                 </label>
@@ -59,6 +59,12 @@
                     <i class="fa fa-bookmark"></i>
                     Save
                 </button>
+                {{#if showDelete}}
+                    <button class="button secondary small" type="button" {{bind-attr disabled=disableDelete}} {{action 'remove'}}>
+                        <i class="fa fa-trash"></i>
+                        Delete
+                    </button>
+                {{/if}}
             </fieldset>
         </div>
         <div class="grid-content show-for-medium-up">
@@ -66,7 +72,7 @@
                 {{#each url in recentUrls}}
                 <li>
                     <a {{bind-attr href=url.href}} target="_blank">
-                        {{render 'favicon' url }}
+                        {{view 'favicon' src=url.favicon }}
                         {{url.title}}
                     </a>
                 </li>

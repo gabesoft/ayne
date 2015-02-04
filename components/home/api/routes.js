@@ -11,4 +11,9 @@ module.exports = [{
   , path    : '/api/urls'
   , handler : url.save
   , config  : { auth : 'token' }
+}, {
+    method  : 'DELETE'
+  , path    : '/api/urls/{id}'
+  , handler : url.remove
+  , config  : { auth : 'token' }
 }];

@@ -5,9 +5,18 @@ export default Ember.ObjectController.extend(Validator, Legend, {
     model         : {}
   , pendingMeta   : false
   , pendingSave   : false
+  , pendingDelete   : false
   , displayHref   : ''
   , recentUrls    : []
   , recentUrlsIds : {}
+
+  , disableSubmit : function () {
+        return !this.get('displayHref') || this.get('pendingSave') || this.get('pendingDelete');
+    }.property('displayHref', 'pendingSave', 'pendingDelete')
+
+  , showDelete : function () {
+        return this.get('model.id');
+    }.property('model.id')
 
   , updateUrlMeta : function () {
         var href = this.get('displayHref');
@@ -39,6 +48,16 @@ export default Ember.ObjectController.extend(Validator, Legend, {
         urls.unshiftObject(data);
     }
 
+  , removeRecentUrl: function (model) {
+        var id   = model.id
+          , urls = this.get('recentUrls')
+          , ids  = this.get('recentUrlsIds')
+          , data = urls.findBy('id', id);
+
+        delete ids[id];
+        urls.removeObject(data);
+    }
+
   , actions: {
         save: function () {
             this.set('pendingSave', false);
@@ -56,8 +75,26 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .finally(function () {
                     this.set('pendingSave', false);
                 }.bind(this));
-        },
-        getUrlMeta: function () {
+        }
+      , remove: function () {
+            this.set('pendingSave', false);
+            this.set('pendingDelete', false);
+            this.api.deleteUrl(this.get('model'))
+               .then(function () {
+                    this.removeRecentUrl(this.get('model'));
+                    this.set('model', {});
+                    this.set('displayHref', null);
+                }.bind(this))
+               .catch(function (response) {
+                    console.log(response);
+                }.bind(this))
+               .finally(function () {
+                    this.set('pendingSave', false);
+                    this.set('pendingDelete', false);
+                }.bind(this));
+        }
+
+      , getUrlMeta: function () {
             Ember.run.debounce(this, this.updateUrlMeta, 300);
         }
     }

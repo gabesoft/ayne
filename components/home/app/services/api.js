@@ -7,4 +7,7 @@ export default Api.extend({
   , saveUrl: function (data) {
         return this.runPost('/api/urls', data);
     }
+  , deleteUrl: function (data) {
+        return this.runDelete('/api/urls/' + data.id);
+    }
 });

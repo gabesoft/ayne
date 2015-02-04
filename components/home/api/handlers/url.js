@@ -14,6 +14,14 @@ function update (data, cb) {
     });
 }
 
+function remove (request, reply) {
+    var userId = request.auth.credentials.id
+      , urlId  = request.params.id;
+    api.del(['/users', userId, 'urls', urlId ], function (err, response, body) {
+        return err ? reply.boom(err) : reply(body);
+    });
+}
+
 function save (request, reply) {
     var userId = request.auth.credentials.id
       , data   = request.payload
@@ -32,5 +40,6 @@ function save (request, reply) {
 }
 
 module.exports = {
-    save: save
+    save   : save
+  , remove : remove
 };

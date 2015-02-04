@@ -66,11 +66,12 @@ function getExisting (href, userId, cb) {
 
 function getMetadata (request, reply) {
     var href   = fixUrl(request.params.href)
-      , userId = request.auth.credentials.id;
+      , userId = request.auth.credentials.id
+      , opts = { url: href, rejectUnauthorized: false, method: 'GET' };
 
     if (!href) { return reply(meta()); }
 
-    req(href, function (err, response, body) {
+    req(opts, function (err, response, body) {
         if (err || !body) {
             reply(meta(href));
         } else {

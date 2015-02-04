@@ -21,6 +21,11 @@ export default Ember.Component.extend({
         });
     }
 
+  , willDestroyElement: function () {
+        this._super();
+        // TODO: cleanup here
+    }
+
   , didInsertElement: function ()  {
         this._super();
 
@@ -55,12 +60,16 @@ export default Ember.Component.extend({
         //       set the autocomplete datasource
 
         $input.on('itemAdded', function (e) {
-            this.get('value').pushObject(e.item);
+            if (this.get('value')) {
+                this.get('value').pushObject(e.item);
+            }
             $input.tagsinput('input').typeahead('close');
         }.bind(this));
 
         $input.on('itemRemoved', function (e) {
-            this.get('value').removeObject(e.item);
+            if (this.get('value')) {
+                this.get('value').removeObject(e.item);
+            }
         }.bind(this));
 
         $parent.find('.bootstrap-tagsinput input').blur(function (e) {
