@@ -26,7 +26,8 @@
         "ayne",
         "Fingerprint",
         "md5",
-        "ZeroClipboard"
+        "ZeroClipboard",
+        "Bloodhound"
     ],
     "regexp": false,
     "strict": false,

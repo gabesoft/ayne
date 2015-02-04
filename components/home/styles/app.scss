@@ -1,6 +1,10 @@
 @import "core/styles/common";
 @import "bootstrap-tagsinput";
 
+.favicon {
+    max-height: 30px;
+}
+
 .bootstrap-tagsinput {
     width: 100%;
     @include form-element();

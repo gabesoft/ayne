@@ -16,7 +16,9 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
         this.set('pendingMeta', true);
         this.api.urlMeta(href).then(function (response) {
-            this.set('model', response.data);
+            if (response.data.href !== this.get('href')) {
+                this.set('model', response.data);
+            }
         }.bind(this)).catch(function (response) {
             console.log(response.error);
         }).finally(function () {
@@ -33,23 +35,14 @@ export default Ember.ObjectController.extend(Validator, Legend, {
             urls.removeObject(ids[id]);
         }
 
-        data.favicon = this.faviconUrl(data.href);
         ids[id] = data;
         urls.unshiftObject(data);
     }
 
-  , faviconUrl: function (href) {
-        var icon = 'http://www.google.com/s2/favicons?domain_url=';
-        return icon + encodeURIComponent(href);
-    }
-
-  , favicon: function () {
-        return this.faviconUrl(this.get('model.href'));
-    }.property('model.href')
-
   , actions: {
         save: function () {
             this.set('pendingSave', false);
+            this.set('model.userEntered', this.get('displayHref'));
             this.api.saveUrl(this.get('model'))
                .then(function (response) {
                     this.addToRecentUrls(response.data);
