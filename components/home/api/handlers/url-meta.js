@@ -1,8 +1,12 @@
-var req     = require('request')
-  , api     = require('../../../core/lib/api')
-  , crypto  = require('crypto')
-  , URI     = require('URIjs')
-  , cheerio = require('cheerio');
+var req       = require('request')
+  , api       = require('../../../core/lib/api')
+  , crypto    = require('crypto')
+  , URI       = require('URIjs')
+  , cheerio   = require('cheerio')
+  , browserUA = {
+        chrome  : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.94 Safari/537.36"
+      , firefox : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0) Gecko/20100101 Firefox/35.0"
+    };
 
 function fixUrl (href) {
     if (!href) { return null; }
@@ -70,11 +74,12 @@ function requestOptions (href) {
       , rejectUnauthorized : false
       , method             : 'GET'
       , headers            : {
-            'User-Agent'      : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0) Gecko/20100101 Firefox/35.0'
-          , 'Accept'          : 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            'User-Agent'      : browserUA.firefox
+          , 'Accept'          : '*/*'
           , 'Accept-Language' : 'en-US,en;q=0.5'
+          , 'Host'            : new URI(href).host()
         }
-    }
+    };
 }
 
 function getMetadata (request, reply) {
