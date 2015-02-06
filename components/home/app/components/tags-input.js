@@ -1,8 +1,9 @@
 export default Ember.Component.extend({
     tagName           : 'input'
-  , attributeBindings : ['type', 'data-role', 'name' ]
+  , attributeBindings : ['type', 'data-role', 'value', 'valueAutocomplete' ]
   , type              : 'text'
-  , name              : 'name'
+  , value             : 'value'
+  , valueAutocomplete : null
   , 'data-role'       : 'tagsinput'
   , multiple          : true
   , placeholder       : null
@@ -22,65 +23,95 @@ export default Ember.Component.extend({
     }
 
   , willDestroyElement: function () {
-        this._super();
-        // TODO: cleanup here
+        this.$().tagsinput('input').typeahead('destroy');
+        this.$().tagsinput('destroy');
+    }
+
+  , getTypeaheadSource: function (data, initialize) {
+        var local  = Ember.$.map(data, function (d) { return { value : d }; })
+          , engine = new Bloodhound({
+                value          : 'tags'
+              , datumTokenizer : Bloodhound.tokenizers.obj.whitespace('value')
+              , queryTokenizer : Bloodhound.tokenizers.whitespace
+              , local          : local
+              , limit          : 10
+              , dupDetector    : function (remote, local) { return remote.value === local.value; }
+            });
+
+        if (initialize) {
+            engine.initialize();
+        }
+
+        return engine;
+    }
+
+  , initializeTagsInput : function ($input) {
+        return $input.tagsinput({
+            confirmKeys     : [13, 44, 32]
+          , trimValue       : true
+          , freeInput       : true
+          , allowDuplicates : false
+        });
+    }
+
+  , initializeTypeahead : function ($input, engine) {
+        return $input.typeahead(null, {
+            source     : engine.ttAdapter()
+          , value      : 'tags'
+          , displayKey : 'value'
+          , valueKey   : 'value'
+          , highlight  : true
+          , hint       : true
+          , minLength  : 1
+        });
     }
 
   , didInsertElement: function ()  {
         this._super();
 
-        var $input  = this.$()
-          , $parent = $input.parent();
+        this.get('valueAutocomplete').then(function (response) {
 
-        var engine = new Bloodhound({
-                name           : 'tags'
-              , local          : [ 'programming', 'javascript', 'java', 'haskell', 'operations', 'documentation', 'front-end', 'back-end', 'server', 'regular-expressions', 'regex', 'ruby', 'foundation', 'bootstrap', 'less', 'software', 'rails', 'vim', 'bash', 'linux', 'web', 'css', 'sass' ].map(function(x) { return { name: x }; })
-              , datumTokenizer : Bloodhound.tokenizers.obj.whitespace('name')
-              , queryTokenizer : Bloodhound.tokenizers.whitespace
+            var $input     = this.$()
+              , engine     = this.getTypeaheadSource(response.data, true)
+              , $tagsinput = null
+              , $parent    = $input.parent();
+
+            this.initializeTagsInput($input);
+            this.initializeTypeahead($input.tagsinput('input'), engine);
+
+            $tagsinput = $input.tagsinput('input');
+
+            $input.on('itemAdded', function (e) {
+                if (this.get('value')) {
+                    this.get('value').pushObject(e.item);
+                }
+
+                $input.tagsinput('input').typeahead('close');
+
+                engine.get(e.item, function (suggestions) {
+                    if(suggestions.length === 0 || suggestions[0].value !== e.item) {
+                        engine.add([{ value: e.item }]);
+                    }
+                });
+            }.bind(this));
+
+            $input.on('itemRemoved', function (e) {
+                if (this.get('value')) {
+                    this.get('value').removeObject(e.item);
+                }
+            }.bind(this));
+
+            $parent.find('.bootstrap-tagsinput input').blur(function () {
+                $input.tagsinput('input').typeahead('close');
+                $input.tagsinput('input').val('');
             });
 
-        engine.initialize();
-        $input.tagsinput({
-            confirmKeys     : [13, 44, 32]
-          , trimValue       : true
-          , freeInput       : true
-          , allowDuplicates : false
-          , typeaheadjs     : {
-                source     : engine.ttAdapter()
-              , name       : 'tags'
-              , displayKey : 'name'
-              , valueKey   : 'name'
-              , highlight  : true
-              , hint       : false
-              , minLength  : 2
-            }
-        });
+            $parent.find('.bootstrap-tagsinput input').focus(function () {
+                $parent.find('.bootstrap-tagsinput').addClass('active');
+            }.bind(this)).blur(function () {
+                $parent.find('.bootstrap-tagsinput').removeClass('active');
+            }.bind(this));
 
-        // TODO: clean this up
-        //       set the autocomplete datasource
-
-        $input.on('itemAdded', function (e) {
-            if (this.get('value')) {
-                this.get('value').pushObject(e.item);
-            }
-            $input.tagsinput('input').typeahead('close');
-        }.bind(this));
-
-        $input.on('itemRemoved', function (e) {
-            if (this.get('value')) {
-                this.get('value').removeObject(e.item);
-            }
-        }.bind(this));
-
-        $parent.find('.bootstrap-tagsinput input').blur(function (e) {
-            $input.tagsinput('input').typeahead('close');
-            $input.tagsinput('input').val('');
-        });
-
-        $parent.find('.bootstrap-tagsinput input').focus(function (e) {
-            $parent.find('.bootstrap-tagsinput').addClass('active');
-        }.bind(this)).blur(function (e) {
-            $parent.find('.bootstrap-tagsinput').removeClass('active');
         }.bind(this));
     }
 });

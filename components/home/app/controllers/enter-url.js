@@ -10,6 +10,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , recentUrls    : []
   , recentUrlsIds : {}
 
+  , tagsData: function () {
+        return this.api.getTags().catch(function () { return []; });
+    }.property()
+
   , disableSubmit : function () {
         return !this.get('displayHref') || this.get('pendingSave') || this.get('pendingDelete');
     }.property('displayHref', 'pendingSave', 'pendingDelete')

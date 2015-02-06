@@ -1,10 +1,17 @@
 var urlMeta = require('./handlers/url-meta')
+  , api     = require('../../core/lib/api')
   , url     = require('./handlers/url');
 
+function tags (request, reply) {
+    api.get('/tags', function (err, response, data) {
+        return err ? reply.boom(err) : reply(data);
+    });
+}
+
 module.exports = [{
-    method: 'GET'
-  , path: '/api/urlmeta/{href}'
-  , handler: urlMeta
+    method  : 'GET'
+  , path    : '/api/urlmeta/{href}'
+  , handler : urlMeta
   , config  : { auth : 'token' }
 }, {
     method  : 'POST'
@@ -15,5 +22,10 @@ module.exports = [{
     method  : 'DELETE'
   , path    : '/api/urls/{id}'
   , handler : url.remove
+  , config  : { auth : 'token' }
+}, {
+    method  : 'GET'
+  , path    : '/api/tags'
+  , handler : tags
   , config  : { auth : 'token' }
 }];
