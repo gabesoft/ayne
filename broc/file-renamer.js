@@ -2,7 +2,6 @@
 
 var fs     = require('fs')
   , util   = require('util')
-  , glob   = require('glob')
   , path   = require('path')
   , Writer = require('broccoli-writer');
 

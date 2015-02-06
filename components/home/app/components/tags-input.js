@@ -36,6 +36,15 @@ export default Ember.Component.extend({
               , local          : local
               , limit          : 10
               , dupDetector    : function (remote, local) { return remote.value === local.value; }
+              , sorter : function (a, b) {
+                    if (a.value < b.value) {
+                        return -1;
+                    } else if (a.value > b.value) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
             });
 
         if (initialize) {
@@ -77,16 +86,17 @@ export default Ember.Component.extend({
               , $parent    = $input.parent();
 
             this.initializeTagsInput($input);
-            this.initializeTypeahead($input.tagsinput('input'), engine);
 
             $tagsinput = $input.tagsinput('input');
+
+            this.initializeTypeahead($tagsinput, engine);
 
             $input.on('itemAdded', function (e) {
                 if (this.get('value')) {
                     this.get('value').pushObject(e.item);
                 }
 
-                $input.tagsinput('input').typeahead('close');
+                $tagsinput.typeahead('close');
 
                 engine.get(e.item, function (suggestions) {
                     if(suggestions.length === 0 || suggestions[0].value !== e.item) {
@@ -102,8 +112,8 @@ export default Ember.Component.extend({
             }.bind(this));
 
             $parent.find('.bootstrap-tagsinput input').blur(function () {
-                $input.tagsinput('input').typeahead('close');
-                $input.tagsinput('input').val('');
+                $tagsinput.typeahead('close');
+                $tagsinput.val('');
             });
 
             $parent.find('.bootstrap-tagsinput input').focus(function () {
