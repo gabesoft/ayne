@@ -64,14 +64,15 @@ export default Ember.Component.extend({
     }
 
   , initializeTypeahead : function ($input, engine) {
-        return $input.typeahead(null, {
+        return $input.typeahead({
+            highlight  : true
+          , hint       : true
+          , minLength  : 1
+        }, {
             source     : engine.ttAdapter()
           , value      : 'tags'
           , displayKey : 'value'
           , valueKey   : 'value'
-          , highlight  : true
-          , hint       : true
-          , minLength  : 1
         });
     }
 
