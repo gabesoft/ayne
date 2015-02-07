@@ -24,5 +24,4 @@ Ember.RSVP.configure('onerror', function (error) {
 
 Ember.TextField.reopen({
     attributeBindings: [ 'aria-label', 'data-role' ]
-  , keyUp: function (e) { this.sendAction('keyUpAction', e); }
 });
