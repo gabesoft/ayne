@@ -3,7 +3,7 @@
         {{input
         name="url"
         type="url"
-        key-up="updateUrlMeta"
+        key-up="getUrlMetaSlow"
         focus-out="getUrlMeta"
         value=displayHref}}
         <span class="form-label">
@@ -19,11 +19,18 @@
         type="text"
         value=title}}
         {{#if pendingMeta}}
-        <span class="form-label">
-            <i class="fa fa-cog fa-spin"></i>
-        </span>
+            <span class="form-label">
+                <i class="fa fa-circle-o-notch fa-spin fa-lg"></i>
+            </span>
         {{/if}}
     </span>
+</label>
+
+<label>Tags (lowercase words, no spaces)
+    {{tags-input
+    name="tags"
+    valueAutocomplete=tagsData
+    value=tags}}
 </label>
 
 <label>Private

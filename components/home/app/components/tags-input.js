@@ -28,7 +28,7 @@ export default Ember.Component.extend({
     }
 
   , getTypeaheadSource: function (data, initialize) {
-          var local  = Ember.$.map(data, function (d) { return { value : d }; })
+        var local  = Ember.$.map(data, function (d) { return { value : d }; })
           , engine = new Bloodhound({
                 value          : 'tags'
               , datumTokenizer : Bloodhound.tokenizers.obj.nonword('value')
@@ -109,7 +109,6 @@ export default Ember.Component.extend({
                 $tagsinput.typeahead('close');
 
                 engine.get(e.item, function (suggestions) {
-                    console.log(e.item, suggestions);
                     if(suggestions.length === 0 || suggestions[0].value !== e.item) {
                         engine.add([{ value: e.item }]);
                     }

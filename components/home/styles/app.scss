@@ -14,20 +14,17 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 .url-input-form {
     margin: 45px 10px 10px 10px;
 
-    .inline-label .form-label {
-        background-color: $tuatara;
-        border-color: $oil;
-    }
-
-    input, textarea {
-        color: $vapor;
+    @mixin input-base {
         background-color: $steel;
         border-color: $oil;
+        color: $vapor;
         font-size: 1rem;
+        font-weight: normal;
+        text-transform: none;
 
         &:focus, &:hover {
             border-color: $jet;
-            background-color: $charcoal;
+            background-color: $steel;
             color: $vapor;
         }
 
@@ -44,12 +41,61 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         }
     }
 
+    input, textarea {
+        @include input-base();
+    }
+
+    .inline-label .form-label {
+        background-color: $charcoal;
+        border-color: $oil;
+        color: $vapor;
+        min-width: 16px;
+    }
+
+    .favicon {
+        background-color: transparent;
+        border-radius: none;
+    }
+
     .button {
         margin: 10px 0;
         background-color: $primary-color-lightest;
 
         &:hover, &:focus {
             background-color: darken($primary-color-lightest, 8);
+        }
+    }
+
+    .button.secondary {
+        background-color: $jumbo;
+
+        &:hover, &:focus {
+            background-color: darken($jumbo, 8);
+        }
+    }
+
+    .bootstrap-tagsinput {
+        @include input-base();
+
+        &.active {
+            @include input-base();
+        }
+
+        .tag {
+            background-color: $primary-color-lightest;
+            text-transform: none;
+        }
+    }
+
+    .twitter-typeahead {
+        .tt-dropdown-menu {
+            @include input-base();
+
+            .tt-suggestion {
+                &.tt-cursor {
+                    background-color: $primary-color-lightest;
+                }
+            }
         }
     }
 }

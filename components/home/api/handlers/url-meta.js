@@ -18,19 +18,17 @@ function fixUrl (href) {
     }
 }
 
-function getPageUri (href, actualUri) {
-    var uri = new URI(href);
-
-    uri.hostname(actualUri.hostname() || uri.hostname());
-    uri.protocol(actualUri.protocol() || uri.protocol());
-
-    return uri;
-}
-
 function getFaviconUri (pageUri, $) {
-    var href1 = $('link[rel=icon]').attr('href')
-      , href2 = $('link[rel="shortcut icon"]').attr('href')
-      , uri   = new URI(href1 || href2 || '');
+    var href1       = $('link[rel=icon]').attr('href')
+      , href2       = $('link[rel="shortcut icon"]').attr('href')
+      , faviconPath = href1 || href2 || ''
+      , uri         = new URI(faviconPath);
+
+    if (!uri.hostname() && !faviconPath.match(/^\//)) {
+        uri.path(pageUri.path());
+        uri.segment(faviconPath);
+        uri.normalizePathname();
+    }
 
     uri.hostname(uri.hostname() || pageUri.hostname());
     uri.protocol(uri.protocol() || pageUri.protocol());
@@ -93,14 +91,13 @@ function getMetadata (request, reply) {
         if (err || !body) {
             reply(meta(href));
         } else {
-            var resolvedUri = new URI(response.request.uri.href)
-              , pageUri     = getPageUri(href, resolvedUri);
+            var resolvedUri = new URI(response.request.uri.href);
 
-            getExisting(pageUri.toString(), userId, function (err, res, data) {
+            getExisting(resolvedUri.toString(), userId, function (err, res, data) {
                 if (!err && data) {
                     reply(data);
                 } else {
-                    reply(buildMeta(pageUri, body));
+                    reply(buildMeta(resolvedUri, body));
                 }
             });
         }
