@@ -118,6 +118,8 @@ $black       : #000000;
 
 // We use these as default colors throughout
 $primary-color: #00558b;
+$primary-color-lighter: #008CBA;
+$primary-color-lightest: #449EC3;
 $secondary-color: #f1f1f1;
 $alert-color: #f04124;
 $success-color: #43AC6A;
@@ -829,7 +831,7 @@ $tabbar-header-line-height: $tabbar-height;
 $tabbar-header-margin: 0;
 
 // Off Canvas Menu Variables
-$off-canvas-width: rem-calc(250);
+$off-canvas-width: rem-calc(325);
 $off-canvas-bg: $oil;
 $off-canvas-bg-hover: scale-color($tabbar-bg, $lightness: -30%);
 
@@ -1241,6 +1243,7 @@ $switch-border-color: scale-color($white, $lightness: -20%);
 $switch-border-style: solid;
 $switch-border-width: 1px;
 $switch-bg: $iron;
+$switch-active-color: $primary-color;
 
 // We use these to control the switch heights for our default classes
 $switch-height-tny: rem-calc(22);

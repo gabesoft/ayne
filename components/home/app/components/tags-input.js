@@ -28,14 +28,16 @@ export default Ember.Component.extend({
     }
 
   , getTypeaheadSource: function (data, initialize) {
-        var local  = Ember.$.map(data, function (d) { return { value : d }; })
+          var local  = Ember.$.map(data, function (d) { return { value : d }; })
           , engine = new Bloodhound({
                 value          : 'tags'
-              , datumTokenizer : Bloodhound.tokenizers.obj.whitespace('value')
-              , queryTokenizer : Bloodhound.tokenizers.whitespace
+              , datumTokenizer : Bloodhound.tokenizers.obj.nonword('value')
+              , queryTokenizer : Bloodhound.tokenizers.nonword
               , local          : local
               , limit          : 10
-              , dupDetector    : function (remote, local) { return remote.value === local.value; }
+              , dupDetector    : function (remote, local) {
+                    return remote.value === local.value;
+                }
               , sorter : function (a, b) {
                     if (a.value < b.value) {
                         return -1;
@@ -68,11 +70,18 @@ export default Ember.Component.extend({
             highlight  : true
           , hint       : true
           , minLength  : 1
+          , autoselect : true
         }, {
             source     : engine.ttAdapter()
           , value      : 'tags'
           , displayKey : 'value'
           , valueKey   : 'value'
+        }).on('keyup', function (e) {
+            var keyCode = e.keyCode || e.which;
+
+            if (keyCode !== 40 && keyCode !== 38) {
+                $('.tt-dataset-0 .tt-suggestion').first().addClass('tt-cursor');
+            }
         });
     }
 
@@ -100,6 +109,7 @@ export default Ember.Component.extend({
                 $tagsinput.typeahead('close');
 
                 engine.get(e.item, function (suggestions) {
+                    console.log(e.item, suggestions);
                     if(suggestions.length === 0 || suggestions[0].value !== e.item) {
                         engine.add([{ value: e.item }]);
                     }

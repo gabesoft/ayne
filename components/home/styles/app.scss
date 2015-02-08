@@ -5,7 +5,53 @@
     height: 16px;
     border-radius: 100%;
     background-color: $primary-color;
+}
 
+html, body, .off-canvas-wrap, .inner-wrap, .main-section {
+    height: 100%;
+}
+
+.url-input-form {
+    margin: 45px 10px 10px 10px;
+
+    .inline-label .form-label {
+        background-color: $tuatara;
+        border-color: $oil;
+    }
+
+    input, textarea {
+        color: $vapor;
+        background-color: $steel;
+        border-color: $oil;
+        font-size: 1rem;
+
+        &:focus, &:hover {
+            border-color: $jet;
+            background-color: $charcoal;
+            color: $vapor;
+        }
+
+        &::selection {
+            background-color: $oil;
+        }
+
+        &::-moz-selection {
+            background-color: $oil;
+        }
+
+        &::-webkit-selection {
+            background-color: $oil;
+        }
+    }
+
+    .button {
+        margin: 10px 0;
+        background-color: $primary-color-lightest;
+
+        &:hover, &:focus {
+            background-color: darken($primary-color-lightest, 8);
+        }
+    }
 }
 
 .bootstrap-tagsinput {

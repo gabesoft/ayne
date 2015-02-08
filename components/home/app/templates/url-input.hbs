@@ -1,0 +1,58 @@
+<label>Url
+    <span class="inline-label">
+        {{input
+        name="url"
+        type="url"
+        key-up="updateUrlMeta"
+        focus-out="getUrlMeta"
+        value=displayHref}}
+        <span class="form-label">
+            {{view 'favicon' src=favicon }}
+        </span>
+    </span>
+</label>
+
+<label>Title
+    <span class="inline-label">
+        {{input
+        name="title"
+        type="text"
+        value=title}}
+        {{#if pendingMeta}}
+        <span class="form-label">
+            <i class="fa fa-cog fa-spin"></i>
+        </span>
+        {{/if}}
+    </span>
+</label>
+
+<label>Private
+    <div class="switch radius">
+        {{input
+        name="private"
+        type="checkbox"
+        id="url-privacy-setting"
+        checked=private}}
+        <label for="url-privacy-setting"></label>
+    </div>
+</label>
+
+<label>Notes
+    {{textarea
+    name="notes"
+    rows="3"
+    value=notes}}
+</label>
+
+<button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+    <i class="fa fa-bookmark"></i>
+    Save
+</button>
+
+{{#if showDelete}}
+    <button class="button secondary small" type="button" {{bind-attr disabled=disableDelete}} {{action 'remove'}}>
+        <i class="fa fa-trash"></i>
+        Delete
+    </button>
+{{/if}}
+
