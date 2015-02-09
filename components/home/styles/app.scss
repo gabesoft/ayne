@@ -4,15 +4,36 @@
 .favicon {
     height: 16px;
     border-radius: 100%;
-    background-color: $primary-color;
 }
 
 html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     height: 100%;
 }
 
+.off-canvas-wrap {
+    .close-icon {
+        display: none;
+    }
+    .header-icon {
+        display: inline-block;
+    }
+}
+
+.off-canvas-wrap.move-right {
+    .close-icon {
+        display: inline-block;
+    }
+    .header-icon {
+        display: none;
+    }
+}
+
 .url-input-form {
     margin: 45px 10px 10px 10px;
+
+    .favicon {
+        border-radius: 0;
+    }
 
     @mixin input-base {
         background-color: $steel;
@@ -50,11 +71,6 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         border-color: $oil;
         color: $vapor;
         min-width: 16px;
-    }
-
-    .favicon {
-        background-color: transparent;
-        border-radius: none;
     }
 
     .button {

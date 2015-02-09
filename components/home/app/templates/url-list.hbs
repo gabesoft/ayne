@@ -1,0 +1,16 @@
+<div class="grid-frame">
+    <div class="grid-block">
+        <div class="grid-content">
+            <ul class="side-nav">
+                {{#each url in controller}}
+                    <li>
+                        <a {{bind-attr href=url.href}} target="_blank">
+                            {{view 'favicon' src=url.favicon }}
+                            {{url.title}}
+                        </a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-export default Ember.ObjectController.extend(Ember.Evented, {
+export default Ember.ObjectController.extend({
     model         : {}
   , pendingMeta   : false
   , pendingSave   : false

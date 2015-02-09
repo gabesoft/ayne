@@ -33,7 +33,7 @@ function getFaviconUri (pageUri, $) {
     uri.hostname(uri.hostname() || pageUri.hostname());
     uri.protocol(uri.protocol() || pageUri.protocol());
 
-    if (!uri.path() || uri.path() === '/') {
+    if (faviconPath.length === 0) {
         uri.path('favicon.ico');
     }
 

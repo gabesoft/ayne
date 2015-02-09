@@ -39,7 +39,18 @@ function save (request, reply) {
     });
 }
 
+function read (request, reply) {
+    var userId = request.auth.credentials.id;
+
+    api.get([ '/users', userId, 'urls' ], function (err, response, body) {
+        return err ? reply.boom(err) : reply(body.sort(function (a, b) {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        }));
+    });
+}
+
 module.exports = {
     save   : save
   , remove : remove
+  , read   : read
 };

@@ -14,6 +14,11 @@ module.exports = [{
   , handler : urlMeta
   , config  : { auth : 'token' }
 }, {
+    method  : 'GET'
+  , path    : '/api/urls'
+  , handler : url.read
+  , config  : { auth : 'token' }
+}, {
     method  : 'POST'
   , path    : '/api/urls'
   , handler : url.save

@@ -13,4 +13,7 @@ export default Api.extend({
   , getTags: function () {
         return this.runGet('/api/tags');
     }
+  , getUrls: function () {
+        return this.runGet('/api/urls');
+    }
 });
