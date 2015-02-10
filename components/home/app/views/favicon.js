@@ -1,8 +1,9 @@
 export default Ember.View.extend({
-    tagName: 'img'
-  , attributeBindings: ['src']
-  , classNames: ['favicon']
-  , srcChanged: function () {
+    tagName           : 'img'
+  , attributeBindings : ['src', 'style']
+  , style             : 'visibility:hidden'
+  , classNames        : ['favicon']
+  , srcChanged        : function () {
         if (!this.get('src')) {
             this.set('src', this.defaultSrc());
         }
@@ -16,6 +17,10 @@ export default Ember.View.extend({
     }
 
   , didInsertElement: function () {
+        this.$().on('load', function () {
+            this.$().css('visibility', 'visible').hide().fadeIn();
+        }.bind(this));
+
         this.$().on('error', function () {
             this.$().attr('src', this.defaultSrc());
         }.bind(this));
