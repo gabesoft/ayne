@@ -23,7 +23,6 @@ export default Ember.Component.extend({
     }
 
   , willDestroyElement: function () {
-        this.$().tagsinput('input').typeahead('destroy');
         this.$().tagsinput('destroy');
     }
 

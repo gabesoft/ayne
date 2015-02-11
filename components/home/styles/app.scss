@@ -10,6 +10,51 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     height: 100%;
 }
 
+.url-view {
+    position: relative;
+}
+
+.url-popup {
+    &:before {
+        @include css-triangle(6px, $steel, bottom);
+        left: 35px;
+        position: absolute;
+        top: 8px;
+    }
+    background-color: transparent;
+    left: 100px;
+    padding: 20px;
+    position: absolute;
+    top: 15px;
+    width: 400px;
+    z-index: 1;
+
+    .popup-container {
+        background-color: $vapor;
+        border: 1px solid $steel;
+        padding: 5px;
+    }
+
+    .edit-button {
+        background-color: transparent;
+        color: $jet;
+        display: inline;
+        margin: 0;
+        padding: 0;
+
+        &:hover {
+            color: $steel;
+        }
+    }
+
+    pre {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+}
+
 .off-canvas-wrap {
     .close-icon {
         display: none;

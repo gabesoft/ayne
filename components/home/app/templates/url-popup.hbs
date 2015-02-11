@@ -1,0 +1,58 @@
+<div class="url-popup" style="display:none">
+    <div class="popup-container">
+        <div class="popup-title margin-bottom-15">
+            <i {{bind-attr class="private:fa-lock:fa-unlock :fa :fa-fw"}}></i>
+            <button class="button tiny edit-button" type="button" {{action 'setEditOn'}}>
+                <i class="fa fa-pencil fa-fw"></i>
+            </button>
+            <h5 class="url-title">{{title}}</h5>
+        </div>
+        <div class="popup-content">
+            <pre>{{href}}</pre>
+            <dl><dd>{{notes}}</dd></dl>
+            <div>
+                {{#each tag in tags}}
+                    <span class="tag label label-info">{{tag}}</span>
+                {{/each}}
+            </div>
+
+            {{#if editOn}}
+            <fieldset class="margin-top-15">
+                <label>Title
+                    <span class="inline-label">
+                    {{input
+                    name="title"
+                    type="text"
+                    value=title}}
+                    </span>
+                </label>
+
+                <label>Tags (lowercase words, no spaces)
+                    {{tags-input
+                    name="tags"
+                    valueAutocomplete=tagsData
+                    value=tags}}
+                </label>
+
+                <label>Private
+                    <div class="switch radius">
+                        {{input
+                        name="private"
+                        type="checkbox"
+                        id="private-switch"
+                        checked=private}}
+                        <label for="private-switch"></label>
+                    </div>
+                </label>
+
+                <label>Notes
+                    {{textarea
+                    name="notes"
+                    rows="3"
+                    value=notes}}
+                </label>
+            </fieldset>
+            {{/if}}
+        </div>
+    </div>
+</div>

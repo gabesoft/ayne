@@ -4,10 +4,7 @@
             <ul class="side-nav">
                 {{#each url in controller}}
                     <li>
-                        <a {{bind-attr href=url.href}} target="_blank">
-                            {{view 'favicon' src=url.favicon }}
-                            {{url.title}}
-                        </a>
+                        {{render 'url-view' url}}
                     </li>
                 {{/each}}
             </ul>

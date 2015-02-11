@@ -5,7 +5,10 @@ export default AppControllerBase.extend({
   , urlModel   : {}
   , actions    : {
         urlUpdated: function (data) {
-            console.log('updated-application', data);
+            console.log('url-updated', data);
+        }
+      , urlDeleted: function (data) {
+            console.log('url-deleted', data);
         }
     }
 });

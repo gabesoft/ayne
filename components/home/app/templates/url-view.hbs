@@ -1,0 +1,9 @@
+<div class="url-view">
+    <a {{bind-attr href=url.href}} target="_blank">
+        {{view 'favicon' src=favicon }}
+        {{title}}
+    </a>
+    {{#if view.hover}}
+        {{render 'url-popup' model}}
+    {{/if}}
+</div>
