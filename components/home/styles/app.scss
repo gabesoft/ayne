@@ -10,6 +10,10 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     height: 100%;
 }
 
+.url-title {
+    text-transform: capitalize;
+}
+
 .url-view {
     position: relative;
 }
@@ -35,15 +39,23 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         padding: 5px;
     }
 
-    .edit-button {
+    .action-button {
         background-color: transparent;
         color: $jet;
         display: inline;
         margin: 0;
         padding: 0;
+    }
 
+    .edit-button {
         &:hover {
-            color: $steel;
+            color: $primary-color;
+        }
+    }
+
+    .delete-button {
+        &:hover {
+            color: $alert-color;
         }
     }
 

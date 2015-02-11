@@ -4,6 +4,6 @@ export default Ember.View.extend({
         this.$('.url-popup').fadeIn('fast');
     }
   , willDestroyElement: function  () {
-        this.get('controller').send('save');
+        this.get('controller').send('saveUrl');
     }
 });

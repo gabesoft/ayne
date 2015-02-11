@@ -2,7 +2,7 @@ export default Ember.Component.extend({
     tagName           : 'input'
   , attributeBindings : ['type', 'data-role', 'value', 'valueAutocomplete' ]
   , type              : 'text'
-  , value             : 'value'
+  , value             : null
   , valueAutocomplete : null
   , 'data-role'       : 'tagsinput'
   , multiple          : true
@@ -10,16 +10,18 @@ export default Ember.Component.extend({
 
   , init: function () {
         this._super();
-        this.set('value', []);
-        this.addObserver('value', this, function () {
-            var val    = this.get('value') || []
-              , $input = this.$();
+        this.set('value', this.get('value') || []);
+        this.addObserver('value', this, this.updateTags);
+    }
 
-            $input.tagsinput('removeAll');
-            Ember.$.each(val, function (i, v) {
-                $input.tagsinput('add', v);
-            }.bind(this));
-        });
+  , updateTags: function () {
+        var val    = this.get('value') || []
+          , $input = this.$();
+
+        $input.tagsinput('removeAll');
+        Ember.$.each(val, function (i, v) {
+            $input.tagsinput('add', v);
+        }.bind(this));
     }
 
   , willDestroyElement: function () {
@@ -85,8 +87,6 @@ export default Ember.Component.extend({
     }
 
   , didInsertElement: function ()  {
-        this._super();
-
         this.get('valueAutocomplete').then(function (response) {
 
             var $input     = this.$()
@@ -130,7 +130,6 @@ export default Ember.Component.extend({
             }.bind(this)).blur(function () {
                 $parent.find('.bootstrap-tagsinput').removeClass('active');
             }.bind(this));
-
         }.bind(this));
     }
 });

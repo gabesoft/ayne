@@ -4,6 +4,7 @@ export default Ember.ObjectController.extend({
   , pendingSave   : false
   , pendingDelete : false
   , displayHref   : ''
+  , needs         : [ 'url-list' ]
 
   , tagsData: function () {
         return this.api.getTags().catch(function () { return []; });
@@ -45,15 +46,20 @@ export default Ember.ObjectController.extend({
         }.bind(this));
     }
 
+  , urlActionDone: function (data, action) {
+        this.get('target').send(action, data);
+        this.get('controllers.url-list').send(action, data);
+        this.set('model', {});
+        this.set('displayHref', null);
+    }
+
   , actions: {
         save: function () {
             this.set('pendingSave', true);
             this.set('model.userEntered', this.get('displayHref'));
             this.api.saveUrl(this.get('model'))
                .then(function (response) {
-                    this.set('model', {});
-                    this.set('displayHref', null);
-                    this.get('target').send('urlUpdated', response.data);
+                    this.urlActionDone(response.data, 'urlUpdated');
                 }.bind(this))
                .catch(function (response) {
                     console.log(response);
@@ -68,8 +74,7 @@ export default Ember.ObjectController.extend({
             this.set('pendingDelete', true);
             this.api.deleteUrl(this.get('model'))
                .then(function () {
-                    this.set('model', {});
-                    this.set('displayHref', null);
+                    this.urlActionDone(this.get('model'), 'urlDeleted');
                 }.bind(this))
                .catch(function (response) {
                     console.log(response);
