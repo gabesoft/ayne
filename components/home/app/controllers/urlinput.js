@@ -4,7 +4,7 @@ export default Ember.ObjectController.extend({
   , pendingSave   : false
   , pendingDelete : false
   , displayHref   : ''
-  , needs         : [ 'url-list' ]
+  , needs         : ['application']
 
   , tagsData: function () {
         return this.api.getTags().catch(function () { return []; });
@@ -48,7 +48,6 @@ export default Ember.ObjectController.extend({
 
   , urlActionDone: function (data, action) {
         this.get('target').send(action, data);
-        this.get('controllers.url-list').send(action, data);
         this.set('model', {});
         this.set('displayHref', null);
     }

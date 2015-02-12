@@ -3,7 +3,7 @@
 var paths = [
         '/'
       , '/enter-url'
-      , '/url-list'
+      , '/urllist'
     ];
 
 function homeHandler (request, reply) {

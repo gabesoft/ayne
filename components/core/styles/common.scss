@@ -43,6 +43,10 @@
     margin-right: 5px;
 }
 
+label > input[type], label > textarea {
+    margin: 0;
+}
+
 textarea {
     resize: none;
 }

@@ -1,14 +1,14 @@
 import AppControllerBase from 'core/app/controllers/application';
 
-export default AppControllerBase.extend({
+export default AppControllerBase.extend(Ember.Evented, {
     headerIcon : 'fa-skyatlas'
   , urlModel   : {}
   , actions    : {
         urlUpdated: function (data) {
-            console.log('url-updated', data);
+            this.trigger('url-updated', data);
         }
       , urlDeleted: function (data) {
-            console.log('url-deleted', data);
+            this.trigger('url-deleted', data);
         }
     }
 });

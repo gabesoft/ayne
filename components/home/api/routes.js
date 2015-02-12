@@ -32,5 +32,4 @@ module.exports = [{
     method  : 'GET'
   , path    : '/api/tags'
   , handler : tags
-  , config  : { auth : 'token' }
 }];

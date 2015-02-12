@@ -5,7 +5,13 @@
             <button class="button small action-button edit-button" title="Edit" type="button" {{action 'setEditOn'}}>
                 <i class="fa fa-pencil fa-fw"></i>
             </button>
-            <button class="button small action-button delete-button" title="Delete" type="button" {{action "deleteUrl"}}>
+            <button id="copy-url-button"
+                class="button small action-button copy-url-button"
+                type="button"
+                {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
+                <i {{bind-attr class="copyClass :fa"}}></i>
+            </button>
+            <button class="button small action-button delete-button pull-right" title="Delete" type="button" {{action "deleteUrl"}}>
                 <i class="fa fa-fw fa-close"></i>
             </button>
             <h5 class="url-title">{{title}}</h5>

@@ -1,7 +1,9 @@
 export default Ember.ObjectController.extend({
-    model    : {}
-  , editOn   : false
-  , tagsData : function () {
+    model     : {}
+  , copyClass : 'fa-copy'
+  , copyTitle : "Copy url to clipboard"
+  , editOn    : false
+  , tagsData  : function () {
         return this.api.getTags().catch(function () { return []; });
     }.property()
   , actions: {
@@ -10,9 +12,7 @@ export default Ember.ObjectController.extend({
         }
       , saveUrl: function () {
             if (this.get('editOn')) {
-                this.api.saveUrl(this.get('model')).then(function (response) {
-                    this.get('target').send('urlUpdated', response.data);
-                }.bind(this));
+                this.api.saveUrl(this.get('model'));
             }
         }
       , deleteUrl: function () {

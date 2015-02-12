@@ -39,15 +39,29 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         padding: 5px;
     }
 
+    .popup-title {
+        background-color: $white;
+    }
+
     .action-button {
         background-color: transparent;
         color: $jet;
         display: inline;
         margin: 0;
+        outline: none;
         padding: 0;
+
+        &:disabled {
+            background-color: transparent;
+            color: $jet;
+
+            &:hover {
+                color: $jet;
+            }
+        }
     }
 
-    .edit-button {
+    .edit-button, .copy-url-button {
         &:hover {
             color: $primary-color;
         }

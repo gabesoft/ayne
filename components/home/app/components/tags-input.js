@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     }
 
   , getTypeaheadSource: function (data, initialize) {
-        var local  = Ember.$.map(data, function (d) { return { value : d }; })
+        var local  = Ember.$.map(data || [], function (d) { return { value : d }; })
           , engine = new Bloodhound({
                 value          : 'tags'
               , datumTokenizer : Bloodhound.tokenizers.obj.nonword('value')

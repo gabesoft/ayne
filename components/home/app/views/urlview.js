@@ -1,6 +1,5 @@
 export default Ember.View.extend({
-    templateName  : 'url-view'
-  , mouseEnter: function () {
+    mouseEnter: function () {
         this.set('hover', true);
     }
   , mouseLeave: function () {
