@@ -24,6 +24,6 @@ export default Ember.View.extend({
     }
   , willDestroyElement: function  () {
         this.get('controller').send('saveUrl');
-        this.get('zeroClient').off('ready aftercopy');
+        this.get('zeroClient').off();
     }
 });
