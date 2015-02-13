@@ -36,16 +36,33 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     .popup-container {
         background-color: $vapor;
         border: 1px solid $steel;
-        padding: 5px;
+        padding: 10px;
     }
 
     .popup-title {
-        background-color: $white;
+        padding: 5px;
+        color: $vapor;
+        background-color: $steel;
+
+        h5 {
+            color: $vapor;
+        }
+    }
+
+    .popup-content {
+        padding: 5px;
+
+        .url-href {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
     }
 
     .action-button {
         background-color: transparent;
-        color: $jet;
+        color: $vapor;
         display: inline;
         margin: 0;
         outline: none;
@@ -53,17 +70,17 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 
         &:disabled {
             background-color: transparent;
-            color: $jet;
+            color: $vapor;
 
             &:hover {
-                color: $jet;
+                color: $vapor;
             }
         }
     }
 
     .edit-button, .copy-url-button {
         &:hover {
-            color: $primary-color;
+            color: $primary-color-lightest;
         }
     }
 
@@ -71,13 +88,6 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         &:hover {
             color: $alert-color;
         }
-    }
-
-    pre {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
     }
 }
 
