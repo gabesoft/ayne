@@ -1,7 +1,7 @@
 export default Ember.View.extend({
     zeroClient: null
   , didInsertElement : function () {
-        this.$('.url-popup').fadeIn('fast');
+        this.$('.url-popup').delay(400).fadeIn(400);
 
         var button = document.getElementById('copy-url-button')
           , client = new ZeroClipboard(button);

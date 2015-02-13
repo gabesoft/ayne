@@ -1,9 +1,10 @@
 export default Ember.ObjectController.extend({
-    model     : {}
-  , copyClass : 'fa-copy'
-  , copyTitle : "Copy url to clipboard"
-  , editOn    : false
-  , tagsData  : function () {
+    model       : {}
+  , copyClass   : 'fa-copy'
+  , copyTitle   : "Copy url to clipboard"
+  , editOn      : false
+  , disableCopy : true
+  , tagsData    : function () {
         return this.api.getTags().catch(function () { return []; });
     }.property()
   , actions: {
