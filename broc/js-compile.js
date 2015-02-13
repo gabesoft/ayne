@@ -1,7 +1,7 @@
 'use strict';
 
 var pickFiles        = require('broccoli-static-compiler')
-  , templateCompiler = require('broccoli-ember-hbs-template-compiler')
+  , templateCompiler = require('./ember-template-compiler')
   , path             = require('path')
   , glob             = require('glob')
   , touch            = require('./touch')
@@ -45,11 +45,12 @@ module.exports = function (opts) {
               , destDir : '/templates'
               , files   : [ '**/*.hbs' ]
             })
-          , all = mergeTrees([partials, templ]);
+          , compiled = templateCompiler(mergeTrees([ partials, templ ]));
 
-        return concatenate(templateCompiler(all), {
-            inputFiles : [ 'templates/**/*.js' ]
-          , outputFile : '/app-templates.js'
+        return pickFiles(compiled, {
+            srcDir  : '/'
+          , destDir : '/'
+          , files   : [ '**/*.js' ]
         });
     }
 
@@ -69,7 +70,8 @@ module.exports = function (opts) {
             return touch([ '/app-compiled.js', '/app-compiled.js.map' ]);
         }
 
-        var modules = pickFiles(opts.root, {
+        var templates = compileTemplates()
+          , modules = pickFiles(opts.root, {
                 srcDir  : '/'
               , destDir : '/'
               , files   : [ '*/app/**/*.js', path.join(opts.name, 'app', '.jshintrc') ]
@@ -78,7 +80,7 @@ module.exports = function (opts) {
                 root     : path.join(opts.name, 'app')
               , destFile : 'app-module-setup.js'
             })
-          , all = mergeTrees([ modules, moduleSetup ]);
+          , all = mergeTrees([ templates, modules, moduleSetup ]);
 
         return moduleCompiler(all, {
             formatter : 'bundle'
@@ -114,11 +116,10 @@ module.exports = function (opts) {
     }
 
     function combineAssetsJs () {
-        var templ    = compileTemplates()
-          , modules  = compileJsModules()
+        var modules  = compileJsModules()
           , jshint   = jshintModules()
           , vendorJs = compileVendorJs()
-          , lib      = concatenate(mergeTrees([ templ, modules ]), {
+          , lib      = concatenate(modules, {
                 inputFiles : [ '**/*.js' ]
               , outputFile : '/app.js'
             })

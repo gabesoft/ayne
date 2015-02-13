@@ -27,8 +27,8 @@
   "devDependencies": {
     "broccoli": "git+https://github.com/gabesoft/broccoli.git",
     "broccoli-concat": "0.0.12",
-    "broccoli-ember-hbs-template-compiler": "git+https://github.com/gabesoft/broccoli-ember-hbs-template-compiler.git",
     "broccoli-es6-module-transpiler": "^0.5.0",
+    "broccoli-filter": "^0.1.11",
     "broccoli-jshint": "^0.5.3",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-sass": "^0.3.3",

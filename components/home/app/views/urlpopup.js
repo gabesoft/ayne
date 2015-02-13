@@ -7,16 +7,18 @@ export default Ember.View.extend({
           , client = new ZeroClipboard(button);
 
         client.on('ready', function () {
-            if (this.controller) {
-                this.controller.set('disableCopy', false);
+            var ctrl = this.get('controller');
+            if (ctrl) {
+                ctrl.set('disableCopy', false);
             }
         }.bind(this));
 
         client.on('aftercopy', function () {
-            if (this.controller) {
-                this.controller.set('copyTitle', 'Copied');
-                this.controller.set('copyClass', 'fa-check-square-o');
-                this.controller.set('disableCopy', true);
+            var ctrl = this.get('controller');
+            if (ctrl) {
+                ctrl.set('copyTitle', 'Copied');
+                ctrl.set('copyClass', 'fa-check-square-o');
+                ctrl.set('disableCopy', true);
             }
         }.bind(this));
 
