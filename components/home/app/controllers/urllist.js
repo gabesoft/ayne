@@ -15,10 +15,9 @@ export default Ember.ArrayController.extend({
                 var urls = this.get('model')
                   , url  = urls.findBy('id', data.id);
                 if (url) {
-                    this.replaceContent(0, 1, [ data ]);
-                } else {
-                    urls.unshiftObject(data);
+                    urls.removeObject(url);
                 }
+                urls.unshiftObject(data);
             }
         }
       , urlDeleted: function (data) {

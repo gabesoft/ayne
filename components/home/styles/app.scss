@@ -10,12 +10,19 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     height: 100%;
 }
 
-.url-title {
-    text-transform: capitalize;
+.top-bar {
+    top: 0;
 }
 
-.url-view {
-    position: relative;
+.url-list {
+    .url-view {
+        position: relative;
+
+        .url-title {
+            text-transform: capitalize;
+            padding: 3px 5px;
+        }
+    }
 }
 
 .url-popup {

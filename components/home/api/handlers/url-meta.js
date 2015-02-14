@@ -24,7 +24,7 @@ function getFaviconUri (pageUri, $) {
       , faviconPath = href1 || href2 || ''
       , uri         = new URI(faviconPath);
 
-    if (!uri.hostname() && !faviconPath.match(/^\//)) {
+    if (!uri.hostname() && faviconPath.match(/^\./)) {
         uri.path(pageUri.path());
         uri.segment(faviconPath);
         uri.normalizePathname();
