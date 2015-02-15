@@ -1,5 +1,8 @@
 export default Ember.View.extend({
-    mouseEnter: function () {
+    showPopup : function () {
+        return this.get('hover');
+    }.property('hover', 'altKey')
+  , mouseEnter: function () {
         this.set('hover', true);
     }
   , mouseLeave: function () {
