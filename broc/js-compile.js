@@ -4,6 +4,7 @@ var pickFiles        = require('broccoli-static-compiler')
   , templateCompiler = require('./ember-template-compiler')
   , path             = require('path')
   , glob             = require('glob')
+  , log              = require('broccoli-stew').log
   , touch            = require('./touch')
   , jshintTree       = require('broccoli-jshint')
   , moduleAppender   = require('./ember-module-appender')
@@ -30,30 +31,6 @@ module.exports = function (opts) {
         }).length > 0;
     }
 
-    function compileTemplates () {
-        if (!hasTemplates()) {
-            return touch('/templates/app-templates.js');
-        }
-
-        var partials = pickFiles(opts.root, {
-                srcDir  : '/'
-              , destDir : '/templates'
-              , files   : [ '**/partials/**/*.hbs']
-            })
-          , templ = pickFiles(opts.root, {
-                srcDir  : path.join(opts.name, 'app', 'templates')
-              , destDir : '/templates'
-              , files   : [ '**/*.hbs' ]
-            })
-          , compiled = templateCompiler(mergeTrees([ partials, templ ]));
-
-        return pickFiles(compiled, {
-            srcDir  : '/'
-          , destDir : '/'
-          , files   : [ '**/*.js' ]
-        });
-    }
-
     function jshintModules () {
         if (!hasModules() || opts.minify) { return empty(); }
 
@@ -63,29 +40,6 @@ module.exports = function (opts) {
             });
 
         return jshintTree(modules, { log: true, disableTestGenerator: true });
-    }
-
-    function compileJsModules () {
-        if (!hasModules()) {
-            return touch([ '/app-compiled.js', '/app-compiled.js.map' ]);
-        }
-
-        var templates = compileTemplates()
-          , modules = pickFiles(opts.root, {
-                srcDir  : '/'
-              , destDir : '/'
-              , files   : [ '*/app/**/*.js', path.join(opts.name, 'app', '.jshintrc') ]
-            })
-          , moduleSetup = moduleAppender(modules, {
-                root     : path.join(opts.name, 'app')
-              , destFile : 'app-module-setup.js'
-            })
-          , all = mergeTrees([ templates, modules, moduleSetup ]);
-
-        return moduleCompiler(all, {
-            formatter : 'bundle'
-          , output    : '/app-compiled.js'
-        });
     }
 
     function compileVendorJs () {
@@ -115,12 +69,65 @@ module.exports = function (opts) {
         return mergeTrees([ flash, js ]);
     }
 
+    function compileTemplates () {
+        if (!hasTemplates()) {
+            return touch('/templates/app-templates.js');
+        }
+
+        var partials = pickFiles(opts.root, {
+                srcDir  : '/'
+              , destDir : '/templates'
+              , files   : [ '*/app/partials/**/*.hbs']
+            })
+          , templ = pickFiles(opts.root, {
+                srcDir  : path.join(opts.name, 'app', 'templates')
+              , destDir : '/templates'
+              , files   : [ '**/*.hbs' ]
+            })
+          , compiled = log(templateCompiler(mergeTrees([ partials, templ ])), {
+                output : 'tree'
+              , label  : 'compiled-templates'
+            });
+
+        return pickFiles(compiled, {
+            srcDir  : '/templates'
+          , destDir : '/'
+          , files   : [ '**/*.js' ]
+        });
+    }
+
+    function compileJsModules () {
+        if (!hasModules()) {
+            return touch([ '/app-compiled.js', '/app-compiled.js.map' ]);
+        }
+
+        var modules = pickFiles(opts.root, {
+                srcDir  : '/'
+              , destDir : '/'
+              , files   : [ '*/app/**/*.js', path.join(opts.name, 'app', '.jshintrc') ]
+            })
+          , moduleSetup = moduleAppender(modules, {
+                root     : path.join(opts.name, 'app')
+              , destFile : 'app-module-setup.js'
+            });
+
+        return moduleCompiler(mergeTrees([ modules, moduleSetup ]), {
+            formatter : 'bundle'
+          , output    : '/app-compiled.js'
+        });
+    }
+
     function combineAssetsJs () {
-        var modules  = compileJsModules()
-          , jshint   = jshintModules()
-          , vendorJs = compileVendorJs()
-          , lib      = concatenate(modules, {
-                inputFiles : [ '**/*.js' ]
+        var templates = compileTemplates()
+          , modules   = compileJsModules()
+          , jshint    = jshintModules()
+          , vendor    = compileVendorJs()
+          , libMerged = log(mergeTrees([ templates, modules ]), {
+                output : 'tree'
+              , label  : 'lib-merged'
+            })
+          , lib = concatenate(libMerged, {
+                inputFiles : [ '*/**/*.js', '**/*.js' ]
               , outputFile : '/app.js'
             })
           , map = pickFiles(modules, {
@@ -149,7 +156,7 @@ module.exports = function (opts) {
                 }
             });
 
-            vendorJs = uglifyJs(vendorJs, {
+            vendor = uglifyJs(vendor, {
                 mangle   : false
               , compress : false
               , sourceMapConfig: {
@@ -159,7 +166,7 @@ module.exports = function (opts) {
             });
         }
 
-        return mergeTrees([ vendorJs, lib, map, jshint ]);
+        return mergeTrees([ vendor, lib, map, jshint ]);
     }
 
     return pickFiles(combineAssetsJs(), {

@@ -15,7 +15,7 @@ function TemplateCompiler (inputTree, options) {
 }
 
 TemplateCompiler.prototype.extensions = [ 'hbs', 'handlebars' ];
-TemplateCompiler.prototype.targetExtension = '.js';
+TemplateCompiler.prototype.targetExtension = 'js';
 
 TemplateCompiler.prototype.getTemplateNameFromPath = function (templatePath) {
     var splitPath                = templatePath.split("/")
