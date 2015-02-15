@@ -26,10 +26,6 @@ module.exports = function (opts) {
                 srcDir  : '/foundation/scss'
               , destDir : '/foundation'
             })
-          , foundationApps = pickFiles(opts.bower, {
-                srcDir  : '/foundation-apps/scss'
-              , destDir : '/foundation-apps'
-            })
           , fontAwesome = pickFiles(opts.bower, {
                 srcDir  : '/font-awesome/scss'
               , destDir : '/font-awesome'
@@ -42,7 +38,7 @@ module.exports = function (opts) {
           , tagsInput = renameFile(bootstrapTagsinput, {
                 'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
             })
-          , compiled = compileSass([ foundation, foundationApps, fontAwesome, tagsInput, opts.root ]
+          , compiled = compileSass([ foundation, fontAwesome, tagsInput, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {

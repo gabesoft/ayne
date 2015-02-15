@@ -24,7 +24,6 @@
     "blueimp-md5": "~1.1.0",
     "modernizr": "~2.8.3",
     "zeroclipboard": "~2.2.0",
-    "foundation-apps": "~1.0.2",
     "bootstrap-tagsinput": "~0.4.2",
     "typeahead.js": "~0.10.5"
   }

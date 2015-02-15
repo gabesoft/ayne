@@ -1,29 +1,35 @@
 <label>Url
-    <span class="inline-label">
-        {{input
-        name="url"
-        type="url"
-        key-up="getUrlMetaSlow"
-        focus-out="getUrlMeta"
-        value=displayHref}}
-        <span class="form-label">
-            {{view 'favicon' src=favicon }}
-        </span>
-    </span>
+    <div class="row collapse">
+        <div class="small-10 columns">
+            {{input
+            name="url"
+            type="url"
+            key-up="getUrlMetaSlow"
+            focus-out="getUrlMeta"
+            value=displayHref}}
+        </div>
+        <div class="small-2 columns">
+            <span class="postfix"> {{view 'favicon' src=favicon }} </span>
+        </div>
+    </div>
 </label>
 
 <label>Title
-    <span class="inline-label">
-        {{input
-        name="title"
-        type="text"
-        value=title}}
-        {{#if pendingMeta}}
-            <span class="form-label">
+    <div class="row collapse">
+        <div class="small-10 columns">
+            {{input
+            name="title"
+            type="text"
+            value=title}}
+        </div>
+        <div class="small-2 columns">
+            <span class="postfix">
+                {{#if pendingMeta}}
                 <i class="fa fa-spinner fa-pulse fa-lg"></i>
+                {{/if}}
             </span>
-        {{/if}}
-    </span>
+        </div>
+    </div>
 </label>
 
 <label>Tags (lowercase words, no spaces)

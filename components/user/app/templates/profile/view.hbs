@@ -1,19 +1,16 @@
-<div class="grid-frame">
-    <div class="grid-block">
-        <div class="grid-content text-center">
-            <div class="card margin-top-30 profile-view">
-                <div class="text-center">
-                    <img {{bind-attr src=gravatarUrl}}>
-                </div>
-                <div class="card-divider profile-name">
-                    {{displayName}}
-                </div>
-                <div class="card-section">
-                    <p>{{firstName}} {{lastName}}</p>
-                    <p>{{location}}</p>
-                </div>
+<div class="row">
+    <div class="text-center">
+        <div class="panel margin-top-30 profile-view">
+            <div class="text-center">
+                <img {{bind-attr src=gravatarUrl}}>
+            </div>
+            <div class="card-divider profile-name">
+                {{displayName}}
+            </div>
+            <div class="card-section">
+                <p>{{firstName}} {{lastName}}</p>
+                <p>{{location}}</p>
             </div>
         </div>
-        <div class="grid-content show-for-medium-up"></div>
     </div>
 </div>

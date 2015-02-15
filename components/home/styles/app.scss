@@ -6,14 +6,6 @@
     border-radius: 100%;
 }
 
-html, body, .off-canvas-wrap, .inner-wrap, .main-section {
-    height: 100%;
-}
-
-.top-bar {
-    top: 0;
-}
-
 .url-list {
     .url-view {
         position: relative;
@@ -87,7 +79,7 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 
     .edit-button, .copy-url-button {
         &:hover {
-            color: $primary-color-lightest;
+            color: $primary-color-light;
         }
     }
 
@@ -95,24 +87,6 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         &:hover {
             color: $alert-color;
         }
-    }
-}
-
-.off-canvas-wrap {
-    .close-icon {
-        display: none;
-    }
-    .header-icon {
-        display: inline-block;
-    }
-}
-
-.off-canvas-wrap.move-right {
-    .close-icon {
-        display: inline-block;
-    }
-    .header-icon {
-        display: none;
     }
 }
 
@@ -154,7 +128,7 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         @include input-base();
     }
 
-    .inline-label .form-label {
+    .postfix {
         background-color: $charcoal;
         border-color: $oil;
         color: $vapor;
@@ -163,10 +137,10 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 
     .button {
         margin: 10px 0;
-        background-color: $primary-color-lightest;
+        background-color: $primary-color-light;
 
         &:hover, &:focus {
-            background-color: darken($primary-color-lightest, 8);
+            background-color: darken($primary-color-light, 8);
         }
     }
 
@@ -186,7 +160,7 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
         }
 
         .tag {
-            background-color: $primary-color-lightest;
+            background-color: $primary-color-light;
             text-transform: none;
         }
     }
@@ -197,7 +171,8 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 
             .tt-suggestion {
                 &.tt-cursor {
-                    background-color: $primary-color-lightest;
+                    background-color: $primary-color-light
+                    ;
                 }
             }
         }
@@ -215,7 +190,6 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
 
     &.active {
         border: 1px solid $input-focus-border-color;
-        box-shadow: 0 0 5px $input-focus-border-color;
         background: none repeat scroll $input-focus-bg-color;
     }
 
@@ -230,7 +204,7 @@ html, body, .off-canvas-wrap, .inner-wrap, .main-section {
     }
 
     .tag [data-role="remove"]:hover {
-        background-color: darken($primary-color, 5%);
+        color: $alert-color;
         box-shadow: none;
     }
 }

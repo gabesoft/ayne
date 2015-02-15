@@ -43,10 +43,6 @@
     margin-right: 5px;
 }
 
-label > input[type], label > textarea {
-    margin: 0;
-}
-
 textarea {
     resize: none;
 }
@@ -66,7 +62,7 @@ ul.off-canvas-list li {
             $switch-paddle-transition-ease,
             $switch-height-med,
             $steel,
-            $primary-color-lightest,
+            $primary-color-light,
             false,
             true
         );
@@ -75,5 +71,32 @@ ul.off-canvas-list li {
     .switch input + label {
         padding: 0;
         border: none;
+    }
+}
+
+.off-canvas-wrap, .inner-wrap {
+    min-height: 100%;
+}
+
+.off-canvas-wrap {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.off-canvas-wrap {
+    .close-icon {
+        display: none;
+    }
+    .header-icon {
+        display: inline-block;
+    }
+}
+
+.off-canvas-wrap.move-right {
+    .close-icon {
+        display: inline-block;
+    }
+    .header-icon {
+        display: none;
     }
 }

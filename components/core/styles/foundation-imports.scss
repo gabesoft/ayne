@@ -1,5 +1,3 @@
-$foundation-version: '1.0.2';
-
 @import "foundation/normalize";
 @import "foundation/foundation/components/grid";
 @import "foundation/foundation/components/alert-boxes";
@@ -17,9 +15,9 @@ $foundation-version: '1.0.2';
 /*@import "foundation/foundation/components/joyride";*/
 @import "foundation/foundation/components/keystrokes";
 @import "foundation/foundation/components/labels";
-@import "foundation/foundation/components/magellan";
+/*@import "foundation/foundation/components/magellan";*/
 /*@import "foundation/foundation/components/pagination";*/
-/*@import "foundation/foundation/components/panels";*/
+@import "foundation/foundation/components/panels";
 /*@import "foundation/foundation/components/progress-bars";*/
 /*@import "foundation/foundation/components/range-slider";*/
 /*@import "foundation/foundation/components/reveal";*/
@@ -35,15 +33,3 @@ $foundation-version: '1.0.2';
 @import "foundation/foundation/components/type";
 @import "foundation/foundation/components/offcanvas";
 @import "foundation/foundation/components/visibility";
-
-@import "foundation-apps/helpers/functions";
-@import "foundation-apps/helpers/mixins";
-@import "foundation-apps/helpers/breakpoints";
-@import "foundation-apps/helpers/images";
-@import "foundation-apps/global";
-@import "foundation-apps/components/grid";
-@import "foundation-apps/components/card";
-@import "foundation-apps/components/forms";
-@import "foundation-apps/components/typography";
-@import "foundation-apps/components/motion";
-@import "foundation-apps/components/utilities";
