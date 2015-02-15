@@ -1,0 +1,88 @@
+.url-input-form {
+    margin: 45px 10px 10px 10px;
+
+    .favicon {
+        border-radius: 0;
+    }
+
+    @mixin input-base {
+        background-color: $steel;
+        border-color: $oil;
+        color: $vapor;
+        font-size: 1rem;
+        font-weight: normal;
+        text-transform: none;
+
+        &:focus, &:hover {
+            border-color: $jet;
+            background-color: $steel;
+            color: $vapor;
+        }
+
+        &::selection {
+            background-color: $oil;
+        }
+
+        &::-moz-selection {
+            background-color: $oil;
+        }
+
+        &::-webkit-selection {
+            background-color: $oil;
+        }
+    }
+
+    input, textarea {
+        @include input-base();
+    }
+
+    .postfix {
+        background-color: $charcoal;
+        border-color: $oil;
+        color: $vapor;
+        min-width: 16px;
+    }
+
+    .button {
+        margin: 10px 0;
+        background-color: $primary-color-light;
+
+        &:hover, &:focus {
+            background-color: darken($primary-color-light, 8);
+        }
+    }
+
+    .button.secondary {
+        background-color: $jumbo;
+
+        &:hover, &:focus {
+            background-color: darken($jumbo, 8);
+        }
+    }
+
+    .bootstrap-tagsinput {
+        @include input-base();
+
+        &.active {
+            @include input-base();
+        }
+
+        .tag {
+            background-color: $primary-color-light;
+            text-transform: none;
+        }
+    }
+
+    .twitter-typeahead {
+        .tt-dropdown-menu {
+            @include input-base();
+
+            .tt-suggestion {
+                &.tt-cursor {
+                    background-color: $primary-color-light
+                    ;
+                }
+            }
+        }
+    }
+}

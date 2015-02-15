@@ -1,0 +1,74 @@
+.url-popup {
+    &:before {
+        @include css-triangle(6px, $steel, bottom);
+        left: 35px;
+        position: absolute;
+        top: 8px;
+    }
+    background-color: transparent;
+    left: 10px;
+    padding: 20px;
+    position: absolute;
+    top: 15px;
+    width: 400px;
+    z-index: 1;
+
+    .popup-container {
+        background-color: $vapor;
+        border: 1px solid $steel;
+        padding: 10px;
+    }
+
+    .popup-title {
+        padding: 5px;
+        color: $vapor;
+        background-color: $steel;
+
+        h5 {
+            color: $vapor;
+            text-transform: capitalize;
+        }
+    }
+
+    .popup-content {
+        padding: 5px;
+
+        .url-href {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+    }
+
+    .action-button {
+        background-color: transparent;
+        color: $vapor;
+        display: inline;
+        margin: 0;
+        outline: none;
+        padding: 0;
+
+        &:disabled {
+            background-color: transparent;
+            color: $vapor;
+
+            &:hover {
+                color: $vapor;
+            }
+        }
+    }
+
+    .edit-button, .copy-url-button {
+        &:hover {
+            color: $primary-color-light;
+        }
+    }
+
+    .delete-button {
+        &:hover {
+            color: $alert-color;
+        }
+    }
+}
+
