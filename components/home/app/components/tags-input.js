@@ -82,6 +82,7 @@ export default Ember.Component.extend({
 
             if (keyCode !== 40 && keyCode !== 38) {
                 $('.tt-dataset-0 .tt-suggestion').first().addClass('tt-cursor');
+                $('.tt-dataset-1 .tt-suggestion').first().addClass('tt-cursor');
             }
         });
     }

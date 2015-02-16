@@ -22,6 +22,18 @@
     }
 }
 
+.dropdown-menu {
+    @include drop-down();
+
+    .textcomplete-item {
+        @include drop-down-item();
+
+        &.active {
+            @include drop-down-item-active();
+        }
+    }
+}
+
 .bootstrap-tagsinput {
     width: 100%;
     @include form-element();
@@ -58,33 +70,13 @@
     }
 
     .tt-dropdown-menu {
-        background-color: $input-focus-bg-color;
-        color: $body-font-color;
-        border: 1px solid $smoke;
-        border-radius: 5px;
-        font-size: 14px;
+        @include drop-down();
 
         .tt-suggestion {
-            padding: 5px 10px;
-
-            &:first-child {
-                border-top-right-radius: 5px;
-                border-top-left-radius: 5px;
-            }
-
-            &:last-child {
-                border-bottom-right-radius: 5px;
-                border-bottom-left-radius: 5px;
-            }
-
-            p {
-                margin: 0;
-                padding: 0;
-            }
+            @include drop-down-item();
 
             &.tt-cursor {
-                background-color: $primary-color;
-                color: $white;
+                @include drop-down-item-active();
             }
         }
     }

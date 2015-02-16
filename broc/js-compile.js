@@ -61,6 +61,7 @@ module.exports = function (opts) {
                   , 'handlebars/handlebars' + ext
                   , 'ember/ember' + ext
                   , 'typeahead.js/dist/typeahead.bundle' + ext
+                  , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
                   , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
                   , 'zeroclipboard/dist/ZeroClipboard' + ext
                 ]

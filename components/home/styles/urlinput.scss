@@ -5,35 +5,8 @@
         border-radius: 0;
     }
 
-    @mixin input-base {
-        background-color: $steel;
-        border-color: $oil;
-        color: $vapor;
-        font-size: 1rem;
-        font-weight: normal;
-        text-transform: none;
-
-        &:focus, &:hover {
-            border-color: $jet;
-            background-color: $steel;
-            color: $vapor;
-        }
-
-        &::selection {
-            background-color: $oil;
-        }
-
-        &::-moz-selection {
-            background-color: $oil;
-        }
-
-        &::-webkit-selection {
-            background-color: $oil;
-        }
-    }
-
     input, textarea {
-        @include input-base();
+        @include input-base-dark();
     }
 
     .postfix {
@@ -61,10 +34,10 @@
     }
 
     .bootstrap-tagsinput {
-        @include input-base();
+        @include input-base-dark();
 
         &.active {
-            @include input-base();
+            @include input-base-dark-focus();
         }
 
         .tag {
@@ -75,12 +48,11 @@
 
     .twitter-typeahead {
         .tt-dropdown-menu {
-            @include input-base();
+            @include drop-down-dark();
 
             .tt-suggestion {
                 &.tt-cursor {
-                    background-color: $primary-color-light
-                    ;
+                    @include drop-down-item-active-dark();
                 }
             }
         }

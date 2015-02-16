@@ -1,6 +1,10 @@
 export default Ember.ArrayController.extend({
-    needs : ['application']
-  , init  : function () {
+    needs  : ['application']
+  , search : {}
+  , tagsData    : function () {
+        return this.api.getTags().catch(function () { return []; });
+    }.property()
+  , init   : function () {
         this._super();
         this.get('controllers.application').on('url-updated', function (data) {
             this.send('urlUpdated', data);
