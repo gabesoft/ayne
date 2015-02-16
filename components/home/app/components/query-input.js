@@ -11,6 +11,10 @@ export default Ember.Component.extend({
         this._super();
     }
 
+  , keyUp: function () {
+        this.set('value', this.$().val());
+    }
+
   , didInsertElement: function () {
         this.get('tags').then(function (response) {
             var $input = this.$()

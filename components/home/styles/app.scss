@@ -48,11 +48,11 @@
 
     .tag {
         padding: 0.25rem 0.5rem 0.3rem 0.5rem;
-    }
 
-    .tag [data-role="remove"]:hover {
-        color: $alert-color;
-        box-shadow: none;
+        [data-role="remove"]:hover {
+            color: $alert-color;
+            box-shadow: none;
+        }
     }
 
     .twitter-typeahead {

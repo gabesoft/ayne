@@ -1,7 +1,8 @@
 export default Ember.ArrayController.extend({
-    needs  : ['application']
-  , search : {}
-  , tagsData    : function () {
+    needs         : ['application']
+  , search        : ''
+  , onEnterAction : 'searchUrls'
+  , tagsData      : function () {
         return this.api.getTags().catch(function () { return []; });
     }.property()
   , init   : function () {
@@ -30,6 +31,9 @@ export default Ember.ArrayController.extend({
                   , url  = urls.findBy('id', data.id);
                 urls.removeObject(url);
             }
+        }
+      , searchUrls: function () {
+            console.log('search', this.get('search'));
         }
     }
 });
