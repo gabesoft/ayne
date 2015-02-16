@@ -23,15 +23,7 @@
 }
 
 .dropdown-menu {
-    @include drop-down();
-
-    .textcomplete-item {
-        @include drop-down-item();
-
-        &.active {
-            @include drop-down-item-active();
-        }
-    }
+    @include drop-down('textcomplete-item', 'active');
 }
 
 .bootstrap-tagsinput {
@@ -62,22 +54,14 @@
         color: $alert-color;
         box-shadow: none;
     }
-}
 
-.twitter-typeahead {
-    .tt-hint {
-        display: none !important;
-    }
+    .twitter-typeahead {
+        .tt-hint {
+            display: none !important;
+        }
 
-    .tt-dropdown-menu {
-        @include drop-down();
-
-        .tt-suggestion {
-            @include drop-down-item();
-
-            &.tt-cursor {
-                @include drop-down-item-active();
-            }
+        .tt-dropdown-menu {
+            @include drop-down('tt-suggestion', 'tt-cursor');
         }
     }
 }

@@ -36,15 +36,16 @@
     }
 }
 
-@mixin drop-down {
-    background-color: $input-focus-bg-color;
-    border-radius: 5px;
-    border: 1px solid $smoke;
-    color: $body-font-color;
-    font-size: 14px;
+@mixin drop-down-item-active {
+    background-color: $primary-color;
+    color: $white;
+
+    a {
+        color: $white;
+    }
 }
 
-@mixin drop-down-item {
+@mixin drop-down-item($item-active-class: null) {
     padding: 5px 10px;
 
     &:first-child {
@@ -61,21 +62,48 @@
         margin: 0;
         padding: 0;
     }
-}
 
-@mixin drop-down-item-active {
-    background-color: $primary-color;
-    color: $white;
-
-    a {
-        color: $white;
+    @if $item-active-class {
+        &.#{$item-active-class} {
+            @include drop-down-item-active();
+        }
     }
 }
 
-@mixin drop-down-dark {
-    @include input-base-dark;
+@mixin drop-down($item-class: null, $item-active-class: null) {
+    background-color: $input-focus-bg-color;
+    border-radius: 5px;
+    border: 1px solid $smoke;
+    color: $body-font-color;
+    font-size: 14px;
+    list-style: none;
+
+    @if $item-class {
+        .#{$item-class} {
+            @include drop-down-item($item-active-class);
+        }
+    }
 }
 
 @mixin drop-down-item-active-dark {
     background-color: $primary-color-light;
+}
+
+@mixin drop-down-item-dark($item-active-class: null) {
+    @if $item-active-class {
+        &.#{$item-active-class} {
+            @include drop-down-item-active-dark();
+        }
+    }
+}
+
+@mixin drop-down-dark($item-class: null, $item-active-class: null) {
+    @include drop-down($item-class, $item-active-class);
+    @include input-base-dark;
+
+    @if $item-class {
+        .#{$item-class} {
+            @include drop-down-item-dark($item-active-class);
+        }
+    }
 }

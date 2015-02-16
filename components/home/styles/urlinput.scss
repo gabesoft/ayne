@@ -44,16 +44,10 @@
             background-color: $primary-color-light;
             text-transform: none;
         }
-    }
 
-    .twitter-typeahead {
-        .tt-dropdown-menu {
-            @include drop-down-dark();
-
-            .tt-suggestion {
-                &.tt-cursor {
-                    @include drop-down-item-active-dark();
-                }
+        .twitter-typeahead {
+            .tt-dropdown-menu {
+                @include drop-down-dark('tt-suggestion', 'tt-cursor');
             }
         }
     }
