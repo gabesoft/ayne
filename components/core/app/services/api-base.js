@@ -45,7 +45,8 @@ export default Ember.Object.extend({
     }
 
   , runGet: function (path, query) {
-        return this.run({ url: path, type: 'GET', qs: query });
+        var qs = query ? '?' + Ember.$.param(query) : '';
+        return this.run({ url: path + qs, type: 'GET' });
     }
 
   , runDelete: function (path) {

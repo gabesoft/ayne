@@ -33,7 +33,9 @@ export default Ember.ArrayController.extend({
             }
         }
       , searchUrls: function () {
-            console.log('search', this.get('search'));
+            this.api.getUrls({ search: this.get('search') }).then(function (response) {
+                this.set('model', response.data);
+            }.bind(this));
         }
     }
 });

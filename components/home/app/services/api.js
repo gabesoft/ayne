@@ -13,7 +13,7 @@ export default Api.extend({
   , getTags: function () {
         return this.runGet('/api/tags');
     }
-  , getUrls: function () {
-        return this.runGet('/api/urls');
+  , getUrls: function (query) {
+        return this.runGet('/api/urls', query);
     }
 });
