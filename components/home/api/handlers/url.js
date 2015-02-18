@@ -39,18 +39,17 @@ function save (request, reply) {
     });
 }
 
-function read (request, reply) {
-    var userId = request.auth.credentials.id;
+function search (request, reply) {
+    var userId = request.auth.credentials.id
+      , query  = request.query || {};
 
-    api.get([ '/users', userId, 'urls' ], request.query, function (err, response, body) {
-        return err ? reply.boom(err) : reply(body.sort(function (a, b) {
-            return new Date(b.updatedAt) - new Date(a.updatedAt);
-        }));
+    api.get([ '/users', userId, 'urls' ], query, function (err, response, body) {
+        return err ? reply.boom(err) : reply(body);
     });
 }
 
 module.exports = {
     save   : save
   , remove : remove
-  , read   : read
+  , search : search
 };

@@ -18,15 +18,23 @@ export default Ember.View.extend({
 
   , didInsertElement: function () {
         this.$().on('load', function () {
-            this.$().css('visibility', 'visible').hide().fadeIn();
+            if (this.$()) {
+                this.$().css('visibility', 'visible').hide().fadeIn();
+            }
         }.bind(this));
 
         this.$().on('error', function () {
-            this.$().attr('src', this.defaultSrc());
+            if (this.$()) {
+                this.$().attr('src', this.defaultSrc());
+            }
         }.bind(this));
 
         if (!this.get('src')) {
             this.set('src', this.defaultSrc());
         }
+    }
+
+  , willDestroyElement: function () {
+        this.$().off();
     }
 });

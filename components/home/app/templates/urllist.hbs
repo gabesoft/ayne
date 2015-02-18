@@ -1,6 +1,6 @@
 <div class="row">
     <div class="medium-10 medium-offset-1 large-8 large-offset-2 columns">
-        {{query-input value=search tags=tagsData}}
+        {{query-input value=search tags=tagsData enterAction="searchUrls"}}
         <ul class="side-nav url-list">
             {{#each url in model}}
             <li class="url-item">
