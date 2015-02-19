@@ -57,15 +57,6 @@ export default Ember.Component.extend({
         return engine;
     }
 
-  , initializeTagsInput : function ($input) {
-        return $input.tagsinput({
-            confirmKeys     : [13, 44, 32]
-          , trimValue       : true
-          , freeInput       : true
-          , allowDuplicates : false
-        });
-    }
-
   , initializeTypeahead : function ($input, engine) {
         return $input.typeahead({
             highlight  : true
@@ -86,50 +77,60 @@ export default Ember.Component.extend({
         });
     }
 
-  , didInsertElement: function ()  {
-        this.get('valueAutocomplete').then(function (response) {
+  , initializeTagsInput: function (tags) {
+        var $input     = this.$()
+          , engine     = this.getTypeaheadSource(tags, true)
+          , $tagsinput = null
+          , $parent    = $input.parent();
 
-            var $input     = this.$()
-              , engine     = this.getTypeaheadSource(response.data, true)
-              , $tagsinput = null
-              , $parent    = $input.parent();
+        $input.tagsinput({
+            confirmKeys     : [13, 44, 32]
+          , trimValue       : true
+          , freeInput       : true
+          , allowDuplicates : false
+        });
 
-            this.initializeTagsInput($input);
+        $tagsinput = $input.tagsinput('input');
 
-            $tagsinput = $input.tagsinput('input');
+        this.initializeTypeahead($tagsinput, engine);
 
-            this.initializeTypeahead($tagsinput, engine);
+        $input.on('itemAdded', function (e) {
+            if (this.get('value')) {
+                this.get('value').pushObject(e.item);
+            }
 
-            $input.on('itemAdded', function (e) {
-                if (this.get('value')) {
-                    this.get('value').pushObject(e.item);
+            $tagsinput.typeahead('close');
+
+            engine.get(e.item, function (suggestions) {
+                if(suggestions.length === 0 || suggestions[0].value !== e.item) {
+                    engine.add([{ value: e.item }]);
                 }
-
-                $tagsinput.typeahead('close');
-
-                engine.get(e.item, function (suggestions) {
-                    if(suggestions.length === 0 || suggestions[0].value !== e.item) {
-                        engine.add([{ value: e.item }]);
-                    }
-                });
-            }.bind(this));
-
-            $input.on('itemRemoved', function (e) {
-                if (this.get('value')) {
-                    this.get('value').removeObject(e.item);
-                }
-            }.bind(this));
-
-            $parent.find('.bootstrap-tagsinput input').blur(function () {
-                $tagsinput.typeahead('close');
-                $tagsinput.val('');
             });
-
-            $parent.find('.bootstrap-tagsinput input').focus(function () {
-                $parent.find('.bootstrap-tagsinput').addClass('active');
-            }.bind(this)).blur(function () {
-                $parent.find('.bootstrap-tagsinput').removeClass('active');
-            }.bind(this));
         }.bind(this));
+
+        $input.on('itemRemoved', function (e) {
+            if (this.get('value')) {
+                this.get('value').removeObject(e.item);
+            }
+        }.bind(this));
+
+        $parent.find('.bootstrap-tagsinput input').blur(function () {
+            $tagsinput.typeahead('close');
+            $tagsinput.val('');
+        });
+
+        $parent.find('.bootstrap-tagsinput input').focus(function () {
+            $parent.find('.bootstrap-tagsinput').addClass('active');
+        }.bind(this)).blur(function () {
+            $parent.find('.bootstrap-tagsinput').removeClass('active');
+        }.bind(this));
+    }
+
+  , didInsertElement: function ()  {
+        Ember.run.later(function () {
+            this.get('valueAutocomplete').then(function (response) {
+                this.initializeTagsInput(response.data);
+            }.bind(this));
+        }.bind(this), 10);
     }
 });

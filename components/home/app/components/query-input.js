@@ -1,38 +1,45 @@
 export default Ember.Component.extend({
-    tagName           : 'input'
+    tagName           : 'div'
+  , classNames        : [ 'row', 'collapse' ]
   , attributeBindings : ['type', 'data-role', 'value', 'tags', 'enterAction']
   , enterAction       : null
-  , type              : 'text'
   , value             : null
-  , className         : 'query-input'
   , placeholder       : null
   , multiple          : true
+  , layoutName        : 'query-input'
+  , inputSelector     : 'input.query-input'
 
   , init: function () {
         this._super();
     }
 
   , keyUp: function () {
-        this.set('value', this.$().val());
+        this.set('value', this.$(this.inputSelector).val());
+    }
+
+  , sendEnterAction: function () {
+        var action = this.get('enterAction');
+        if (action) {
+            this.get('parentView').get('controller').send(action);
+        }
     }
 
   , keyDown: function (e) {
-        var action = this.get('enterAction');
-        if (e.keyCode === 13 && action) {
-            this.get('parentView').get('controller').send(action, e);
+        if (e.keyCode === 13) {
+            this.sendEnterAction();
         }
     }
 
   , didInsertElement: function () {
         this.get('tags').then(function (response) {
-            var $input = this.$()
+            var $input = this.$(this.inputSelector)
               , tags   = response.data;
 
             $input.textcomplete([{
                 match  : /\B#([\-\w]*)$/
               , search : function (term, callback) {
                     callback($.map(tags, function (tag) {
-                        return tag.indexOf(term) === 0 ? tag : null;
+                        return tag.indexOf(term.toLowerCase()) === 0 ? tag : null;
                     }));
                 }
               , template: function (value) {
@@ -42,7 +49,14 @@ export default Ember.Component.extend({
                     return '#' + value;
                 }
               , index : 1
-            }]);
+            }], { placement: '' });
         }.bind(this));
+    }
+
+  , actions: {
+        clearSearch: function () {
+            this.set('value', '');
+            Ember.run.later(this.sendEnterAction.bind(this), 100);
+        }
     }
 });

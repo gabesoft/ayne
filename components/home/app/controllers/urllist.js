@@ -32,7 +32,7 @@ export default Ember.ArrayController.extend({
             }
         }
       , searchUrls: function () {
-            this.api.getUrls({ search: this.get('search'), sort: null })
+            this.api.getUrls({ search: this.get('search'), sort: "updatedAt:desc" })
                .then(function (response) {
                     this.set('model', response.data);
                 }.bind(this))

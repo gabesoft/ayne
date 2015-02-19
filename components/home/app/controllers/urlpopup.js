@@ -5,21 +5,27 @@ export default Ember.ObjectController.extend({
   , editOn      : false
   , disableCopy : true
   , tagsData    : function () {
-        return this.api.getTags().catch(function () { return []; });
-    }.property()
+        return this.get('parentController.tagsData');
+    }.property('parentController.tagsData')
   , actions: {
-        setEditOn: function () {
-            this.set('editOn', true);
+        toggleEdit: function () {
+            this.toggleProperty('editOn');
         }
       , saveUrl: function () {
             if (this.get('editOn')) {
-                this.api.saveUrl(this.get('model'));
+                this.api.saveUrl(this.get('model')).catch(function (response) {
+                    console.log(response);
+                });
             }
         }
       , deleteUrl: function () {
-            this.api.deleteUrl(this.get('model')).then(function () {
-                this.get('target').send('urlDeleted', this.get('model'));
-            }.bind(this));
+            this.api.deleteUrl(this.get('model'))
+               .then(function () {
+                    this.get('target').send('urlDeleted', this.get('model'));
+                }.bind(this))
+               .catch(function (response) {
+                    console.log(response);
+                });
         }
     }
 });
