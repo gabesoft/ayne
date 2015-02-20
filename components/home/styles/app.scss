@@ -11,6 +11,7 @@
 .query-input {
     .button.postfix {
         border: 1px solid scale-color($primary-color, $lightness: $button-function-factor);
+        outline: none;
     }
 }
 

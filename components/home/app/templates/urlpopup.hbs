@@ -1,7 +1,9 @@
 <div class="url-popup" hidden="true">
     <div {{bind-attr class="editOn:edit-on :popup-container"}}>
         <div class="popup-title margin-bottom-15">
-            <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
+            <button class="button small action-button privacy-button" {{bind-attr title=privacyTitle}} {{action 'togglePrivacy'}}>
+                <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
+            </button>
             <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
                 <i class="fa fa-pencil fa-fw"></i>
             </button>
@@ -14,61 +16,41 @@
             <button class="button small action-button delete-button pull-right" title="Delete" type="button" {{action "deleteUrl"}}>
                 <i class="fa fa-fw fa-close"></i>
             </button>
-            <h5>{{title}}</h5>
+            {{#if editOn}}
+                <label>
+                    {{input name="title" type="text" value=title}}
+                </label>
+            {{else}}
+                <h5>{{title}}</h5>
+            {{/if}}
         </div>
         <div class="popup-content">
             <dl>
                 <dd class="url-href" {{bind-attr title=href}}>{{href}}</dd>
             </dl>
 
-            {{#if notes}}
+            {{#if editOn}}
+                <label>Notes
+                    {{textarea name="notes" rows="3" value=notes}}
+                </label>
+            {{else if notes}}
                 <blockquote class="url-notes">{{notes}}</blockquote>
             {{/if}}
 
-            <div>
-                {{#each tag in tags}}
-                    <span class="tag label label-info">{{tag}}</span>
-                {{/each}}
-            </div>
-
             {{#if editOn}}
-            <div class="margin-top-15">
-                <label>Title
-                    <span class="inline-label">
-                    {{input
-                    name="title"
-                    type="text"
-                    value=title}}
-                    </span>
-                </label>
-
                 <label>Tags (lowercase words, no spaces)
                     {{tags-input
                     name="tags"
                     valueAutocomplete=tagsData
                     valueTags=tags
-                    value=tags
-                    }}
+                    value=tags }}
                 </label>
-
-                <label>Private
-                    <div class="switch radius">
-                        {{input
-                        name="private"
-                        type="checkbox"
-                        id="private-switch"
-                        checked=private}}
-                        <label for="private-switch"></label>
-                    </div>
-                </label>
-
-                <label>Notes
-                    {{textarea
-                    name="notes"
-                    rows="3"
-                    value=notes}}
-                </label>
-            </div>
+            {{else}}
+                <div>
+                    {{#each tag in tags}}
+                        <span class="tag label label-info">{{tag}}</span>
+                    {{/each}}
+                </div>
             {{/if}}
         </div>
     </div>

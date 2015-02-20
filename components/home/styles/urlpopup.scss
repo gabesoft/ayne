@@ -4,7 +4,7 @@
     padding: 20px;
     position: absolute;
     top: 15px;
-    width: 400px;
+    width: 350px;
     z-index: 1;
     transition: 0.3s cubic-bezier(0.4, 0.2, 0.5, 1.4);
     transform-origin: 35px -8px;
@@ -37,13 +37,17 @@
     }
 
     .popup-title {
-        padding: 5px;
+        padding: 10px;
         color: $vapor;
-        background-color: $steel;
+        background-color: $charcoal;
 
         h5 {
             color: $vapor;
             text-transform: capitalize;
+        }
+
+        input {
+            @include input-base-dark();
         }
     }
 
@@ -76,7 +80,7 @@
         }
     }
 
-    .edit-button, .copy-url-button {
+    .edit-button, .copy-url-button, .privacy-button {
         &:hover {
             color: $primary-color-light;
         }

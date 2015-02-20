@@ -127,10 +127,10 @@ export default Ember.Component.extend({
     }
 
   , didInsertElement: function ()  {
-        Ember.run.later(function () {
+        Ember.run.next(function () {
             this.get('valueAutocomplete').then(function (response) {
                 this.initializeTagsInput(response.data);
             }.bind(this));
-        }.bind(this), 10);
+        }.bind(this));
     }
 });

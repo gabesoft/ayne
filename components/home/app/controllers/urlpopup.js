@@ -7,9 +7,15 @@ export default Ember.ObjectController.extend({
   , tagsData    : function () {
         return this.get('parentController.tagsData');
     }.property('parentController.tagsData')
+  , privacyTitle: function () {
+        return this.get('model.private') ? 'Private' : 'Public';
+    }.property('model.private')
   , actions: {
         toggleEdit: function () {
             this.toggleProperty('editOn');
+        }
+      , togglePrivacy: function () {
+            this.toggleProperty('model.private');
         }
       , saveUrl: function () {
             if (this.get('editOn')) {
