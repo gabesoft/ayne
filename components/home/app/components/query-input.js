@@ -56,7 +56,7 @@ export default Ember.Component.extend({
   , actions: {
         clearSearch: function () {
             this.set('value', '');
-            Ember.run.later(this.sendEnterAction.bind(this), 100);
+            Ember.run.later(this.sendEnterAction.bind(this), 10);
         }
     }
 });

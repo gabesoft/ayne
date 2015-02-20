@@ -1,22 +1,39 @@
 .url-popup {
+    background-color: transparent;
+    left: 25px;
+    padding: 20px;
+    position: absolute;
+    top: 15px;
+    width: 400px;
+    z-index: 1;
+    transition: 0.3s cubic-bezier(0.4, 0.2, 0.5, 1.4);
+    transform-origin: 35px -8px;
+
+    &[hidden] {
+        opacity: 0;
+        transform: scale(0);
+        display: block;
+        transition-timing-function: ease;
+    }
+
     &:before {
         @include css-triangle(6px, $steel, bottom);
         left: 35px;
         position: absolute;
         top: 8px;
     }
-    background-color: transparent;
-    left: 10px;
-    padding: 20px;
-    position: absolute;
-    top: 15px;
-    width: 400px;
-    z-index: 1;
 
     .popup-container {
-        background-color: $vapor;
+        background: hsla(0, 0%, 100%, 0.9);
+        background: linear-gradient(to bottom right, white, hsla(0, 0%, 100%, 0.8));
+        box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
         border: 1px solid $steel;
         padding: 10px;
+
+        &.edit-on {
+            background-color: $body-bg;
+        }
     }
 
     .popup-title {

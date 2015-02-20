@@ -1,5 +1,5 @@
-<div class="url-popup" style="display:none">
-    <div class="popup-container">
+<div class="url-popup" hidden="true">
+    <div {{bind-attr class="editOn:edit-on :popup-container"}}>
         <div class="popup-title margin-bottom-15">
             <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
             <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
