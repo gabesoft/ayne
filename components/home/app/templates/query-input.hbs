@@ -1,17 +1,18 @@
-<div class="small-8 columns">
+<div class="small-9 columns">
     <input type="text" class="query-input" {{bind-attr value=value}}>
 </div>
-<div class="small-4 columns">
-    <span class="postfix">
-        <button class="button small action-button clear-button"
-            title="Clear search"
-            type="button" {{action "clearSearch"}}>
-            <i class="fa fa-fw fa-close"></i>
-        </button>
-        <button class="button small action-button save-button" 
-            title="Save search"
-            type="button" {{action "saveSearch"}}>
-            <i class="fa fa-fw fa-save"></i>
-        </button>
-    </span>
+<div class="small-1 columns">
+    <a href="#" class="button postfix run-button" title="Search" {{action "runSearch"}}>
+        <i class="fa fa-fw fa-search"></i>
+    </a>
+</div>
+<div class="small-1 columns">
+    <a href="#" class="button postfix clear-button" title="Clear search" {{action "clearSearch"}}>
+        <i class="fa fa-fw fa-eraser"></i>
+    </a>
+</div>
+<div class="small-1 columns">
+    <a href="#" class="button postfix save-button" title="Save search" {{action "saveSearch"}}>
+        <i class="fa fa-fw fa-save"></i>
+    </a>
 </div>

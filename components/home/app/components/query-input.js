@@ -1,7 +1,7 @@
 export default Ember.Component.extend({
     tagName           : 'div'
-  , classNames        : [ 'row', 'collapse' ]
-  , attributeBindings : ['type', 'data-role', 'value', 'tags', 'enterAction']
+  , classNames        : [ 'query-input', 'row', 'collapse' ]
+  , attributeBindings : [ 'type', 'data-role', 'value', 'tags', 'enterAction' ]
   , enterAction       : null
   , value             : null
   , placeholder       : null
@@ -57,6 +57,12 @@ export default Ember.Component.extend({
         clearSearch: function () {
             this.set('value', '');
             Ember.run.later(this.sendEnterAction.bind(this), 10);
+        }
+      , runSearch: function () {
+            this.sendEnterAction();
+        }
+      , saveSearch: function () {
+            console.log('Not implemented');
         }
     }
 });
