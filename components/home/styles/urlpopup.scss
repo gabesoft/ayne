@@ -60,6 +60,11 @@
             white-space: nowrap;
             width: 100%;
         }
+
+        .url-notes {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
     }
 
     .action-button {

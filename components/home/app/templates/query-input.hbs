@@ -1,10 +1,10 @@
-<div class="small-9 columns">
-    <input type="text" class="query-input" {{bind-attr value=value}}>
-</div>
 <div class="small-1 columns">
-    <a href="#" class="button postfix run-button" title="Search" {{action "runSearch"}}>
+    <a href="#" class="button prefix radius run-button" title="Search" {{action "runSearch"}}>
         <i class="fa fa-fw fa-search"></i>
     </a>
+</div>
+<div class="small-9 columns">
+    <input type="text" class="query-input" {{bind-attr value=value}}>
 </div>
 <div class="small-1 columns">
     <a href="#" class="button postfix clear-button" title="Clear search" {{action "clearSearch"}}>
@@ -12,7 +12,7 @@
     </a>
 </div>
 <div class="small-1 columns">
-    <a href="#" class="button postfix save-button" title="Save search" {{action "saveSearch"}}>
+    <a href="#" class="button postfix radius save-button" title="Save search" {{action "saveSearch"}}>
         <i class="fa fa-fw fa-save"></i>
     </a>
 </div>

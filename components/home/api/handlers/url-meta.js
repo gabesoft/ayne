@@ -40,14 +40,14 @@ function getFaviconUri (pageUri, $) {
     return uri;
 }
 
-function meta (pageUri, faviconUri, title) {
+function meta (pageUri, faviconUri, title, notes) {
     return {
         title   : title || null
       , href    : pageUri ? pageUri.toString() : null
       , favicon : faviconUri ? faviconUri.toString() : null
       , tags    : []
       , private : false
-      , notes   : null
+      , notes   : notes
     };
 }
 
@@ -58,8 +58,12 @@ function makeUrlId (href, userId) {
 function buildMeta (pageUri, body) {
     var $          = cheerio.load(body)
       , faviconUri = getFaviconUri(pageUri, $)
-      , title      = $('title').text();
-    return meta(pageUri, faviconUri, title);
+      , title      = $('title').text()
+      , notes      = $('meta[name]').filter(function () {
+            return this.attribs.name.toLowerCase() === 'description';
+        }).attr('content');
+
+    return meta(pageUri, faviconUri, title, notes);
 }
 
 function getExisting (href, userId, cb) {
