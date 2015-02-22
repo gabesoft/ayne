@@ -19,6 +19,11 @@ module.exports = [{
   , handler : url.search
   , config  : { auth : 'token' }
 }, {
+    method  : 'GET'
+  , path    : '/api/queries'
+  , handler : url.queries
+  , config  : { auth : 'token' }
+}, {
     method  : 'POST'
   , path    : '/api/urls'
   , handler : url.save

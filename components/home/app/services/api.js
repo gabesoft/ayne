@@ -16,4 +16,7 @@ export default Api.extend({
   , getUrls: function (query) {
         return this.runGet('/api/urls', query);
     }
+  , getQueries: function (query) {
+        return this.runGet('/api/queries', query);
+    }
 });

@@ -48,8 +48,18 @@ function search (request, reply) {
     });
 }
 
+function queries (request, reply) {
+    var userId = request.auth.credentials.id
+      , query  = request.query || {};
+
+    api.get([ '/users', userId, 'queries' ], query, function (err, response, body) {
+        return err ? reply.boom(err) : reply(body);
+    });
+}
+
 module.exports = {
-    save   : save
-  , remove : remove
-  , search : search
+    save    : save
+  , queries : queries
+  , remove  : remove
+  , search  : search
 };

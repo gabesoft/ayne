@@ -11,23 +11,28 @@ export default Ember.Component.extend({
 
   , init: function () {
         this._super();
+        this.addObserver('value', this, function () {
+            this.set('queryValue', this.get('value'));
+            this.sendEnterAction();
+        });
     }
 
-  , keyUp: function () {
-        this.set('value', this.$(this.inputSelector).val());
-    }
-
-  , sendEnterAction: function () {
-        var action = this.get('enterAction');
-        if (action) {
-            this.get('parentView').get('controller').send(action);
+  , queryValue: function (key, value) {
+        if (value) {
+            this.$(this.inputSelector).val(value);
+        } else {
+            return this.$(this.inputSelector).val();
         }
-    }
+    }.property().volatile()
 
   , keyDown: function (e) {
         if (e.keyCode === 13) {
             this.sendEnterAction();
         }
+    }
+
+  , sendEnterAction: function () {
+        this.sendAction('action', this.get('queryValue'));
     }
 
   , didInsertElement: function () {
@@ -55,14 +60,11 @@ export default Ember.Component.extend({
 
   , actions: {
         clearSearch: function () {
-            this.set('value', '');
-            Ember.run.next(this.sendEnterAction.bind(this));
+            this.set('queryValue', '');
+            this.sendEnterAction();
         }
       , runSearch: function () {
             this.sendEnterAction();
-        }
-      , saveSearch: function () {
-            console.log('Not implemented');
         }
     }
 });
