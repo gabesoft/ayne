@@ -140,10 +140,10 @@
 
     &:disabled {
         background-color: transparent;
-        color: $body-font-color;
+        color: $button-color;
 
         &:hover {
-            color: $body-font-color;
+            color: $button-color;
         }
     }
 }

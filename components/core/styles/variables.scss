@@ -19,12 +19,12 @@ $jet         : #222222;
 $black       : #000000;
 
 $alert-color     : color("materialize-red", "lighten-2");
-$info-color      : #a0d3e8;
+$info-color      : color("light-blue", "lighten-1");
 $primary-color   : color("teal", "lighten-1");
 $secondary-color : color("brown", "lighten-1");
 $ternary-color   : color("blue-grey", "darken-1");
-$success-color   : #43AC6A;
-$warning-color   : #f08a24;
+$success-color   : color("teal", "lighten-2");
+$warning-color   : color("yellow", "lighten-1");
 
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
