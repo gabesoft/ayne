@@ -26,6 +26,7 @@
     "zeroclipboard": "~2.2.0",
     "bootstrap-tagsinput": "~0.4.2",
     "typeahead.js": "~0.10.5",
-    "jquery-textcomplete": "~0.3.7"
+    "jquery-textcomplete": "~0.3.7",
+    "materialize": "~0.95.2"
   }
 }

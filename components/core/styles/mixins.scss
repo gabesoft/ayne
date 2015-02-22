@@ -1,3 +1,9 @@
+@mixin box-shadow-2($args1, $args2) {
+    -webkit-box-shadow: $args1, $args2;
+    -moz-box-shadow: $args1, $args2;
+    box-shadow: $args1, $args2;
+}
+
 @mixin profile-photo-small() {
     border-radius: 100%;
     position: relative;
@@ -18,6 +24,10 @@
     font-size: 1rem;
     font-weight: normal;
     text-transform: none;
+
+    @if $input-include-glowing-effect {
+        @include block-glowing-effect(focus, $glowing-effect-fade-time, $glowing-effect-color);
+    }
 
     &:focus {
         @include input-base-dark-focus();
@@ -104,6 +114,36 @@
     @if $item-class {
         .#{$item-class} {
             @include drop-down-item-dark($item-active-class);
+        }
+    }
+}
+
+@mixin card-panel($card-padding: 20px, $card-bg-color: #fff, $element-top-margin: 1.5rem/3, $element-bottom-margin: 1rem) {
+    padding: $card-padding;
+    margin: $element-top-margin 0 $element-bottom-margin 0;
+    @include radius(2px);
+    @extend .z-depth-1;
+    background-color: $card-bg-color;
+}
+
+@mixin transparent-button($button-color: $body-font-color, $button-hover-color: $body-font-color) {
+    background-color: transparent;
+    color: $button-color;
+    display: inline;
+    margin: 0;
+    outline: none;
+    padding: 0;
+
+    &:hover {
+        color :$button-hover-color;
+    }
+
+    &:disabled {
+        background-color: transparent;
+        color: $body-font-color;
+
+        &:hover {
+            color: $body-font-color;
         }
     }
 }

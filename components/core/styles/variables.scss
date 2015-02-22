@@ -1,0 +1,42 @@
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
+
+$alert-color     : color("materialize-red", "lighten-2");
+$info-color      : #a0d3e8;
+$primary-color   : color("teal", "lighten-1");
+$secondary-color : color("brown", "lighten-1");
+$ternary-color   : color("blue-grey", "darken-1");
+$success-color   : #43AC6A;
+$warning-color   : #f08a24;
+
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+$font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+$font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
+
+$font-weight-normal: normal;
+$font-weight-bold: bold;
+
+$body-bg: $vapor;
+$body-bg-reverse: $jet;
+$body-font-color: $jet;
+$body-font-color-reverse: $vapor;
+$body-font-family: $font-family-sans-serif;
+$body-font-style: normal;
+$body-font-weight: $font-weight-normal;

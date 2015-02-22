@@ -30,6 +30,10 @@ module.exports = function (opts) {
                 srcDir  : '/font-awesome/scss'
               , destDir : '/font-awesome'
             })
+          , materialize = pickFiles(opts.bower, {
+                srcDir  : '/materialize/sass'
+              , destDir : '/materialize'
+            })
           , bootstrapTagsinput = pickFiles(opts.bower, {
                 srcDir  : '/bootstrap-tagsinput/dist'
               , destDir : '/'
@@ -38,7 +42,7 @@ module.exports = function (opts) {
           , tagsInput = renameFile(bootstrapTagsinput, {
                 'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
             })
-          , compiled = compileSass([ foundation, fontAwesome, tagsInput, opts.root ]
+          , compiled = compileSass([ foundation, fontAwesome, materialize, tagsInput, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {

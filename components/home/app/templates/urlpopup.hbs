@@ -1,27 +1,29 @@
 <div class="url-popup" hidden="true">
     <div {{bind-attr class="editOn:edit-on :popup-container"}}>
         <div class="popup-title margin-bottom-15">
-            <button class="button small action-button privacy-button" {{bind-attr title=privacyTitle}} {{action 'togglePrivacy'}}>
-                <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
-            </button>
-            <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
-                <i class="fa fa-pencil fa-fw"></i>
-            </button>
-            <button id="copy-url-button"
-                class="button small action-button copy-url-button"
-                type="button"
-                {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
-                <i {{bind-attr class="copyClass :fa"}}></i>
-            </button>
-            <button class="button small action-button delete-button pull-right" title="Delete" type="button" {{action "deleteUrl"}}>
-                <i class="fa fa-fw fa-close"></i>
-            </button>
+            <div class="action-buttons">
+                <button class="button small action-button privacy-button" {{bind-attr title=privacyTitle}} {{action 'togglePrivacy'}}>
+                    <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
+                </button>
+                <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
+                    <i class="fa fa-pencil fa-fw"></i>
+                </button>
+                <button id="copy-url-button"
+                    class="button small action-button copy-url-button"
+                    type="button"
+                    {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
+                    <i {{bind-attr class="copyClass :fa"}}></i>
+                </button>
+                <button class="button small action-button delete-button pull-right" title="Delete" type="button" {{action "deleteUrl"}}>
+                    <i class="fa fa-fw fa-close"></i>
+                </button>
+            </div>
             {{#if editOn}}
                 <label>
                     {{input name="title" type="text" value=title}}
                 </label>
             {{else}}
-                <h5>{{title}}</h5>
+                <h5 class="title">{{title}}</h5>
             {{/if}}
         </div>
         <div class="popup-content">

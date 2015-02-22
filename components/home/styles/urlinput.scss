@@ -1,53 +1,28 @@
-.url-input-form {
-    margin: 45px 10px 10px 10px;
 
-    .favicon {
-        border-radius: 0;
-    }
+.off-canvas-list {
+    .url-input-form {
+        padding: 10px 20px 0 20px;
+        background-color: $off-canvas-bg;
 
-    input, textarea {
-        @include input-base-dark();
-    }
-
-    .postfix {
-        background-color: $charcoal;
-        border-color: $oil;
-        color: $vapor;
-        min-width: 16px;
-    }
-
-    .button {
-        margin: 10px 0;
-        background-color: $primary-color-light;
-
-        &:hover, &:focus {
-            background-color: darken($primary-color-light, 8);
-        }
-    }
-
-    .button.secondary {
-        background-color: $jumbo;
-
-        &:hover, &:focus {
-            background-color: darken($jumbo, 8);
-        }
-    }
-
-    .bootstrap-tagsinput {
-        @include input-base-dark();
-
-        &.active {
-            @include input-base-dark-focus();
+        p.title {
+            color: $body-font-color-reverse;
+            margin: 0 0 10px 0;
+            text-transform: capitalize;
         }
 
-        .tag {
-            background-color: $primary-color-light;
+        label {
+            background-color: $body-bg;
+            border: none;
+            color: $body-font-color;
+            font-weight: $body-font-weight;
             text-transform: none;
         }
 
-        .twitter-typeahead {
-            .tt-dropdown-menu {
-                @include drop-down-dark('tt-suggestion', 'tt-cursor');
+        .bootstrap-tagsinput {
+            text-transform: none;
+
+            .tag {
+                text-transform: none;
             }
         }
     }

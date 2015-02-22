@@ -1,4 +1,5 @@
 @import "core/styles/common";
+@import "core/styles/off-canvas";
 @import "bootstrap-tagsinput";
 @import "urlinput";
 @import "urlpopup";
@@ -6,13 +7,11 @@
 .favicon {
     height: 16px;
     border-radius: 100%;
+    background-color: $white;
 }
 
-.query-input {
-    .button.postfix {
-        border: 1px solid scale-color($primary-color, $lightness: $button-function-factor);
-        outline: none;
-    }
+.query-list {
+
 }
 
 .url-list {
@@ -34,20 +33,22 @@
 }
 
 .bootstrap-tagsinput {
-    width: 100%;
     @include form-element();
     @include side-radius($opposite-direction, 0);
     @include side-radius($default-float, 0);
-
     height: auto;
     min-height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(1));
+    transition: box-shadow 300ms, border-color 300ms ease-in-out;
+    width: 100%;
 
     &.active {
-        border: 1px solid $input-focus-border-color;
         background: none repeat scroll $input-focus-bg-color;
+        border: 1px solid $input-focus-border-color;
+        box-shadow: 0 0 5px $glowing-effect-color;
     }
 
     input {
+        box-shadow: none;
         display: inline;
         height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(20));
         vertical-align: middle !important;
@@ -55,6 +56,7 @@
 
     .tag {
         padding: 0.25rem 0.5rem 0.3rem 0.5rem;
+        border-radius: 2px;
 
         [data-role="remove"]:hover {
             color: $alert-color;

@@ -1,0 +1,49 @@
+ul.off-canvas-list li {
+    .switch {
+        @include switch(
+            $switch-paddle-transition-speed,
+            $switch-paddle-transition-ease,
+            $switch-height-med,
+            $white,
+            $primary-color,
+            false,
+            true
+        );
+    }
+
+    .switch input + label {
+        padding: 0;
+        border: none;
+    }
+}
+
+.off-canvas-wrap, .inner-wrap {
+    min-height: 100%;
+}
+
+.off-canvas-wrap {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.off-canvas-wrap {
+    .close-icon {
+        display: none;
+    }
+    .header-icon {
+        display: inline-block;
+    }
+}
+
+.off-canvas-wrap.move-right {
+    .close-icon {
+        display: inline-block;
+    }
+    .header-icon {
+        display: none;
+    }
+}
+
+.left-off-canvas-toggle {
+    outline: none;
+}

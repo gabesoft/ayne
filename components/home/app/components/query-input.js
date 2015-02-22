@@ -39,7 +39,7 @@ export default Ember.Component.extend({
                 match  : /\B#([\-\w]*)$/
               , search : function (term, callback) {
                     callback($.map(tags, function (tag) {
-                        return tag.indexOf(term.toLowerCase()) === 0 ? tag : null;
+                        return tag.indexOf(term.toLowerCase()) !== -1 ? tag : null;
                     }));
                 }
               , template: function (value) {

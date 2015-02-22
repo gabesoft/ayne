@@ -9,6 +9,10 @@
     transition: 0.3s cubic-bezier(0.4, 0.2, 0.5, 1.4);
     transform-origin: 35px -8px;
 
+    .tag {
+        border-radius: 2px;
+    }
+
     &[hidden] {
         opacity: 0;
         transform: scale(0);
@@ -17,7 +21,7 @@
     }
 
     &:before {
-        @include css-triangle(6px, $steel, bottom);
+        @include css-triangle(6px, $ternary-color, bottom);
         left: 35px;
         position: absolute;
         top: 8px;
@@ -28,7 +32,7 @@
         background: linear-gradient(to bottom right, white, hsla(0, 0%, 100%, 0.8));
         box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
         border-radius: 2px;
-        border: 1px solid $steel;
+        border: 1px solid $ternary-color;
         padding: 10px;
 
         &.edit-on {
@@ -37,17 +41,20 @@
     }
 
     .popup-title {
-        padding: 10px;
-        color: $vapor;
-        background-color: $charcoal;
+        @include card-panel($card-padding: 0, $card-bg-color: $secondary-color, $element-top-margin: 0, $element-bottom-margin: 0);
+        margin: 5px;
 
         h5 {
             color: $vapor;
             text-transform: capitalize;
         }
 
-        input {
-            @include input-base-dark();
+        .action-buttons {
+            padding: 10px 10px 0 10px;
+        }
+
+        .title {
+            padding: 0px 10px 10px 10px;
         }
     }
 
@@ -67,34 +74,12 @@
         }
     }
 
-    .action-button {
-        background-color: transparent;
-        color: $vapor;
-        display: inline;
-        margin: 0;
-        outline: none;
-        padding: 0;
-
-        &:disabled {
-            background-color: transparent;
-            color: $vapor;
-
-            &:hover {
-                color: $vapor;
-            }
-        }
-    }
-
     .edit-button, .copy-url-button, .privacy-button {
-        &:hover {
-            color: $primary-color-light;
-        }
+        @include transparent-button($body-font-color-reverse, $primary-color);
     }
 
     .delete-button {
-        &:hover {
-            color: $alert-color;
-        }
+        @include transparent-button($body-font-color-reverse, $alert-color);
     }
 }
 
