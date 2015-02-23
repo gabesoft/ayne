@@ -1,24 +1,16 @@
 export default Ember.Component.extend({
     tagName           : 'div'
   , classNames        : [ 'query-input', 'row', 'collapse' ]
-  , attributeBindings : [ 'type', 'data-role', 'value', 'tags', 'enterAction' ]
-  , enterAction       : null
+  , attributeBindings : [ 'type', 'data-role', 'value', 'tags', 'pending' ]
   , value             : null
+  , pending           : false
   , placeholder       : null
   , multiple          : true
   , layoutName        : 'query-input'
   , inputSelector     : 'input.query-input'
 
-  , init: function () {
-        this._super();
-        this.addObserver('value', this, function () {
-            this.set('queryValue', this.get('value'));
-            this.sendEnterAction();
-        });
-    }
-
   , queryValue: function (key, value) {
-        if (value) {
+        if (arguments.length > 1) {
             this.$(this.inputSelector).val(value);
         } else {
             return this.$(this.inputSelector).val();

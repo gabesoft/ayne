@@ -1,7 +1,8 @@
 export default Ember.ObjectController.extend({
-    needs    : ['application']
-  , search   : ''
-  , tagsData : function () {
+    needs         : ['application']
+  , search        : ''
+  , searchPending : false
+  , tagsData      : function () {
         return this.api.getTags().catch(function () { return []; });
     }.property()
   , init   : function () {
@@ -16,7 +17,7 @@ export default Ember.ObjectController.extend({
   , actions: {
         urlUpdated: function (data) {
             if (data.id) {
-                var urls = this.get('model')
+                var urls = this.get('model.urls')
                   , url  = urls.findBy('id', data.id);
                 if (url) {
                     urls.removeObject(url);
@@ -26,23 +27,27 @@ export default Ember.ObjectController.extend({
         }
       , urlDeleted: function (data) {
             if (data.id) {
-                var urls = this.get('model')
+                var urls = this.get('model.urls')
                   , url  = urls.findBy('id', data.id);
                 urls.removeObject(url);
             }
         }
       , searchUrls: function (queryValue) {
-            console.log('SEARCH', queryValue);
+            this.set('searchPending', true);
             this.api.getUrls({ search: queryValue, sort: "updatedAt:desc" })
                .then(function (response) {
                     this.set('model.urls', response.data);
                 }.bind(this))
-               .catch(function (err) {
-                    console.log(err);
-                });
+               .finally(function () {
+                    this.set('searchPending', false);
+                }.bind(this));
+            this.api.getQueries({ limit: 50 }).then(function (response) {
+                this.set('model.queries', response.data);
+            }.bind(this));
         }
       , runQuery: function (query) {
             this.set('search', query.expression);
+            this.send('searchUrls', query.expression);
         }
     }
 });

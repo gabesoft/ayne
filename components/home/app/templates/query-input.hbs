@@ -1,9 +1,13 @@
 <div class="small-1 columns">
     <a href="#" class="button prefix radius run-button" title="Search" {{action "runSearch"}}>
-        <i class="fa fa-fw fa-search"></i>
+        {{#if pending}}
+            <i class="fa fa-fw fa-ellipsis-h"></i>
+        {{else}}
+            <i class="fa fa-fw fa-search"></i>
+        {{/if}}
     </a>
 </div>
-<div class="small-9 columns">
+<div class="small-10 columns">
     <input type="text" class="query-input" {{bind-attr value=value}}>
 </div>
 <div class="small-1 columns">
