@@ -9,7 +9,14 @@ export default Ember.Component.extend({
   , layoutName        : 'query-input'
   , inputSelector     : 'input.query-input'
 
-  , queryValue: function (key, value) {
+  , init: function () {
+        this._super();
+        this.addObserver('value', this, function () {
+            this.set('_value', this.get('value'));
+        });
+    }
+
+  , _value: function (key, value) {
         if (arguments.length > 1) {
             this.$(this.inputSelector).val(value);
         } else {
@@ -24,7 +31,7 @@ export default Ember.Component.extend({
     }
 
   , sendEnterAction: function () {
-        this.sendAction('action', this.get('queryValue'));
+        this.sendAction('action', this.get('_value'));
     }
 
   , didInsertElement: function () {
@@ -52,7 +59,7 @@ export default Ember.Component.extend({
 
   , actions: {
         clearSearch: function () {
-            this.set('queryValue', '');
+            this.set('value', '');
             this.sendEnterAction();
         }
       , runSearch: function () {

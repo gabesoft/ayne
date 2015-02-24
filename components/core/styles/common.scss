@@ -42,9 +42,9 @@
 .button {
     &.secondary {
         @include button-style(
-        $bg           : color("grey", "lighten-1"),
-        $bg-hover     : color("grey", "darken-1"),
-        $border-color : color("grey", "darken-1"));
+        $bg           : $primary-color-light-3,
+        $bg-hover     : $primary-color-light-2,
+        $border-color : $primary-color-light-2);
     }
 }
 

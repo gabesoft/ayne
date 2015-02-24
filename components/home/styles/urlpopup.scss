@@ -82,6 +82,7 @@ $url-popup-border-color: $secondary-color;
 
     .delete-button {
         @include transparent-button($alert-color, $alert-color);
+        padding: 3px 0;
     }
 }
 

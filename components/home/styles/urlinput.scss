@@ -4,12 +4,16 @@
         padding: 10px 20px 0 20px;
         background-color: $off-canvas-bg;
 
+        .button {
+            @extend .z-depth-1;
+        }
+
         fieldset {
             margin: 0;
             padding: 0;
             border: none;
             border-radius: 2px;
-            @extend .z-depth-2;
+            @extend .z-depth-1;
         }
 
         p.title {
@@ -18,7 +22,7 @@
             text-transform: capitalize;
         }
 
-        label {
+        fieldset > label {
             background-color: $body-bg;
             border: none;
             color: $body-font-color;

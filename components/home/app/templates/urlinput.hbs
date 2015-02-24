@@ -1,64 +1,64 @@
 <p class="title">Add or edit a url</p>
 
 <fieldset>
-<label>Url
-    <div class="row collapse">
-        <div class="small-10 columns">
+    <label>Url
+        <div class="row collapse">
+            <div class="small-10 columns">
+                {{input
+                name="url"
+                type="url"
+                key-up="getUrlMetaSlow"
+                focus-out="getUrlMeta"
+                value=displayHref}}
+            </div>
+            <div class="small-2 columns">
+                <span class="postfix"> {{view 'favicon' src=favicon }} </span>
+            </div>
+        </div>
+    </label>
+
+    <label>Title
+        <div class="row collapse">
+            <div class="small-10 columns">
+                {{input
+                name="title"
+                type="text"
+                value=title}}
+            </div>
+            <div class="small-2 columns">
+                <span class="postfix">
+                    {{#if pendingMeta}}
+                    <i class="fa fa-spinner fa-pulse fa-lg"></i>
+                    {{/if}}
+                </span>
+            </div>
+        </div>
+    </label>
+
+    <label>Tags (lowercase words, no spaces)
+        {{tags-input
+        name="tags"
+        valueAutocomplete=tagsData
+        value=tags}}
+    </label>
+
+    <label>Private
+        <div class="switch radius">
             {{input
-            name="url"
-            type="url"
-            key-up="getUrlMetaSlow"
-            focus-out="getUrlMeta"
-            value=displayHref}}
+            name="private"
+            type="checkbox"
+            id="url-privacy-setting"
+            checked=private}}
+            <label for="url-privacy-setting"></label>
         </div>
-        <div class="small-2 columns">
-            <span class="postfix"> {{view 'favicon' src=favicon }} </span>
-        </div>
-    </div>
-</label>
+    </label>
 
-<label>Title
-    <div class="row collapse">
-        <div class="small-10 columns">
-            {{input
-            name="title"
-            type="text"
-            value=title}}
-        </div>
-        <div class="small-2 columns">
-            <span class="postfix">
-                {{#if pendingMeta}}
-                <i class="fa fa-spinner fa-pulse fa-lg"></i>
-                {{/if}}
-            </span>
-        </div>
-    </div>
-</label>
-
-<label>Tags (lowercase words, no spaces)
-    {{tags-input
-    name="tags"
-    valueAutocomplete=tagsData
-    value=tags}}
-</label>
-
-<label>Private
-    <div class="switch radius">
-        {{input
-        name="private"
-        type="checkbox"
-        id="url-privacy-setting"
-        checked=private}}
-        <label for="url-privacy-setting"></label>
-    </div>
-</label>
-
-<label>Notes
-    {{textarea
-    name="notes"
-    rows="3"
-    value=notes}}
-</label>
+    <label>Notes
+        {{textarea
+        name="notes"
+        rows="3"
+        value=notes}}
+    </label>
 </fieldset>
 
 <button class="button small margin-top-10" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
