@@ -3,28 +3,12 @@
 @import "bootstrap-tagsinput";
 @import "urlinput";
 @import "urlpopup";
+@import "urllist";
 
 .favicon {
     height: 16px;
     border-radius: 100%;
     background-color: $body-bg;
-}
-
-.query-list {
-
-}
-
-.url-list {
-    .url-view {
-        position: relative;
-
-        .url-title {
-            text-transform: capitalize;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
 }
 
 .dropdown-menu {

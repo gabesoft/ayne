@@ -30,6 +30,10 @@ module.exports = function (opts) {
                 srcDir  : '/font-awesome/scss'
               , destDir : '/font-awesome'
             })
+          , roboto = pickFiles(opts.bower, {
+                srcDir  : '/roboto-fontface'
+              , destDir : '/roboto-fontface'
+            })
           , materialize = pickFiles(opts.bower, {
                 srcDir  : '/materialize/sass'
               , destDir : '/materialize'
@@ -42,7 +46,7 @@ module.exports = function (opts) {
           , tagsInput = renameFile(bootstrapTagsinput, {
                 'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
             })
-          , compiled = compileSass([ foundation, fontAwesome, materialize, tagsInput, opts.root ]
+          , compiled = compileSass([ foundation, fontAwesome, roboto, materialize, tagsInput, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {
@@ -58,10 +62,16 @@ module.exports = function (opts) {
     }
 
     function processFonts () {
-        return pickFiles(opts.bower, {
-            srcDir  : '/font-awesome/fonts'
-          , destDir : path.join(opts.name, '/fonts')
-        });
+        var fontAwesome = pickFiles(opts.bower, {
+                srcDir  : '/font-awesome/fonts'
+              , destDir : path.join(opts.name, '/fonts')
+            })
+          , roboto = pickFiles(opts.bower, {
+                srcDir  : '/roboto-fontface/fonts'
+              , destDir : path.join(opts.name, '/fonts')
+            });
+
+        return mergeTrees([ fontAwesome, roboto ]);
     }
 
     return mergeTrees([ processSass(), processFonts() ]);

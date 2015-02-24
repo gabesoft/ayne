@@ -22,11 +22,10 @@
     "font-awesome": "~4.3.0",
     "fingerprint": "~0.5.4",
     "blueimp-md5": "~1.1.0",
-    "modernizr": "~2.8.3",
     "zeroclipboard": "~2.2.0",
     "bootstrap-tagsinput": "~0.4.2",
     "typeahead.js": "~0.10.5",
     "jquery-textcomplete": "~0.3.7",
-    "materialize": "~0.95.2"
+    "roboto-fontface": "~0.2.7"
   }
 }

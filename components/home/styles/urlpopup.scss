@@ -1,3 +1,5 @@
+$url-popup-border-color: $secondary-color;
+
 .url-popup {
     background-color: transparent;
     left: 25px;
@@ -21,7 +23,7 @@
     }
 
     &:before {
-        @include css-triangle(6px, $ternary-color, bottom);
+        @include css-triangle(6px, $url-popup-border-color, bottom);
         left: 35px;
         position: absolute;
         top: 8px;
@@ -32,7 +34,7 @@
         background: linear-gradient(to bottom right, white, hsla(0, 0%, 100%, 0.8));
         box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
         border-radius: 2px;
-        border: 1px solid $ternary-color;
+        border: 1px solid $url-popup-border-color;
         padding: 10px;
 
         &.edit-on {
@@ -41,7 +43,7 @@
     }
 
     .popup-title {
-        @include card-panel($card-padding: 0, $card-bg-color: $secondary-color, $element-top-margin: 0, $element-bottom-margin: 0);
+        @include card-panel($card-padding: 0, $card-bg-color: $primary-color, $element-top-margin: 0, $element-bottom-margin: 0);
         margin: 5px;
 
         h5 {
@@ -75,11 +77,11 @@
     }
 
     .edit-button, .copy-url-button, .privacy-button {
-        @include transparent-button($body-font-color-reverse, $primary-color);
+        @include transparent-button($secondary-color, $secondary-color);
     }
 
     .delete-button {
-        @include transparent-button($body-font-color-reverse, $alert-color);
+        @include transparent-button($alert-color, $alert-color);
     }
 }
 

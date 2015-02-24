@@ -4,6 +4,14 @@
         padding: 10px 20px 0 20px;
         background-color: $off-canvas-bg;
 
+        fieldset {
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-radius: 2px;
+            @extend .z-depth-2;
+        }
+
         p.title {
             color: $body-font-color-reverse;
             margin: 0 0 10px 0;
@@ -16,6 +24,14 @@
             color: $body-font-color;
             font-weight: $body-font-weight;
             text-transform: none;
+
+            &:first-child {
+                border-radius: 2px 2px 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 2px 2px;
+            }
         }
 
         .bootstrap-tagsinput {

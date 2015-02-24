@@ -1,0 +1,21 @@
+.url-list {
+    ul {
+        @include side-nav();
+
+        li a:not(.button) {
+            padding-left: 0;
+        }
+    }
+
+    .url-view {
+        position: relative;
+
+        .url-title {
+            text-transform: capitalize;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
+

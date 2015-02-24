@@ -1,14 +1,14 @@
+<div class="small-10 columns">
+    <input type="text" class="query-input" {{bind-attr value=value}}>
+</div>
 <div class="small-1 columns">
-    <a href="#" class="button prefix radius run-button" title="Search" {{action "runSearch"}}>
+    <a href="#" class="button postfix run-button" title="Search" {{action "runSearch"}}>
         {{#if pending}}
-            <i class="fa fa-fw fa-ellipsis-h"></i>
+            <i class="fa fa-fw fa-search-plus"></i>
         {{else}}
             <i class="fa fa-fw fa-search"></i>
         {{/if}}
     </a>
-</div>
-<div class="small-10 columns">
-    <input type="text" class="query-input" {{bind-attr value=value}}>
 </div>
 <div class="small-1 columns">
     <a href="#" class="button postfix radius clear-button" title="Clear search" {{action "clearSearch"}}>

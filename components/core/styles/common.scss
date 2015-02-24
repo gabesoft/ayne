@@ -1,4 +1,4 @@
-@import "core/styles/vendor-imports-pre";
+@import "core/styles/colors";
 @import "core/styles/variables";
 @import "core/styles/foundation-settings";
 @import "core/styles/vendor-imports";
@@ -37,6 +37,15 @@
 
 .height-full {
     height: 100%;
+}
+
+.button {
+    &.secondary {
+        @include button-style(
+        $bg           : color("grey", "lighten-1"),
+        $bg-hover     : color("grey", "darken-1"),
+        $border-color : color("grey", "darken-1"));
+    }
 }
 
 textarea {

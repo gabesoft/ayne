@@ -3,7 +3,8 @@ var urlMeta = require('./handlers/url-meta')
   , url     = require('./handlers/url');
 
 function tags (request, reply) {
-    api.get('/tags', function (err, response, data) {
+    var userId = request.auth.credentials.id;
+    api.get([ '/users', userId, 'tags' ], function (err, response, data) {
         return err ? reply.boom(err) : reply(data);
     });
 }
@@ -37,4 +38,5 @@ module.exports = [{
     method  : 'GET'
   , path    : '/api/tags'
   , handler : tags
+  , config  : { auth : 'token' }
 }];
