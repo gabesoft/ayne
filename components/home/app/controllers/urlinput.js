@@ -1,4 +1,4 @@
-export default Ember.ObjectController.extend({
+export default Ember.ObjectController.extend(Ember.Evented, {
     model         : {}
   , pendingMeta   : false
   , pendingSave   : false
@@ -50,6 +50,7 @@ export default Ember.ObjectController.extend({
         this.get('target').send(action, data);
         this.set('model', {});
         this.set('displayHref', null);
+        this.trigger(action.toLowerCase(), data)
     }
 
   , actions: {

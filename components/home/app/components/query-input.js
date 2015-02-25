@@ -60,6 +60,7 @@ export default Ember.Component.extend({
   , actions: {
         clearSearch: function () {
             this.set('value', '');
+            this.set('_value', '');
             this.sendEnterAction();
         }
       , runSearch: function () {

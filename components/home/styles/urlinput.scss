@@ -6,6 +6,7 @@
 
         .button {
             @extend .z-depth-1;
+            border-radius: 2px;
         }
 
         fieldset {
