@@ -50,7 +50,7 @@ export default Ember.ObjectController.extend(Ember.Evented, {
         this.get('target').send(action, data);
         this.set('model', {});
         this.set('displayHref', null);
-        this.trigger(action.toLowerCase(), data)
+        this.trigger(action.toLowerCase(), data);
     }
 
   , actions: {
