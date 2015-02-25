@@ -9,7 +9,7 @@ export default Ember.View.extend(InitVendor, {
                .send('focusUrlInput');
         }.bind(this));
 
-        $(document).on('keypress', function (e) {
+        $(document).on('keydown', function (e) {
             if (e.keyCode === 113) {   // F2
                 $('.off-canvas-wrap').foundation('offcanvas', 'toggle', 'move-right');
             }
@@ -17,7 +17,7 @@ export default Ember.View.extend(InitVendor, {
     }
 
   , willDestroyElement: function () {
-        $(document).off('keypress');
+        $(document).off('keydown');
         $(document).off('open.fndtn.offcanvas');
     }
 });

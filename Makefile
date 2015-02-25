@@ -60,3 +60,6 @@ setup:
 clean-dep:
 	@rm -rf node_modules
 
+deploy: setup
+	@bower install --allow-root
+	@BROCCOLI_ENV=production rm -rf public && broccoli build 'public'
