@@ -1,19 +1,22 @@
 'use strict';
 
-var paths = [
+var routes = null
+  , paths  = [
         '/'
       , '/enter-url'
       , '/urllist'
     ];
 
 function homeHandler (request, reply) {
-    return reply.view('core/templates/index.jade', { title: 'home', page: 'home' });
+    return reply.view('core/templates/index.jade', { title: 'Ayne Home', page: 'home' });
 }
 
-module.exports = paths.map(function (path) {
+routes = paths.map(function (path) {
     return {
         method  : 'GET'
       , path    : path
       , handler : homeHandler
     };
 });
+
+module.exports = routes;
