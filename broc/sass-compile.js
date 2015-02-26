@@ -64,11 +64,11 @@ module.exports = function (opts) {
     function processFonts () {
         var fontAwesome = pickFiles(opts.bower, {
                 srcDir  : '/font-awesome/fonts'
-              , destDir : path.join(opts.name, '/fonts')
+              , destDir : path.join(opts.name, '/css/fonts')
             })
           , roboto = pickFiles(opts.bower, {
                 srcDir  : '/roboto-fontface/fonts'
-              , destDir : path.join(opts.name, '/fonts')
+              , destDir : path.join(opts.name, '/css/fonts')
             });
 
         return mergeTrees([ fontAwesome, roboto ]);
