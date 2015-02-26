@@ -76,7 +76,7 @@ $url-popup-border-color: $secondary-color;
         }
     }
 
-    .edit-button, .copy-url-button, .privacy-button {
+    .edit-button, .copy-url-button, .privacy-button, .original-link {
         @include transparent-button($secondary-color, $secondary-color);
     }
 

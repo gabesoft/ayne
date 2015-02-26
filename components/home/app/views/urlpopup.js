@@ -6,7 +6,7 @@ export default Ember.View.extend({
             if ($popup) {
                 $popup.removeAttr('hidden');
             }
-        }.bind(this), 100);
+        }.bind(this), 200);
 
         var button = document.getElementById('copy-url-button')
           , client = new ZeroClipboard(button);
@@ -27,10 +27,20 @@ export default Ember.View.extend({
             }
         }.bind(this));
 
+        client.on('error', function (e) {
+            console.log('copy failed', e);
+            client.destroy();
+        });
+
         this.set('zeroClient', client);
     }
   , willDestroyElement: function  () {
+        var client = this.get('zeroClient');
+
         this.get('controller').send('saveUrl');
-        this.get('zeroClient').off();
+
+        if (client) {
+            client.destroy();
+        }
     }
 });

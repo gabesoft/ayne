@@ -134,7 +134,12 @@
     outline: none;
     padding: 0;
 
-    &:hover {
+    &:hover, &.zero-clipboard-is-hover {
+        color :$button-hover-color;
+        text-shadow: 0px 0px 5px $button-hover-color;
+    }
+
+    &:active, &.zero-clipboard-is-active {
         color :$button-hover-color;
         text-shadow: 0px 0px 5px $button-hover-color;
     }
@@ -145,6 +150,7 @@
 
         &:hover {
             color: $button-color;
+            text-shadow: none;
         }
     }
 }

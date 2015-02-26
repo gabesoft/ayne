@@ -8,6 +8,12 @@
                 <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
                     <i class="fa fa-pencil fa-fw"></i>
                 </button>
+                <a class="button small action-button original-link"
+                    {{bind-attr href=userEnteredLink}}
+                    title="Open link in a new window"
+                    target="_blank">
+                    <i class="fa fa-fw fa-external-link"></i>
+                </a>
                 <button id="copy-url-button"
                     class="button small action-button copy-url-button"
                     type="button"

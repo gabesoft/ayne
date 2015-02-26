@@ -4,6 +4,10 @@ export default Ember.ObjectController.extend({
   , copyTitle   : "Copy url to clipboard"
   , editOn      : false
   , disableCopy : true
+  , userEnteredLink: function () {
+        var url = this.get('model.userEntered');
+        return url.match(/^https?:/) ? url : 'http://' + url;
+    }.property('model.userEntered')
   , tagsData    : function () {
         return this.get('parentController.tagsData');
     }.property('parentController.tagsData')
