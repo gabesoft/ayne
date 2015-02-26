@@ -14,12 +14,6 @@
                     target="_blank">
                     <i class="fa fa-fw fa-external-link"></i>
                 </a>
-                <button id="copy-url-button"
-                    class="button small action-button copy-url-button"
-                    type="button"
-                    {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
-                    <i {{bind-attr class="copyClass :fa"}}></i>
-                </button>
                 <button class="button small action-button delete-button pull-right" title="Delete Url" type="button" {{action "deleteUrl"}}>
                     <i class="fa fa-fw fa-close"></i>
                 </button>
@@ -34,7 +28,15 @@
         </div>
         <div class="popup-content">
             <dl>
-                <dd class="url-href" {{bind-attr title=href}}>{{href}}</dd>
+                <dd class="url-href" {{bind-attr title=href}}>
+                    <a id="copy-url-button"
+                    class="button small action-button copy-url-button"
+                    type="button"
+                    {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
+                        <i {{bind-attr class="copyClass :fa"}}></i>
+                    </a>
+                    {{href}}
+                </dd>
             </dl>
 
             {{#if editOn}}
