@@ -19,9 +19,10 @@ function fixUrl (href) {
 }
 
 function getFaviconUri (pageUri, $) {
-    var href1       = $('link[rel=icon]').attr('href')
-      , href2       = $('link[rel="shortcut icon"]').attr('href')
-      , faviconPath = href1 || href2 || ''
+    var href = $('link[rel]').filter(function () {
+            return (this.attribs.rel.toLowerCase() || '').match(/icon/i);
+        }).attr('href')
+      , faviconPath = href || ''
       , uri         = new URI(faviconPath);
 
     if (!uri.hostname() && faviconPath.match(/^\./)) {

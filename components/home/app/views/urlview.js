@@ -8,4 +8,12 @@ export default Ember.View.extend({
   , mouseLeave: function () {
         this.set('hover', false);
     }
+  , didInsertElement: function () {
+        this.$('a.url-title').on('click', function () {
+            this.get('controller').send('urlClick');
+        }.bind(this));
+    }
+  , willDestroyElement: function () {
+        this.$('a.url-title').off();
+    }
 });

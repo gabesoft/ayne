@@ -5,7 +5,7 @@ export default Ember.ObjectController.extend({
   , editOn      : false
   , disableCopy : true
   , userEnteredLink: function () {
-        var url = this.get('model.userEntered');
+        var url = this.get('model.userEntered') || '';
         return url.match(/^https?:/) ? url : 'http://' + url;
     }.property('model.userEntered')
   , tagsData    : function () {
