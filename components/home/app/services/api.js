@@ -14,6 +14,9 @@ export default Api.extend({
         return this.runGet('/api/tags');
     }
   , getUrls: function (query) {
+        query = Ember.$.extend({}
+          , { sort: 'clickCount:desc updatedAtdesc', limit: 50 }
+          , query);
         return this.runGet('/api/urls', query);
     }
   , getQueries: function (query) {
