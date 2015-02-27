@@ -9,6 +9,12 @@ export default Ember.View.extend(InitVendor, {
                .send('focusUrlInput');
         }.bind(this));
 
+        $(document).on('close.fndtn.offcanvas', '[data-offcanvas]', function () {
+            this.get('childViews')
+               .findBy('viewName', 'urlinput')
+               .send('blurUrlInput');
+        }.bind(this));
+
         $(document).on('keydown', function (e) {
             if (e.keyCode === 113) {   // F2
                 $('.off-canvas-wrap').foundation('offcanvas', 'toggle', 'move-right');
@@ -19,5 +25,6 @@ export default Ember.View.extend(InitVendor, {
   , willDestroyElement: function () {
         $(document).off('keydown');
         $(document).off('open.fndtn.offcanvas');
+        $(document).off('close.fndtn.offcanvas');
     }
 });
