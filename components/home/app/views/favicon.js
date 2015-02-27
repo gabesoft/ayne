@@ -1,6 +1,7 @@
 export default Ember.View.extend({
     tagName           : 'img'
-  , attributeBindings : ['src', 'style']
+  , attributeBindings : ['src', 'style', 'clearOnClick']
+  , clearOnClick      : false
   , style             : 'visibility:hidden'
   , classNames        : ['favicon']
   , srcChanged        : function () {
@@ -31,6 +32,12 @@ export default Ember.View.extend({
 
         if (!this.get('src')) {
             this.set('src', this.defaultSrc());
+        }
+
+        if (this.get('clearOnClick')) {
+            this.$().on('click', function () {
+                this.set('src', this.defaultSrc());
+            }.bind(this));
         }
     }
 
