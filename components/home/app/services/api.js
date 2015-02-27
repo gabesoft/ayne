@@ -15,7 +15,7 @@ export default Api.extend({
     }
   , getUrls: function (query) {
         query = Ember.$.extend({}
-          , { sort: 'clickCount:desc updatedAtdesc', limit: 50 }
+          , { sort: 'clickCount:desc updatedAt:desc', limit: 50 }
           , query);
         return this.runGet('/api/urls', query);
     }
