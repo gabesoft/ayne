@@ -2,11 +2,11 @@ $roboto-font-path: './fonts';
 $fa-font-path: './fonts';
 
 $primary-color          : color("blue-grey", "base");
-$primary-color-light-1  : color("blue-grey", "lighten-1");
-$primary-color-light-2  : color("blue-grey", "lighten-2");
-$primary-color-light-3  : color("blue-grey", "lighten-3");
-$primary-color-light-4  : color("blue-grey", "lighten-4");
-$primary-color-light-5  : color("blue-grey", "lighten-5");
+$primary-color-lighten-1  : color("blue-grey", "lighten-1");
+$primary-color-lighten-2  : color("blue-grey", "lighten-2");
+$primary-color-lighten-3  : color("blue-grey", "lighten-3");
+$primary-color-lighten-4  : color("blue-grey", "lighten-4");
+$primary-color-lighten-5  : color("blue-grey", "lighten-5");
 $primary-color-darken-1 : color("blue-grey", "darken-1");
 $primary-color-darken-2 : color("blue-grey", "darken-2");
 $primary-color-darken-3 : color("blue-grey", "darken-3");
@@ -30,10 +30,10 @@ $font-family-monospace: "Roboto", Consolas, "Liberation Mono", Courier, monospac
 $font-weight-normal: normal;
 $font-weight-bold: bold;
 
-$body-bg: $primary-color-light-5;
+$body-bg: $primary-color-lighten-5;
 $body-bg-reverse: color("grey", "darken-4");
 $body-font-color: color("grey", "darken-4");
-$body-font-color-reverse: $primary-color-light-5;
+$body-font-color-reverse: $primary-color-lighten-5;
 $body-font-family: $font-family-sans-serif;
 $body-font-style: normal;
 $body-font-weight: $font-weight-normal;
