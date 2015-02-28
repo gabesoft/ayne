@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   , placeholder       : null
   , multiple          : true
   , layoutName        : 'query-input'
-  , inputSelector     : 'input.query-input'
+  , inputSelector     : 'input'
 
   , init: function () {
         this._super();

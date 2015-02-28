@@ -1,0 +1,30 @@
+.query-input {
+    position: relative;
+
+    .query-box {
+        padding-right: 90px;
+    }
+
+    .input-button {
+        background-color: transparent;
+        color: $secondary-color;
+        display: block;
+        height: 33px;
+        outline: none;
+        padding: 4px 0 0 10px;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        width: 40px;
+
+        &:hover, &:active, &:focus {
+            background-color: $secondary-color;
+            color: $body-font-color-reverse;
+        }
+    }
+
+    .search-button {
+        right: 43px;
+    }
+}
+

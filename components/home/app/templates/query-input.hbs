@@ -1,17 +1,13 @@
-<div class="small-10 columns">
-    <input type="text" class="query-input" {{bind-attr value=value}}>
-</div>
-<div class="small-1 columns">
-    <a href="#" class="button postfix run-button" title="Search" {{action "runSearch"}}>
+<div class="columns">
+    <input type="text" class="query-box" {{bind-attr value=value}}>
+    <a href="#" class="input-button search-button" title="Search" {{action "runSearch"}}>
         {{#if pending}}
             <i class="fa fa-fw fa-spin fa-cog"></i>
         {{else}}
             <i class="fa fa-fw fa-search"></i>
         {{/if}}
     </a>
-</div>
-<div class="small-1 columns">
-    <a href="#" class="button postfix radius clear-button" title="Clear search" {{action "clearSearch"}}>
+    <a href="#" class="input-button clear-button" title="Clear search" {{action "clearSearch"}}>
         <i class="fa fa-fw fa-close"></i>
     </a>
 </div>
