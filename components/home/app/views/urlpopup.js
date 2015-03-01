@@ -33,6 +33,10 @@ export default Ember.View.extend({
         });
 
         this.set('zeroClient', client);
+
+        this.$().on('click', 'a.original-link', function () {
+            this.get('controller').send('urlClick');
+        }.bind(this));
     }
   , willDestroyElement: function  () {
         var client = this.get('zeroClient');

@@ -28,6 +28,10 @@ export default Ember.ObjectController.extend({
                 });
             }
         }
+      , urlClick: function () {
+            this.incrementProperty('model.clickCount');
+            this.api.saveUrl(this.get('model'));
+        }
       , deleteUrl: function () {
             this.api.deleteUrl(this.get('model'))
                .then(function () {
