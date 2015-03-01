@@ -8,9 +8,11 @@
 @import "query-input";
 
 .favicon {
-    height: 16px;
-    border-radius: 100%;
     background-color: $body-bg;
+    border-radius: 100%;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
 }
 
 .query-list {
