@@ -1,5 +1,9 @@
 <div class="columns">
-    <input type="text" class="query-box" {{bind-attr value=value}}>
+    {{input value=value type="text" name="query" class="error:error :query-box"}}
+    {{#if error}}
+        <small class="error">{{error}}</small>
+    {{/if}}
+
     <a href="#" class="input-button search-button" title="Search" {{action "runSearch"}}>
         {{#if pending}}
             <i class="fa fa-fw fa-spin fa-cog"></i>

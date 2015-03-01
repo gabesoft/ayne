@@ -2,6 +2,7 @@ export default Ember.ObjectController.extend({
     needs         : ['application']
   , search        : ''
   , searchPending : false
+  , queryError    : null
   , tagsData      : function () {
         return this.api.getTags().catch(function () { return []; });
     }.property()
@@ -34,9 +35,13 @@ export default Ember.ObjectController.extend({
         }
       , searchUrls: function (queryValue) {
             this.set('searchPending', true);
+            this.set('queryError', null);
             this.api.getUrls({ search: queryValue })
                .then(function (response) {
                     this.set('model.urls', response.data);
+                }.bind(this))
+               .catch(function (response) {
+                    this.set('queryError', (response.json || {}).message);
                 }.bind(this))
                .finally(function () {
                     this.set('searchPending', false);

@@ -1,8 +1,9 @@
 export default Ember.Component.extend({
     tagName           : 'div'
   , classNames        : [ 'query-input', 'row', 'collapse' ]
-  , attributeBindings : [ 'type', 'data-role', 'value', 'tags', 'pending' ]
+  , attributeBindings : [ 'type', 'data-role', 'value', 'tags', 'pending', 'error' ]
   , value             : null
+  , error             : null
   , pending           : false
   , placeholder       : null
   , multiple          : true
