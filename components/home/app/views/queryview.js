@@ -4,7 +4,7 @@ export default Ember.View.extend({
   , tagName      : 'span'
   , queryHtml    : function () {
         return this
-           .get('model.expression')
+           .get('model.name')
            .replace(/#([a-z\-]+)/g, '<span class="tag label thin radius">$1</span>')
            .replace(/\(/g, '<span class="paren open-paren">(</span>')
            .replace(/\)/g, '<span class="paren close-paren">)</span>')
