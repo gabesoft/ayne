@@ -1,9 +1,7 @@
-<ul class="side-nav">
+<ul class="query-list">
     {{#each query in model}}
         <li class="query-item">
-            <a {{action "runQuery" query}}>
-                {{query.name}}
-            </a>
+            {{ view 'queryview' model=query}}
         </li>
     {{/each}}
 </ul>

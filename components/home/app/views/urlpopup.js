@@ -37,10 +37,10 @@ export default Ember.View.extend({
   , willDestroyElement: function  () {
         var client = this.get('zeroClient');
 
-        this.get('controller').send('saveUrl');
-
         if (client) {
             client.destroy();
         }
+
+        this.get('controller').send('saveUrl');
     }
 });

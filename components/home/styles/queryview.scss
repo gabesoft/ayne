@@ -1,0 +1,25 @@
+.query-view {
+    font-size: $label-font-sizing;
+
+    .normal-display {
+        display: inline-block;
+    }
+
+    .hover-display {
+        display: none;
+        color: $primary-color-darken-4;
+    }
+
+    &:hover {
+        .normal-display {
+            display: none;
+        }
+        .hover-display {
+            display: inline-block;
+        }
+    }
+
+    .operator, .paren {
+        color: $secondary-color;
+    }
+}

@@ -11,10 +11,6 @@ $url-popup-border-color: $secondary-color;
     transition: 0.3s cubic-bezier(0.4, 0.2, 0.5, 1.4);
     transform-origin: 35px -8px;
 
-    .tag {
-        border-radius: 2px;
-    }
-
     &[hidden] {
         opacity: 0;
         transform: scale(0);
@@ -45,10 +41,19 @@ $url-popup-border-color: $secondary-color;
     .popup-title {
         @include card-panel($card-padding: 0, $card-bg-color: $primary-color, $element-top-margin: 0, $element-bottom-margin: 0);
         margin: 5px;
+        position: relative;
 
         h5 {
             color: $vapor;
             text-transform: capitalize;
+        }
+
+        .click-count {
+            bottom: 5px;
+            color: $primary-color-lighten-1;
+            display: inline-block;
+            position: absolute;
+            right: 5px;
         }
 
         .action-buttons {

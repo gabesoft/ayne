@@ -24,6 +24,7 @@
                 </label>
             {{else}}
                 <h5 class="title">{{title}}</h5>
+                <span class="label label-info click-count" title="Click Count">{{clickCount}}</span>
             {{/if}}
         </div>
         <div class="popup-content">
@@ -58,7 +59,7 @@
             {{else}}
                 <div>
                     {{#each tag in tags}}
-                        <span class="tag label label-info">{{tag}}</span>
+                        <span class="tag label radius">{{tag}}</span>
                     {{/each}}
                 </div>
             {{/if}}

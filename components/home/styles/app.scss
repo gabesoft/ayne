@@ -4,12 +4,23 @@
 @import "urlinput";
 @import "urlpopup";
 @import "urllist";
+@import "queryview";
 @import "query-input";
 
 .favicon {
     height: 16px;
     border-radius: 100%;
     background-color: $body-bg;
+}
+
+.query-list {
+    ul {
+        line-height: 1.2em;
+    }
+
+    ul > li {
+        list-style: none;
+    }
 }
 
 .dropdown-menu {
@@ -39,8 +50,8 @@
     }
 
     .tag {
-        padding: 0.25rem 0.5rem 0.3rem 0.5rem;
-        border-radius: 2px;
+        @include label-size($padding: $label-padding);
+        @include label-style($radius: true);
 
         [data-role="remove"]:hover {
             color: $alert-color;

@@ -61,6 +61,10 @@
     }
 }
 
+.label.thin {
+    @include label-size($padding: $label-padding-thin);
+}
+
 textarea {
     resize: none;
 }
