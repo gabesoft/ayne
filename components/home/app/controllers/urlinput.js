@@ -91,5 +91,9 @@ export default Ember.ObjectController.extend(Ember.Evented, {
       , getUrlMetaSlow: function () {
             Ember.run.debounce(this, this.updateUrlMeta, 300);
         }
+
+      , removeTag: function (tag) {
+            this.api.deleteTag(tag);
+        }
     }
 });

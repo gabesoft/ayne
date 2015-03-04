@@ -1,11 +1,12 @@
 export default Ember.Component.extend({
     tagName           : 'input'
-  , attributeBindings : ['type', 'data-role', 'value', 'valueAutocomplete' ]
+  , attributeBindings : [ 'type', 'data-role', 'value', 'valueAutocomplete' ]
   , type              : 'text'
   , value             : null
   , valueAutocomplete : null
   , 'data-role'       : 'tagsinput'
   , multiple          : true
+  , blacklist         : {}
   , placeholder       : null
 
   , init: function () {
@@ -57,6 +58,12 @@ export default Ember.Component.extend({
         return engine;
     }
 
+  , filter: function (suggestions) {
+        return suggestions.filter(function (item) {
+            return !this.get('blacklist')[item.value];
+        }.bind(this));
+    }
+
   , initializeTypeahead : function ($input, engine) {
         return $input.typeahead({
             highlight  : true
@@ -64,10 +71,25 @@ export default Ember.Component.extend({
           , minLength  : 1
           , autoselect : true
         }, {
-            source     : engine.ttAdapter()
+            source : function (query, cb) {
+                engine.get(query, function (suggestions) {
+                    cb(this.filter(suggestions));
+                }.bind(this));
+            }.bind(this)
           , value      : 'tags'
           , displayKey : 'value'
           , valueKey   : 'value'
+          , templates  : {
+                suggestion: function (data) {
+                    var view = this.container.lookup('view:tysuggestion');
+
+                    view.set('controller', this);
+                    view.set('value', data.value);
+                    view.createElement();
+
+                    return view.element.outerHTML;
+                }.bind(this)
+            }
         }).on('keyup', function (e) {
             var keyCode = e.keyCode || e.which;
 
@@ -96,7 +118,7 @@ export default Ember.Component.extend({
 
         $input.on('itemAdded', function (e) {
             if (this.get('value')) {
-                this.get('value').pushObject(e.item);
+                this.get('value').pushObject(e.item.trim().replace(/^#/, ''));
             }
 
             $tagsinput.typeahead('close');
@@ -132,5 +154,13 @@ export default Ember.Component.extend({
                 this.initializeTagsInput(response.data);
             }.bind(this));
         }.bind(this));
+    }
+
+  , actions : {
+        deleteTag: function (tag) {
+            this.$().tagsinput('input').val('');
+            this.get('blacklist')[tag] = true;
+            this.sendAction('removeTag', tag);
+        }
     }
 });

@@ -41,5 +41,8 @@ export default Ember.ObjectController.extend({
                     console.log(response);
                 });
         }
+      , removeTag: function (tag) {
+            this.api.deleteTag(tag);
+        }
     }
 });

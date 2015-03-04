@@ -67,7 +67,7 @@
         }
 
         .tt-dropdown-menu {
-            @include drop-down('tt-suggestion', 'tt-cursor');
+            @include drop-down('tt-suggestion', 'tt-cursor', $delete-button: true);
         }
     }
 }

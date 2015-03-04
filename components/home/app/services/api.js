@@ -10,6 +10,9 @@ export default Api.extend({
   , deleteUrl: function (data) {
         return this.runDelete('/api/urls/' + data.id);
     }
+  , deleteTag: function (tag) {
+        return this.runDelete('/api/tags/' + tag);
+    }
   , getTags: function () {
         return this.runGet('/api/tags');
     }

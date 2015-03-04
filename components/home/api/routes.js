@@ -1,13 +1,6 @@
 var urlMeta = require('./handlers/url-meta')
-  , api     = require('../../core/lib/api')
-  , url     = require('./handlers/url');
-
-function tags (request, reply) {
-    var userId = request.auth.credentials.id;
-    api.get([ '/users', userId, 'tags' ], function (err, response, data) {
-        return err ? reply.boom(err) : reply(data);
-    });
-}
+  , url     = require('./handlers/url')
+  , tag     = require('./handlers/tag');
 
 module.exports = [{
     method  : 'GET'
@@ -37,6 +30,11 @@ module.exports = [{
 }, {
     method  : 'GET'
   , path    : '/api/tags'
-  , handler : tags
+  , handler : tag.get
+  , config  : { auth : 'token' }
+}, {
+    method  : 'DELETE'
+  , path    : '/api/tags/{tag}'
+  , handler : tag.remove
   , config  : { auth : 'token' }
 }];
