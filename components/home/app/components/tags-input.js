@@ -124,7 +124,11 @@ export default Ember.Component.extend({
             $tagsinput.typeahead('close');
 
             engine.get(e.item, function (suggestions) {
-                if(suggestions.length === 0 || suggestions[0].value !== e.item) {
+                var found = suggestions.find(function (s) {
+                    return s.value === e.item;
+                });
+
+                if (!found) {
                     engine.add([{ value: e.item }]);
                 }
             });
