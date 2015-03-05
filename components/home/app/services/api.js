@@ -11,7 +11,7 @@ export default Api.extend({
         return this.runDelete('/api/urls/' + data.id);
     }
   , deleteTag: function (tag) {
-        return this.runDelete('/api/tags/' + tag);
+        return this.runDelete('/api/tags/' + encodeURIComponent(tag));
     }
   , getTags: function () {
         return this.runGet('/api/tags');
