@@ -1,6 +1,9 @@
 {
+    "libs": [
+        "browser",
+        "jquery"
+    ],
     "loadEagerly": [
-        "bower_components/jquery/dist/jquery.js",
         "bower_components/ember/ember.js"
     ],
     "plugins": {
