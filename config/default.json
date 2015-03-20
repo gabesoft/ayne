@@ -13,7 +13,7 @@
         "secret": "C3812FD7-F9BC-4868-A5E1-3FB751524501",
         "ttl": {
             "unit": "days",
-            "value": 10
+            "value": 30
         },
         "ttlTemp": {
             "unit": "minutes",
