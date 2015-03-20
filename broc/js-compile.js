@@ -43,8 +43,9 @@ module.exports = function (opts) {
     }
 
     function compileVendorJs () {
-        var ext   = opts.minify ? '.min.js' : '.js'
-          , flash = pickFiles(opts.bower, {
+        var ext      = opts.minify ? '.min.js' : '.js'
+          , emberExt = opts.minify ? '.prod.js' : '.debug.js'
+          , flash    = pickFiles(opts.bower, {
                 srcDir  : 'zeroclipboard/dist'
               , destDir : '/'
               , files   : [ '*.swf']
@@ -58,7 +59,7 @@ module.exports = function (opts) {
                   , 'modernizr/modernizr.js'
                   , 'foundation/js/foundation' + ext
                   , 'handlebars/handlebars' + ext
-                  , 'ember/ember' + ext
+                  , 'ember/ember' + emberExt
                   , 'typeahead.js/dist/typeahead.bundle' + ext
                   , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
                   , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
