@@ -52,6 +52,7 @@ $url-popup-border-color: $secondary-color;
             bottom: 5px;
             color: $primary-color-lighten-1;
             display: inline-block;
+            height: 20px;
             position: absolute;
             right: 5px;
         }
@@ -61,7 +62,7 @@ $url-popup-border-color: $secondary-color;
         }
 
         .title {
-            padding: 0px 10px 10px 10px;
+            padding: 0px 10px 30px 10px;
         }
     }
 
