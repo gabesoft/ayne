@@ -32,7 +32,7 @@ function extractUser (request, cb) {
         return cb(Boom.badRequest('Bad HTTP authentication header format', 'Bearer'));
     }
 
-    token.verify(parts[1], request.headers, function (err, payload) {
+    token.verify(parts[1], function (err, payload) {
         if (err && err.name === 'TokenExpiredError') {
             cb(Boom.unauthorized('Expired token received from JSON Web Token validation', 'Bearer'));
         } else if (err) {

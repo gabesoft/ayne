@@ -20,7 +20,6 @@
     "ember": "~1.10.0",
     "foundation": "~5.5.0",
     "font-awesome": "~4.3.0",
-    "fingerprint": "~0.5.4",
     "blueimp-md5": "~1.1.0",
     "zeroclipboard": "~2.2.0",
     "bootstrap-tagsinput": "~0.4.2",

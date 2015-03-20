@@ -4,13 +4,8 @@ export default Ember.Object.extend({
 
         Ember.$.ajaxSetup({
             beforeSend: function (xhr) {
-                var fp          = new Fingerprint({ canvas: true, screen_resolution : true })
-                  , token       = auth.get('token')
-                  , fingerprint = !auth.get('noFingerprint');
+                var token = auth.get('token');
 
-                if (fingerprint) {
-                    xhr.setRequestHeader('Browser-Fingerprint', fp.get());
-                }
                 if (token) {
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 }

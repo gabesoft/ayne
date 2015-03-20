@@ -18,10 +18,6 @@ export default Ember.Object.extend({
         return this.get('credentials.noVerify');
     }.property('credentials')
 
-  , noFingerprint : function () {
-        return this.get('credentials.noFingerprint');
-    }.property('credentials')
-
   , loggedIn : function () {
         return Boolean(this.get('credentials'));
     }.property('credentials')

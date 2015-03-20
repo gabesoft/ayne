@@ -44,7 +44,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                         this.set('prevTransition', null);
                         prev.retry();
                     } else {
-                        this.transitionToRoute('profile.view');
+                        window.location.replace('/');
                     }
                 }.bind(this))
                .catch(function (response) {

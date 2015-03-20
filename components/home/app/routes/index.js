@@ -1,5 +1,10 @@
 export default Ember.Route.extend({
-    model: function () {
+    beforeModel: function (transition) {
+        if (!this.controllerFor('application').get('loggedIn')) {
+            window.location.replace('/user');
+        }
+    }
+  , model: function () {
         var urls = this.api.getUrls()
                .then(function (response) { return response.data; })
                .catch(function () { return []; })

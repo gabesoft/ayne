@@ -49,10 +49,9 @@ function loginUserWithGuid (guid, cb) {
 
         token.temp(user, function (err, tk) {
             return err ? cb(err) : cb(null, {
-                user          : makeClientUser(user)
-              , token         : tk
-              , noFingerprint : true
-              , noVerify      : true
+                user     : makeClientUser(user)
+              , token    : tk
+              , noVerify : true
             });
         });
     });
@@ -62,7 +61,7 @@ function loginUser (data, cb) {
     verifyUser(data.user, function (err, user) {
         if (err) { return cb(err); }
 
-        token.make(user, data.headers, function (err, tk) {
+        token.make(user, function (err, tk) {
             if (err) { return cb(err); }
 
             cb(null, {
@@ -74,7 +73,7 @@ function loginUser (data, cb) {
 }
 
 function logoutUser (data, cb) {
-    token.remove(data.user, data.headers, cb);
+    token.remove(data.user, cb);
 }
 
 function verifyUser (data, cb) {
