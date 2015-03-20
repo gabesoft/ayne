@@ -1,5 +1,5 @@
 export default Ember.Route.extend({
-    beforeModel: function (transition) {
+    beforeModel: function () {
         if (!this.controllerFor('application').get('loggedIn')) {
             window.location.replace('/user');
         }
