@@ -1,0 +1,13 @@
+doctype html
+html
+    include ../../core/templates/head.jade
+    title #{title}
+    body
+        input(type=text ng-model="user")
+        span(ng-cloak) {{user}}
+
+        script(src="#{ayne.assets.host}/#{page}/js/vendor.js")
+        script(src="#{ayne.assets.host}/#{page}/js/app.js")
+        script.
+            window.ayne = !{JSON.stringify(ayne)};
+

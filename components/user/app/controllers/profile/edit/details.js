@@ -1,4 +1,4 @@
-import Legend from 'user/app/mixins/legend';
+import Legend from 'core/app/mixins/legend';
 import Validator from 'core/app/mixins/validator';
 import Gravatar from 'core/app/mixins/gravatar';
 

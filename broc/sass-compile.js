@@ -34,10 +34,6 @@ module.exports = function (opts) {
                 srcDir  : '/roboto-fontface'
               , destDir : '/roboto-fontface'
             })
-          , materialize = pickFiles(opts.bower, {
-                srcDir  : '/materialize/sass'
-              , destDir : '/materialize'
-            })
           , bootstrapTagsinput = pickFiles(opts.bower, {
                 srcDir  : '/bootstrap-tagsinput/dist'
               , destDir : '/'
@@ -46,7 +42,7 @@ module.exports = function (opts) {
           , tagsInput = renameFile(bootstrapTagsinput, {
                 'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
             })
-          , compiled = compileSass([ foundation, fontAwesome, roboto, materialize, tagsInput, opts.root ]
+          , compiled = compileSass([ foundation, fontAwesome, roboto, tagsInput, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {
