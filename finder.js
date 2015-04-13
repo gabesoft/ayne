@@ -6,7 +6,7 @@ var request = require('request')
   , config  = require('./config/github.json');
 
 function runSearch (page) {
-    var file = 'search-data/search.' + i + '.json'
+    var file = 'search-data/search.' + page + '.json'
       , opts = {
             url     : 'https://api.github.com/search/repositories'
           , method  : 'GET'
@@ -29,23 +29,45 @@ function runSearch (page) {
        .on('error', function (err) {
             console.log(err);
         })
-       .pipe(fs.createWriteStream(file))
+       .pipe(fs.createWriteStream(file));
 }
+
+
 
 // for (var i = 1; i < 35; i++) {
 // runSearch(i);
 // }
 
 var urls = [];
+
 glob('search-data/*', function (err, files) {
     async.eachSeries(files, function (f, next) {
         var json  = require('./' + f)
           , items = json.items || [];
 
         urls = urls.concat(items.map(function (x) { return x.clone_url; }));
-
         console.log(chalk.blue(f), items.length, urls.length);
-        next();
+
+        async.each(items, function (item, next2) {
+            var data  = {
+                    name            : item.name
+                  , author          : item.owner.login        // TODO: get the owner's name with item.owner.url
+                  , description     : item.description
+                  , githubUrl       : item.html_url
+                  , githubStarCount : item.stargazers_count
+                };
+
+            request({
+                url    : 'http://localhost:8006/vplugs'
+              , method : 'POST'
+              , body   : data
+              , json   : true
+            }, function () {
+                next2();
+            });
+        }, function () {
+            next();
+        });
     }, function () {
         urls.sort(function (a, b) { return a.localeCompare(b); });
         urls.forEach(function (url) {
