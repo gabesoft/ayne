@@ -25,5 +25,6 @@ public
 
 config/production.json
 config/gmail.json
+config/github.json
 
 components/*/app/.jshintrc
