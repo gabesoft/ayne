@@ -1,10 +1,64 @@
 doctype html
 html
     include ../../core/templates/head.jade
+
     title #{title}
-    body
-        input(type=text ng-model="user")
-        span(ng-cloak) {{user}}
+    body(ng-app="app")
+        md-toolbar(layout="row")
+            div.md-toolbar-tools App title
+            md-button.menu
+                ng-md-icon(icon="menu")
+
+        md-subheader subheader
+        md-button hello
+        md-button.md-fab.md-primary
+            ng-md-icon(icon="send")
+        md-button.md-fab.md-accent abc
+
+        br
+        br
+        md-button.md-raised.md-primary primary
+        md-button.md-raised.md-primary.md-hue-1 primary 1
+        md-button.md-raised.md-primary.md-hue-2 primary 2
+        md-button.md-raised.md-primary.md-hue-3 primary 3
+
+        br
+        br
+        md-button.md-raised.md-accent  accent
+        md-button.md-raised.md-accent.md-hue-1  accent 1
+        md-button.md-raised.md-accent.md-hue-2  accent 2
+        md-button.md-raised.md-accent.md-hue-3  accent 3
+
+        br
+        br
+        md-button.md-raised.md-warn    warn
+        md-button.md-raised            white
+
+        md-checkbox(ng-model="isChecked" aria-label="finished") finished
+        md-switch(ng-model="isActive") active
+
+        p.md-body-2 body medium 2
+        p.md-body-1 body medium 1
+            small.md-caption small caption
+        h3.md-title  title
+        span.caption caption
+
+        md-input-container
+            label Color
+            input(type=text ng-model="color")
+
+        md-list
+            md-list-item.md-2-line
+                div.md-list-item-text item 1
+            md-list-item.md-2-line
+                div.md-list-item-text item 2
+
+        md-card
+            md-card-content
+                h2 headline {{isChecked}}
+                p  {{color}}
+            md-card-footer footer
+
 
         script(src="#{ayne.assets.host}/#{page}/js/vendor.js")
         script(src="#{ayne.assets.host}/#{page}/js/app.js")

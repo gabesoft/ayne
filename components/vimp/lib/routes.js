@@ -8,7 +8,7 @@ var routes = null
     ];
 
 function vimpHandler (request, reply) {
-    return reply.view('vimp/templates/index.jade', { title: 'Vim Index', page: 'vimp' });
+    return reply.view('vimp/templates/index.jade', { title: 'Vim Plugins Index', page: 'vimp' });
 }
 
 routes = paths.map(function (path) {

@@ -1,35 +1,56 @@
 {
-    "server":{
+    "api": {
+        "args": [
+            "server.js",
+            "--port",
+            "8006"
+        ],
+        "color": "grey",
         "command": "node-dev",
-        "color": "blue",
-        "args" : ["server.js", "--port", "8005"],
-        "env": { "NODE_PATH": "$NODE_PATH:." } // TODO: implement in mpr
+        "cwd": "../dask",
+        "env": {}
     },
-    "brocco" : {
-        "command": "broccoli",
-        "color": "magenta",
+    "brocco": {
         "args": [
             "serve",
             "--cors",
             "--port",
             "4300"
         ],
+        "color": "magenta",
+        "command": "broccoli",
         "env": {}
     },
-    "api":{
-        "command": "node-dev",
-        "color": "grey",
-        "args" : ["server.js", "--port", "8006"],
-        "cwd": "../dask",
-        "env": {}
-    },
-    "mongo":{
-        "command": "mongod",
+    "mongo": {
+        "args": [
+            "--config",
+            "/usr/local/etc/mongod.conf"
+        ],
         "color": "green",
-        "args" : ["--config", "/usr/local/etc/mongod.conf"]
+        "command": "mongod"
     },
-    "redis":{
-        "command": "redis-server",
-        "color": "yellow"
+    "redis": {
+        "color": "yellow",
+        "command": "redis-server"
+    },
+    "server": {
+        "args": [
+            "server.js",
+            "--port",
+            "8005",
+            "--watch",
+            "**/lib/",
+            "--watch",
+            "**/templates/",
+            "--watch",
+            "server.js",
+            "--ext",
+            "js,jade"
+        ],
+        "color": "blue",
+        "command": "nodemon",
+        "env": {
+            "NODE_PATH": "$NODE_PATH:."
+        }
     }
 }

@@ -1,10 +1,13 @@
 'use strict';
 
-angular.module('app', []);
+function MainController () {
 
-// TODO: fix this
-angular.element(document).ready(function () {
-    setTimeout(function () {
-        angular.bootstrap(document.getElementsByTagName('body'), ['app']);
-    });
-});
+}
+
+angular.module('app', [ 'ngMaterial', 'ngMdIcons', 'ui.router' ])
+   .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+           .primaryPalette('brown')
+           .accentPalette('blue');
+    })
+   .controller('MainController', MainController);

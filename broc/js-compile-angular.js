@@ -16,6 +16,11 @@ module.exports = function (opts) {
             outputFile : '/vendor.js'
           , inputFiles : [
                 'angular/angular' + ext
+              , 'angular-animate/angular-animate' + ext
+              , 'angular-aria/angular-aria' + ext
+              , 'angular-material/angular-material' + ext
+              , 'angular-material-icons/angular-material-icons' + ext
+              , 'angular-ui-router/release/angular-ui-router' + ext
             ]
         });
     }
