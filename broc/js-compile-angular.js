@@ -19,7 +19,6 @@ module.exports = function (opts) {
               , 'angular-animate/angular-animate' + ext
               , 'angular-aria/angular-aria' + ext
               , 'angular-material/angular-material' + ext
-              , 'angular-material-icons/angular-material-icons' + ext
               , 'angular-ui-router/release/angular-ui-router' + ext
             ]
         });
@@ -27,8 +26,12 @@ module.exports = function (opts) {
 
     function compileSource () {
         return browserify(path.join(opts.root, opts.name), {
-            bundles    : { 'app.js': { entryPoints: [ 'app/**/*.js' ] } }
-          , browserify : { debug: true }
+            bundles    : { 'app.js': { entryPoints: [ 'app/app.js' ] } }
+          , browserify : {
+                fullPaths : true
+              , basedir   : path.join(opts.root, opts.name)
+              , debug     : !opts.minify
+            }
         });
     }
 

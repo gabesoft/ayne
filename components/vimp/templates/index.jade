@@ -7,13 +7,22 @@ html
         md-toolbar(layout="row")
             div.md-toolbar-tools App title
             md-button.menu
-                ng-md-icon(icon="menu")
+                md-icon(md-svg-icon="navigation:menu-24")
 
         md-subheader subheader
         md-button hello
         md-button.md-fab.md-primary
-            ng-md-icon(icon="send")
+            md-icon(md-svg-icon="action:3d-rotation-24")
+        md-button.md-fab.md-primary.md-mini
+            md-icon(md-svg-icon="action:accessibility-24")
         md-button.md-fab.md-accent abc
+
+        br
+        br
+        md-button.md-icon-button.md-raised
+            md-icon(md-svg-icon="action:account-balance-24")
+        md-button.md-icon-button.md-raised
+            md-icon(md-svg-icon="action:account-balance-wallet-24")
 
         br
         br
