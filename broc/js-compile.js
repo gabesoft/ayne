@@ -58,6 +58,7 @@ module.exports = function (opts) {
                   , 'fastclick/lib/fastclick.js'
                   , 'modernizr/modernizr.js'
                   , 'foundation/js/foundation' + ext
+                  , 'handlebars/handlebars' + ext
                   , 'ember/ember' + emberExt
                   , 'typeahead.js/dist/typeahead.bundle' + ext
                   , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
@@ -85,9 +86,8 @@ module.exports = function (opts) {
               , files   : [ '**/*.hbs' ]
             })
           , compiled = log(templateCompiler(mergeTrees([ partials, templ ])), {
-                output    : 'tree'
-              , debugOnly : true
-              , label     : 'compiled-templates'
+                output : 'tree'
+              , label  : 'compiled-templates'
             });
 
         return pickFiles(compiled, {
@@ -105,11 +105,7 @@ module.exports = function (opts) {
         var modules = pickFiles(opts.root, {
                 srcDir  : '/'
               , destDir : '/'
-              , files   : [
-                    path.join('core', 'app/**/*.js')
-                  , path.join(opts.name, 'app/**/*.js')
-                  , path.join(opts.name, 'app', '.jshintrc')
-                ]
+              , files   : [ '*/app/**/*.js', path.join(opts.name, 'app', '.jshintrc') ]
             })
           , moduleSetup = moduleAppender(modules, {
                 root     : path.join(opts.name, 'app')
@@ -128,9 +124,8 @@ module.exports = function (opts) {
           , jshint    = jshintModules()
           , vendor    = compileVendorJs()
           , libMerged = log(mergeTrees([ templates, modules ]), {
-                output    : 'tree'
-              , debugOnly : true
-              , label     : 'lib-merged'
+                output : 'tree'
+              , label  : 'lib-merged'
             })
           , lib = concatenate(libMerged, {
                 inputFiles : [ '*/**/*.js', '**/*.js' ]

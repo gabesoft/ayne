@@ -7,7 +7,6 @@
         "bower_components/ember/ember.js"
     ],
     "plugins": {
-        "angular": "./",
         "node": {}
     }
 }
