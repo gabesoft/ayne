@@ -1,17 +1,19 @@
 'use strict';
 
-var icons = require('./icons');
+var icons      = require('./icons')
+  , Vplug      = require('./controllers/vplug')
+  , ApiFactory = require('./services/api')
+  , module     = angular.module('app', ['ngMaterial', 'ui.router']);
 
-function MainController () {
 
-}
 
-angular.module('app', [ 'ngMaterial', 'ui.router' ])
-   .config(function ($mdThemingProvider, $mdIconProvider) {
-        $mdThemingProvider.theme('default')
-           .primaryPalette('brown')
-           .accentPalette('blue');
+module.config(function ($mdThemingProvider, $mdIconProvider) {
+    $mdThemingProvider.theme('default')
+       .primaryPalette('brown')
+       .accentPalette('blue');
 
-        icons.setup($mdIconProvider);
-    })
-   .controller('MainController', MainController);
+    icons.setup($mdIconProvider);
+});
+
+module.controller('VplugController', Vplug);
+module.factory('ApiService', ApiFactory);

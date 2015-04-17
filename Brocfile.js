@@ -27,19 +27,6 @@ dirs.forEach(function (dir) {
         };
 
     trees.push(mergeTrees(comp.map(function (c) { return c(opts); })));
-
-    // TODO: use a config
-    // if (dir === '/work/ayne/components/vimp') {
-        // trees.push(mergeTrees([
-            // buildJSAngular(opts)
-          // , buildSASSAngular(opts)
-        // ]));
-    // } else {
-        // trees.push(mergeTrees([
-            // buildJS(opts)
-          // , buildSASS(opts)
-        // ]));
-    // }
 });
 
 module.exports = mergeTrees(trees);

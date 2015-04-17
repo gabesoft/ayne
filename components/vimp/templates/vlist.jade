@@ -1,0 +1,28 @@
+doctype html
+html
+    include ../../core/templates/head.jade
+
+    title #{title}
+    body(ng-app="app")
+        md-toolbar(layout="row")
+            div.md-toolbar-tools Vim Plugins
+            md-button.menu
+                md-icon(md-svg-icon="navigation:menu-24")
+
+        div(ng-controller="VplugController as vc")
+            md-content
+                md-list(layout="column" layout-padding layout-margin layout-fill)
+                    md-list-item.md-3-line(ng-repeat="plug in vc.plugins" flex="100")
+                        div.md-list-item-text
+                            h2.md-headline {{plug.name}} ({{plug.githubStarCount}})
+                            h3.md-body-2 by {{plug.author}}
+                            p  {{plug.description}}
+                            a(ng-href="{{plug.githubUrl}}") {{plug.githubUrl}}
+                        md-divider
+
+        script(src="#{ayne.assets.host}/#{page}/js/vendor.js")
+        script(src="#{ayne.assets.host}/#{page}/js/app.js")
+        script.
+            window.ayne = !{JSON.stringify(ayne)};
+
+

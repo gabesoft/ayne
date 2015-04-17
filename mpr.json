@@ -41,6 +41,8 @@
             "--watch",
             "**/lib/",
             "--watch",
+            "**/api/",
+            "--watch",
             "**/templates/",
             "--watch",
             "server.js",
@@ -48,9 +50,6 @@
             "js,jade"
         ],
         "color": "blue",
-        "command": "nodemon",
-        "env": {
-            "NODE_PATH": "$NODE_PATH:."
-        }
+        "command": "nodemon"
     }
 }
