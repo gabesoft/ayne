@@ -62,13 +62,13 @@
     </label>
 </fieldset>
 
-<button class="button small margin-top-10" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+<button class="button small margin-top-10" type="button" disabled={{disableSubmit}} {{action 'save'}}>
     <i class="fa fa-bookmark-o"></i>
     Save
 </button>
 
 {{#if showDelete}}
-    <button class="button secondary small margin-top-10" type="button" {{bind-attr disabled=disableDelete}} {{action 'remove'}}>
+    <button class="button secondary small margin-top-10" type="button" disabled={{disableDelete}} {{action 'remove'}}>
         <i class="fa fa-trash"></i>
         Delete
     </button>

@@ -1,4 +1,4 @@
-<label {{bind-attr class="error.email:error"}}>
+<label class="{{if error.email 'error'}}">
     Email
     {{input
     value=model.email

@@ -57,12 +57,12 @@
                     value=model.notes}}
                 </label>
 
-                <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
+                <button class="button small" type="button" disabled={{disableSubmit}} {{action 'save'}}>
                     <i class="fa fa-bookmark"></i>
                     Save
                 </button>
                 {{#if showDelete}}
-                    <button class="button secondary small" type="button" {{bind-attr disabled=disableDelete}} {{action 'remove'}}>
+                <button class="button secondary small" type="button" disabled={{disableDelete}} {{action 'remove'}}>
                         <i class="fa fa-trash"></i>
                         Delete
                     </button>
@@ -73,7 +73,7 @@
             <ul class="side-nav">
                 {{#each url in recentUrls}}
                 <li>
-                    <a {{bind-attr href=url.href}} target="_blank">
+                    <a href={{url.href}} target="_blank">
                         {{view 'favicon' src=url.favicon }}
                         {{url.title}}
                     </a>

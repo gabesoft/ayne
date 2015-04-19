@@ -9,7 +9,7 @@
                     {{#link-to 'forgot-password'}}I forgot my password{{/link-to}}
                 </blockquote>
             {{/if}}
-            <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'authenticate'}}>
+            <button class="button small" type="button" disabled={{disableSubmit}} {{action 'authenticate'}}>
                 {{#if authenticatePending}}
                     <i class="fa fa-spin fa-cog"></i>
                 {{else}}

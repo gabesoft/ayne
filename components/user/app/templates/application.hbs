@@ -4,18 +4,18 @@
         <ul class="pull-right hide-for-medium-up">
             {{#if loggedIn}}
                 {{#link-to 'profile.edit' tagName="li" href=false}}
-                    <a {{bind-attr href="view.href"}}>Profile Edit</a>
+                    <a href={{view.href}}>Profile Edit</a>
                 {{/link-to}}
                 {{#link-to 'profile.view' tagName="li" href=false}}
-                    <a {{bind-attr href="view.href"}}>Profile View</a>
+                    <a href={{view.href}}>Profile View</a>
                 {{/link-to}}
                 <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
             {{else}}
                 {{#link-to 'login' tagName="li" href=false}}
-                    <a {{bind-attr href="view.href"}}>Log In</a>
+                    <a href={{view.href}}>Log In</a>
                 {{/link-to}}
                 {{#link-to 'signup' tagName="li" href=false}}
-                    <a {{bind-attr href="view.href"}}>Register</a>
+                    <a href={{view.href}}>Register</a>
                 {{/link-to}}
             {{/if}}
         </ul>
@@ -25,10 +25,10 @@
                 {{partial 'core/app/partials/header-profile-info'}}
                 <ul class="dropdown">
                     {{#link-to 'profile.edit' tagName="li" href=false}}
-                        <a {{bind-attr href="view.href"}}>Profile Edit</a>
+                        <a href={{view.href}}>Profile Edit</a>
                     {{/link-to}}
                     {{#link-to 'profile.view' tagName="li" href=false}}
-                        <a {{bind-attr href="view.href"}}>Profile View</a>
+                        <a href={{view.href}}>Profile View</a>
                     {{/link-to}}
                     <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
                 </ul>

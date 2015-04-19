@@ -5,7 +5,7 @@
             {{partial 'user/app/partials/email-input'}}
             {{partial 'user/app/partials/password-input'}}
             {{partial 'user/app/partials/password-verify-input'}}
-            <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'createUser'}}>
+            <button class="button small" type="button" disabled={{disableSubmit}} {{action 'createUser'}}>
                 {{#if createUserPending}}
                 <i class="fa fa-spin fa-cog"></i>
                 {{else}}

@@ -1,15 +1,15 @@
 <div class="url-popup" hidden="true">
-    <div {{bind-attr class="editOn:edit-on :popup-container"}}>
+    <div class="{{if editOn 'edit-on'}} popup-container">
         <div class="popup-title margin-bottom-15">
             <div class="action-buttons">
-                <button class="button small action-button privacy-button" {{bind-attr title=privacyTitle}} {{action 'togglePrivacy'}}>
-                    <i {{bind-attr class="model.private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
+                <button class="button small action-button privacy-button" title={{privacyTitle}} {{action 'togglePrivacy'}}>
+                    <i class="{{if model.private 'fa-lock' 'fa-unlock-alt'}} fa fa-fw"></i>
                 </button>
                 <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
                     <i class="fa fa-pencil fa-fw"></i>
                 </button>
                 <a class="button small action-button original-link"
-                    {{bind-attr href=userEnteredLink}}
+                    href={{userEnteredLink}}
                     title="Open link in a new window"
                     target="_blank">
                     <i class="fa fa-fw fa-external-link"></i>
@@ -29,12 +29,14 @@
         </div>
         <div class="popup-content">
             <dl>
-                <dd class="url-href" {{bind-attr title=model.href}}>
-                    <a id="copy-url-button"
-                    class="button small action-button copy-url-button"
-                    type="button"
-                    {{bind-attr data-clipboard-text=model.href disabled=disableCopy title=copyTitle}}>
-                        <i {{bind-attr class="copyClass :fa :fa-fw"}}></i>
+                <dd class="url-href" title={{model.href}}>
+                    <a  id="copy-url-button"
+                        class="button small action-button copy-url-button"
+                        type="button"
+                        data-clipboard-text={{model.href}}
+                        disabled={{disableCopy}}
+                        title={{copyTitle}}>
+                        <i class="{{copyClass}} fa fa-fw"></i>
                     </a>
                     {{model.href}}
                 </dd>

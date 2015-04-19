@@ -1,5 +1,5 @@
 <div class="url-view">
-    <a {{bind-attr href=url.href}} class="url-title" target="_blank">
+    <a href={{url.href}} class="url-title" target="_blank">
         {{view 'favicon' src=model.favicon }}
         {{model.title}}
     </a>
