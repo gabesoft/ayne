@@ -1,4 +1,4 @@
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
     tagsData: function () {
         return this.get('parentController.tagsData');
     }.property('parentController.tagsData')

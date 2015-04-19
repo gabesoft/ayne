@@ -13,7 +13,7 @@
                         focus-out="getUrlMeta"
                         value=displayHref}}
                         <span class="form-label">
-                            {{view 'favicon' src=favicon }}
+                            {{view 'favicon' src=model.favicon }}
                         </span>
                     </span>
                 </label>
@@ -23,7 +23,7 @@
                     {{input
                     name="title"
                     type="text"
-                    value=title}}
+                    value=model.title}}
                     {{#if pendingMeta}}
                         <span class="form-label">
                             <i class="fa fa-cog fa-spin"></i>
@@ -36,7 +36,7 @@
                     {{tags-input
                     name="tags"
                     valueAutocomplete=tagsData
-                    value=tags}}
+                    value=model.tags}}
                 </label>
 
                 <label>Private
@@ -54,7 +54,7 @@
                     {{textarea
                     name="notes"
                     rows="3"
-                    value=notes}}
+                    value=model.notes}}
                 </label>
 
                 <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>

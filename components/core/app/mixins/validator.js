@@ -136,8 +136,10 @@ export default Ember.Mixin.create({
         return regex.test(text);
     }
 
-  , alphaNumericField: function (field, onlyLowercase) {
-        this.setValidator('alphaNumericField', field, field, function () {
+  , alphaNumericField: function (field, dstField, onlyLowercase) {
+        dstField = dstField || field;
+
+        this.setValidator('alphaNumericField', field, dstField, function () {
             var value = this.get(field)
               , valid = this.validAlphaNumeric(value, onlyLowercase)
               , msg   = onlyLowercase
@@ -148,8 +150,10 @@ export default Ember.Mixin.create({
         });
     }
 
-  , requiredField: function (field) {
-        this.setValidator('requiredField', field, field, function (force) {
+  , requiredField: function (field, dstField) {
+        dstField = dstField || field;
+
+        this.setValidator('requiredField', field, dstField, function (force) {
             var value = this.get(field);
 
             if ((!force && typeof value === 'undefined') || value) {
@@ -174,8 +178,10 @@ export default Ember.Mixin.create({
         });
     }
 
-  , emailField : function (field) {
-        this.setValidator('emailField', field, field, function () {
+  , emailField : function (field, dstField) {
+        dstField = dstField || field;
+
+        this.setValidator('emailField', field, dstField, function () {
             var value = this.get(field)
               , valid = this.validEmail(value);
 

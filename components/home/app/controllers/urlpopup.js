@@ -1,10 +1,11 @@
-export default Ember.ObjectController.extend({
-    model       : {}
-  , copyClass   : 'fa-copy'
-  , copyTitle   : "Copy url to clipboard"
-  , editOn      : false
-  , disableCopy : true
-  , userEnteredLink: function () {
+export default Ember.Controller.extend({
+    model           : {}
+  , copyClass       : 'fa-copy'
+  , copyTitle       : "Copy url to clipboard"
+  , privacyChanged  : false
+  , editOn          : false
+  , disableCopy     : true
+  , userEnteredLink : function () {
         var url = this.get('model.userEntered') || '';
         return url.match(/^https?:/) ? url : 'http://' + url;
     }.property('model.userEntered')
@@ -20,9 +21,10 @@ export default Ember.ObjectController.extend({
         }
       , togglePrivacy: function () {
             this.toggleProperty('model.private');
+            this.set('privacyChanged', true);
         }
       , saveUrl: function () {
-            if (this.get('editOn')) {
+            if (this.get('editOn') || this.get('privacyChanged')) {
                 this.api.saveUrl(this.get('model')).catch(function (response) {
                     console.log(response);
                 });

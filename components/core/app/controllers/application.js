@@ -1,11 +1,11 @@
 import Gravatar from 'core/app/mixins/gravatar';
 
-export default Ember.ObjectController.extend(Gravatar, {
+export default Ember.Controller.extend(Gravatar, {
     headerIcon: 'fa-wrench'
   , profilePhotoSize : 64
   , gravatarEmail    : function () {
-        return this.get('profile.gravatarEmail');
-    }.property('profile.gravatarEmail')
+        return this.get('model.profile.gravatarEmail');
+    }.property('model.profile.gravatarEmail')
   , loggedIn: function () {
         return this.auth.get('loggedIn');
     }.property('auth.loggedIn')

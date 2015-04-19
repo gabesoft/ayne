@@ -1,7 +1,7 @@
 import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, Legend, {
+export default Ember.Controller.extend(Validator, Legend, {
     resetPending  : false
   , legendDefault : 'Forgot password'
   , onEnterAction : 'reset'
@@ -9,8 +9,8 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , init: function () {
         this._super();
-        this.requiredField('email');
-        this.emailField('email');
+        this.requiredField('model.email', 'email');
+        this.emailField('model.email', 'email');
         this.alert();
     }
 
@@ -33,7 +33,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , alertSuccess: function () {
         this.alert([
             'We found an account that matches',
-            '<b>' + this.get('model').email + '</b>,',
+            '<b>' + this.get('model.email') + '</b>,',
             'you should receive an email with instructions',
             'on how to reset your password shortly.'
         ].join(' '), 'success');
@@ -41,7 +41,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , alertFailed: function (response) {
         if (response && response.json.statusCode === 404) {
-            this.alert('No account matches <b>' + this.get('model').email + '</b>', 'error');
+            this.alert('No account matches <b>' + this.get('model.email') + '</b>', 'error');
         } else {
             this.alert('Failed to send a reset password email', 'error');
         }
@@ -58,7 +58,7 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                 }.bind(this))
                .thenIf(function (response) {
                     var email = Ember.get(response, 'data.email');
-                    if (email && email === this.get('email')) {
+                    if (email && email === this.get('model.email')) {
                         this.alertSuccess();
                     }
                 }.bind(this))

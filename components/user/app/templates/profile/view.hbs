@@ -5,11 +5,11 @@
                 <img {{bind-attr src=gravatarUrl}}>
             </div>
             <div class="card-divider profile-name">
-                {{displayName}}
+                {{model.displayName}}
             </div>
             <div class="card-section">
-                <p>{{firstName}} {{lastName}}</p>
-                <p>{{location}}</p>
+                <p>{{model.firstName}} {{model.lastName}}</p>
+                <p>{{model.location}}</p>
             </div>
         </div>
     </div>

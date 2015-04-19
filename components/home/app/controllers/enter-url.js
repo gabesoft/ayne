@@ -1,11 +1,10 @@
-import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, Legend, {
+export default Ember.Controller.extend(Legend, {
     model         : {}
   , pendingMeta   : false
   , pendingSave   : false
-  , pendingDelete   : false
+  , pendingDelete : false
   , displayHref   : ''
   , recentUrls    : []
   , recentUrlsIds : {}

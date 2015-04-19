@@ -1,7 +1,7 @@
 import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, Legend, {
+export default Ember.Controller.extend(Validator, Legend, {
     createUserPending : false
   , legendDefault     : 'Create an account'
   , onEnterAction     : 'createUser'
@@ -10,12 +10,12 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , init: function () {
         this._super();
-        this.emailField('email');
-        this.requiredField('email');
-        this.minLengthField('password', 8, 'passwords');
-        this.uncommonPasswordField('password', 'passwords');
-        this.passwordFields('password', 'passwordVerify', 'passwords');
-        this.legendResetFields('email', 'password', 'passwordVerify');
+        this.emailField('model.email', 'email');
+        this.requiredField('model.email', 'email');
+        this.minLengthField('model.password', 8, 'passwords');
+        this.uncommonPasswordField('model.password', 'passwords');
+        this.passwordFields('model.password', 'model.passwordVerify', 'passwords');
+        this.legendResetFields('model.email', 'model.password', 'model.passwordVerify');
     }
 
   , setup: function (model) {

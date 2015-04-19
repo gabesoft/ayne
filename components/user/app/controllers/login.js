@@ -1,7 +1,7 @@
 import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, Legend, {
+export default Ember.Controller.extend(Validator, Legend, {
     authenticatePending : false
   , legendDefault       : 'Enter your credentials'
   , onEnterAction       : 'authenticate'
@@ -9,6 +9,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
   , showForgotPassword  : false
   , needs               : ['application']
   , appCtrl             : Ember.computed.alias('controllers.application')
+
+  , email : function () {
+        return this.get('model.email');
+    }.property('model.email')
 
   , init : function () {
         this._super();

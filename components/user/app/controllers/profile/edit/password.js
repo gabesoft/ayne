@@ -1,7 +1,7 @@
 import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
-export default Ember.ObjectController.extend(Validator, Legend, {
+export default Ember.Controller.extend(Validator, Legend, {
     savePending        : false
   , legendDefault      : 'Change Password'
   , requireOldPassword : true
@@ -11,10 +11,10 @@ export default Ember.ObjectController.extend(Validator, Legend, {
 
   , init: function () {
         this._super();
-        this.legendResetFields('password', 'passwordVerify');
-        this.minLengthField('password', 8, 'passwords');
-        this.uncommonPasswordField('password', 'passwords');
-        this.passwordFields('password', 'passwordVerify', 'passwords');
+        this.legendResetFields('model.password', 'model.passwordVerify', 'model.oldPassword');
+        this.minLengthField('model.password', 8, 'passwords');
+        this.uncommonPasswordField('model.password', 'passwords');
+        this.passwordFields('model.password', 'model.passwordVerify', 'passwords');
     }
 
   , updateRequireOldPasswordFlag: function () {
@@ -36,10 +36,9 @@ export default Ember.ObjectController.extend(Validator, Legend, {
                .thenIf(function () {
                     var user = this.auth.get('user') || {};
 
-                    this.auth.logout();
                     return this.api.login({
                         email    : user.email
-                      , password : this.get('password')
+                      , password : this.get('model.password')
                     });
                 }.bind(this))
                .thenIf(function (response) {

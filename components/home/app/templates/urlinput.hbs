@@ -12,7 +12,7 @@
                 value=displayHref}}
             </div>
             <div class="small-2 columns">
-                <span class="postfix"> {{view 'favicon' src=favicon clearOnClick=true }} </span>
+                <span class="postfix"> {{view 'favicon' src=model.favicon clearOnClick=true }} </span>
             </div>
         </div>
     </label>
@@ -23,7 +23,7 @@
                 {{input
                 name="title"
                 type="text"
-                value=title}}
+                value=model.title}}
             </div>
             <div class="small-2 columns">
                 <span class="postfix">
@@ -40,7 +40,7 @@
         name="tags"
         valueAutocomplete=tagsData
         removeTag="removeTag"
-        value=tags}}
+        value=model.tags}}
     </label>
 
     <label>Private
@@ -49,7 +49,7 @@
             name="private"
             type="checkbox"
             id="url-privacy-setting"
-            checked=private}}
+            checked=model.private}}
             <label for="url-privacy-setting"></label>
         </div>
     </label>
@@ -58,7 +58,7 @@
         {{textarea
         name="notes"
         rows="3"
-        value=notes}}
+        value=model.notes}}
     </label>
 </fieldset>
 

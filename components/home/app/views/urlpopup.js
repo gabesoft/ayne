@@ -13,14 +13,14 @@ export default Ember.View.extend({
 
         client.on('ready', function () {
             var ctrl = this.get('controller');
-            if (ctrl) {
+            if (ctrl && !ctrl.get('isDestroyed')) {
                 ctrl.set('disableCopy', false);
             }
         }.bind(this));
 
         client.on('aftercopy', function () {
             var ctrl = this.get('controller');
-            if (ctrl) {
+            if (ctrl && !ctrl.get('isDestroyed')) {
                 ctrl.set('copyTitle', 'Copied');
                 ctrl.set('copyClass', 'fa-check-square-o');
                 ctrl.set('disableCopy', true);

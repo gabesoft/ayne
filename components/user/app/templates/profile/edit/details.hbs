@@ -6,14 +6,14 @@
                 {{input
                 name="firstName"
                 type="text"
-                value=firstName}}
+                value=model.firstName}}
             </label>
 
             <label>Last Name
                 {{input
                 name="lastName"
                 type="text"
-                value=lastName}}
+                value=model.lastName}}
             </label>
 
             <label {{bind-attr class="error.displayName:error"}}>Display Name
@@ -22,7 +22,7 @@
                 name="displayName"
                 type="text"
                 required=true
-                value=displayName}}
+                value=model.displayName}}
                 {{#if error.displayName}}
                 <small class="error">{{error.displayName}}</small>
                 {{/if}}
@@ -32,14 +32,14 @@
                 {{input
                 name="location"
                 type="text"
-                value=location}}
+                value=model.location}}
             </label>
 
             <label>Gravatar Email
                 {{input
                 name="gravatarEmail"
                 type="email"
-                value=gravatarEmail}}
+                value=model.gravatarEmail}}
             </label>
             <button class="button small" type="button" {{bind-attr disabled=disableSubmit}} {{action 'save'}}>
                 <i class="fa fa-save"></i>

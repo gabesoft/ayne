@@ -3,7 +3,7 @@
         <div class="popup-title margin-bottom-15">
             <div class="action-buttons">
                 <button class="button small action-button privacy-button" {{bind-attr title=privacyTitle}} {{action 'togglePrivacy'}}>
-                    <i {{bind-attr class="private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
+                    <i {{bind-attr class="model.private:fa-lock:fa-unlock-alt :fa :fa-fw"}}></i>
                 </button>
                 <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
                     <i class="fa fa-pencil fa-fw"></i>
@@ -20,32 +20,32 @@
             </div>
             {{#if editOn}}
                 <label>
-                    {{input name="title" type="text" value=title}}
+                    {{input name="title" type="text" value=model.title}}
                 </label>
             {{else}}
-                <h5 class="title">{{title}}</h5>
-                <span class="label label-info click-count" title="Click Count">{{clickCount}}</span>
+                <h5 class="title">{{model.title}}</h5>
+                <span class="label label-info click-count" title="Click Count">{{model.clickCount}}</span>
             {{/if}}
         </div>
         <div class="popup-content">
             <dl>
-                <dd class="url-href" {{bind-attr title=href}}>
+                <dd class="url-href" {{bind-attr title=model.href}}>
                     <a id="copy-url-button"
                     class="button small action-button copy-url-button"
                     type="button"
-                    {{bind-attr data-clipboard-text=href disabled=disableCopy title=copyTitle}}>
+                    {{bind-attr data-clipboard-text=model.href disabled=disableCopy title=copyTitle}}>
                         <i {{bind-attr class="copyClass :fa :fa-fw"}}></i>
                     </a>
-                    {{href}}
+                    {{model.href}}
                 </dd>
             </dl>
 
             {{#if editOn}}
                 <label>Notes
-                    {{textarea name="notes" rows="3" value=notes}}
+                    {{textarea name="notes" rows="3" value=model.notes}}
                 </label>
-            {{else if notes}}
-                <blockquote class="url-notes">{{notes}}</blockquote>
+            {{else if model.notes}}
+                <blockquote class="url-notes">{{model.notes}}</blockquote>
             {{/if}}
 
             {{#if editOn}}
@@ -55,11 +55,11 @@
                     valueAutocomplete=tagsData
                     valueTags=tags
                     removeTag="removeTag"
-                    value=tags }}
+                    value=model.tags }}
                 </label>
             {{else}}
                 <div>
-                    {{#each tag in tags}}
+                    {{#each tag in model.tags}}
                         <span class="tag label radius">{{tag}}</span>
                     {{/each}}
                 </div>

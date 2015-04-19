@@ -2,14 +2,19 @@ import Legend from 'user/app/mixins/legend';
 import Validator from 'core/app/mixins/validator';
 import Gravatar from 'core/app/mixins/gravatar';
 
-export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
+export default Ember.Controller.extend(Gravatar, Validator, Legend, {
     savePending      : false
   , profilePhotoSize : 200
   , legendDefault    : 'Name and Details'
   , onEnterAction    : 'save'
+  , _model           : {}
   , model            : {}
   , needs            : [ 'application' ]
   , appCtrl          : Ember.computed.alias('controllers.application')
+
+  , gravatarEmail : function () {
+        return this.get('model.gravatarEmail');
+    }.property('model.gravatarEmail')
 
   , init: function () {
         this._super();
@@ -17,10 +22,10 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
             this.set('_model', Ember.copy(this.get('model')));
         });
 
-        this.requiredField('displayName');
-        this.alphaNumericField('displayName', true);
-        this.setValidator('uniqueDisplayName', 'displayName', 'displayName', function () {
-            var value    = this.get('displayName')
+        this.requiredField('model.displayName', 'displayName');
+        this.alphaNumericField('model.displayName', 'displayName', true);
+        this.setValidator('uniqueDisplayName', 'model.displayName', 'displayName', function () {
+            var value    = this.get('model.displayName')
               , orig     = this.get('_model.displayName');
 
             if (!value || !orig || value === orig) {
@@ -37,6 +42,10 @@ export default Ember.ObjectController.extend(Gravatar, Validator, Legend, {
   , disableSubmit : function () {
         return this.get('invalid');
     }.property('invalid')
+
+  , disableCancel : function () {
+        return this.get('savePending');
+    }.property('savePending')
 
   , actions: {
         save: function () {

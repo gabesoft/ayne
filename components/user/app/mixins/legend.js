@@ -5,6 +5,7 @@ export default Ember.Mixin.create({
         this.set('legendText', this.get('legendDefault') || 'Legend default not set');
         this.set('legendClass', '');
         this.set('legendIcon', '');
+        this.set('legendPending', false);
         this.set('errorIcon', 'fa-exclamation-circle');
         this.set('successIcon', 'fa-check-square-o');
         this.set('warningIcon', 'fa-warning');
@@ -14,7 +15,9 @@ export default Ember.Mixin.create({
         var args = Array.prototype.slice.call(arguments);
         Ember.$.each(args, function (i, field) {
             this.addObserver(field, this, function () {
-                this.legend();
+                if (!this.get('legendPending')) {
+                    this.legend();
+                }
             });
         }.bind(this));
     }
@@ -28,8 +31,10 @@ export default Ember.Mixin.create({
         }
 
         if (timeout) {
+            this.set('legendPending', true);
             this.runId = Ember.run.later(this, function () {
                 this.legend();
+                this.set('legendPending', false);
             }, timeout);
         }
 
