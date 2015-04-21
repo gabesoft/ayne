@@ -74,17 +74,17 @@ module.exports = function (opts) {
             return touch('/templates/app-templates.js');
         }
 
-        var partials = pickFiles(opts.root, {
-                srcDir  : '/'
+        var core = pickFiles(opts.root, {
+                srcDir : '/'
               , destDir : '/templates'
-              , files   : [ '*/app/partials/**/*.hbs']
+              , files : [ 'core/app/partials/**/*.hbs', 'core/app/templates/**/*.hbs' ]
             })
           , templ = pickFiles(opts.root, {
                 srcDir  : path.join(opts.name, 'app', 'templates')
               , destDir : '/templates'
               , files   : [ '**/*.hbs' ]
             })
-          , compiled = templateCompiler(mergeTrees([ partials, templ ]));
+          , compiled = templateCompiler(mergeTrees([ core, templ ]));
 
         return pickFiles(compiled, {
             srcDir  : '/templates'

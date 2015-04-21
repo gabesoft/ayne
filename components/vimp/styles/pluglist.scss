@@ -1,0 +1,9 @@
+.plug-list {
+    ul {
+        @include side-nav();
+
+        li a: not(.button) {
+            padding: 10px;
+        }
+    }
+}

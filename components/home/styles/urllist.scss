@@ -3,11 +3,11 @@
         @include side-nav();
 
         li a:not(.button) {
-            padding: 10px 10px;
-            text-shadow: 0 0 5px rgba(96,125,139,0.3);
-            border-radius: 2px;
             border: 1px solid scale-color($primary-color-lighten-5, $lightness: -3%);
+            border-radius: 2px;
             outline: none;
+            padding: 10px;
+            text-shadow: 0 0 5px rgba(96,125,139,0.3);
 
             &:hover {
                 text-shadow: 0 0 5px rgba(96,125,139,0.6);

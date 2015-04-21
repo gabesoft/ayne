@@ -1,0 +1,10 @@
+<ul>
+    {{#each vplug in model}}
+        <li class="vplug-item">
+            <h3>{{vplug.name}} ({{vplug.githubStarCount}})</h3>
+            <p>{{vplug.description}}</p>
+            <a href="{{vplug.githubUrl}}">{{vplug.githubUrl}}</a>
+        </li>
+    {{/each}}
+</ul>
+
