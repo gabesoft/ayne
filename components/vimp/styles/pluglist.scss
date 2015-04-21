@@ -2,8 +2,29 @@
     ul {
         @include side-nav();
 
-        li a: not(.button) {
+        li  {
+            border: 1px solid $primary-color-lighten-4;
+            border-radius: 2px;
+        }
+
+        li a:not(.button) {
+            display: inline;
             padding: 10px;
+        }
+    }
+
+    .plug-view {
+        background-color: $primary-color-lighten-5;
+        padding: 10px;
+        transition: 0.5s;
+
+        &:hover {
+            background-color: $primary-color-lighten-4;
+        }
+
+        .plug-title {
+            color: $secondary-color-darken-3;
+            text-transform: capitalize;
         }
     }
 }
