@@ -36,6 +36,8 @@ export default Ember.Component.extend({
     }
 
   , didInsertElement: function () {
+        if (!this.get('tags')) { return; }
+
         this.get('tags').then(function (response) {
             var $input = this.$(this.inputSelector)
               , tags   = response.data;
