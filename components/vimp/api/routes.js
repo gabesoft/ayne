@@ -1,7 +1,7 @@
 var api = require('../../core/lib/api');
 
-function getVplugs (request, reply) {
-    api.get('/vplugs', null, function (err, response, body) {
+function search (request, reply) {
+    api.get('/vplugs', request.query, function (err, response, body) {
         return err ? reply.boom(err) : reply(body);
     });
 }
@@ -9,5 +9,5 @@ function getVplugs (request, reply) {
 module.exports = [{
     method  : 'GET'
   , path    : '/api/vplugs'
-  , handler : getVplugs
+  , handler : search
 }];
