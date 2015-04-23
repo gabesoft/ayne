@@ -80,7 +80,7 @@ module.exports = function (opts) {
               , files : [ 'core/app/partials/**/*.hbs', 'core/app/templates/**/*.hbs' ]
             })
           , templ = pickFiles(opts.root, {
-                srcDir  : path.join(opts.name, 'app', 'templates')
+                srcDir  : path.join(opts.name, 'app')
               , destDir : '/templates'
               , files   : [ '**/*.hbs' ]
             })

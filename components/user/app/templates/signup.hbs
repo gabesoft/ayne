@@ -1,10 +1,10 @@
 <div class="row">
     <form class="medium-8 medium-offset-2 large-4 large-offset-4 columns" action="">
         <fieldset class="panel callout">
-            {{partial 'user/app/partials/legend'}}
-            {{partial 'user/app/partials/email-input'}}
-            {{partial 'user/app/partials/password-input'}}
-            {{partial 'user/app/partials/password-verify-input'}}
+            {{partial 'partials/legend'}}
+            {{partial 'partials/email-input'}}
+            {{partial 'partials/password-input'}}
+            {{partial 'partials/password-verify-input'}}
             <button class="button small" type="button" disabled={{disableSubmit}} {{action 'createUser'}}>
                 {{#if createUserPending}}
                 <i class="fa fa-spin fa-cog"></i>
