@@ -2,6 +2,16 @@ export default Ember.Controller.extend({
     needs         : ['application']
   , searchPending : false
   , queryError    : null
+  , keywords      : function () {
+        return this.api.getVplugKeywords()
+           .then(function (response) {
+                var data = response.data.map(function (keyword) {
+                    return keyword.name;
+                });
+                return { data : data };
+            })
+           .catch(function () { return []; });
+    }.property()
 
   , actions : {
         searchPlugs : function (query) {

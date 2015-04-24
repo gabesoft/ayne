@@ -6,8 +6,18 @@ function search (request, reply) {
     });
 }
 
+function keywords (request, reply) {
+    api.get('/vplugkeywords', request.query, function (err, response, body) {
+        return err ? reply.boom(err) : reply(body);
+    });
+}
+
 module.exports = [{
     method  : 'GET'
   , path    : '/api/vplugs'
   , handler : search
+}, {
+    method  : 'GET'
+  , path    : '/api/vplugkeywords'
+  , handler : keywords
 }];

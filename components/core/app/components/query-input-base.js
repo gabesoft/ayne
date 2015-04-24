@@ -43,7 +43,7 @@ export default Ember.Component.extend({
               , tags   = response.data;
 
             $input.textcomplete([{
-                match  : /\B#([\-\w]*)$/
+                match  : this.get('triggerRegex')
               , search : function (term, callback) {
                     callback($.map(tags, function (tag) {
                         var matches  = tag.indexOf(term.toLowerCase()) !== -1
@@ -51,13 +51,9 @@ export default Ember.Component.extend({
                         return contains ? tag : null;
                     }));
                 }
-              , template: function (value) {
-                    return value;
-                }
-              , replace : function (value) {
-                    return '#' + value;
-                }
-              , index : 1
+              , template : this.matchTemplate
+              , replace  : this.matchReplace
+              , index    : 1
             }], { placement: '' });
         }.bind(this));
     }

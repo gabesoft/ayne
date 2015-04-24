@@ -2,3 +2,7 @@
 @import "core/styles/off-canvas";
 @import "core/styles/query-input";
 @import 'pluglist';
+
+.dropdown-menu {
+    @include drop-down('textcomplete-item', 'active');
+}
