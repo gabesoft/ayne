@@ -36,6 +36,7 @@ export default Ember.Component.extend({
     }
 
   , didInsertElement: function () {
+        // TODO: rename tags to keywords
         if (!this.get('tags')) { return; }
 
         this.get('tags').then(function (response) {

@@ -6,3 +6,19 @@
 .dropdown-menu {
     @include drop-down('textcomplete-item', 'active');
 }
+
+.twitter-typeahead {
+    width: 100%;
+
+    .tt-dropdown-menu {
+        @include drop-down(
+        $item-class: 'tt-suggestion',
+        $item-active-class: 'tt-cursor',
+        $background-color: rgba($primary-color-lighten-4, 0.9));
+        width: 100%;
+    }
+}
+
+.query-info {
+    color: $primary-color-lighten-3;
+}

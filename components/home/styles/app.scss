@@ -56,8 +56,8 @@
         @include label-style($radius: true);
 
         [data-role="remove"]:hover {
-            color: $alert-color;
             box-shadow: none;
+            color: $alert-color;
         }
     }
 

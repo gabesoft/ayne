@@ -3,14 +3,7 @@ export default Ember.Controller.extend({
   , searchPending : false
   , queryError    : null
   , keywords      : function () {
-        return this.api.getVplugKeywords()
-           .then(function (response) {
-                var data = response.data.map(function (keyword) {
-                    return keyword.name;
-                });
-                return { data : data };
-            })
-           .catch(function () { return []; });
+        return this.api.getVplugKeywords().catch(function () { return []; });
     }.property()
 
   , actions : {
@@ -20,6 +13,7 @@ export default Ember.Controller.extend({
             this.api.getVplugs({ search : query })
                .then(function (response) {
                     this.set('model', response.data);
+                    this.set('lastQuery', query + ' ' + response.data.length);
                 }.bind(this))
                .catch(function (response) {
                     this.set('queryError', (response.json || {}).message);

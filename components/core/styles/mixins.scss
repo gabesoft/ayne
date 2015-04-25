@@ -6,8 +6,8 @@
 
 @mixin profile-photo-small() {
     border-radius: 100%;
-    position: relative;
     height: 35px;
+    position: relative;
     width: 35px;
 }
 
@@ -48,6 +48,7 @@
 
 @mixin drop-down-item-active {
     background-color: $primary-color;
+    border: 1px solid $primary-color;
     color: $white;
 
     a {
@@ -56,6 +57,9 @@
 }
 
 @mixin drop-down-item($item-active-class: null, $delete-button: false) {
+    $border: 1px solid $primary-color-lighten-3;
+    border-left: $border;
+    border-right: $border;
     padding: 5px 10px;
     position: relative;
 
@@ -84,13 +88,15 @@
     }
 
     &:first-child {
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
+        border-top: $border;
+        border-top-left-radius: $drop-down-border-radius;
+        border-top-right-radius: $drop-down-border-radius;
     }
 
     &:last-child {
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-bottom: $border;
+        border-bottom-left-radius: $drop-down-border-radius;
+        border-bottom-right-radius: $drop-down-border-radius;
     }
 
     p {
@@ -105,10 +111,9 @@
     }
 }
 
-@mixin drop-down($item-class: null, $item-active-class: null, $delete-button: false) {
-    background-color: $input-focus-bg-color;
-    border-radius: 5px;
-    border: 1px solid $smoke;
+@mixin drop-down($item-class: null, $item-active-class: null, $delete-button: false, $background-color: $input-focus-bg-color) {
+    background-color: $background-color;
+    border-radius: $drop-down-border-radius;
     color: $body-font-color;
     font-size: 14px;
     list-style: none;
@@ -144,9 +149,9 @@
 }
 
 @mixin card-panel($card-padding: 20px, $card-bg-color: #fff, $element-top-margin: 1.5rem/3, $element-bottom-margin: 1rem) {
-    padding: $card-padding;
     margin: $element-top-margin 0 $element-bottom-margin 0;
-    @include radius(2px);
+    padding: $card-padding;
+    @include radius(5px);
     @extend .z-depth-1;
     background-color: $card-bg-color;
 }
