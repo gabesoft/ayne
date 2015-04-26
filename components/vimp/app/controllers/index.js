@@ -6,6 +6,15 @@ export default Ember.Controller.extend({
         return this.api.getVplugKeywords().catch(function () { return []; });
     }.property()
 
+  , searchHelp : function () {
+        return [
+            'Multiple words are ORed.',
+            'Enclose the words in quotes to AND them.',
+            'For phrase search enclose the entire phrase in quotes',
+            'To exclude a word prefix it by -'
+        ].join(' ');
+    }.property()
+
   , actions : {
         searchPlugs : function (query) {
             this.set('searchPending', true);

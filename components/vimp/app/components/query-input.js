@@ -14,7 +14,7 @@ export default Base.extend({
         if (arguments.length > 1) {
             this.$(this.inputSelector).typeahead('val', value);
         } else {
-            return this.$(this.inputSelector).typeahead('val');
+            return this && this.$(this.inputSelector).typeahead('val');
         }
     }
   , didInsertElement : function () {
