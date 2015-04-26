@@ -76,6 +76,6 @@ export default Base.extend({
     }
 
   , willDestroyElement : function () {
-        $input.typeahead('destroy');
+        this.$(this.inputSelector).typeahead('destroy');
     }
 });

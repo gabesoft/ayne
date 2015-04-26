@@ -51,6 +51,7 @@ function makeRequest(path, method, data, cb) {
     }
     request(options(path, method, data), function (err, response, body) {
         body = body || {};
+
         if (body.statusCode && +body.statusCode >= 400) {
             cb(err || body, response, null);
         } else {

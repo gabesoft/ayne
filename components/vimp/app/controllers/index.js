@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
                 }.bind(this))
                .finally(function () {
                     this.set('searchPending', false);
-                }.bind(this))
+                }.bind(this));
         }
     }
 });
