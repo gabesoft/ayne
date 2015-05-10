@@ -1,5 +1,7 @@
 import Base from 'core/app/components/query-input-base';
-export default Base.extend({
+import Keys from 'core/app/mixins/keys';
+
+export default Base.extend(Keys, {
     triggerRegex  : /\b(\w{2,})$/
   , init : function () {
         this._super();
@@ -48,7 +50,7 @@ export default Base.extend({
                 highlight  : true
               , hint       : true
               , minLength  : 1
-              , autoselect : true
+              , autoselect : false
             }, {
                 source    : engine.ttAdapter()
               , value     : 'keywords'
@@ -65,13 +67,17 @@ export default Base.extend({
                         return view.element.outerHTML;
                     }.bind(this)
                 }
-            }).on('keyup', function (e) {
+            }).on('keydown', function (e) {
                 var keyCode = e.keyCode || e.which;
 
-                if (keyCode !== 40 && keyCode !== 38) {
-                    $('.tt-suggestion').first().addClass('tt-cursor');
+                if (keyCode === this.get('keys.ENTER')) {
+                    $input.typeahead('close');
                 }
-            });
+
+                if (keyCode === this.get('keys.TAB')) {
+                    $input.typeahead('moveCursor', +1);
+                }
+            }.bind(this));
         }.bind(this));
     }
 
