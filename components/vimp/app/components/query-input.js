@@ -73,10 +73,6 @@ export default Base.extend(Keys, {
                 if (keyCode === this.get('keys.ENTER')) {
                     $input.typeahead('close');
                 }
-
-                if (keyCode === this.get('keys.TAB')) {
-                    $input.typeahead('moveCursor', +1);
-                }
             }.bind(this));
         }.bind(this));
     }

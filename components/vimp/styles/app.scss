@@ -10,7 +10,7 @@
 .twitter-typeahead {
     width: 100%;
 
-    .tt-dropdown-menu {
+    .tt-menu {
         @include drop-down(
         $item-class: 'tt-suggestion',
         $item-active-class: 'tt-cursor',

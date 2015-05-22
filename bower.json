@@ -18,14 +18,14 @@
   ],
   "dependencies": {
     "ember": "~1.11.3",
-    "foundation": "~5.5.0",
     "font-awesome": "~4.3.0",
     "blueimp-md5": "~1.1.0",
     "zeroclipboard": "~2.2.0",
     "bootstrap-tagsinput": "~0.4.2",
-    "typeahead.js": "~0.10.5",
     "jquery-textcomplete": "~0.3.7",
-    "roboto-fontface": "~0.2.7"
+    "roboto-fontface": "~0.2.7",
+    "foundation": "~5.5.2",
+    "typeahead.js": "~0.11.1"
   },
   "resolutions": {
     "ember": "~1.11.3"

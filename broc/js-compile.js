@@ -4,7 +4,6 @@ var pickFiles        = require('broccoli-static-compiler')
   , templateCompiler = require('./ember-template-compiler')
   , path             = require('path')
   , glob             = require('glob')
-  , log              = require('broccoli-stew').log
   , touch            = require('./touch')
   , jshintTree       = require('broccoli-jshint')
   , moduleAppender   = require('./ember-module-appender')
