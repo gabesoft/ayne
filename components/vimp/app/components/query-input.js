@@ -15,8 +15,10 @@ export default Base.extend(Keys, {
   , _value : function (key, value) {
         if (arguments.length > 1) {
             this.$(this.inputSelector).typeahead('val', value);
+        } else if (this){
+            return this.$(this.inputSelector).typeahead('val');
         } else {
-            return this && this.$(this.inputSelector).typeahead('val');
+            return '';
         }
     }
   , didInsertElement : function () {
