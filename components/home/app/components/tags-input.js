@@ -71,10 +71,10 @@ export default Ember.Component.extend({
           , minLength  : 1
           , autoselect : true
         }, {
-            source : function (query, cb) {
-                engine.get(query, function (suggestions) {
-                    cb(this.filter(suggestions));
-                }.bind(this));
+            source : function (query, sync, async) {
+                function _sync (suggestions) { sync(this.filter(suggestions)); }
+                function _async (suggestions) { async(this.filter(suggestions)); }
+                engine.search(query, _sync.bind(this), _async.bind(this));
             }.bind(this)
           , value      : 'tags'
           , displayKey : 'value'
@@ -125,8 +125,8 @@ export default Ember.Component.extend({
 
             engine.get(e.item, function (suggestions) {
                 var found = suggestions.find(function (s) {
-                    return s.value === e.item;
-                });
+                        return s.value === e.item;
+                    });
 
                 if (!found) {
                     engine.add([{ value: e.item }]);
