@@ -22,7 +22,11 @@ html
         md-button.md-icon-button.md-raised
             md-icon(md-svg-icon="action:account-balance-24")
         md-button.md-icon-button.md-raised
+            md-icon(md-svg-icon="action:account-balance-wallet-24") account balance
+        md-button.md-raised.md-primary
             md-icon(md-svg-icon="action:account-balance-wallet-24")
+            span account balance
+
 
         br
         br
@@ -73,4 +77,3 @@ html
         script(src="#{ayne.assets.host}/#{page}/js/app.js")
         script.
             window.ayne = !{JSON.stringify(ayne)};
-
