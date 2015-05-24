@@ -16,6 +16,16 @@ export default Ember.Route.extend({
                 }.bind(this));
         }
       , hideModal : function () {
+            function removeHash () {
+                history.pushState(""
+                  , document.title
+                  , window.location.pathname + window.location.search
+                );
+            }
+
+            removeHash();
+            // TODO: add page link to each plugin
+            //       the url should reflect the current query
             return this.disconnectOutlet({
                 outlet     : 'modal'
               , parentView : 'application'

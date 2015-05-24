@@ -14,6 +14,8 @@ function get (request, reply) {
         if (body.readme) {
             body.readme = new Buffer(body.readme.content, body.readme.encoding);
             body.readme = body.readme.toString('utf8');
+            // TODO: replace relative urls with absolute
+            // prepend body.githubUrl + '/raw/master/' + relUrl
         }
 
         if (body.doc) {

@@ -3,6 +3,44 @@
 @import "core/styles/query-input";
 @import 'pluglist';
 
+.reveal-modal {
+    .close-reveal-modal {
+        font-size: 1.7rem;
+        font-weight: normal;
+    }
+
+    overflow-y: scroll;
+}
+
+.readme {
+    pre {
+        background-color: #f7f7f7;
+        border: 0;
+        border-radius: 3px;
+        display: block;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-size: 85%;
+        line-height: 1.45;
+        max-width: initial;
+        overflow: auto;
+        padding: 16px;
+        white-space: pre;
+        word-wrap: normal;
+    }
+
+    code {
+        background-color: transparent;
+        border: none;
+        display: inline;
+        font-family: inherit;
+        line-height: inherit;
+        margin: 0;
+        overflow: initial;
+        padding: 0;
+        word-wrap: normal;
+    }
+}
+
 .dropdown-menu {
     @include drop-down('textcomplete-item', 'active');
 }
