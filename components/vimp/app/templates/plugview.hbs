@@ -1,6 +1,6 @@
 <div class="plug-view">
     <h4 class="plug-title">
-        {{model.name}}
+        <a href="#" {{action 'showModal' 'details-dialog' model}}>{{model.name}}</a>
         <a class="pull-right" href="{{model.githubUrl}}" target="_blank">
             {{model.githubStarCount}} <i class="fa fa-lg fa-github"></i>
         </a>

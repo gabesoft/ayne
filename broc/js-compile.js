@@ -62,6 +62,7 @@ module.exports = function (opts) {
                   , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
                   , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
                   , 'zeroclipboard/dist/ZeroClipboard' + ext
+                  , 'marked/marked.min.js'
                 ]
             });
 

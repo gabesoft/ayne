@@ -7,13 +7,16 @@ export default Api.extend({
         query = Ember.$.extend({}
           , {
                 sort     : 'githubStarCount:desc'
-              , limit    : 1000
+              , limit    : 50
               , isPlugin : true
               , fields   : fields.join('~')
             }
           , query);
 
         return this.runGet('/api/vplugs', query);
+    }
+  , getVplug : function (id) {
+        return this.runGet('/api/vplugs/' + id);
     }
   , getVplugKeywords : function () {
         return this.runGet('/api/vplugkeywords');
