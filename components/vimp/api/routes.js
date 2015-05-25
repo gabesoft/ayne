@@ -1,6 +1,7 @@
 var api           = require('../../core/lib/api')
   , markdownitanc = require('markdown-it-anchor')
   , markdownittoc = require('markdown-it-table-of-contents')
+  , markdownitrel = require('markdown-it-replace-link')
   , hljs          = require('highlight.js')
   , markdownit    = require('markdown-it');
 
@@ -10,14 +11,16 @@ function search (request, reply) {
     });
 }
 
+function fixRelativeUrl (base, link) {
+    return link.match(/^https?:/) ? link : base + '/' + link;
+}
+
 function formatReadme (data) {
-    if (!data) { return ''; }
+    if (!data.readme) { return ''; }
 
-    // TODO: replace relative urls with absolute
-    // prepend body.githubUrl + '/raw/master/' + relUrl
-
-    var readme = new Buffer(data.content, data.encoding).toString('utf8')
-      , md     = markdownit({
+    var readme  = new Buffer(data.readme.content, data.readme.encoding).toString('utf8')
+      , baseUrl = data.githubUrl + '/raw/master'
+      , md      = markdownit({
             html        : true
           , xhtmlOut    : true
           , breaks      : true
@@ -31,10 +34,14 @@ function formatReadme (data) {
                     return hljs.highlightAuto(str).value;
                 }
             }
+          , replaceLink : function (link) {
+                return fixRelativeUrl(baseUrl, link);
+            }
         });
 
     md.use(markdownitanc);
     md.use(markdownittoc);
+    md.use(markdownitrel);
 
     return md.render(readme);
 }
@@ -48,7 +55,7 @@ function get (request, reply) {
         if (err) { return reply.boom(err); }
         if (!body) { return reply(); }
 
-        body.readme = formatReadme(body.readme);
+        body.readme = formatReadme(body);
         body.doc    = formatDoc(body.doc);
 
         return reply(body);

@@ -23,6 +23,7 @@
     "jsonwebtoken": "^3.2.0",
     "markdown-it": "^4.2.1",
     "markdown-it-anchor": "^1.1.2",
+    "markdown-it-replace-link": "^1.0.0",
     "markdown-it-table-of-contents": "^0.1.2",
     "moment": "^2.8.4",
     "nconf": "^0.7.1",
