@@ -2,6 +2,8 @@ export default Ember.Controller.extend({
     needs         : ['application']
   , searchPending : false
   , queryError    : null
+  , queryParams   : [ 'search' ]
+  , search        : null
   , keywords      : function () {
         return this.api.getVplugKeywords().catch(function () { return []; });
     }.property()

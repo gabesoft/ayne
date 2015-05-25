@@ -1,6 +1,6 @@
 'use strict';
 
-var paths  = [ '/vim' ];
+var paths  = [ '/vim', '/vim/' ];
 
 function handler (request, reply) {
     return reply.view('core/templates/index.jade', { title: 'Ayne Vim', page: 'vimp' });
