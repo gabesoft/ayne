@@ -26,6 +26,7 @@ export default Ember.Route.extend({
             removeHash();
             // TODO: add page link to each plugin
             //       the url should reflect the current query
+
             return this.disconnectOutlet({
                 outlet     : 'modal'
               , parentView : 'application'

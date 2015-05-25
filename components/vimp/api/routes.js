@@ -12,7 +12,9 @@ function search (request, reply) {
 }
 
 function fixRelativeUrl (base, link) {
-    return link.match(/^https?:/) ? link : base + '/' + link;
+    if (link.match(/^#/)) { return link; }
+    if (link.match(/^https?:/)) { return link; }
+    return base + '/' + link;
 }
 
 function formatReadme (data) {

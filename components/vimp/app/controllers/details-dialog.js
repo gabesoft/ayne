@@ -1,5 +1,14 @@
 export default Ember.Controller.extend({
-    actions : {
+    hasReadme : function () {
+        return Boolean(this.get('model.readme'));
+    }.property('model.readme')
+  , modalSize : function () {
+        return this.get('hasReadme') ? 'full' : 'small';
+    }.property('hasReadme')
+  , closeTimeout : function () {
+        return this.get('hasReadme') ? 0 : 1000;
+    }.property('hasReadme')
+  , actions : {
         closeModal : function () {
             return this.send('hideModal');
         }

@@ -2,12 +2,12 @@ export default Ember.Component.extend({
     layoutName : 'modal-dialog'
   , size       : 'medium'
 
-  , open : function () {
-        this.$('.reveal-modal').foundation('reveal', 'open');
+  , show : function () {
+        this.$('[data-reveal]').foundation('reveal', 'open');
     }
 
-  , close : function () {
-        this.$('.reveal-modal').foundation('reveal', 'close');
+  , hide : function () {
+        Ember.$('[data-reveal]').foundation('reveal', 'close');
     }
 
   , didInsertElement : function () {
@@ -15,7 +15,11 @@ export default Ember.Component.extend({
             this.sendAction('close');
         }.bind(this));
 
-        this.open();
+        this.show();
+
+        if (this.get('closeTimeout')) {
+            Ember.run.later(this.hide.bind(this), this.get('closeTimeout'));
+        }
     }
 
   , willDestroyElement : function () {
