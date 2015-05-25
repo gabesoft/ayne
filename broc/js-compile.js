@@ -49,7 +49,7 @@ module.exports = function (opts) {
               , destDir : '/'
               , files   : [ '*.swf']
             })
-          , js = concatenate(opts.bower, {
+          , bower = concatenate(opts.bower, {
                 outputFile : '/vendor.js'
               , inputFiles : [
                     'jquery/dist/jquery' + ext
@@ -62,11 +62,10 @@ module.exports = function (opts) {
                   , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
                   , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
                   , 'zeroclipboard/dist/ZeroClipboard' + ext
-                  , 'marked/marked.min.js'
                 ]
             });
 
-        return mergeTrees([ flash, js ]);
+        return mergeTrees([ flash, bower ]);
     }
 
     function compileTemplates () {

@@ -9,6 +9,7 @@ var mergeTrees    = require('broccoli-merge-trees')
   , buildSASS     = require('./broc/sass-compile')
   , components    = path.join(__dirname, 'components')
   , bower         = path.join(__dirname, 'bower_components')
+  , node          = path.join(__dirname, 'node_modules')
   , dirs          = glob.sync(components + '/*')
   , trees         = [];
 
@@ -19,6 +20,7 @@ dirs.forEach(function (dir) {
           , path   : dir
           , root   : components
           , bower  : unwatchedTree(bower)
+          , node   : unwatchedTree(node)
         };
 
     trees.push(mergeTrees([

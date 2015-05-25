@@ -1,15 +1,38 @@
-@import "core/styles/common";
-@import "core/styles/off-canvas";
-@import "core/styles/query-input";
+@import 'core/styles/common';
+@import 'core/styles/off-canvas';
+@import 'core/styles/query-input';
+@import 'hljs-foundation';
 @import 'pluglist';
 
 .reveal-modal {
+    background-color: rgba($primary-color-lighten-5, 0.93);
+    overflow-y: scroll;
+
     .close-reveal-modal {
+        color: $secondary-color-darken-3;
+        float: right;
         font-size: 1.7rem;
         font-weight: normal;
+        position: inherit;
     }
 
-    overflow-y: scroll;
+    .title {
+        border-bottom: 1px solid $secondary-color-lighten-1;
+        margin-bottom: 30px;
+        padding-bottom: 5px;
+
+        .name {
+            color: $secondary-color;
+        }
+
+        .author {
+            text-transform: lowercase;
+        }
+
+        h4, h5 {
+            display: inline;
+        }
+    }
 }
 
 .readme {

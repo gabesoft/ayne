@@ -34,15 +34,23 @@ module.exports = function (opts) {
                 srcDir  : '/roboto-fontface'
               , destDir : '/roboto-fontface'
             })
-          , bootstrapTagsinput = pickFiles(opts.bower, {
+          , hljs = pickFiles(opts.node, {
+                srcDir  : '/highlight.js/styles'
+              , destDir : '/'
+              , files   : [ 'foundation.css' ]
+            })
+          , hljsSass = renameFile(hljs, {
+                'foundation.css' : '_hljs-foundation.scss'
+            })
+          , tagsInput = pickFiles(opts.bower, {
                 srcDir  : '/bootstrap-tagsinput/dist'
               , destDir : '/'
               , files   : [ 'bootstrap-tagsinput.css' ]
             })
-          , tagsInput = renameFile(bootstrapTagsinput, {
+          , tagsInputSass = renameFile(tagsInput, {
                 'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
             })
-          , compiled = compileSass([ foundation, fontAwesome, roboto, tagsInput, opts.root ]
+          , compiled = compileSass([ foundation, fontAwesome, roboto, hljsSass, tagsInputSass, opts.root ]
               , path.join(opts.name, 'styles', 'app.scss')
               , '/app.css'
               , {

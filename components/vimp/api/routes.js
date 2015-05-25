@@ -1,4 +1,8 @@
-var api = require('../../core/lib/api');
+var api           = require('../../core/lib/api')
+  , markdownitanc = require('markdown-it-anchor')
+  , markdownittoc = require('markdown-it-table-of-contents')
+  , hljs          = require('highlight.js')
+  , markdownit    = require('markdown-it');
 
 function search (request, reply) {
     api.get('/vplugs', request.query, function (err, response, body) {
@@ -6,22 +10,46 @@ function search (request, reply) {
     });
 }
 
+function formatReadme (data) {
+    if (!data) { return ''; }
+
+    // TODO: replace relative urls with absolute
+    // prepend body.githubUrl + '/raw/master/' + relUrl
+
+    var readme = new Buffer(data.content, data.encoding).toString('utf8')
+      , md     = markdownit({
+            html        : true
+          , xhtmlOut    : true
+          , breaks      : true
+          , langPrefix  : 'language-'
+          , linkify     : true
+          , typograhper : true
+          , highlight   : function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(lang, str, true).value;
+                } else {
+                    return hljs.highlightAuto(str).value;
+                }
+            }
+        });
+
+    md.use(markdownitanc);
+    md.use(markdownittoc);
+
+    return md.render(readme);
+}
+
+function formatDoc (data) {
+    return data ? new Buffer(data.content, data.encoding).toString('utf8') : '';
+}
+
 function get (request, reply) {
     api.get('/vplugs/' + request.params.id, function (err, response, body) {
         if (err) { return reply.boom(err); }
         if (!body) { return reply(); }
 
-        if (body.readme) {
-            body.readme = new Buffer(body.readme.content, body.readme.encoding);
-            body.readme = body.readme.toString('utf8');
-            // TODO: replace relative urls with absolute
-            // prepend body.githubUrl + '/raw/master/' + relUrl
-        }
-
-        if (body.doc) {
-            body.doc = new Buffer(body.doc.content, body.doc.encoding);
-            body.doc = body.doc.toString('utf8');
-        }
+        body.readme = formatReadme(body.readme);
+        body.doc    = formatDoc(body.doc);
 
         return reply(body);
     });
