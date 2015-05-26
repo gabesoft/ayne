@@ -1,3 +1,22 @@
+@import 'core/styles/colors';
+
+$primary-color           : color('brown', 'base') !default;
+$primary-color-lighten-1 : color('brown', 'lighten-1') !default;
+$primary-color-lighten-2 : color('brown', 'lighten-2') !default;
+$primary-color-lighten-3 : color('brown', 'lighten-3') !default;
+$primary-color-lighten-4 : color('brown', 'lighten-4') !default;
+$primary-color-lighten-5 : color('brown', 'lighten-5') !default;
+$primary-color-darken-1  : color('brown', 'darken-1') !default;
+$primary-color-darken-2  : color('brown', 'darken-2') !default;
+$primary-color-darken-3  : color('brown', 'darken-3') !default;
+$primary-color-darken-4  : color('brown', 'darken-4') !default;
+
+$secondary-color           : color('blue', 'accent-2') !default;
+$secondary-color-lighten-1 : color('blue', 'accent-1') !default;
+$secondary-color-darken-1  : color('blue', 'accent-2') !default;
+$secondary-color-darken-2  : color('blue', 'accent-3') !default;
+$secondary-color-darken-3  : color('blue', 'accent-4') !default;
+
 @import 'core/styles/common';
 @import 'core/styles/off-canvas';
 @import 'core/styles/query-input';
@@ -5,7 +24,7 @@
 @import 'pluglist';
 
 .reveal-modal {
-    background-color: rgba($primary-color-lighten-5, 0.93);
+    background-color: rgba($white, 0.93);
     overflow-y: scroll;
 
     .close-reveal-modal {
@@ -41,7 +60,7 @@
         border: 0;
         border-radius: 3px;
         display: block;
-        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
         font-size: 85%;
         line-height: 1.45;
         max-width: initial;
@@ -81,7 +100,7 @@
 }
 
 .query-info {
-    color: $secondary-color;
+    color: $success-color;
 }
 
 .help-info {

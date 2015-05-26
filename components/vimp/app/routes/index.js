@@ -1,8 +1,12 @@
 export default Ember.Route.extend({
     queryParams : {
-        search : { refreshModel : true }
+        search : {
+            refreshModel : true
+          , replace      : false
+        }
     }
   , model : function (params) {
+        console.log('PARAMS', params);
         return this.api.getVplugs(params)
            .then(function (response) { return response.data; })
            .catch(function () { return []; });

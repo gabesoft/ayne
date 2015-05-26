@@ -1,31 +1,42 @@
 .plug-list {
     ul {
-        @include side-nav();
-
-        li  {
-            border: 1px solid $primary-color-lighten-4;
-            border-radius: 2px;
-        }
+        list-style-type: none;
 
         li a:not(.button) {
             display: inline;
             outline: none;
-            padding: 10px;
+            padding: 0;
         }
     }
 
     .plug-view {
-        background-color: $primary-color-lighten-5;
-        padding: 10px;
+        margin: 0 15px 15px 0;
         transition: 0.5s;
 
-        &:hover {
-            background-color: $primary-color-lighten-4;
+        .title {
+            border-bottom: 1px solid $primary-color-lighten-4;
+            margin-bottom: 10px;
         }
 
         .plug-title {
-            color: $secondary-color-darken-3;
+            display: inline;
             text-transform: capitalize;
+
+            a.name {
+                color: $secondary-color;
+
+                &:hover {
+                    color: $secondary-color-darken-2;
+                }
+            }
+        }
+
+        .plug-author-info {
+            display: inline-block;
+
+            &:hover {
+                color: $primary-color-darken-3;
+            }
         }
     }
 }
