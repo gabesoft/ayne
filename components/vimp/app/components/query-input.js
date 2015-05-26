@@ -12,20 +12,23 @@ export default Base.extend(Keys, {
   , matchReplace : function (value) {
         return value + ' ';
     }
-  , _value : function (key, value) {
-        if (arguments.length > 1) {
-            this.$(this.inputSelector).typeahead('val', value);
-        } else if (this){
-            return this.$(this.inputSelector).typeahead('val');
-        } else {
-            return '';
+
+  , _value : Ember.computed({
+        volatile : true
+      , get : function () {
+            return this.$('input').val();
         }
-    }
+      , set : function (key, value) {
+            this.$('input').val(value);
+            return value;
+        }
+    })
+
   , didInsertElement : function () {
         if (!this.get('tags')) { return; }
 
         this.get('tags').then(function (response) {
-            var $input   = this.$(this.inputSelector)
+            var $input   = this.$('input')
               , keywords = response.data
               , engine   = null;
 
@@ -80,6 +83,6 @@ export default Base.extend(Keys, {
     }
 
   , willDestroyElement : function () {
-        this.$(this.inputSelector).typeahead('destroy');
+        this.$('input').typeahead('destroy');
     }
 });

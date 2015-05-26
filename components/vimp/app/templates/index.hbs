@@ -1,18 +1,15 @@
-<div class="row margin-top-30">
+<div class="row margin-top-30 margin-bottom-10">
     <div class="medium-8 large-6 columns">
-        <div>
-            {{query-input value=search tags=keywords action="searchPlugs" error=queryError pending=searchPending}}
+        <div title={{searchHelp}}>
+            {{query-input tags=keywords action="searchPlugs" error=queryError pending=searchPending}}
         </div>
     </div>
 </div>
 <div class="margin-bottom-30 row">
     <div class="medium-8 large-6 columns">
-        <small class="help-info pull-left">
-            <span aria-haspopup="true" class="has-tip" title={{searchHelp}}>
-                <i class="fa fa-fw fa-question"></i>
-            </span>
-        </small>
-        <small class="query-info pull-right">{{lastQuery}}</small>
+        <div>
+            <small class="query-info pull-left">{{search}} {{model.length}}</small>
+        </div>
         {{render 'pluglist' model}}
     </div>
 </div>

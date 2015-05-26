@@ -8,7 +8,17 @@ export default Ember.Component.extend({
   , placeholder       : null
   , multiple          : true
   , layoutName        : 'query-input'
-  , inputSelector     : 'input'
+
+  , _value : Ember.computed({
+        volatile : true
+      , get : function () {
+            return this.$('input').val();
+        }
+      , set : function (key, value) {
+            this.$('input').val(value);
+            return value;
+        }
+    })
 
   , init: function () {
         this._super();
@@ -16,14 +26,6 @@ export default Ember.Component.extend({
             this.set('_value', this.get('value'));
         });
     }
-
-  , _value: function (key, value) {
-        if (arguments.length > 1) {
-            this.$(this.inputSelector).val(value);
-        } else {
-            return this.$(this.inputSelector).val();
-        }
-    }.property().volatile()
 
   , keyDown: function (e) {
         if (e.keyCode === 13) {
@@ -40,7 +42,7 @@ export default Ember.Component.extend({
         if (!this.get('tags')) { return; }
 
         this.get('tags').then(function (response) {
-            var $input = this.$(this.inputSelector)
+            var $input = this.$('input')
               , tags   = response.data;
 
             $input.textcomplete([{

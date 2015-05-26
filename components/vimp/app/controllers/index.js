@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
             this.api.getVplugs({ search : query })
                .then(function (response) {
                     this.set('model', response.data);
-                    this.set('lastQuery', query + ' ' + response.data.length);
+                    this.set('search', query);
                 }.bind(this))
                .catch(function (response) {
                     this.set('queryError', (response.json || {}).message);
