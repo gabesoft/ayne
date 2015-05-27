@@ -1,11 +1,13 @@
-{{#modal-dialog close='closeModal' size=modalSize closeTimeout=closeTimeout}}
-    <div class="title">
-        <a class="close-reveal-modal" aria-label="Close">&times;</a>
-        <h4 class="name">{{model.name}}</h4>
-        <h4 class="author">({{model.author.login}} - {{model.githubStarCount}} <i class="fa fa-github"></i>)</h4>
+{{#modal-dialog close='closeModal' className="details-modal" size=modalSize closeTimeout=closeTimeout}}
+    <div class="title-wrapper fixed">
+        <div class="title">
+            <a class="close-reveal-modal" aria-label="Close">&times;</a>
+            <h5 class="name">{{model.name}}</h5>
+            <h5 class="author">({{author}} - {{model.githubStarCount}} <i class="fa fa-github"></i>)</h5>
+        </div>
     </div>
     {{#if hasReadme}}
-        <div class="readme">{{{view.readme}}}</div>
+        <div class="readme margin-top-30">{{{view.readme}}}</div>
     {{else}}
         <div><span class="warn">This plugin does not have a readme file</span></div>
     {{/if}}

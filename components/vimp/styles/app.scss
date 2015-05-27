@@ -23,12 +23,17 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
 @import 'hljs-foundation';
 @import 'pluglist';
 
-.reveal-modal {
-    background-color: rgba($white, 0.93);
+.details-modal {
+    background-color: rgba($body-bg, 0.93);
     overflow-y: scroll;
 
+    .title-wrapper.fixed {
+        background-color: $primary-color;
+        padding: 7px 30px;
+    }
+
     .close-reveal-modal {
-        color: $secondary-color-darken-3;
+        color: $secondary-color;
         float: right;
         font-size: 1.7rem;
         font-weight: normal;
@@ -36,16 +41,13 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
     }
 
     .title {
-        border-bottom: 1px solid $secondary-color-lighten-1;
-        margin-bottom: 30px;
-        padding-bottom: 5px;
-
         .name {
-            color: $secondary-color;
+            color: $secondary-color-lighten-1;
         }
 
         .author {
-            text-transform: lowercase;
+            color: $body-font-color-reverse;
+            text-transform: capitalize;
         }
 
         h4, h5 {
@@ -56,11 +58,11 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
 
 .readme {
     pre {
-        background-color: #f7f7f7;
+        background-color: $body-bg;
         border: 0;
         border-radius: 3px;
         display: block;
-        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-family: $font-family-code;
         font-size: 85%;
         line-height: 1.45;
         max-width: initial;

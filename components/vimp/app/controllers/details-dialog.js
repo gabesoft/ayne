@@ -1,5 +1,10 @@
 export default Ember.Controller.extend({
-    hasReadme : function () {
+    author : function () {
+        return this.get('model.author.name')
+        || this.get('model.author.login')
+        || this.get('model.author');
+    }.property('model')
+  , hasReadme : function () {
         return Boolean(this.get('model.readme'));
     }.property('model.readme')
   , modalSize : function () {
