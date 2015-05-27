@@ -22,6 +22,10 @@
             display: inline;
             text-transform: capitalize;
 
+            &.has-readme:hover {
+                text-shadow: 1px 1px 5px rgba($secondary-color, 0.3);
+            }
+
             a.name {
                 color: $secondary-color;
 

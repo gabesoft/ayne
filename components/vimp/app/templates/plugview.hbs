@@ -1,7 +1,7 @@
 <div class="plug-view">
     <div class="title row">
         <div class="pull-left">
-            <h5 class="plug-title">
+            <h5 class="plug-title {{if model.hasReadme 'has-readme'}}">
                 <a class="name" href="javascript:void(0)" {{action 'showModal' 'details-dialog' model}}>{{model.name}}</a>
             </h5>
         </div>
