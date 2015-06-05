@@ -1,0 +1,33 @@
+.vim-help {
+    .todo-line, .error-line {
+        color: $alert-color;
+    }
+
+    .headline, .header {
+        font-weight: $font-weight-bold;
+    }
+
+    .tag-name {
+        color: $secondary-color;
+    }
+
+    .tag-link {
+        color: $primary-color;
+    }
+
+    .vim-option {
+        color: $success-color;
+    }
+
+    .vim-version {
+        background-color: $warning-color;
+    }
+
+    .special, .special-key {
+        color: $alert-color;
+    }
+
+    .section-double, .section-single {
+        color: $primary-color-darken-1;
+    }
+}

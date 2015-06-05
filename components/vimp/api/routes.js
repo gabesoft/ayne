@@ -1,4 +1,5 @@
 var api           = require('../../core/lib/api')
+  , Velpp         = require('velpp').Velpp
   , markdownitanc = require('markdown-it-anchor')
   , markdownittoc = require('markdown-it-table-of-contents')
   , markdownitrel = require('markdown-it-replace-link')
@@ -49,7 +50,16 @@ function formatReadme (data) {
 }
 
 function formatDoc (data) {
-    return data ? new Buffer(data.content, data.encoding).toString('utf8') : '';
+    if (!data) { return ''; }
+
+    var doc   = new Buffer(data.content,  data.encoding).toString('utf8')
+      , velpp = new Velpp({
+            highlight : function (str) {
+                return hljs.highlight('vim', str, true).value;
+            }
+        });
+
+    return velpp.render(doc);
 }
 
 function get (request, reply) {

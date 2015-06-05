@@ -1,6 +1,10 @@
 export default Ember.View.extend({
     templateName : 'details-dialog'
-  , readme       : function () {
-        return this.get('controller.model.readme') || '';
-    }.property()
+  , didInsertElement : function () {
+        if (this.get('controller.model.hasReadme')) {
+            this.set('controller.showDoc', false);
+        } else if (this.get('controller.model.hasDoc')) {
+            this.set('controller.showDoc', true);
+        }
+    }
 });

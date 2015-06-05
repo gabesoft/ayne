@@ -4,6 +4,12 @@ export default Ember.Controller.extend({
         || this.get('model.author.login')
         || this.get('model.author');
     }.property('model')
+  , hasReadmeOrDoc : function () {
+        return this.get('model.hasReadme') || this.get('model.hasDoc');
+    }.property('model.hasReadme', 'model.hasDoc')
+  , hasReadmeAndDoc : function () {
+        return this.get('model.hasReadme') && this.get('model.hasDoc');
+    }.property('model.hasReadme', 'model.hasDoc')
   , modalSize : function () {
         return this.get('model.hasReadme') ? 'full' : 'tiny';
     }.property('model.hasReadme')
@@ -13,6 +19,12 @@ export default Ember.Controller.extend({
   , actions : {
         closeModal : function () {
             return this.send('hideModal');
+        }
+      , showReadme : function () {
+            this.set('showDoc', false);
+        }
+      , showDoc : function () {
+            this.set('showDoc', true);
         }
     }
 });

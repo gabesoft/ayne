@@ -1,13 +1,27 @@
-{{#modal-dialog close='closeModal' className="details-modal" size=modalSize closeTimeout=closeTimeout}}
+{{#modal-dialog close='closeModal' className="details-dialog" size=modalSize closeTimeout=closeTimeout}}
     <div class="title-wrapper fixed">
         <div class="title">
             <a class="close-reveal-modal" aria-label="Close">&times;</a>
-            <h5 class="name">{{model.name}}</h5>
-            <h5 class="author">({{author}} - {{model.githubStarCount}} <i class="fa fa-github"></i>)</h5>
+
+            {{#if showDoc}}
+                <h5 class="content"><i class="fa fa-fw fa-question-circle"></i>Help File - {{model.name}}</h5>
+                {{#if model.hasReadme}}
+                    <a class="button small" href="#" {{action 'showReadme'}}>Show Readme</a>
+                {{/if}}
+            {{else}}
+                <h5 class="content"><i class="fa fa-fw fa-book"></i>Readme File - {{model.name}}</h5>
+                {{#if model.hasDoc}}
+                    <a class="button small" href="#" {{action 'showDoc'}}>Show Help</a>
+                {{/if}}
+            {{/if}}
         </div>
     </div>
-    {{#if model.hasReadme}}
-        <div class="readme margin-top-30">{{{view.readme}}}</div>
+    {{#if hasReadmeOrDoc}}
+        {{#if showDoc}}
+            <div class="doc margin-top-50">{{{model.doc}}}</div>
+        {{else}}
+            <div class="readme margin-top-50">{{{model.readme}}}</div>
+        {{/if}}
     {{else}}
         <div><span class="warn">This plugin does not have a readme file</span></div>
     {{/if}}
