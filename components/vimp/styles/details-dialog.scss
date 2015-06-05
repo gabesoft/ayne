@@ -5,15 +5,15 @@
 
     .title-wrapper.fixed {
         background-color: rgba($primary-color, 0.8);
-        padding: 5px 30px;
+        padding: 9px 10px;
         vertical-align: middle;
 
         .button {
             background-color: transparent;
             display: inline-block;
+            float: right;
             margin: 0;
             padding: 5px 15px;
-            float: right;
         }
     }
 
