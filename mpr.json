@@ -5,7 +5,7 @@
             "--port",
             "8006"
         ],
-        "color": "grey",
+        "color": "green",
         "command": "node-dev",
         "cwd": "../dask"
     },

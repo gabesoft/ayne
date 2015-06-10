@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     }
   , model : function (params) {
         return this.api.getVplugs(params)
-           .then(function (response) { return response.data; })
+           .then(function (response) { return response.data || []; })
            .catch(function () { return []; });
     }
   , actions : {
