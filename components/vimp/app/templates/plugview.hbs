@@ -19,10 +19,10 @@
         </div>
     </div>
 
-    <div class="description row">
+    <div class="{{if aboveThreshold 'plugin'}} description row">
         <dl>
-            <dd>{{model.isPlugin}}</dd>
-            <dd>{{model.description}}</dd>
+            <dd class="certainty">{{model.isPlugin}}</dd>
+            <dd class="description">{{model.description}}</dd>
         </dl>
     </div>
 </div>

@@ -42,5 +42,13 @@
                 color: $primary-color-darken-3;
             }
         }
+
+        .description {
+            &.plugin {
+                .certainty {
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 }
