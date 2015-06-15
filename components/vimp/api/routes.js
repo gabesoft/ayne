@@ -22,7 +22,7 @@ function formatReadme (data) {
     if (!data.readme) { return ''; }
 
     var readme  = new Buffer(data.readme.content, data.readme.encoding).toString('utf8')
-      , baseUrl = data.githubUrl + '/raw/master'
+      , baseUrl = data.githubHtmlUrl + '/raw/master'
       , md      = markdownit({
             html        : true
           , xhtmlOut    : true

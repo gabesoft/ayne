@@ -2,7 +2,18 @@ import Api from 'core/app/services/api';
 
 export default Api.extend({
     getVplugs : function (query) {
-        var fields = [ 'author', 'description', 'githubStarCount', 'githubUrl', 'name', 'hasDoc', 'hasReadme', 'isPlugin' ];
+        var fields = [
+                'author'
+              , 'description'
+              , 'githubStarCount'
+              , 'githubHtmlUrl'
+              , 'githubCreatedAt'
+              , 'githubPushedAt'
+              , 'name'
+              , 'hasDoc'
+              , 'hasReadme'
+              , 'isPlugin'
+            ];
 
         query = Ember.$.extend({}
           , {

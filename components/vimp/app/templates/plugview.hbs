@@ -12,7 +12,7 @@
                     {{author}}
                 </a>
                 -
-                <a href="{{model.githubUrl}}" target="_blank">
+                <a href="{{model.githubHtmlUrl}}" target="_blank">
                     {{model.githubStarCount}} <i class="fa fa-lg fa-github"></i>
                 </a>
             </h5>
@@ -22,6 +22,7 @@
     <div class="{{if aboveThreshold 'plugin'}} description row">
         <dl>
             <dd class="certainty">{{model.isPlugin}}</dd>
+            <dd class="created-at">created: {{createdAt}}, latest commit: {{pushedAt}}</dd>
             <dd class="description">{{model.description}}</dd>
         </dl>
     </div>

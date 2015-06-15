@@ -7,4 +7,10 @@ export default Ember.Controller.extend({
   , aboveThreshold : function () {
         return this.get('model.isPlugin') > 0.3;
     }.property('isPlugin')
+  , createdAt : function () {
+        return moment(this.get('model.githubCreatedAt')).format('LL');
+    }.property('model.githubCreatedAt')
+  , pushedAt : function () {
+        return moment(this.get('model.githubPushedAt')).fromNow();
+    }.property('model.githubPushedAt')
 });

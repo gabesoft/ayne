@@ -56,6 +56,7 @@ module.exports = function (opts) {
                   , 'blueimp-md5/js/md5' + ext
                   , 'fastclick/lib/fastclick.js'
                   , 'modernizr/modernizr.js'
+                  , 'moment/min/moment.min.js'
                   , 'foundation/js/foundation' + ext
                   , 'ember/ember' + emberExt
                   , 'typeahead.js/dist/typeahead.bundle' + ext
