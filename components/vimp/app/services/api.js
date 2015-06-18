@@ -17,10 +17,11 @@ export default Api.extend({
 
         query = Ember.$.extend({}
           , {
-                sort   : 'githubStarCount:desc'
-              , limit  : 100
-              , hasDoc : true
-              , fields : fields.join('~')
+                sort     : 'githubStarCount:desc'
+              , limit    : 100
+              , hasDoc   : true
+              , isPlugin : '0.25'
+              , fields   : fields.join('~')
             }
           , query);
 
