@@ -7,23 +7,28 @@
         </div>
 
         <div class="pull-right">
-            <h5 class="plug-author-info">
-                <a href="{{model.author.html_url}}" target="_blank">
+            <h5 class="github-info">
+                <a class="author-url margin-right-10" href="{{model.author.html_url}}" target="_blank">
                     {{author}}
                 </a>
-                -
-                <a href="{{model.githubHtmlUrl}}" target="_blank">
+
+                <a class="html-url" href="{{model.githubHtmlUrl}}" target="_blank">
                     {{model.githubStarCount}} <i class="fa fa-lg fa-github"></i>
                 </a>
             </h5>
         </div>
     </div>
 
-    <div class="{{if aboveThreshold 'plugin'}} description row">
+    <div class="{{if aboveThreshold 'plugin'}} row">
         <dl>
-            <dd class="certainty">{{model.isPlugin}}</dd>
-            <dd class="created-at">created: {{createdAt}}, latest commit: {{pushedAt}}</dd>
             <dd class="description">{{model.description}}</dd>
+            <dd class="created-date">
+                Created <span class="date">{{createdAt}}</span>
+            </dd>
+            <dd class="latest-commit">
+                Latest commit <span class="date">{{pushedAt}}</span>
+            </dd>
+            <dd class="certainty">{{model.isPlugin}}</dd>
         </dl>
     </div>
 </div>

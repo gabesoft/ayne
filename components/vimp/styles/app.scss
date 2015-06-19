@@ -42,13 +42,5 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
 }
 
 .query-info {
-    color: $success-color;
-}
-
-.help-info {
-    color: $primary-color-lighten-3;
-
-    i {
-        color: $primary-color-lighten-3;
-    }
+    color: $primary-color;
 }

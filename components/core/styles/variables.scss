@@ -31,6 +31,9 @@ $font-family-code       : Consolas, 'Liberation Mono', Menlo, Courier, monospace
 $font-weight-normal : normal;
 $font-weight-bold   : bold;
 
+$small-font-size: 60%;
+$large-font-size: 120%;
+
 $body-bg                 : $primary-color-lighten-5;
 $body-bg-reverse         : color('grey', 'darken-4');
 $body-font-color         : color('grey', 'darken-4');

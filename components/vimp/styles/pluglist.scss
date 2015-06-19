@@ -35,20 +35,42 @@
             }
         }
 
-        .plug-author-info {
+        .github-info {
             display: inline-block;
 
-            &:hover {
-                color: $primary-color-darken-3;
+            .author-url, .html-url {
+                color: $secondary-color;
+
+                &:hover {
+                    color: $secondary-color-darken-3;
+                }
             }
         }
 
         .description {
-            &.plugin {
-                .certainty {
-                    text-decoration: underline;
-                }
+            font-size: $large-font-size;
+        }
+
+        .created-date {
+            display: inline-block;
+            float: left;
+
+            .date {
+                color: rgba($primary-color, 0.8);
             }
+        }
+
+        .latest-commit {
+            display: inline-block;
+            float: right;
+
+            .date {
+                color: $primary-color;
+            }
+        }
+
+        .certainty {
+            color: rgba($primary-color-lighten-4, 0.2);
         }
     }
 }
