@@ -2,8 +2,8 @@ export default Ember.View.extend({
     zeroClient : null
   , didInsertElement : function () {
         var id     = this.get('controller.model.id') + '-copy-clone-url-button'
-          , button = document.getElementById(id)
-          , client = new ZeroClipboard(button);
+          , button = this.$('[data-id=' + id + ']')
+          , client = new ZeroClipboard(button.first());
 
         client.on('ready', function () {
             var ctrl = this.get('controller');
