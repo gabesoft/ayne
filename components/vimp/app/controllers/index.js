@@ -4,9 +4,35 @@ export default Ember.Controller.extend({
   , queryError    : null
   , queryParams   : [ 'search' ]
   , search        : null
+
   , keywords      : function () {
         return this.api.getVplugKeywords().catch(function () { return []; });
     }.property()
+
+  , makeLocalKey : function (name) {
+        var id  = this.auth.get('user.id') || '';
+        return id + '-' + name;
+    }
+
+  , sidebarActive : function (name, defVal) {
+        if (!this.auth.get('loggedIn')) { return defVal; }
+
+        var key = this.makeLocalKey(name);
+
+        if (this.local.has(key)) {
+            return this.local.get(key);
+        } else {
+            return defVal;
+        }
+    }
+
+  , lastUpdatedActive : function () {
+        return this.sidebarActive('last-updated', true);
+    }.property()
+
+  , mostStarredActive : function () {
+        return this.sidebarActive('most-starred', false);
+    }.property('lastUpdatedActive')
 
   , searchHelp : function () {
         return [
@@ -32,6 +58,13 @@ export default Ember.Controller.extend({
                .finally(function () {
                     this.set('searchPending', false);
                 }.bind(this));
+        },
+
+        updateMostStarred : function (active) {
+            this.local.set(this.makeLocalKey('most-starred'), active);
+        }
+      , updateLastUpdated : function (active) {
+            this.local.set(this.makeLocalKey('last-updated'), active);
         }
     }
 });

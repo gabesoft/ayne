@@ -18,23 +18,23 @@
     <div class="medium-1 large-1 columns"></div>
 
     <ul class="accordion medium-5 large-5 columns" data-accordion>
-        <li class="accordion-navigation">
+        <li class="accordion-navigation {{if mostStarredActive 'active'}}">
             <a href="#most-starred">
                 Most Starred
                 <i class="fa fa-fw fa-angle-double-down open"></i>
                 <i class="fa fa-fw fa-angle-double-left close"></i>
             </a>
-            <div id="most-starred" class="content">
+            <div id="most-starred" class="content {{if mostStarredActive 'active'}}">
                 {{render 'pluglist' model.mostStarred}}
             </div>
         </li>
-        <li class="accordion-navigation active">
+        <li class="accordion-navigation {{if lastUpdatedActive 'active'}}">
             <a href="#last-updated">
                 Last Updated
                 <i class="fa fa-fw fa-angle-double-down open"></i>
                 <i class="fa fa-fw fa-angle-double-left close"></i>
             </a>
-            <div id="last-updated" class="content active">
+            <div id="last-updated" class="content {{if lastUpdatedActive 'active'}}">
                 {{render 'pluglist' model.lastUpdated}}
             </div>
         </li>
