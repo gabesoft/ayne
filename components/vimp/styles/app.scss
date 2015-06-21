@@ -51,4 +51,30 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
         padding: 5px 2px;
         background-color: $primary-color-lighten-4;
     }
+
+    .accordion-navigation {
+        margin-top: 5px;
+    }
+
+    .open, .close {
+        float: right;
+        margin: 4px 0 0 0;
+    }
+
+    .open {
+        display: inline;
+    }
+
+    .close {
+        display: none;
+    }
+
+    .active {
+        .open {
+            display: none;
+        }
+        .close {
+            display: inline;
+        }
+    }
 }

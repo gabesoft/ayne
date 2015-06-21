@@ -28,7 +28,7 @@ export default Api.extend({
     }
   , getLastUpdated : function () {
         return this.getVplugs({
-            limit : 10
+            limit : 20
           , sort  : 'githubPushedAt:desc'
         });
     }

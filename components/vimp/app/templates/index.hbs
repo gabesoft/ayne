@@ -16,12 +16,27 @@
     </div>
 
     <div class="medium-1 large-1 columns"></div>
-    <div class="sidebar medium-5 large-5 columns">
-        <h5>Most Starred Plugins</h5>
-        {{render 'pluglist' model.mostStarred}}
 
-        <h5>Last Updated Plugins</h5>
-        {{render 'pluglist' model.lastUpdated}}
-    </div>
-
+    <ul class="accordion medium-5 large-5 columns" data-accordion>
+        <li class="accordion-navigation">
+            <a href="#most-starred">
+                Most Starred
+                <i class="fa fa-fw fa-angle-double-down open"></i>
+                <i class="fa fa-fw fa-angle-double-left close"></i>
+            </a>
+            <div id="most-starred" class="content">
+                {{render 'pluglist' model.mostStarred}}
+            </div>
+        </li>
+        <li class="accordion-navigation active">
+            <a href="#last-updated">
+                Last Updated
+                <i class="fa fa-fw fa-angle-double-down open"></i>
+                <i class="fa fa-fw fa-angle-double-left close"></i>
+            </a>
+            <div id="last-updated" class="content active">
+                {{render 'pluglist' model.lastUpdated}}
+            </div>
+        </li>
+    </ul>
 </div>
