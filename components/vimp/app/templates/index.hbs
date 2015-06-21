@@ -1,15 +1,27 @@
 <div class="row margin-top-30 margin-bottom-10">
-    <div class="medium-8 large-6 columns">
+    <div class="medium-6 large-6 columns">
         <div title={{searchHelp}}>
             {{query-input tags=keywords action="searchPlugs" error=queryError pending=searchPending}}
-            <small class="query-info pull-left">{{search}}</small>
-            <small class="query-info pull-right">{{model.length}}</small>
         </div>
     </div>
 </div>
 
-<div class="margin-bottom-30 row">
-    <div class="medium-8 large-6 columns">
-        {{render 'pluglist' model}}
+<div class="plug-index margin-bottom-30 row">
+    <div class="search-results medium-6 large-6 columns">
+        <h5>
+            <span class="title">Search Results</span>
+            <span class="info pull-right">{{search}} {{model.plugins.length}}</span>
+        </h5>
+        {{render 'pluglist' model.plugins}}
     </div>
+
+    <div class="medium-1 large-1 columns"></div>
+    <div class="sidebar medium-5 large-5 columns">
+        <h5>Most Starred Plugins</h5>
+        {{render 'pluglist' model.mostStarred}}
+
+        <h5>Last Updated Plugins</h5>
+        {{render 'pluglist' model.lastUpdated}}
+    </div>
+
 </div>

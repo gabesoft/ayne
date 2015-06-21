@@ -45,3 +45,10 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
     color: $primary-color;
     padding: 0 1px;
 }
+
+.plug-index {
+    h5 {
+        padding: 5px 2px;
+        background-color: $primary-color-lighten-4;
+    }
+}

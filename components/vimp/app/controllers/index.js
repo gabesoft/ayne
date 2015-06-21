@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
             this.set('queryError', null);
             this.api.getVplugs({ search : query })
                .then(function (response) {
-                    this.set('model', response.data);
+                    this.set('model.plugins', response.data);
                     this.set('search', query);
                 }.bind(this))
                .catch(function (response) {

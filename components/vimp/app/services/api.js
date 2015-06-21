@@ -18,14 +18,22 @@ export default Api.extend({
         query = Ember.$.extend({}
           , {
                 sort     : 'githubStarCount:desc'
-              , limit    : 100
-              , hasDoc   : true
+              , limit    : 120
               , isPlugin : '0.25'
               , fields   : fields.join('~')
             }
           , query);
 
         return this.runGet('/api/vplugs', query);
+    }
+  , getLastUpdated : function () {
+        return this.getVplugs({
+            limit : 10
+          , sort  : 'githubPushedAt:desc'
+        });
+    }
+  , getMostStarred : function () {
+        return this.getVplugs({ limit : 10 });
     }
   , getVplug : function (id) {
         return this.runGet('/api/vplugs/' + id);

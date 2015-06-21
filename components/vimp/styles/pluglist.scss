@@ -13,6 +13,10 @@
         margin: 0 15px 15px 0;
         transition: 0.5s;
 
+        dd {
+            margin: 0;
+        }
+
         .title {
             border-bottom: 1px solid $primary-color-lighten-4;
             margin-bottom: 10px;
@@ -47,12 +51,12 @@
             }
         }
 
-        .description {
-            font-size: $large-font-size;
+        .created-date, .latest-commit {
+            font-size: $medium-font-size;
+            display: inline-block;
         }
 
         .created-date {
-            display: inline-block;
             float: left;
 
             .date {
@@ -61,7 +65,6 @@
         }
 
         .latest-commit {
-            display: inline-block;
             float: right;
 
             .date {
@@ -70,7 +73,14 @@
         }
 
         .certainty {
-            color: rgba($primary-color-lighten-4, 0.1);
+            color: $primary-color-lighten-5;
+            display: inline-block;
+            font-size: $medium-font-size;
+            width: 100%;
+
+            &:hover {
+                color: $primary-color-lighten-4;
+            }
         }
     }
 }

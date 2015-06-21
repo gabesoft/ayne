@@ -1,13 +1,13 @@
 <div class="plug-view">
     <div class="title row">
         <div class="pull-left">
-            <h5 class="plug-title {{if model.hasReadme 'has-readme'}}">
+            <h6 class="plug-title {{if model.hasReadme 'has-readme'}}">
                 <a class="name" href="javascript:void(0)" {{action 'showModal' 'details-dialog' model}}>{{model.name}}</a>
-            </h5>
+            </h6>
         </div>
 
         <div class="pull-right">
-            <h5 class="github-info">
+            <h6 class="github-info">
                 <a class="author-url margin-right-10" href="{{model.author.html_url}}" target="_blank">
                     {{author}}
                 </a>
@@ -15,20 +15,22 @@
                 <a class="html-url" href="{{model.githubHtmlUrl}}" target="_blank">
                     {{model.githubStarCount}} <i class="fa fa-lg fa-github"></i>
                 </a>
-            </h5>
+            </h6>
         </div>
     </div>
 
     <div class="{{if aboveThreshold 'plugin'}} row">
         <dl>
             <dd class="description">{{model.description}}</dd>
-            <dd class="created-date">
-                Created <span class="date">{{createdAt}}</span>
+            <dd>
+                <small class="created-date">
+                    Created <span class="date">{{createdAt}}</span>
+                </small>
+                <small class="latest-commit">
+                    Latest commit <span class="date">{{pushedAt}}</span>
+                </small>
             </dd>
-            <dd class="latest-commit">
-                Latest commit <span class="date">{{pushedAt}}</span>
-            </dd>
-            <dd class="certainty">{{model.isPlugin}}</dd>
         </dl>
+        <div class="certainty">{{model.isPlugin}}</div>
     </div>
 </div>

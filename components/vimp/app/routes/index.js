@@ -1,3 +1,14 @@
+function makeHash(promises) {
+    var hash = Object.keys(promises).reduce(function (acc, name) {
+            acc[name] = promises[name]()
+               .then(function (response) { return response.data || []; })
+               .catch(function () { return []; });
+            return acc;
+        }, {});
+
+    return Ember.RSVP.hash(hash);
+}
+
 export default Ember.Route.extend({
     queryParams : {
         search : {
@@ -6,9 +17,11 @@ export default Ember.Route.extend({
         }
     }
   , model : function (params) {
-        return this.api.getVplugs(params)
-           .then(function (response) { return response.data || []; })
-           .catch(function () { return []; });
+        return makeHash({
+            plugins     : this.api.getVplugs.bind(this.api, params)
+          , mostStarred : this.api.getMostStarred.bind(this.api)
+          , lastUpdated : this.api.getLastUpdated.bind(this.api)
+        });
     }
   , actions : {
         showModal : function (name, model) {
@@ -30,9 +43,6 @@ export default Ember.Route.extend({
             }
 
             removeHash();
-            // TODO: add page link to each plugin
-            //       the url should reflect the current query
-
             return this.disconnectOutlet({
                 outlet     : 'modal'
               , parentView : 'application'
