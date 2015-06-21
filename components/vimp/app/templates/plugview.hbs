@@ -4,6 +4,13 @@
             <h6 class="plug-title {{if model.hasReadme 'has-readme'}}">
                 <a class="name" href="javascript:void(0)" {{action 'showModal' 'details-dialog' model}}>{{model.name}}</a>
             </h6>
+            <a  data-id="{{model.id}}-copy-clone-url-button"
+                class="button small action-button copy-clone-url-button"
+                type="button"
+                data-clipboard-text={{model.githubCloneUrl}}
+                title={{copyCloneUrlTitle}}>
+                <i class="{{copyCloneUrlClass}} fa fa-fw"></i>
+            </a>
         </div>
 
         <div class="pull-right">
@@ -16,13 +23,6 @@
                     {{model.githubStarCount}} <i class="fa fa-lg fa-github"></i>
                 </a>
             </h6>
-            <a  data-id="{{model.id}}-copy-clone-url-button"
-                class="button small action-button copy-clone-url-button"
-                type="button"
-                data-clipboard-text={{model.githubCloneUrl}}
-                title={{copyCloneUrlTitle}}>
-                <i class="{{copyCloneUrlClass}} fa fa-fw"></i>
-            </a>
         </div>
     </div>
 

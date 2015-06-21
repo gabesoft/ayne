@@ -28,13 +28,10 @@ export default Api.extend({
         return this.runGet('/api/vplugs', query);
     }
   , getLastUpdated : function () {
-        return this.getVplugs({
-            limit : 30
-          , sort  : 'githubPushedAt:desc'
-        });
+        return this.getVplugs({limit : 30 , sort  : 'githubPushedAt:desc'});
     }
   , getMostStarred : function () {
-        return this.getVplugs({ limit : 20 });
+        return this.getVplugs({ limit : 30 });
     }
   , getVplug : function (id) {
         return this.runGet('/api/vplugs/' + id);
