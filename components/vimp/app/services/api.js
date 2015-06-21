@@ -9,6 +9,7 @@ export default Api.extend({
               , 'githubHtmlUrl'
               , 'githubCreatedAt'
               , 'githubPushedAt'
+              , 'githubCloneUrl'
               , 'name'
               , 'hasDoc'
               , 'hasReadme'

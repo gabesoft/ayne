@@ -1,5 +1,9 @@
 export default Ember.Controller.extend({
-    author : function () {
+    copyCloneUrlClass   : 'fa-copy'
+  , copyCloneUrlTitle   : 'Copy clone url to clipboard'
+  , enabledCloneUrlCopy : false
+
+  , author : function () {
         return this.get('model.author.name')
         || this.get('model.author.login')
         || this.get('model.author');

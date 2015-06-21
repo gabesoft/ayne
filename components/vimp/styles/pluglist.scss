@@ -82,5 +82,9 @@
                 color: $primary-color-lighten-4;
             }
         }
+
+        .copy-clone-url-button {
+            @include transparent-button($secondary-color, $secondary-color);
+        }
     }
 }

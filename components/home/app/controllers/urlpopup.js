@@ -1,7 +1,7 @@
 export default Ember.Controller.extend({
     model           : {}
   , copyClass       : 'fa-copy'
-  , copyTitle       : "Copy url to clipboard"
+  , copyTitle       : 'Copy url to clipboard'
   , privacyChanged  : false
   , editOn          : false
   , disableCopy     : true
