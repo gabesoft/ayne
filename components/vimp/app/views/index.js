@@ -4,7 +4,7 @@ export default Ember.View.extend({
       , 'last-updated' : 'updateLastUpdated'
     }
   , didInsertElement : function () {
-        this.$().find('.accordion').on('toggled', function (e, targets) {
+        this.$('.accordion').on('toggled', function (e, targets) {
             var $el    = $(targets[0])
               , id     = $el.attr('id')
               , active = $el.hasClass('active')
@@ -22,7 +22,7 @@ export default Ember.View.extend({
     }
   , willDestroyElement : function () {
         this.$().off();
-        this.$().find('.accordion').off();
+        this.$('.accordion').off();
     }
   , sendControllerAction : function (name, value) {
         this.get('controller').send(name, value);
