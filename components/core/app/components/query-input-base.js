@@ -37,6 +37,10 @@ export default Ember.Component.extend({
         this.sendAction('action', this.get('_value'));
     }
 
+  , sendClearAction : function () {
+        this.sendAction('clear');
+    }
+
   , didInsertElement: function () {
         // TODO: rename tags to keywords
         if (!this.get('tags')) { return; }
@@ -66,6 +70,7 @@ export default Ember.Component.extend({
             this.set('value', '');
             this.set('_value', '');
             this.sendEnterAction();
+            this.sendClearAction();
         }
       , runSearch: function () {
             this.sendEnterAction();

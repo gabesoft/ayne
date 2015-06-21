@@ -28,12 +28,12 @@ export default Api.extend({
     }
   , getLastUpdated : function () {
         return this.getVplugs({
-            limit : 20
+            limit : 30
           , sort  : 'githubPushedAt:desc'
         });
     }
   , getMostStarred : function () {
-        return this.getVplugs({ limit : 10 });
+        return this.getVplugs({ limit : 20 });
     }
   , getVplug : function (id) {
         return this.runGet('/api/vplugs/' + id);
