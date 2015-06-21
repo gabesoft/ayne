@@ -14,6 +14,12 @@ export default Ember.Controller.extend({
         return id + '-' + name;
     }
 
+  , saveLocalValue : function (name, value) {
+        if (this.auth.get('loggedIn')) {
+            this.local.set(this.makeLocalKey(name), value);
+        }
+    }
+
   , sidebarActive : function (name, defVal) {
         if (!this.auth.get('loggedIn')) { return defVal; }
 
@@ -58,13 +64,13 @@ export default Ember.Controller.extend({
                .finally(function () {
                     this.set('searchPending', false);
                 }.bind(this));
-        },
+        }
 
-        updateMostStarred : function (active) {
-            this.local.set(this.makeLocalKey('most-starred'), active);
+      , updateMostStarred : function (active) {
+            this.saveLocalValue('most-starred', active);
         }
       , updateLastUpdated : function (active) {
-            this.local.set(this.makeLocalKey('last-updated'), active);
+            this.saveLocalValue('last-updated', active);
         }
     }
 });
