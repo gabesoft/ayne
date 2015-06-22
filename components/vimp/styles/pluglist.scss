@@ -18,7 +18,7 @@
         }
 
         .title {
-            border-bottom: 1px solid $primary-color-lighten-4;
+            border-bottom: 1px solid rgba($secondary-color, 0.5);
             margin-bottom: 10px;
         }
 
@@ -49,6 +49,15 @@
                     color: $secondary-color-darken-3;
                 }
             }
+        }
+
+        .description {
+            display: block;
+            overflow: hidden;
+        }
+
+        .description:first-letter {
+            text-transform: capitalize;
         }
 
         .created-date, .latest-commit {

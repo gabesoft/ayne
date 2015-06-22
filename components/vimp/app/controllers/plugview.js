@@ -1,6 +1,6 @@
 export default Ember.Controller.extend({
     copyCloneUrlClass   : 'fa-copy'
-  , copyCloneUrlTitle   : 'Copy clone url to clipboard'
+  , copyCloneUrlTitle   : 'Copy github clone url to clipboard'
   , enabledCloneUrlCopy : false
 
   , author : function () {

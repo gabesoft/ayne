@@ -25,6 +25,7 @@
         "Ember",
         "ayne",
         "Fingerprint",
+        "moment",
         "md5",
         "ZeroClipboard",
         "Bloodhound"

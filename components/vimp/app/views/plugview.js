@@ -22,7 +22,7 @@ export default Ember.View.extend({
             Ember.run.later(function () {
                 if (ctrl && !ctrl.get('isDestroyed')) {
                     ctrl.set('copyCloneUrlClass', 'fa-copy');
-                    ctrl.set('copyCloneUrlTitle', 'Copy clone url to clipboard');
+                    ctrl.set('copyCloneUrlTitle', 'Copy github clone url to clipboard');
                 }
             }, 1000);
         }.bind(this));
