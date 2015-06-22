@@ -52,6 +52,10 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
         background-color: $primary-color-lighten-4;
     }
 
+    .accordion {
+        margin: 0;
+    }
+
     .accordion-navigation {
         margin-top: 5px;
     }
