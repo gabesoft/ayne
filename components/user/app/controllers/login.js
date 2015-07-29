@@ -2,44 +2,41 @@ import Validator from 'core/app/mixins/validator';
 import Legend from 'user/app/mixins/legend';
 
 export default Ember.Controller.extend(Validator, Legend, {
-    authenticatePending : false
-  , legendDefault       : 'Enter your credentials'
-  , onEnterAction       : 'authenticate'
-  , prevTransition      : null
-  , showForgotPassword  : false
-  , needs               : ['application']
-  , appCtrl             : Ember.computed.alias('controllers.application')
+    authenticatePending: false,
+    legendDefault: 'Enter your credentials',
+    prevTransition: null,
+    showForgotPassword: false,
 
-  , email : function () {
+    email: function () {
         return this.get('model.email');
-    }.property('model.email')
+    }.property('model.email'),
 
-  , init : function () {
+    init: function () {
         this._super();
         this.emailField('email');
         this.requiredField('email');
         this.legendResetFields('email', 'password');
-    }
+    },
 
-  , setup: function (model) {
+    setup: function (model) {
         this.resetErrors();
         this.legend();
         this.set('model', model);
-    }
+    },
 
-  , disableSubmit : function () {
+    disableSubmit: function () {
         return this.get('invalid') || this.get('authenticatePending');
-    }.property('invalid', 'authenticatePending')
+    }.property('invalid', 'authenticatePending'),
 
-  , actions : {
-        authenticate: function () {
+    actions: {
+        save: function () {
             this.set('authenticatePending', true);
             this.validate()
-               .thenIf(function () {
+                .thenIf(function () {
                     this.auth.logout();
                     return this.api.login(this.get('model'));
                 }.bind(this))
-               .thenIf(function (response) {
+                .thenIf(function (response) {
                     var prev = this.get('prevTransition');
 
                     this.auth.login(response.data);
@@ -51,7 +48,7 @@ export default Ember.Controller.extend(Validator, Legend, {
                         window.location.replace('/');
                     }
                 }.bind(this))
-               .catch(function (response) {
+                .catch(function (response) {
                     var json = response.json || response;
 
                     if (json.statusCode === 401 || json.statusCode === 404) {
@@ -61,12 +58,12 @@ export default Ember.Controller.extend(Validator, Legend, {
                         this.legend(json.message, 'error');
                     }
                 }.bind(this))
-               .finally(function () {
+                .finally(function () {
                     this.set('authenticatePending', false);
                 }.bind(this));
-        }
+        },
 
-      , redirectToSignup: function () {
+        redirectToSignup: function () {
             this.transitionToRoute('signup');
         }
     }

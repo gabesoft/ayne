@@ -1,14 +1,15 @@
 <label class="{{if error.email 'error'}}">
-    Email
-    {{input
+  Email
+  {{input
     value=model.email
     type="email"
+    action="save"
     name="email"
     required=true
     class=error.email:error}}
-    {{#if error.email}}
-        <small class="error">{{error.email}}</small>
-    {{/if}}
+  {{#if error.email}}
+    <small class="error">{{error.email}}</small>
+  {{/if}}
 </label>
 
 

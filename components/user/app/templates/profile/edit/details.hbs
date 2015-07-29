@@ -1,58 +1,63 @@
 <div class="row">
-    <div class="medium-6 large-6 columns">
-        <fieldset class="panel">
-            {{partial 'partials/legend'}}
-            <label>First Name
-                {{input
-                name="firstName"
-                type="text"
-                value=model.firstName}}
-            </label>
+  <div class="medium-6 large-6 columns">
+    <fieldset class="panel">
+      {{partial 'partials/legend'}}
+      <label>First Name
+        {{input
+          name="firstName"
+          type="text"
+          action="save"
+          value=model.firstName}}
+      </label>
 
-            <label>Last Name
-                {{input
-                name="lastName"
-                type="text"
-                value=model.lastName}}
-            </label>
+      <label>Last Name
+        {{input
+          name="lastName"
+          type="text"
+          action="save"
+          value=model.lastName}}
+      </label>
 
-            <label class="{{if error.displayName 'error'}}">Display Name
-                {{input
-                class=error.displayName:error
-                name="displayName"
-                type="text"
-                required=true
-                value=model.displayName}}
-                {{#if error.displayName}}
-                <small class="error">{{error.displayName}}</small>
-                {{/if}}
-            </label>
+      <label class="{{if error.displayName 'error'}}">Display Name
+        {{input
+          class=error.displayName:error
+          name="displayName"
+          type="text"
+          action="save"
+          required=true
+          value=model.displayName}}
+        {{#if error.displayName}}
+          <small class="error">{{error.displayName}}</small>
+        {{/if}}
+      </label>
 
-            <label>Location
-                {{input
-                name="location"
-                type="text"
-                value=model.location}}
-            </label>
+      <label>Location
+        {{input
+          name="location"
+          type="text"
+          action="save"
+          value=model.location}}
+      </label>
 
-            <label>Gravatar Email
-                {{input
-                name="gravatarEmail"
-                type="email"
-                value=model.gravatarEmail}}
-            </label>
-            <button class="button small" type="button" disabled={{disableSubmit}} {{action 'save'}}>
-                <i class="fa fa-save"></i>
-                Save
-            </button>
-            <button class="button secondary small" type="button" disabled={{disableCancel}} {{action 'cancel'}}>
-                <i class="fa fa-undo"></i>
-                Cancel
-            </button>
-        </fieldset>
-    </div>
+      <label>Gravatar Email
+        {{input
+          name="gravatarEmail"
+          type="email"
+          action="save"
+          value=model.gravatarEmail}}
+      </label>
+      <button class="button small" type="button" disabled={{disableSubmit}} {{action 'save'}}>
+        <i class="fa fa-save"></i>
+        Save
+      </button>
+      <button class="button secondary small" type="button" disabled={{disableCancel}} {{action 'cancel'}}>
+        <i class="fa fa-undo"></i>
+        Cancel
+      </button>
+    </fieldset>
+  </div>
 
-    <div class="medium-6 large-4 columns margin-top-30 show-for-medium-up">
-        <img class="profile-photo" src={{gravatarUrl}}>
-    </div>
+  <div class="medium-6 large-4 columns margin-top-30 show-for-medium-up">
+    <img class="profile-photo" src={{gravatarUrl}}>
+  </div>
 </div>

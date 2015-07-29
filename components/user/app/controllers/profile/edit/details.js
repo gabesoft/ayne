@@ -3,20 +3,20 @@ import Validator from 'core/app/mixins/validator';
 import Gravatar from 'core/app/mixins/gravatar';
 
 export default Ember.Controller.extend(Gravatar, Validator, Legend, {
-    savePending      : false
-  , profilePhotoSize : 200
-  , legendDefault    : 'Name and Details'
-  , onEnterAction    : 'save'
-  , _model           : {}
-  , model            : {}
-  , needs            : [ 'application' ]
-  , appCtrl          : Ember.computed.alias('controllers.application')
+    savePending: false,
+    profilePhotoSize: 200,
+    legendDefault: 'Name and Details',
+    onEnterAction: 'save',
+    _model: {},
+    model: {},
+    application: Ember.inject.controller(),
 
-  , gravatarEmail : function () {
+    gravatarEmail: function () {
         return this.get('model.gravatarEmail');
     }.property('model.gravatarEmail')
 
-  , init: function () {
+    ,
+    init: function () {
         this._super();
         this.addObserver('model', function () {
             this.set('_model', Ember.copy(this.get('model')));
@@ -25,40 +25,43 @@ export default Ember.Controller.extend(Gravatar, Validator, Legend, {
         this.requiredField('model.displayName', 'displayName');
         this.alphaNumericField('model.displayName', 'displayName', true);
         this.setValidator('uniqueDisplayName', 'model.displayName', 'displayName', function () {
-            var value    = this.get('model.displayName')
-              , orig     = this.get('_model.displayName');
+            var value = this.get('model.displayName'),
+                orig = this.get('_model.displayName');
 
             if (!value || !orig || value === orig) {
                 return null;
             }
 
             return this.api.checkDisplayName(value)
-               .then(function (response) {
+                .then(function (response) {
                     return response.data.exists ? 'display name not available' : null;
                 });
         }, 300);
     }
 
-  , disableSubmit : function () {
+    ,
+    disableSubmit: function () {
         return this.get('invalid');
     }.property('invalid')
 
-  , disableCancel : function () {
+    ,
+    disableCancel: function () {
         return this.get('savePending');
     }.property('savePending')
 
-  , actions: {
+    ,
+    actions: {
         save: function () {
             this.validate()
-               .thenIf(function () {
+                .thenIf(function () {
                     return this.api.saveProfile(this.get('model'));
                 }.bind(this))
-               .thenIf(function (response) {
+                .thenIf(function (response) {
                     this.set('model', response.data);
-                    this.get('appCtrl').get('target').send('invalidateModel');
+                    this.get('application.target').send('invalidateModel');
                     this.legend('Settings Updated', 'success', 5000);
                 }.bind(this))
-               .catch(function (response) {
+                .catch(function (response) {
                     var json = response.json || {};
                     if (json.statusCode === 409) {
                         this.legend(json.message, 'error');
@@ -67,14 +70,14 @@ export default Ember.Controller.extend(Gravatar, Validator, Legend, {
                         this.legend('Failed to Update Settings', 'error');
                     }
                 }.bind(this));
-        }
-      , cancel : function () {
+        },
+        cancel: function () {
             this.api.getProfile()
-               .then(function (response) {
+                .then(function (response) {
                     this.set('model', response.data);
-                    this.get('appCtrl').get('target').send('invalidateModel');
+                    this.get('application.target').send('invalidateModel');
                 }.bind(this))
-               .catch(function (response) {
+                .catch(function (response) {
                     console.log(response);
                     this.legend('Unknown Error', 'error');
                 }.bind(this));

@@ -1,26 +1,26 @@
 <div class="row">
-    <div class="medium-8 medium-offset-2 large-4 large-offset-4 columns">
-        <fieldset class="panel">
-            {{partial 'partials/legend'}}
-            {{partial 'partials/email-input'}}
-            {{partial 'partials/password-input'}}
-            {{#if showForgotPassword}}
-                <blockquote>
-                    {{#link-to 'forgot-password'}}I forgot my password{{/link-to}}
-                </blockquote>
-            {{/if}}
-            <button class="button small" type="button" disabled={{disableSubmit}} {{action 'authenticate'}}>
-                {{#if authenticatePending}}
-                    <i class="fa fa-spin fa-cog"></i>
-                {{else}}
-                    <i class="fa fa-sign-in"></i>
-                {{/if}}
-                Log In
-            </button>
-            <button class="button secondary small" type="button" {{action 'redirectToSignup'}}>
-                <i class="fa fa-user"></i>
-                Register
-            </button>
-        </fieldset>
-    </div>
+  <div class="medium-8 medium-offset-2 large-4 large-offset-4 columns">
+    <fieldset class="panel">
+      {{partial 'partials/legend'}}
+      {{partial 'partials/email-input'}}
+      {{partial 'partials/password-input'}}
+      {{#if showForgotPassword}}
+        <blockquote>
+          {{#link-to 'forgot-password'}}I forgot my password{{/link-to}}
+        </blockquote>
+      {{/if}}
+      <button class="button small" type="button" disabled={{disableSubmit}} {{action 'save'}}>
+        {{#if authenticatePending}}
+          <i class="fa fa-spin fa-cog"></i>
+        {{else}}
+          <i class="fa fa-sign-in"></i>
+        {{/if}}
+        Log In
+      </button>
+      <button class="button secondary small" type="button" {{action 'redirectToSignup'}}>
+        <i class="fa fa-user"></i>
+        Register
+      </button>
+    </fieldset>
+  </div>
 </div>
