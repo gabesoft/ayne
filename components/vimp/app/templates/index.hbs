@@ -1,40 +1,32 @@
 <div class="row margin-top-30 margin-bottom-10">
-    <div class="medium-6 large-6 columns">
-        <div title={{searchHelp}}>
-            {{query-input tags=keywords action="searchPlugs" error=queryError pending=searchPending}}
-            {{#if model.plugins.length}}
-                <small class="query-info pull-left">{{search}}</small>
-                <small class="query-info pull-right">{{model.plugins.length}}</small>
-            {{/if}}
-        </div>
+  <div class="medium-6 large-6 columns">
+    <div title={{searchHelp}}>
+      {{query-input tags=keywords action="searchPlugs" error=queryError pending=searchPending}}
+      {{#if model.plugins.length}}
+        <small class="query-info pull-left">{{search}}</small>
+        <small class="query-info pull-right">{{model.plugins.length}}</small>
+      {{/if}}
     </div>
+  </div>
 </div>
 
 <div class="plug-index margin-bottom-30 row">
-    <div class="search-results medium-6 large-6 columns">
-        {{render 'pluglist' model.plugins}}
-    </div>
+  <div class="search-results medium-6 large-6 columns">
+    {{plug-list model=model.plugins showModal="showModal"}}
+  </div>
 
-    <ul class="accordion medium-6 large-6 columns" data-accordion>
-        <li class="accordion-navigation {{if mostStarredActive 'active'}}">
-            <a href="#most-starred">
-                Most Starred
-                <i class="fa fa-fw fa-angle-double-down open"></i>
-                <i class="fa fa-fw fa-angle-double-left close"></i>
-            </a>
-            <div id="most-starred" class="content {{if mostStarredActive 'active'}}">
-                {{render 'pluglist' model.mostStarred}}
-            </div>
-        </li>
-        <li class="accordion-navigation {{if lastUpdatedActive 'active'}}">
-            <a href="#last-updated">
-                Last Updated
-                <i class="fa fa-fw fa-angle-double-down open"></i>
-                <i class="fa fa-fw fa-angle-double-left close"></i>
-            </a>
-            <div id="last-updated" class="content {{if lastUpdatedActive 'active'}}">
-                {{render 'pluglist' model.lastUpdated}}
-            </div>
-        </li>
-    </ul>
+  <ul class="accordion medium-6 large-6 columns" data-accordion>
+    {{#accordion-item
+       open=mostStarredActive
+       accordionId="most-starred"
+       title="Most Starred"
+       toggleAction="updateMostStarred"
+    }}
+      {{plug-list model=model.mostStarred showModal="showModal"}}
+    {{/accordion-item}}
+
+    {{#accordion-item open=lastUpdatedActive accordionId="last-updated" title="Last Updated" toggleAction="updateLastUpdated"}}
+      {{plug-list model=model.lastUpdated showModal="showModal"}}
+    {{/accordion-item}}
+  </ul>
 </div>

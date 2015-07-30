@@ -1,0 +1,8 @@
+<a data-id="{{accordionId}}">
+  {{title}}
+  <i class="fa fa-fw fa-angle-double-down open"></i>
+  <i class="fa fa-fw fa-angle-double-left close"></i>
+</a>
+<div id="{{accordionId}}" class="content {{if open 'active'}}">
+  {{yield}}
+</div>

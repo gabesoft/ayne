@@ -1,27 +1,27 @@
 export default Ember.Controller.extend({
-    needs         : ['application']
-  , searchPending : false
-  , queryError    : null
-  , queryParams   : [ 'search' ]
-  , search        : null
-
-  , keywords      : function () {
-        return this.api.getVplugKeywords().catch(function () { return []; });
-    }.property()
-
-  , makeLocalKey : function (name) {
-        var id  = this.auth.get('user.id') || '';
+    searchPending: false,
+    queryError: null,
+    queryParams: ['search'],
+    search: null,
+    application: Ember.inject.controller(),
+    keywords: function () {
+        return this.api.getVplugKeywords().catch(function () {
+            return [];
+        });
+    }.property(),
+    makeLocalKey: function (name) {
+        var id = this.auth.get('user.id') || '';
         return id + '-' + name;
-    }
-
-  , saveLocalValue : function (name, value) {
+    },
+    saveLocalValue: function (name, value) {
         if (this.auth.get('loggedIn')) {
             this.local.set(this.makeLocalKey(name), value);
         }
-    }
-
-  , sidebarActive : function (name, defVal) {
-        if (!this.auth.get('loggedIn')) { return defVal; }
+    },
+    sidebarActive: function (name, defVal) {
+        if (!this.auth.get('loggedIn')) {
+            return defVal;
+        }
 
         var key = this.makeLocalKey(name);
 
@@ -30,46 +30,43 @@ export default Ember.Controller.extend({
         } else {
             return defVal;
         }
-    }
-
-  , lastUpdatedActive : function () {
+    },
+    lastUpdatedActive: function () {
         return this.sidebarActive('last-updated', true);
-    }.property()
-
-  , mostStarredActive : function () {
+    }.property(),
+    mostStarredActive: function () {
         return this.sidebarActive('most-starred', false);
-    }.property('lastUpdatedActive')
-
-  , searchHelp : function () {
+    }.property('lastUpdatedActive'),
+    searchHelp: function () {
         return [
             'Multiple words are ORed.',
             'Enclose the words in quotes to AND them.',
             'For phrase search enclose the entire phrase in quotes',
             'To exclude a word prefix it by -'
         ].join(' ');
-    }.property()
-
-  , actions : {
-        searchPlugs : function (query) {
+    }.property(),
+    actions: {
+        searchPlugs: function (query) {
             this.set('searchPending', true);
             this.set('queryError', null);
-            this.api.getVplugs({ search : query })
-               .then(function (response) {
+            this.api.getVplugs({
+                search: query
+            })
+                .then(function (response) {
                     this.set('model.plugins', response.data);
                     this.set('search', query);
                 }.bind(this))
-               .catch(function (response) {
+                .catch(function (response) {
                     this.set('queryError', (response.json || {}).message);
                 }.bind(this))
-               .finally(function () {
+                .finally(function () {
                     this.set('searchPending', false);
                 }.bind(this));
-        }
-
-      , updateMostStarred : function (active) {
+        },
+        updateMostStarred: function (active) {
             this.saveLocalValue('most-starred', active);
-        }
-      , updateLastUpdated : function (active) {
+        },
+        updateLastUpdated: function (active) {
             this.saveLocalValue('last-updated', active);
         }
     }

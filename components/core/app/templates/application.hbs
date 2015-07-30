@@ -1,38 +1,38 @@
 <nav class="top-bar" data-topbar data-options="mobile_show_parent_link: false" role="navigation">
-    {{partial 'core/app/partials/header-title'}}
-    <section class="top-bar-section">
-        <ul class="pull-right hide-for-medium-up">
-            {{#if loggedIn}}
-                <li><a href="/user/profile/edit/details">Profile Edit</a></li>
-                <li><a href="/user/profile/view">Profile View</a></li>
-                <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
-            {{else}}
-                <li><a href="user/login">Log In</a></li>
-                <li><a href="user/signup">Register</a></li>
-            {{/if}}
-        </ul>
-        <ul class="pull-right show-for-medium-up">
-            {{#if loggedIn}}
-            <li class="has-dropdown not-click">
-                {{partial 'core/app/partials/header-profile-info'}}
-                <ul class="dropdown">
-                    <li><a href="/user/profile/edit/details">Profile Edit</a></li>
-                    <li><a href="/user/profile/view">Profile View</a></li>
-                    <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
-                </ul>
-            </li>
-            {{else}}
-                <li class="divider"></li>
-                <li class="has-form">
-                    <a class="button" href="/user/login">Log In</a>
-                </li>
-                <li class="divider"></li>
-                <li class="has-form">
-                    <a class="button" href="/user/signup">Register</a>
-                </li>
-            {{/if}}
-        </ul>
-    </section>
+  {{partial 'core/app/partials/header-title'}}
+  <section class="top-bar-section">
+    <ul class="pull-right hide-for-medium-up">
+      {{#if loggedIn}}
+        <li><a href="/user/profile/edit/details">Profile Edit</a></li>
+        <li><a href="/user/profile/view">Profile View</a></li>
+        <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+      {{else}}
+        <li><a href="user/login">Log In</a></li>
+        <li><a href="user/signup">Register</a></li>
+      {{/if}}
+    </ul>
+    <ul class="pull-right show-for-medium-up">
+      {{#if loggedIn}}
+        <li class="has-dropdown not-click">
+          {{partial 'core/app/partials/header-profile-info'}}
+          <ul class="dropdown">
+            <li><a href="/user/profile/edit/details">Profile Edit</a></li>
+            <li><a href="/user/profile/view">Profile View</a></li>
+            <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>
+          </ul>
+        </li>
+      {{else}}
+        <li class="divider"></li>
+        <li class="has-form">
+          <a class="button" href="/user/login">Log In</a>
+        </li>
+        <li class="divider"></li>
+        <li class="has-form">
+          <a class="button" href="/user/signup">Register</a>
+        </li>
+      {{/if}}
+    </ul>
+  </section>
 </nav>
 {{outlet}}
 
