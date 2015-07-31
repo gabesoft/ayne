@@ -22,7 +22,7 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
 @import 'core/styles/query-input';
 @import 'hljs-foundation';
 @import 'pluglist';
-@import 'details-dialog';
+@import 'plugin-info';
 @import 'vim-help';
 
 .dropdown-menu {

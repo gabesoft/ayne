@@ -4,10 +4,8 @@ var Router = Ember.Router.extend({
     });
 
 Router.map(function () {
-    // TODO: add the search query in the url
-    //       add anchors to plugins
-    //       push the plugin anchors on details modal open and pop on close
     this.route('/vim');
+    this.resource('plug-detail', { path: '/:id' });
 });
 
 export default Router;

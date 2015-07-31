@@ -8,7 +8,7 @@ export default Ember.Component.extend({
     openBinding: 'open',
 
     didInsertElement: function () {
-        this.$().closest('[data-accordion]').on('click', function (e) {
+        this.$().closest('[data-accordion]').on('click', '.accordion-toggle', function (e) {
             var target = this.$(e.target).get(0).closest('[data-id]'),
                 id = this.$(target).data('id');
 

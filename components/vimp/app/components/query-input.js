@@ -63,10 +63,9 @@ export default Base.extend(Keys, {
               , valueKey  : 'name'
               , templates : {
                     suggestion : function (data) {
-                        var view = this.container.lookup('view:ddsuggestion');
+                        var view = this.container.lookup('component:dropdown-suggestion');
 
-                        view.set('controller', new Ember.Controller());
-                        view.get('controller').set('model', data);
+                        view.set('model', data);
                         view.createElement();
 
                         return view.element.outerHTML;

@@ -25,7 +25,12 @@
       {{plug-list model=model.mostStarred showModal="showModal"}}
     {{/accordion-item}}
 
-    {{#accordion-item open=lastUpdatedActive accordionId="last-updated" title="Last Updated" toggleAction="updateLastUpdated"}}
+    {{#accordion-item
+       open=lastUpdatedActive
+       accordionId="last-updated"
+       title="Last Updated"
+       toggleAction="updateLastUpdated"
+    }}
       {{plug-list model=model.lastUpdated showModal="showModal"}}
     {{/accordion-item}}
   </ul>
