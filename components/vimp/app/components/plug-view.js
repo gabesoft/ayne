@@ -5,6 +5,10 @@ export default Ember.Component.extend({
     copyCloneUrlTitle: 'Copy github clone url to clipboard',
     enabledCloneUrlCopy: false,
 
+    hasReadmeOrDoc: function () {
+        return this.get('model.hasReadme') || this.get('model.hasDoc');
+    }.property('model'),
+
     author: function () {
         return this.get('model.author.name') || this.get('model.author.login') || this.get('model.author');
     }.property('model'),

@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
     queryParams: ['search'],
     search: null,
     application: Ember.inject.controller(),
+
     keywords: function () {
         return this.api.getVplugKeywords().catch(function () {
             return [];
@@ -49,9 +50,7 @@ export default Ember.Controller.extend({
         searchPlugs: function (query) {
             this.set('searchPending', true);
             this.set('queryError', null);
-            this.api.getVplugs({
-                search: query
-            })
+            this.api.getVplugs({ search: query })
                 .then(function (response) {
                     this.set('model.plugins', response.data);
                     this.set('search', query);

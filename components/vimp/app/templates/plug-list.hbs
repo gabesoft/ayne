@@ -1,5 +1,5 @@
 <ul>
-  {{#each vplug in model}}
+  {{#each model as |vplug|}}
     <li class="plug-item">
       {{plug-view model=vplug}}
     </li>
