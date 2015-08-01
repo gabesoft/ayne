@@ -1,5 +1,2 @@
-export default Ember.Component.extend({
-    didInsertElement: function () {
-        Ember.$(document).foundation('reflow');
-    }
-});
+import Base from 'core/app/components/foundation-reflow';
+export default Base;

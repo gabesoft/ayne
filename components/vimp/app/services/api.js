@@ -18,7 +18,7 @@ export default Api.extend({
 
         query = Ember.$.extend({}, {
             sort: 'githubStarCount:desc',
-            limit: 80,
+            limit: 120,
             isPlugin: '0.25',
             fields: fields.join('~')
         }, query);

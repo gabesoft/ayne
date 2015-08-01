@@ -1,5 +1,2 @@
-export default Ember.Component.extend({
-    didInsertElement: function () {
-        Ember.$(document).foundation({});
-    }
-});
+import Base from 'core/app/components/foundation-init';
+export default Base;
