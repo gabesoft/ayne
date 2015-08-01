@@ -1,21 +1,36 @@
-<div class="row margin-top-30">
+<div class="plug-detail row margin-top-30">
   <div class="columns">
-    <ul class="tabs" data-tab>
-      <li class="tab-title active">
-        <a href="#readme">Readme</a>
-      </li>
-      <li class="tab-title">
-        <a href="#help">Help</a>
-      </li>
-    </ul>
+    {{#if noReadmeOrDoc}}
+      <h3>This plugin does not have documentation</h3>
+    {{else}}
+      <ul class="tabs" data-tab>
+        {{#if model.hasReadme}}
+          <li class="tab-title active">
+            <a href="#readme">Readme</a>
+          </li>
+        {{/if}}
 
-    <div class="tabs-content plugin-info">
-      <section id="readme" role="tabpanel" class="content active" aria-hidden="false">
-        <div class="readme">{{{model.readme}}}</div>
-      </section>
-      <section id="help" role="tabpanel" class="content" aria-hidden="true">
-        <div class="doc">{{{model.doc}}}</div>
-      </section>
-    </div>
+        {{#if model.hasDoc}}
+          <li class="tab-title {{if hasOnlyDoc 'active'}}">
+            <a href="#help">Help</a>
+          </li>
+        {{/if}}
+      </ul>
+
+      <div class="tabs-content plug-info">
+        {{#if model.hasReadme}}
+          <section id="readme" role="tabpanel" class="content active" aria-hidden="false">
+            <div class="readme">{{{model.readme}}}</div>
+          </section>
+        {{/if}}
+
+        {{#if model.hasDoc}}
+          <section id="help" role="tabpanel" class="content {{if hasOnlyDoc 'active'}}" aria-hidden="{{hasReadmeAndDoc}}">
+            <div class="doc">{{{model.doc}}}</div>
+          </section>
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
 </div>
+{{foundation-reflow}}

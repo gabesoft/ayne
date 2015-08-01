@@ -1,78 +1,89 @@
+.plug-detail {
+    .tab-title {
+        min-width: 130px;
+        text-align: center;
 
-.plugin-info {
-    overflow-y: scroll;
-    padding: 30px;
-
-    .title-wrapper.fixed {
-        background-color: rgba($primary-color, 0.8);
-        padding: 9px 10px;
-        vertical-align: middle;
-
-        .button {
-            background-color: transparent;
-            display: inline-block;
-            float: right;
-            margin: 0;
-            padding: 5px 15px;
+        a {
+            outline: none;
         }
     }
+    
+    .plug-info {
+        overflow-y: scroll;
+        padding: 30px;
 
-    .close-reveal-modal {
-        color: $secondary-color;
-        float: right;
-        font-size: 1.7rem;
-        font-weight: normal;
-        position: inherit;
-    }
-
-    .title {
-        .content, .name, .author {
+        .title-wrapper.fixed {
+            background-color: rgba($primary-color, 0.8);
+            padding: 9px 10px;
             vertical-align: middle;
+
+            .button {
+                background-color: transparent;
+                display: inline-block;
+                float: right;
+                margin: 0;
+                padding: 5px 15px;
+            }
         }
 
-        .content {
-            color: $primary-color-lighten-5;
+        .close-reveal-modal {
+            color: $secondary-color;
+            float: right;
+            font-size: 1.7rem;
+            font-weight: normal;
+            position: inherit;
         }
 
-        .name {
-            color: $secondary-color-lighten-1;
+        .title {
+            .content, .name, .author {
+                vertical-align: middle;
+            }
+
+            .content {
+                color: $primary-color-lighten-5;
+            }
+
+            .name {
+                color: $secondary-color-lighten-1;
+            }
+
+            .author {
+                color: $body-font-color-reverse;
+                text-transform: capitalize;
+            }
+
+            h4, h5 {
+                display: inline;
+            }
         }
 
-        .author {
-            color: $body-font-color-reverse;
-            text-transform: capitalize;
+        pre {
+            background-color: $body-bg;
+            border: 0;
+            border-radius: 3px;
+            display: block;
+            font-family: $font-family-code;
+            font-size: 85%;
+            line-height: 1.45;
+            max-width: initial;
+            overflow: auto;
+            padding: 16px;
+            white-space: pre;
+            word-wrap: normal;
         }
 
-        h4, h5 {
+        code {
+            background-color: transparent;
+            border: none;
             display: inline;
+            font-family: inherit;
+            line-height: inherit;
+            margin: 0;
+            overflow: initial;
+            padding: 0;
+            word-wrap: normal;
         }
     }
 
-    pre {
-        background-color: $body-bg;
-        border: 0;
-        border-radius: 3px;
-        display: block;
-        font-family: $font-family-code;
-        font-size: 85%;
-        line-height: 1.45;
-        max-width: initial;
-        overflow: auto;
-        padding: 16px;
-        white-space: pre;
-        word-wrap: normal;
-    }
-
-    code {
-        background-color: transparent;
-        border: none;
-        display: inline;
-        font-family: inherit;
-        line-height: inherit;
-        margin: 0;
-        overflow: initial;
-        padding: 0;
-        word-wrap: normal;
-    }
+    
 }
-

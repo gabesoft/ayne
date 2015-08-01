@@ -2,9 +2,9 @@
   <div class="title row">
     <div class="pull-left">
       <h6 class="plug-title {{if model.hasReadme 'has-readme'}}">
-        <a class="name" href="javascript:void(0)" {{action 'showModal'}}>
+        {{#link-to 'plug-detail' model.id}}
           {{model.name}}
-        </a>
+        {{/link-to}}
       </h6>
       <a  data-id="{{model.id}}-copy-clone-url-button"
           class="button small action-button copy-clone-url-button"
