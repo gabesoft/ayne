@@ -1,5 +1,5 @@
 import Validator from 'core/app/mixins/validator';
-import Legend from 'user/app/mixins/legend';
+import Legend from 'core/app/mixins/legend';
 
 export default Ember.Controller.extend(Validator, Legend, {
     savePending: false,

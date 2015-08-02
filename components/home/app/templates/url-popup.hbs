@@ -1,0 +1,71 @@
+<div class="url-popup" hidden="true">
+  <div class="{{if editOn 'edit-on'}} popup-container">
+    <div class="popup-title margin-bottom-15">
+      <div class="action-buttons">
+        <button class="button small action-button privacy-button" title={{privacyTitle}} {{action 'togglePrivacy'}}>
+          <i class="{{if model.private 'fa-lock' 'fa-unlock-alt'}} fa fa-fw"></i>
+        </button>
+        <button class="button small action-button edit-button" title="Edit" type="button" {{action 'toggleEdit'}}>
+          <i class="fa fa-pencil fa-fw"></i>
+        </button>
+        <a class="button small action-button original-link"
+           href={{userEnteredLink}}
+           title="Open link in a new window"
+           target="_blank">
+          <i class="fa fa-fw fa-external-link"></i>
+        </a>
+        <button class="button small action-button delete-button pull-right" title="Delete Url" type="button" {{action "deleteUrl"}}>
+          <i class="fa fa-fw fa-close"></i>
+        </button>
+      </div>
+      {{#if editOn}}
+        <label>
+          {{input name="title" type="text" value=model.title}}
+        </label>
+      {{else}}
+        <h5 class="title">{{model.title}}</h5>
+        <span class="label label-info click-count" title="Click Count">{{model.clickCount}}</span>
+      {{/if}}
+    </div>
+    <div class="popup-content">
+      <dl>
+        <dd class="url-href" title={{model.href}}>
+          <a  id="copy-url-button"
+              class="button small action-button copy-url-button"
+              type="button"
+              data-clipboard-text={{model.href}}
+              disabled={{disableCopy}}
+              title={{copyTitle}}>
+            <i class="{{copyClass}} fa fa-fw"></i>
+          </a>
+          {{model.href}}
+        </dd>
+      </dl>
+
+      {{#if editOn}}
+        <label>Notes
+          {{textarea name="notes" rows="3" value=model.notes}}
+        </label>
+      {{else if model.notes}}
+        <blockquote class="url-notes">{{model.notes}}</blockquote>
+      {{/if}}
+
+      {{#if editOn}}
+        <label>Tags (lowercase words, no spaces)
+          {{tags-input
+            name="tags"
+            valueAutocomplete=tagsData
+            valueTags=tags
+            removeTag="removeTag"
+            value=model.tags }}
+        </label>
+      {{else}}
+        <div>
+          {{#each model.tags as |tag|}}
+            <span class="tag label radius">{{tag}}</span>
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

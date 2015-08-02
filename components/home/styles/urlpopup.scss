@@ -32,17 +32,17 @@ $url-popup-border-color: $secondary-color;
         border: 1px solid $url-popup-border-color;
         box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
         padding: 10px;
-
+        
         &.edit-on {
             background-color: $body-bg;
         }
     }
-
+    
     .popup-title {
         @include card-panel($card-padding: 0, $card-bg-color: $primary-color, $element-top-margin: 0, $element-bottom-margin: 0);
         margin: 5px;
         position: relative;
-
+        
         h5 {
             color: $vapor;
             text-transform: capitalize;

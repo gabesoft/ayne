@@ -1,9 +1,16 @@
 <div class="url-view">
-    <a href={{model.href}} class="url-title" target="_blank">
-        {{view 'favicon' src=model.favicon }}
-        {{model.title}}
-    </a>
-    {{#if view.showPopup}}
-        {{render 'urlpopup' model}}
-    {{/if}}
+  <a href={{model.href}} class="url-title" target="_blank">
+    {{view 'favicon' src=model.favicon }}
+    {{model.title}}
+  </a>
+  {{#if view.showPopup}}
+    {{url-popup
+      model=model
+      tagsData=tagsData
+      saveUrl="saveUrl"
+      deleteUrl="deleteUrl"
+      urlClick="urlClick"
+      removeTag="removeTag"
+    }}
+  {{/if}}
 </div>
