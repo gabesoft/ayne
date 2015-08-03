@@ -1,0 +1,28 @@
+* Vim plugins page
+** Enhancements
+- change the colors
+- make docs show up inline as well
+*** Improve the details page
+- add bookmarks to go back to search
+- add more info about the plugin 
+** Fixes
+* Bookmarks page
+** Enhancements
+- maybe make queries get their own URL
+*** Improve the edit dialog experience
+- maybe use the same button to show both info and edit
+- the dialog should show closer to the button that opened it
+- maybe make info open the pop up but only hover off 
+the entire list item would close it
+*** Implement a better way to count the URL clicks
+- use a redirect page
+- remove all logic related to click count from urlview
+- currently this is done via the urlClick action
+- this should work when clicking the original link in the pop up also
+*** Make delete tag work better
+- should not require two clicks
+- should indicate that the tag has been deleted
+*** Improve the URL input form
+- better design
+- bring back the focus functionality lost by removing the view
+

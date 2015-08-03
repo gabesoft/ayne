@@ -82,13 +82,12 @@ $url-popup-border-color: $secondary-color;
         }
     }
 
-    .edit-button, .copy-url-button, .privacy-button, .original-link {
+    .action-button {
         @include transparent-button($secondary-color, $secondary-color);
     }
 
     .delete-button {
-        @include transparent-button($alert-color, $alert-color);
-        padding: 3px 0;
+        padding: 0 10px 0 0;
     }
 }
 

@@ -23,6 +23,10 @@
             text-transform: capitalize;
         }
 
+        span.postfix {
+            height: 35px;
+        }
+
         fieldset > label {
             background-color: $body-bg;
             border: none;

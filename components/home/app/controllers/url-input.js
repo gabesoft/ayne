@@ -1,37 +1,39 @@
-import Legend from 'core/app/mixins/legend';
-
-export default Ember.Controller.extend(Legend, {
+export default Ember.Controller.extend(Ember.Evented, {
     model: {},
     pendingMeta: false,
     pendingSave: false,
     pendingDelete: false,
     displayHref: '',
-    recentUrls: [],
-    recentUrlsIds: {},
+    application: Ember.inject.controller(),
     tagsData: function () {
-        return this.api.getTags().catch(function () { return []; });
+        return this.api.getTags().catch(function () {
+            return [];
+        });
     }.property(),
     disableSubmit: function () {
-        return !this.get('displayHref') || this.get('pendingSave') || this.get('pendingDelete');
-    }.property('displayHref', 'pendingSave', 'pendingDelete'),
+        return !this.get('displayHref') || this.get('pendingAction');
+    }.property('displayHref', 'pendingAction'),
+    pendingAction: function () {
+        return this.get('pendingSave') || this.get('pendingDelete');
+    }.property('pendingSave', 'pendingDelete'),
     showDelete: function () {
         return this.get('model.id');
     }.property('model.id'),
     updateUrlMeta: function () {
         var href = this.get('displayHref');
 
-        if (this.get('pendingSave') || this.get('pendingDelete')) {
-            return;
-        }
-
         if (!href) {
             this.set('model', {});
             return;
         }
 
+        if (this.get('pendingAction')) {
+            return;
+        }
+
         this.set('pendingMeta', true);
         this.api.urlMeta(href).then(function (response) {
-            if (response.data.href !== this.get('href')) {
+            if (response.data.href !== this.get('href') && href === this.get('displayHref')) {
                 this.set('model', response.data);
             }
         }.bind(this)).catch(function (response) {
@@ -40,36 +42,19 @@ export default Ember.Controller.extend(Legend, {
             this.set('pendingMeta', false);
         }.bind(this));
     },
-    addToRecentUrls: function (data) {
-        var id = data.id,
-            urls = this.get('recentUrls'),
-            ids = this.get('recentUrlsIds');
-
-        if (ids[id]) {
-            urls.removeObject(ids[id]);
-        }
-
-        ids[id] = data;
-        urls.unshiftObject(data);
-    },
-    removeRecentUrl: function (model) {
-        var id = model.id,
-            urls = this.get('recentUrls'),
-            ids = this.get('recentUrlsIds'),
-            data = urls.findBy('id', id);
-
-        delete ids[id];
-        urls.removeObject(data);
+    urlActionDone: function (data, action) {
+        this.get('target').send(action, data);
+        this.set('model', {});
+        this.set('displayHref', null);
+        this.trigger(action.toLowerCase(), data);
     },
     actions: {
         save: function () {
-            this.set('pendingSave', false);
+            this.set('pendingSave', true);
             this.set('model.userEntered', this.get('displayHref'));
             this.api.saveUrl(this.get('model'))
                 .then(function (response) {
-                    this.addToRecentUrls(response.data);
-                    this.set('model', {});
-                    this.set('displayHref', null);
+                    this.urlActionDone(response.data, 'urlUpdated');
                 }.bind(this))
                 .catch(function (response) {
                     console.log(response);
@@ -80,24 +65,26 @@ export default Ember.Controller.extend(Legend, {
                 }.bind(this));
         },
         remove: function () {
-            this.set('pendingSave', false);
-            this.set('pendingDelete', false);
+            this.set('pendingDelete', true);
             this.api.deleteUrl(this.get('model'))
                 .then(function () {
-                    this.removeRecentUrl(this.get('model'));
-                    this.set('model', {});
-                    this.set('displayHref', null);
+                    this.urlActionDone(this.get('model'), 'urlDeleted');
                 }.bind(this))
                 .catch(function (response) {
                     console.log(response);
                 }.bind(this))
                 .finally(function () {
-                    this.set('pendingSave', false);
                     this.set('pendingDelete', false);
                 }.bind(this));
         },
         getUrlMeta: function () {
+            this.updateUrlMeta();
+        },
+        getUrlMetaSlow: function () {
             Ember.run.debounce(this, this.updateUrlMeta, 300);
+        },
+        removeTag: function (tag) {
+            this.api.deleteTag(tag);
         }
     }
 });

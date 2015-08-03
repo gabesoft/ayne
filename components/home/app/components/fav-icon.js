@@ -1,4 +1,4 @@
-export default Ember.View.extend({
+export default Ember.Component.extend({
     tagName           : 'img'
   , attributeBindings : ['src', 'style', 'clearOnClick']
   , clearOnClick      : false

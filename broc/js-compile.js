@@ -83,13 +83,13 @@ module.exports = function (opts) {
             srcDir: '/',
             destDir: '/templates',
             files: ['core/app/partials/**/*.hbs', 'core/app/templates/**/*.hbs']
-        }),
-            templ = pickFiles(opts.root, {
-                srcDir: path.join(opts.name, 'app'),
-                destDir: '/templates',
-                files: ['**/*.hbs']
-            }),
-            compiled = templateCompiler(mergeTrees([core, templ]));
+        });
+        var templ = pickFiles(opts.root, {
+            srcDir: path.join(opts.name, 'app'),
+            destDir: '/templates',
+            files: ['**/*.hbs']
+        });
+        var compiled = templateCompiler(mergeTrees([core, templ]));
 
         return pickFiles(compiled, {
             srcDir: '/templates',
@@ -106,18 +106,21 @@ module.exports = function (opts) {
         var core = pickFiles(opts.root, {
             srcDir: '/',
             destDir: '/',
-            files: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')] }),
-            modules = pickFiles(opts.root, {
-                srcDir: '/',
-                destDir: '/',
-                files: [
-                    path.join(opts.name, 'app/**/*.js'),
-                    path.join(opts.name, 'app', '.jshintrc')
-                ] }),
-            moduleSetup = moduleAppender(modules, {
-                root: path.join(opts.name, 'app'),
-                destFile: 'app-module-setup.js' }),
-            all = [modules, moduleSetup];
+            files: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')]
+        });
+        var modules = pickFiles(opts.root, {
+            srcDir: '/',
+            destDir: '/',
+            files: [
+                path.join(opts.name, 'app/**/*.js'),
+                path.join(opts.name, 'app', '.jshintrc')
+            ]
+        });
+        var moduleSetup = moduleAppender(modules, {
+            root: path.join(opts.name, 'app'),
+            destFile: 'app-module-setup.js'
+        });
+        var all = [modules, moduleSetup];
 
         if (opts.name !== 'core') {
             all.unshift(core);

@@ -26,6 +26,9 @@ export default Ember.Component.extend({
         },
         deleteUrl: function () {
             this.sendAction('deleteUrl', this.get('model'));
+        },
+        close: function () {
+            this.sendAction('popupOff');
         }
     },
     didInsertElement: function () {
@@ -67,8 +70,6 @@ export default Ember.Component.extend({
             client.destroy();
         }
 
-        if (this.get('editOn') || this.get('privacyChanged')) {
-            this.sendAction('saveUrl', this.get('model'));
-        }
+        this.sendAction('saveUrl', this.get('model'));
     }
 });

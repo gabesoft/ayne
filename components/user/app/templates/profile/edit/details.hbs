@@ -6,7 +6,7 @@
         {{input
           name="firstName"
           type="text"
-          action="save"
+          enter="save"
           value=model.firstName}}
       </label>
 
@@ -14,7 +14,7 @@
         {{input
           name="lastName"
           type="text"
-          action="save"
+          enter="save"
           value=model.lastName}}
       </label>
 
@@ -23,7 +23,7 @@
           class=error.displayName:error
           name="displayName"
           type="text"
-          action="save"
+          enter="save"
           required=true
           value=model.displayName}}
         {{#if error.displayName}}
@@ -35,7 +35,7 @@
         {{input
           name="location"
           type="text"
-          action="save"
+          enter="save"
           value=model.location}}
       </label>
 
@@ -43,7 +43,7 @@
         {{input
           name="gravatarEmail"
           type="email"
-          action="save"
+          enter="save"
           value=model.gravatarEmail}}
       </label>
       <button class="button small" type="button" disabled={{disableSubmit}} {{action 'save'}}>

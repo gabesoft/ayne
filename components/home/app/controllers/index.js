@@ -1,56 +1,62 @@
 export default Ember.Controller.extend({
-    needs         : ['application']
-  , search        : ''
-  , searchPending : false
-  , queryError    : null
-  , tagsData      : function () {
-        return this.api.getTags().catch(function () { return []; });
-    }.property()
-  , init   : function () {
+    application: Ember.inject.controller(),
+    search: '',
+    searchPending: false,
+    queryError: null,
+    tagsData: function () {
+        return this.api.getTags().catch(function () {
+            return [];
+        });
+    }.property(),
+    init: function () {
         this._super();
-        this.get('controllers.application').on('url-updated', function (data) {
+        this.get('application').on('url-updated', function (data) {
             this.send('urlUpdated', data);
         }.bind(this));
-        this.get('controllers.application').on('url-deleted', function (data) {
+        this.get('application').on('url-deleted', function (data) {
             this.send('urlDeleted', data);
         }.bind(this));
-    }
-  , actions: {
+    },
+    actions: {
         urlUpdated: function (data) {
             if (data.id) {
-                var urls = this.get('model.urls')
-                  , url  = urls.findBy('id', data.id);
+                var urls = this.get('model.urls'),
+                    url = urls.findBy('id', data.id);
                 if (url) {
                     urls.removeObject(url);
                 }
                 urls.unshiftObject(data);
             }
-        }
-      , urlDeleted: function (data) {
+        },
+        urlDeleted: function (data) {
             if (data.id) {
-                var urls = this.get('model.urls')
-                  , url  = urls.findBy('id', data.id);
+                var urls = this.get('model.urls'),
+                    url = urls.findBy('id', data.id);
                 urls.removeObject(url);
             }
-        }
-      , searchUrls: function (queryValue) {
+        },
+        searchUrls: function (queryValue) {
             this.set('searchPending', true);
             this.set('queryError', null);
-            this.api.getUrls({ search: queryValue })
-               .then(function (response) {
+            this.api.getUrls({
+                search: queryValue
+            })
+                .then(function (response) {
                     this.set('model.urls', response.data);
                 }.bind(this))
-               .catch(function (response) {
+                .catch(function (response) {
                     this.set('queryError', (response.json || {}).message);
                 }.bind(this))
-               .finally(function () {
+                .finally(function () {
                     this.set('searchPending', false);
                 }.bind(this));
-            this.api.getQueries({ limit: 50 }).then(function (response) {
+            this.api.getQueries({
+                limit: 50
+            }).then(function (response) {
                 this.set('model.queries', response.data);
             }.bind(this));
-        }
-      , runQuery: function (query) {
+        },
+        runQuery: function (query) {
             this.set('search', query.expression);
             this.send('searchUrls', query.expression);
         }

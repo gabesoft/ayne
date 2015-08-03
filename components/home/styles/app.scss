@@ -2,10 +2,10 @@
 @import "core/styles/off-canvas";
 @import "core/styles/query-input";
 @import "bootstrap-tagsinput";
-@import "urlinput";
-@import "urlpopup";
-@import "urllist";
-@import "queryview";
+@import "url-input";
+@import "url-popup";
+@import "url-list";
+@import "query-view";
 
 .favicon {
     background-color: $body-bg;

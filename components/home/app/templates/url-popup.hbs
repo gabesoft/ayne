@@ -14,8 +14,11 @@
            target="_blank">
           <i class="fa fa-fw fa-external-link"></i>
         </a>
-        <button class="button small action-button delete-button pull-right" title="Delete Url" type="button" {{action "deleteUrl"}}>
+        <button class="button small action-button close-button pull-right" title="Close" type="button" {{action "close"}}>
           <i class="fa fa-fw fa-close"></i>
+        </button>
+        <button class="button small action-button delete-button pull-right" title="Delete" type="button" {{action "deleteUrl"}}>
+          <i class="fa fa-fw fa-trash"></i>
         </button>
       </div>
       {{#if editOn}}

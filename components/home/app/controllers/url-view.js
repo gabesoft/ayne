@@ -3,9 +3,9 @@ export default Ember.Controller.extend({
         return this.api.getTags().catch(function () { return []; });
     }.property('parentController.tagsData'),
     actions: {
-        urlClick: function () {
+        urlClick: function (url) {
             this.incrementProperty('model.clickCount');
-            this.api.saveUrl(this.get('model'));
+            this.api.saveUrl(url);
         },
         removeTag: function (tag) {
             this.api.deleteTag(tag);
@@ -23,6 +23,17 @@ export default Ember.Controller.extend({
                 .catch(function (response) {
                     console.log(response);
                 });
+        },
+        popupInfoOn: function () {
+            this.set('showPopup', true);
+            this.set('popupEditOn', false);
+        },
+        popupOff: function () {
+            this.set('showPopup', false);
+        },
+        toggleEditPopup: function () {
+            this.toggleProperty('showPopup');
+            this.set('popupEditOn', this.get('showPopup'));
         }
     }
 });

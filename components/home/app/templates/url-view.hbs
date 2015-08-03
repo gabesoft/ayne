@@ -1,0 +1,30 @@
+<div class="url-view">
+  <a {{action 'urlClick' model on="mouseUp" bubbles=true}}
+     href="{{model.href}}"
+     class="url-title" target="_blank">
+
+    <i class="fa fa-info-circle fa-lg info {{if showPopup 'popup'}}"
+       {{action 'popupInfoOn' on="mouseEnter"}}
+       {{action 'popupOff' on="mouseLeave"}}></i>
+
+    {{fav-icon src=model.favicon }}
+    {{model.title}}
+
+    <i {{action 'toggleEditPopup' on="click"}}
+       class="fa fa-pencil fa-lg pull-right edit {{if showPopup 'popup'}}"
+       title="Edit"></i>
+  </a>
+
+  {{#if showPopup}}
+    {{url-popup
+      model=model
+      tagsData=tagsData
+      saveUrl="saveUrl"
+      deleteUrl="deleteUrl"
+      urlClick="urlClick"
+      removeTag="removeTag"
+      popupOff="popupOff"
+      editOn=popupEditOn
+    }}
+  {{/if}}
+</div>
