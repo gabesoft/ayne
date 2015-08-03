@@ -2,6 +2,8 @@
   {{partial 'core/app/partials/header-title'}}
   <section class="top-bar-section">
     <ul class="pull-right hide-for-medium-up">
+      <li><a href="/">Home</a></li>
+      <li><a href="/vim">Vim Plugins</a></li>
       {{#if loggedIn}}
         <li><a href="/user/profile/edit/details">Profile Edit</a></li>
         <li><a href="/user/profile/view">Profile View</a></li>
@@ -16,6 +18,8 @@
         <li class="has-dropdown not-click">
           {{partial 'core/app/partials/header-profile-info'}}
           <ul class="dropdown">
+            <li><a href="/">Home</a></li>
+            <li><a href="/vim">Vim Plugins</a></li>
             <li><a href="/user/profile/edit/details">Profile Edit</a></li>
             <li><a href="/user/profile/view">Profile View</a></li>
             <li> <a href="#" {{action 'logout'}}>Log Out</a> </li>

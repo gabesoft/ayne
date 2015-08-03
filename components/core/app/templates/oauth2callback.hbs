@@ -8,13 +8,6 @@
 </div>
 <div class="row">
     <div class="columns">
-        <button id="copy-button"
-            class="copy-button button small"
-            type="button"
-            data-clipboard-text={{code}}
-            disabled={{disableCopy}}>
-            <i class="{{copyClass}} fa"></i>
-            {{copyLabel}}
-        </button>
+      {{copy-button text=code}}
     </div>
 </div>
