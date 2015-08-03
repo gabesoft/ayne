@@ -1,5 +1,5 @@
 {{#off-canvas toggleKey="113"}}
-  <div class="inner-wrap">
+  <div class="inner-wrap margin-bottom-50">
     <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         <li class="url-input-form">{{render 'url-input' urlModel}}</li>
@@ -65,6 +65,7 @@
 
     <div class="main-section">
       {{outlet}}
+      {{foundation-init}}
     </div>
   </div>
 {{/off-canvas}}

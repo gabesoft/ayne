@@ -1,5 +1,5 @@
 export default Ember.Component.extend({
-    classNames: ['height-full'],
+    classNames: [],
     layoutName: 'off-canvas',
     toggleKey: 113, // F2
     toggleLinkSelector: '.left-off-canvas-toggle-link',
