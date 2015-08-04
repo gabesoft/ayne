@@ -1,4 +1,4 @@
-* Vim plugins page
+* Vim plugins page                                                     :vimp:
 ** Enhancements
 - change the colors
 - make docs show up inline as well
@@ -6,7 +6,7 @@
 - add bookmarks to go back to search
 - add more info about the plugin 
 ** Fixes
-* Bookmarks page
+* Bookmarks page                                                       :home:
 ** Enhancements
 - maybe make queries get their own URL
 *** Improve the edit dialog experience
