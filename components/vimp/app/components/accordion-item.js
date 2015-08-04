@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
     didInsertElement: function () {
         this.$().closest('[data-accordion]').on('click', '.accordion-toggle', function (e) {
-            var target = this.$(e.target).get(0).closest('[data-id]'),
+            var target = this.$(e.target).eq(0).closest('[data-id]'),
                 id = this.$(target).data('id');
 
             if (id === this.get('accordionId')) {
