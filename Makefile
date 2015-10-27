@@ -1,7 +1,9 @@
 default: test
 
-MOCHA   = node_modules/.bin/mocha -u tdd --check-leaks
-VERSION = $(shell node -pe 'require("./package.json").version')
+MOCHA			= node_modules/.bin/mocha -u tdd --check-leaks
+VERSION		= $(shell node -pe 'require("./package.json").version')
+BOWER			= node_modules/.bin/bower
+BROCCOLI  = node_modules/.bin/broccoli
 
 all: test
 
@@ -11,8 +13,10 @@ no_targets__:
 help:
 	@sh -c "$(MAKE) -rpn no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | grep -v 'Makefile' | grep -v 'make\[1\]' | sort"
 
-run:
+start:
 	@mpr run ./mpr.json
+
+run: start
 
 link-jshintrc:
 	@for i in `ls -d components/*/app`; do \
@@ -24,14 +28,14 @@ link-jshintrc-clean:
 		rm -v `pwd`/$$i/.jshintrc; \
 	done;
 
-serve: 
+serve:
 	@node-dev server.js
 
 serve-auth-assets:
-	@cd components/auth && broccoli serve --port 4300
+	@cd components/auth && $(BROCCOLI) serve --port 4300
 
 build:
-	@rm -rf public && broccoli build 'public'
+	@rm -rf public && $(BROCCOLI) build 'public'
 
 tag:
 	@git tag -a "v$(VERSION)" -m "Version $(VERSION)"
@@ -56,10 +60,12 @@ loc:
 
 setup:
 	@npm install . -d
+	@$(BOWER) install
 
 clean-dep:
 	@rm -rf node_modules
+	@rm -rf bower_components
 
 deploy: setup
-	@bower install --allow-root
-	@BROCCOLI_ENV=production rm -rf public && broccoli build 'public'
+	@$(BOWER) install --allow-root
+	@BROCCOLI_ENV=production rm -rf public && $(BROCCOLI) build 'public'

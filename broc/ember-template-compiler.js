@@ -6,12 +6,13 @@ var util     = require('util')
 
 util.inherits(TemplateCompiler, Filter);
 
-function TemplateCompiler (inputTree, options) {
+function TemplateCompiler (inputNode, options) {
     if (!(this instanceof TemplateCompiler)) {
-        return new TemplateCompiler(inputTree, options);
+        return new TemplateCompiler(inputNode, options);
     }
-    this.inputTree = inputTree;
+    this.inputNode = inputNode;
     this.options = options || {};
+    Filter.call(this, inputNode, options);
 }
 
 TemplateCompiler.prototype.extensions = [ 'hbs', 'handlebars' ];

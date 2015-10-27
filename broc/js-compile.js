@@ -1,17 +1,17 @@
 'use strict';
 
-var pickFiles = require('broccoli-static-compiler'),
-    templateCompiler = require('./ember-template-compiler'),
+var Funnel = require('broccoli-funnel'),
+    TemplateCompiler = require('./ember-template-compiler'),
     path = require('path'),
     glob = require('glob'),
-    touch = require('./touch'),
+    Touch = require('./touch'),
     jshintTree = require('broccoli-jshint'),
-    moduleAppender = require('./ember-module-appender'),
-    moduleCompiler = require('broccoli-es6-module-transpiler'),
-    concatenate = require('broccoli-concat'),
+    ModuleAppender = require('./ember-module-appender'),
+    Babel = require('broccoli-babel-transpiler'),
+    Concat = require('broccoli-sourcemap-concat'),
     uglifyJs = require('broccoli-uglify-sourcemap'),
     empty = require('./empty'),
-    mergeTrees = require('broccoli-merge-trees');
+    MergeTrees = require('broccoli-merge-trees');
 
 module.exports = function (opts) {
     function hasTemplates() {
@@ -35,7 +35,7 @@ module.exports = function (opts) {
             return empty();
         }
 
-        var modules = pickFiles(opts.root, {
+        var modules = new Funnel(opts.root, {
             srcDir: path.join(opts.name, 'app'),
             destDir: '/'
         });
@@ -49,86 +49,106 @@ module.exports = function (opts) {
     function compileVendorJs() {
         var ext = opts.minify ? '.min.js' : '.js',
             emberExt = opts.minify ? '.prod.js' : '.debug.js',
-            flash = pickFiles(opts.bower, {
+            flash = new Funnel(opts.bower, {
                 srcDir: 'zeroclipboard/dist',
                 destDir: '/',
-                files: ['*.swf']
+                include: ['*.swf']
             }),
-            bower = concatenate(opts.bower, {
+            loaderPath = path.dirname(require.resolve('loader.js')),
+            loaderNode = new Funnel(loaderPath, {
+                include: ['loader.js'],
+                destDir: '/'
+            }),
+            vendorNode = new MergeTrees([ opts.bower, loaderNode ]),
+            vendor = new Concat(vendorNode, {
                 outputFile: '/vendor.js',
                 inputFiles: [
-                    'jquery/dist/jquery' + ext
-                    , 'blueimp-md5/js/md5' + ext
-                    , 'fastclick/lib/fastclick.js'
-                    , 'modernizr/modernizr.js'
-                    , 'moment/min/moment.min.js'
-                    , 'foundation/js/foundation' + ext
-                    , 'ember/ember' + emberExt
-                    , 'typeahead.js/dist/typeahead.bundle' + ext
-                    , 'jquery-textcomplete/dist/jquery.textcomplete' + ext
-                    , 'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext
-                    , 'zeroclipboard/dist/ZeroClipboard' + ext
+                    'loader.js',
+                    'jquery/dist/jquery' + ext,
+                    'blueimp-md5/js/md5' + ext,
+                    'fastclick/lib/fastclick.js',
+                    'modernizr/modernizr.js',
+                    'moment/min/moment.min.js',
+                    'foundation/js/foundation' + ext,
+                    'ember/ember' + emberExt,
+                    'typeahead.js/dist/typeahead.bundle' + ext,
+                    'jquery-textcomplete/dist/jquery.textcomplete' + ext,
+                    'bootstrap-tagsinput/dist/bootstrap-tagsinput' + ext,
+                    'zeroclipboard/dist/ZeroClipboard' + ext
                 ]
             });
 
-        return mergeTrees([flash, bower]);
+        return new MergeTrees([vendor, flash]);
     }
 
     function compileTemplates() {
         if (!hasTemplates()) {
-            return touch('/templates/app-templates.js');
+            return new Touch('/templates/app-templates.js');
         }
 
-        var core = pickFiles(opts.root, {
+        var core = new Funnel(opts.root, {
             srcDir: '/',
             destDir: '/templates',
-            files: ['core/app/partials/**/*.hbs', 'core/app/templates/**/*.hbs']
+            include: ['core/app/partials/**/*.hbs', 'core/app/templates/**/*.hbs']
         });
-        var templ = pickFiles(opts.root, {
+        var templ = new Funnel(opts.root, {
             srcDir: path.join(opts.name, 'app'),
             destDir: '/templates',
-            files: ['**/*.hbs']
+            include: ['**/*.hbs']
         });
-        var compiled = templateCompiler(mergeTrees([core, templ]));
+        var compiled = new TemplateCompiler(new MergeTrees([core, templ]));
 
-        return pickFiles(compiled, {
+        return new Funnel(compiled, {
             srcDir: '/templates',
             destDir: '/',
-            files: ['**/*.js']
+            include: ['**/*.js']
         });
     }
 
     function compileJsModules() {
         if (!hasModules()) {
-            return touch(['/app-compiled.js', '/app-compiled.js.map']);
+            return new Touch(['/app-compiled.js', '/app-compiled.js.map']);
         }
 
-        var core = pickFiles(opts.root, {
+        var core = new Funnel(opts.root, {
             srcDir: '/',
             destDir: '/',
-            files: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')]
+            include: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')]
         });
-        var modules = pickFiles(opts.root, {
+        var modules = new Funnel(opts.root, {
             srcDir: '/',
             destDir: '/',
-            files: [
+            include: [
                 path.join(opts.name, 'app/**/*.js'),
                 path.join(opts.name, 'app', '.jshintrc')
             ]
         });
-        var moduleSetup = moduleAppender(modules, {
+        var moduleSetup = new ModuleAppender(modules, {
             root: path.join(opts.name, 'app'),
             destFile: 'app-module-setup.js'
         });
-        var all = [modules, moduleSetup];
+
+        var appRun = new Touch('app-module-setup-run.js', {
+            'app-module-setup-run.js': 'require("app-module-setup", []);'
+        });
+
+        var allModules = [modules, moduleSetup];
 
         if (opts.name !== 'core') {
-            all.unshift(core);
+            allModules.unshift(core);
         }
 
-        return moduleCompiler(mergeTrees(all), {
-            formatter: 'bundle',
-            output: '/app-compiled.js'
+        var compiled = new Babel(new MergeTrees(allModules), {
+            stage: 0,
+            moduleIds: true,
+            modules: 'amd',
+            highlightCode: false
+        });
+
+        return new Concat(new MergeTrees([ compiled, appRun ]), {
+            inputFiles: ['**/*.js'],
+            footerFiles: [ 'app-module-setup-run.js' ],
+            outputFile: '/app-compiled.js'
         });
     }
 
@@ -137,15 +157,15 @@ module.exports = function (opts) {
             modules = compileJsModules(),
             jshint = jshintModules(),
             vendor = compileVendorJs(),
-            libMerged = mergeTrees([templates, modules]),
-            lib = concatenate(libMerged, {
+            libMerged = new MergeTrees([templates, modules]),
+            lib = new Concat(libMerged, {
                 inputFiles: ['*/**/*.js', '**/*.js'],
                 outputFile: '/app.js'
             }),
-            map = pickFiles(modules, {
+            map = new Funnel(modules, {
                 srcDir: '/',
                 destDir: '/',
-                files: ['**/*.map']
+                include: ['**/*.map']
             });
 
         if (opts.minify) {
@@ -178,10 +198,10 @@ module.exports = function (opts) {
             });
         }
 
-        return mergeTrees([vendor, lib, map, jshint]);
+        return new MergeTrees([vendor, lib, map, jshint]);
     }
 
-    return pickFiles(combineAssetsJs(), {
+    return new Funnel(combineAssetsJs(), {
         srcDir: '/',
         destDir: path.join(opts.name, 'js')
     });

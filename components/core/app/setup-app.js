@@ -2,8 +2,8 @@ import Auth from 'core/app/security/auth';
 import Local from 'core/app/stores/local';
 
 Ember.Application.initializer({
-    name       : 'global-setup'
-  , initialize : function (container, app) {
+    name       : 'global-setup',
+    initialize : function (app) {
         var ayne = window.ayne || {};
 
         app.LOG_TRANSITIONS          = ayne.env !== 'production';

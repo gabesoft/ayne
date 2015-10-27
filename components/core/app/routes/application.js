@@ -1,38 +1,40 @@
 export default Ember.Route.extend({
-    init : function () {
+    init: function () {
         this._super();
         this.addObserver('loggedIn', this, function () {
             this.refresh();
         });
-    }
-  , model: function () {
-        if (!this.get('loggedIn')) { return {}; }
+    },
+    model: function () {
+        if (!this.get('loggedIn')) {
+            return {};
+        }
 
         return this.api.getProfile()
-           .then(function (response) {
+            .then(function (response) {
                 return {
-                    profile : response.data
-                  , user    : this.auth.get('user')
+                    profile: response.data,
+                    user: this.auth.get('user')
                 };
             }.bind(this))
-           .catch(function (response) {
+            .catch(function (response) {
                 if (Ember.get(response, 'error') === 'Unauthorized') {
                     this.auth.logout();
                 }
                 return {};
             }.bind(this));
-    }
-  , actions : {
+    },
+    actions: {
         logout: function () {
             this.api.logout().finally(function () {
                 this.auth.logout();
             }.bind(this));
-        }
-      , invalidateModel: function () {
+        },
+        invalidateModel: function () {
             this.refresh();
         }
-    }
-  , loggedIn: function () {
+    },
+    loggedIn: function () {
         return this.auth.get('loggedIn');
     }.property('auth.loggedIn')
 });

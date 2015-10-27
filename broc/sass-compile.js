@@ -1,82 +1,82 @@
 'use strict';
 
-var pickFiles   = require('broccoli-static-compiler')
-  , path        = require('path')
-  , glob        = require('glob')
-  , touch       = require('./touch')
-  , renameFile  = require('./file-renamer')
-  , compileSass = require('broccoli-sass')
-  , mergeTrees  = require('broccoli-merge-trees');
+var Funnel = require('broccoli-funnel'),
+    path = require('path'),
+    glob = require('glob'),
+    touch = require('./touch'),
+    RenameFile = require('./file-renamer'),
+    CompileSass = require('broccoli-sass'),
+    MergeTrees = require('broccoli-merge-trees');
 
 module.exports = function (opts) {
-    function hasSass () {
+    function hasSass() {
         return glob.sync(path.join(opts.name, 'styles', 'app.scss'), {
-            nomount : false
-          , cwd     : opts.root
-          , root    : opts.root
+            nomount: false,
+            cwd: opts.root,
+            root: opts.root
         }).length > 0;
     }
 
-    function processSass () {
+    function processSass() {
         if (!hasSass()) {
             return touch(path.join(opts.name, 'css', 'app.css'));
         }
 
-        var foundation = pickFiles(opts.bower, {
-                srcDir  : '/foundation/scss'
-              , destDir : '/foundation'
-            })
-          , fontAwesome = pickFiles(opts.bower, {
-                srcDir  : '/font-awesome/scss'
-              , destDir : '/font-awesome'
-            })
-          , roboto = pickFiles(opts.bower, {
-                srcDir  : '/roboto-fontface'
-              , destDir : '/roboto-fontface'
-            })
-          , hljs = pickFiles(opts.node, {
-                srcDir  : '/highlight.js/styles'
-              , destDir : '/'
-              , files   : [ 'foundation.css' ]
-            })
-          , hljsSass = renameFile(hljs, {
-                'foundation.css' : '_hljs-foundation.scss'
-            })
-          , tagsInput = pickFiles(opts.bower, {
-                srcDir  : '/bootstrap-tagsinput/dist'
-              , destDir : '/'
-              , files   : [ 'bootstrap-tagsinput.css' ]
-            })
-          , tagsInputSass = renameFile(tagsInput, {
-                'bootstrap-tagsinput.css' : '_bootstrap-tagsinput.scss'
-            })
-          , compiled = compileSass([ foundation, fontAwesome, roboto, hljsSass, tagsInputSass, opts.root ]
-              , path.join(opts.name, 'styles', 'app.scss')
-              , '/app.css'
-              , {
-                    sourceMap      : !opts.minify
-                  , sourceComments : opts.minify ? false : 'map'
-                  , outputStyle    : opts.minify ? 'compressed' : 'inline'
-                });
+        var foundation = new Funnel(opts.bower, {
+            srcDir: '/foundation/scss',
+            destDir: '/foundation'
+        });
+        var fontAwesome = new Funnel(opts.bower, {
+            srcDir: '/font-awesome/scss',
+            destDir: '/font-awesome'
+        });
+        var roboto = new Funnel(opts.bower, {
+            srcDir: '/roboto-fontface',
+            destDir: '/roboto-fontface'
+        });
+        var hljs = new Funnel(opts.node, {
+            srcDir: '/highlight.js/styles',
+            destDir: '/',
+            files: ['foundation.css']
+        });
+        var hljsSass = new RenameFile(hljs, {
+            'foundation.css': '_hljs-foundation.scss'
+        });
+        var tagsInput = new Funnel(opts.bower, {
+            srcDir: '/bootstrap-tagsinput/dist',
+            destDir: '/',
+            files: ['bootstrap-tagsinput.css']
+        });
+        var tagsInputSass = new RenameFile(tagsInput, {
+            'bootstrap-tagsinput.css': '_bootstrap-tagsinput.scss'
+        });
+        var compiled = new CompileSass(
+            [opts.root, foundation, fontAwesome, roboto, hljsSass, tagsInputSass],
+            path.join(opts.name, 'styles', 'app.scss'),
+            '/app.css', {
+                sourceMap: !opts.minify,
+                sourceComments: opts.minify ? false : 'map',
+                outputStyle: opts.minify ? 'compressed' : 'inline'
+            });
 
-        return pickFiles(compiled, {
-            srcDir  : '/'
-          , destDir : path.join(opts.name, 'css')
+        return new Funnel(compiled, {
+            srcDir: '/',
+            destDir: path.join(opts.name, 'css')
         });
     }
 
-    function processFonts () {
-        var fontAwesome = pickFiles(opts.bower, {
-                srcDir  : '/font-awesome/fonts'
-              , destDir : path.join(opts.name, '/css/fonts')
-            })
-          , roboto = pickFiles(opts.bower, {
-                srcDir  : '/roboto-fontface/fonts'
-              , destDir : path.join(opts.name, '/css/fonts')
-            });
+    function processFonts() {
+        var fontAwesome = new Funnel(opts.bower, {
+            srcDir: '/font-awesome/fonts',
+            destDir: path.join(opts.name, '/css/fonts')
+        });
+        var roboto = new Funnel(opts.bower, {
+            srcDir: '/roboto-fontface/fonts',
+            destDir: path.join(opts.name, '/css/fonts')
+        });
 
-        return mergeTrees([ fontAwesome, roboto ]);
+        return new MergeTrees([fontAwesome, roboto]);
     }
 
-    return mergeTrees([ processSass(), processFonts() ]);
+    return new MergeTrees([processSass(), processFonts()]);
 };

@@ -5,7 +5,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function () {
     this.route('/vim');
-    this.resource('plug-detail', { path: '/:id' });
+    this.route('plug-detail', { resetNamespace: true, path: '/:id' });
 });
 
 export default Router;

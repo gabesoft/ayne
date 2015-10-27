@@ -1,16 +1,17 @@
 'use strict';
 
 var util   = require('util')
-  , Writer = require('broccoli-writer');
+  , Plugin = require('broccoli-plugin');
 
-util.inherits(Empty, Writer);
+util.inherits(Empty, Plugin);
 
 function Empty () {
     if (!(this instanceof Empty)) {
         return new Empty();
     }
+    Plugin.call(this, []);
 }
 
-Empty.prototype.write = function () {};
+Empty.prototype.build = function () {};
 
 module.exports = Empty;

@@ -6,7 +6,8 @@
             "8006"
         ],
         "color": "green",
-        "command": "node-dev",
+        "resolvePath": true,
+        "command": "node_modules/.bin/node-dev",
         "cwd": "../dask"
     },
     "brocco": {
@@ -17,8 +18,9 @@
             "4300"
         ],
         "color": "magenta",
-        "command": "broccoli",
-        "env": {}
+        "resolvePath": true,
+        "command": "node_modules/.bin/broccoli",
+        "env": { "BROCCOLI_WARN_READ_API" : "y"}
     },
     "mongo": {
         "args": [
@@ -39,6 +41,7 @@
             "8005"
         ],
         "color": "blue",
-        "command": "node-dev"
+        "resolvePath": true,
+        "command": "node_modules/.bin/node-dev"
     }
 }

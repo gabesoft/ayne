@@ -7,67 +7,71 @@
 @import "url-list";
 @import "query-view";
 
+.ember-view {
+  height: 100%;
+}
+
 .favicon {
-    background-color: $body-bg;
-    border-radius: 100%;
-    display: inline-block;
-    height: 16px;
-    width: 16px;
+  background-color: $body-bg;
+  border-radius: 100%;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
 }
 
 .query-list {
-    ul {
-        line-height: 1.2em;
-    }
+  ul {
+    line-height: 1.2em;
+  }
 
-    ul > li {
-        list-style: none;
-    }
+  ul > li {
+    list-style: none;
+  }
 }
 
 .dropdown-menu {
-    @include drop-down('textcomplete-item', 'active');
+  @include drop-down('textcomplete-item', 'active');
 }
 
 .bootstrap-tagsinput {
-    @include form-element();
-    @include side-radius($opposite-direction, 0);
-    @include side-radius($default-float, 0);
-    height: auto;
-    min-height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(1));
-    transition: box-shadow 300ms, border-color 300ms ease-in-out;
-    width: 100%;
+  @include form-element();
+  @include side-radius($opposite-direction, 0);
+  @include side-radius($default-float, 0);
+  height: auto;
+  min-height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(1));
+  transition: box-shadow 300ms, border-color 300ms ease-in-out;
+  width: 100%;
 
-    &.active {
-        background: none repeat scroll $input-focus-bg-color;
-        border: 1px solid $input-focus-border-color;
-        box-shadow: 0 0 5px $glowing-effect-color;
+  &.active {
+    background: none repeat scroll $input-focus-bg-color;
+    border: 1px solid $input-focus-border-color;
+    box-shadow: 0 0 5px $glowing-effect-color;
+  }
+
+  input {
+    box-shadow: none;
+    display: inline;
+    height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(20));
+    vertical-align: middle !important;
+  }
+
+  .tag {
+    @include label-size($padding: $label-padding);
+    @include label-style($radius: true);
+
+    [data-role="remove"]:hover {
+      box-shadow: none;
+      color: $alert-color;
+    }
+  }
+
+  .twitter-typeahead {
+    .tt-hint {
+      display: none !important;
     }
 
-    input {
-        box-shadow: none;
-        display: inline;
-        height: ($input-font-size + ($form-spacing * 1.5) - rem-calc(20));
-        vertical-align: middle !important;
+    .tt-menu {
+      @include drop-down('tt-suggestion', 'tt-cursor', $delete-button: true);
     }
-
-    .tag {
-        @include label-size($padding: $label-padding);
-        @include label-style($radius: true);
-
-        [data-role="remove"]:hover {
-            box-shadow: none;
-            color: $alert-color;
-        }
-    }
-
-    .twitter-typeahead {
-        .tt-hint {
-            display: none !important;
-        }
-
-        .tt-menu {
-            @include drop-down('tt-suggestion', 'tt-cursor', $delete-button: true);
-        }
-    }
+  }
 }

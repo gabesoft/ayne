@@ -1,28 +1,33 @@
 'use strict';
 
-var fs     = require('fs')
-  , util   = require('util')
-  , mkdirp = require('mkdirp')
-  , path   = require('path')
-  , Writer = require('broccoli-writer');
+var fs = require('fs'),
+    util = require('util'),
+    mkdirp = require('mkdirp'),
+    path = require('path'),
+    Plugin = require('broccoli-plugin');
 
-util.inherits(Touch, Writer);
+util.inherits(Touch, Plugin);
 
-function Touch (files) {
+function Touch(files, options) {
     if (!(this instanceof Touch)) {
-        return new Touch(files);
+        return new Touch(files, options);
     }
-    this.files = Array.isArray(files) ? files : [ files ];
+    this.options = options || {};
+    this.files = util.isArray(files) ? files : [files];
+    Plugin.call(this, []);
 }
 
-Touch.prototype.write = function (readTree, destDir) {
-    this.files.forEach(function (file) {
-        var full = path.join(destDir, file)
-          , dest = path.dirname(full);
+Touch.prototype.build = function () {
+    var destDir = this.outputPath;
 
-        mkdirp.sync(dest);
-        fs.writeFileSync(full, '', { flag: 'wx' });
-    });
+    this.files.forEach(function (file) {
+        var filePath = path.join(destDir, file),
+            fileName = path.basename(filePath),
+            fileData = this.options[file] || this.options[fileName] || '';
+
+        mkdirp.sync(path.dirname(filePath));
+        fs.writeFileSync(filePath, fileData, { flag: 'wx' });
+    }.bind(this));
 };
 
 module.exports = Touch;

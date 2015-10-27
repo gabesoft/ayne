@@ -4,29 +4,29 @@ export default Ember.Object.extend({
         this.addObserver('credentials', this, function () {
             this.local.set('credentials', this.get('credentials'));
         });
-    }
+    },
 
-  , user: function () {
+    user: function () {
         return this.get('credentials.user');
-    }.property('credentials')
+    }.property('credentials'),
 
-  , token: function () {
+    token: function () {
         return this.get('credentials.token');
-    }.property('credentials')
+    }.property('credentials'),
 
-  , noVerify : function () {
+    noVerify: function () {
         return this.get('credentials.noVerify');
-    }.property('credentials')
+    }.property('credentials'),
 
-  , loggedIn : function () {
+    loggedIn: function () {
         return Boolean(this.get('credentials'));
-    }.property('credentials')
+    }.property('credentials'),
 
-  , login: function (data) {
+    login: function (data) {
         this.set('credentials', data);
-    }
+    },
 
-  , logout: function () {
+    logout: function () {
         this.set('credentials', null);
     }
 });

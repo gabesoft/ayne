@@ -5,9 +5,9 @@
   "dependencies": {
     "blueimp-md5": "~1.1.0",
     "bootstrap-tagsinput": "https://github.com/timschlechter/bootstrap-tagsinput.git#0.5",
-    "ember": "~1.13.6",
+    "ember": "~2.1.0",
     "font-awesome": "~4.4.0",
-    "foundation": "~5.5.2",
+    "foundation": "~5.5.3",
     "jquery-textcomplete": "~0.3.7",
     "roboto-fontface": "~0.2.7",
     "zeroclipboard": "~2.2.0",

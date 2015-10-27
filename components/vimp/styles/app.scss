@@ -26,59 +26,59 @@ $secondary-color-darken-3  : color('blue', 'accent-4') !default;
 @import 'vim-help';
 
 .dropdown-menu {
-    @include drop-down('textcomplete-item', 'active');
+  @include drop-down('textcomplete-item', 'active');
 }
 
 .twitter-typeahead {
-    width: 100%;
+  width: 100%;
 
-    .tt-menu {
-        @include drop-down(
-        $item-class: 'tt-suggestion',
-        $item-active-class: 'tt-cursor',
-        $background-color: rgba($primary-color-lighten-4, 0.9));
-        width: 100%;
-    }
+  .tt-menu {
+    @include drop-down(
+      $item-class: 'tt-suggestion',
+      $item-active-class: 'tt-cursor',
+      $background-color: rgba($primary-color-lighten-4, 0.9));
+    width: 100%;
+  }
 }
 
 .query-info {
-    color: $primary-color;
-    padding: 0 1px;
+  color: $primary-color;
+  padding: 0 1px;
 }
 
 .plug-index {
-    h5 {
-        padding: 5px 2px;
-        background-color: $primary-color-lighten-4;
-    }
+  h5 {
+    padding: 5px 2px;
+    background-color: $primary-color-lighten-4;
+  }
 
-    .accordion {
-        margin: 0;
-    }
+  .accordion {
+    margin: 0;
+  }
 
-    .accordion-navigation {
-        margin-top: 5px;
-    }
+  .accordion-navigation {
+    margin-top: 5px;
+  }
 
-    .open, .close {
-        float: right;
-        margin: 4px 0 0 0;
-    }
+  .open, .close {
+    float: right;
+    margin: 4px 0 0 0;
+  }
 
+  .open {
+    display: inline;
+  }
+
+  .close {
+    display: none;
+  }
+
+  .active {
     .open {
-        display: inline;
+      display: none;
     }
-
     .close {
-        display: none;
+      display: inline;
     }
-
-    .active {
-        .open {
-            display: none;
-        }
-        .close {
-            display: inline;
-        }
-    }
+  }
 }
