@@ -1,50 +1,50 @@
 
 .off-canvas-list {
-    .url-input-form {
-        padding: 10px 20px 0 20px;
-        background-color: $off-canvas-bg;
+  .url-input-form {
+    padding: 10px 20px 0 20px;
+    background-color: $off-canvas-bg;
 
-        .button {
-            @extend .z-depth-1;
-            border-radius: 2px;
-        }
-
-        fieldset {
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-radius: 2px;
-            @extend .z-depth-1;
-        }
-
-        p.title {
-            color: $body-font-color-reverse;
-            margin: 0 0 10px 0;
-            text-transform: capitalize;
-        }
-
-        span.postfix {
-            height: 35px;
-        }
-
-        fieldset > label {
-            background-color: $body-bg;
-            border: none;
-            color: $body-font-color;
-            font-weight: $body-font-weight;
-            text-transform: none;
-
-            &:first-child {
-                border-radius: 2px 2px 0 0;
-            }
-
-            &:last-child {
-                border-radius: 0 0 2px 2px;
-            }
-        }
-
-        .bootstrap-tagsinput {
-            text-transform: none;
-        }
+    .button {
+      @extend .z-depth-1;
+      border-radius: 2px;
     }
+
+    fieldset {
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 2px;
+      @extend .z-depth-1;
+    }
+
+    p.title {
+      color: $body-font-color-reverse;
+      margin: 0 0 10px 0;
+      text-transform: capitalize;
+    }
+
+    span.postfix {
+      height: 37px;
+    }
+
+    fieldset > label {
+      background-color: $body-bg;
+      border: none;
+      color: $body-font-color;
+      font-weight: $body-font-weight;
+      text-transform: none;
+
+      &:first-child {
+        border-radius: 2px 2px 0 0;
+      }
+
+      &:last-child {
+        border-radius: 0 0 2px 2px;
+      }
+    }
+
+    .bootstrap-tagsinput {
+      text-transform: none;
+    }
+  }
 }
