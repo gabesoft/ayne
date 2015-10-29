@@ -1,15 +1,17 @@
-var req       = require('request')
-  , api       = require('../../../core/lib/api')
-  , crypto    = require('crypto')
-  , URI       = require('URIjs')
-  , cheerio   = require('cheerio')
-  , browserUA = {
-        chrome  : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.94 Safari/537.36"
-      , firefox : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0) Gecko/20100101 Firefox/35.0"
+var req = require('request'),
+    api = require('../../../core/lib/api'),
+    crypto = require('crypto'),
+    URI = require('URIjs'),
+    cheerio = require('cheerio'),
+    browserUA = {
+        chrome: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.94 Safari/537.36",
+        firefox: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:35.0) Gecko/20100101 Firefox/35.0"
     };
 
-function fixUrl (href) {
-    if (!href) { return null; }
+function fixUrl(href) {
+    if (!href) {
+        return null;
+    }
 
     if (href.match(/^http|ftp/)) {
         return href;
@@ -18,12 +20,12 @@ function fixUrl (href) {
     }
 }
 
-function getFaviconUri (pageUri, $) {
+function getFaviconUri(pageUri, $) {
     var href = $('link[rel]').filter(function () {
-            return (this.attribs.rel.toLowerCase() || '').match(/icon/i);
-        }).attr('href')
-      , faviconPath = href || ''
-      , uri         = new URI(faviconPath);
+        return (this.attribs.rel.toLowerCase() || '').match(/icon/i);
+    }).attr('href');
+    var faviconPath = href || '';
+    var uri = new URI(faviconPath);
 
     if (!uri.hostname() && faviconPath.match(/^\./)) {
         uri.path(pageUri.path());
@@ -41,56 +43,58 @@ function getFaviconUri (pageUri, $) {
     return uri;
 }
 
-function meta (pageUri, faviconUri, title, notes) {
+function meta(pageUri, faviconUri, title, notes) {
     return {
-        title   : title || null
-      , href    : pageUri ? pageUri.toString() : null
-      , favicon : faviconUri ? faviconUri.toString() : null
-      , tags    : []
-      , private : false
-      , notes   : notes
+        title: title || null,
+        href: pageUri ? pageUri.toString() : null,
+        favicon: faviconUri ? faviconUri.toString() : null,
+        tags: [],
+        private: false,
+        notes: notes
     };
 }
 
-function makeUrlId (href, userId) {
+function makeUrlId(href, userId) {
     return crypto.createHash('md5').update(userId + href).digest('hex');
 }
 
-function buildMeta (pageUri, body) {
-    var $          = cheerio.load(body)
-      , faviconUri = getFaviconUri(pageUri, $)
-      , title      = $('title').text()
-      , notes      = $('meta[name]').filter(function () {
+function buildMeta(pageUri, body) {
+    var $ = cheerio.load(body),
+        faviconUri = getFaviconUri(pageUri, $),
+        title = $('title').text(),
+        notes = $('meta[name]').filter(function () {
             return this.attribs.name.toLowerCase() === 'description';
         }).attr('content');
 
     return meta(pageUri, faviconUri, title, notes);
 }
 
-function getExisting (href, userId, cb) {
-    api.get(['/users', userId, 'urls', makeUrlId(href, userId) ], cb);
+function getExisting(href, userId, cb) {
+    api.get(['/users', userId, 'urls', makeUrlId(href, userId)], cb);
 }
 
-function requestOptions (href) {
+function requestOptions(href) {
     return {
-        url: href
-      , rejectUnauthorized : false
-      , method             : 'GET'
-      , headers            : {
-            'User-Agent'      : browserUA.firefox
-          , 'Accept'          : '*/*'
-          , 'Accept-Language' : 'en-US,en;q=0.5'
-          , 'Host'            : new URI(href).host()
+        url: href,
+        rejectUnauthorized: false,
+        method: 'GET',
+        headers: {
+            'User-Agent': browserUA.firefox,
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Host': new URI(href).host()
         }
     };
 }
 
-function getMetadata (request, reply) {
-    var href   = fixUrl(request.params.href)
-      , userId = request.auth.credentials.id
-      , opts   = requestOptions(href);
+function getMetadata(request, reply) {
+    var href = fixUrl(request.params.href),
+        userId = request.auth.credentials.id,
+        opts = requestOptions(href);
 
-    if (!href) { return reply(meta()); }
+    if (!href) {
+        return reply(meta());
+    }
 
     req(opts, function (err, response, body) {
         if (err || !body) {
