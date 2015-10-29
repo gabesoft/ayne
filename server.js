@@ -1,29 +1,31 @@
 'use strict';
 
-var path   = require('path')
-  , Hapi   = require('hapi')
-  , async  = require('async')
-  , glob   = require('glob')
-  , conf   = require('./config/store.js')
-  , server = new Hapi.Server({});
+var path = require('path'),
+    Hapi = require('hapi'),
+    async = require('async'),
+    glob = require('glob'),
+    conf = require('./config/store.js'),
+    server = new Hapi.Server({});
 
-function loadRoutes (cb) {
-    var root       = conf.get('path:root')
-      , components = path.join(root, 'components')
-      , opts       = {
-            nomount : false
-          , cwd     : components
-          , root    : components
+function loadRoutes(cb) {
+    var root = conf.get('path:root'),
+        components = path.join(root, 'components'),
+        opts = {
+            nomount: false,
+            cwd: components,
+            root: components
         };
 
     glob('/**/routes.js', opts, function (err, files) {
-        if (err) { return cb(err); }
+        if (err) {
+            return cb(err);
+        }
 
         files.forEach(function (file) {
             var routes = require(file);
 
             if (!Array.isArray(routes)) {
-                routes = [ routes ];
+                routes = [routes];
             }
 
             routes.forEach(function (route) {
@@ -39,12 +41,18 @@ function loadRoutes (cb) {
     });
 }
 
-function setupServer (cb) {
-    server.connection({ port : conf.get('app:port') || 8005 });
+function setupServer(cb) {
+    server.connection({
+        port: conf.get('app:port') || 8005
+    });
     server.views({
-        engines        : { jade : require('jade') }
-      , compileOptions : { pretty: true }
-      , path           : path.join(conf.get('path:root'), '/components')
+        engines: {
+            jade: require('jade')
+        },
+        compileOptions: {
+            pretty: true
+        },
+        path: path.join(conf.get('path:root'), '/components')
     });
 
     server.decorate('reply', 'conf', function (key) {
@@ -60,8 +68,8 @@ function setupServer (cb) {
             return reply.continue();
         }
 
-        var response = request.response
-          , context  = (response.source || {}).context || {};
+        var response = request.response,
+            context = (response.source || {}).context || {};
 
         context.ayne = context.ayne || {};
         context.ayne.assets = conf.get('assets');
@@ -75,30 +83,36 @@ function setupServer (cb) {
     cb(null);
 }
 
-function registerPlugins (cb) {
+function registerPlugins(cb) {
     server.register([
-        require('http-status-decorator')
-      , require('./plugins/jwt')
-      , {
-            register : require('good')
-          , options  : {
-                reporters : [{
-                    reporter : require('good-console')
-                  , args     : [
-                        { log    : '*', response: '*', error: '*' }
-                      , { format : 'hh:mm:ss.SSS' }
+        require('http-status-decorator'),
+        require('./plugins/jwt'),
+        {
+            register: require('good'),
+            options: {
+                reporters: [{
+                    reporter: require('good-console'),
+                    args: [
+                        {
+                            log: '*',
+                            response: '*',
+                            error: '*'
+                        },
+                        {
+                            format: 'hh:mm:ss.SSS'
+                        }
                     ]
                 }],
             }
         }], cb);
 }
 
-function setupAuth (cb) {
+function setupAuth(cb) {
     server.auth.strategy('token', 'jwt');
     cb();
 }
 
-function startServer (cb) {
+function startServer(cb) {
     server.start(function (err) {
         console.log('server started: ', server.info.uri);
         cb(err);
@@ -106,11 +120,11 @@ function startServer (cb) {
 }
 
 async.series([
-    setupServer
-  , registerPlugins
-  , setupAuth
-  , loadRoutes
-  , startServer
+    setupServer,
+    registerPlugins,
+    setupAuth,
+    loadRoutes,
+    startServer
 ], function (err) {
     if (err) {
         console.log(err);

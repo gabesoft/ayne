@@ -51,6 +51,7 @@
     "broccoli-uglify-sourcemap": "^1.0.1",
     "broccoli-unwatched-tree": "^0.1.1",
     "broccoli-writer": "^0.1.1",
+    "eslint": "^1.7.3",
     "loader.js": "^3.4.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.3",
