@@ -62,14 +62,18 @@ eslint:
 loc:
 	@find src/ -name *.js | xargs wc -l
 
-setup:
+deps: deps-npm deps-bower
+
+deps-npm:
 	@npm install . -d
-	@$(BOWER) install
+
+deps-bower:
+	@$(BOWER) install --allow-root
 
 clean-dep:
 	@rm -rf node_modules
 	@rm -rf bower_components
 
-deploy: setup
+deploy: deps-npm
 	@$(BOWER) install --allow-root
 	@BROCCOLI_ENV=production rm -rf public && $(BROCCOLI) build 'public'
