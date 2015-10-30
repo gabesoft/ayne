@@ -2,6 +2,8 @@
 
 var path = require('path'),
     Hapi = require('hapi'),
+    Vision = require('vision'),
+    Inert = require('inert'),
     async = require('async'),
     glob = require('glob'),
     conf = require('./config/store.js'),
@@ -45,15 +47,21 @@ function setupServer(cb) {
     server.connection({
         port: conf.get('app:port') || 8005
     });
-    server.views({
-        engines: {
-            jade: require('jade')
-        },
-        compileOptions: {
-            pretty: true
-        },
-        path: path.join(conf.get('path:root'), '/components')
+
+    server.register(Inert, function() {});
+    server.register(Vision, function (err) {
+        server.views({
+            engines: {
+                jade: require('jade')
+            },
+            compileOptions: {
+                pretty: true
+            },
+            path: path.join(conf.get('path:root'), '/components')
+        });
     });
+
+    server.path(__dirname);
 
     server.decorate('reply', 'conf', function (key) {
         return conf.get(key);
@@ -92,15 +100,9 @@ function registerPlugins(cb) {
             options: {
                 reporters: [{
                     reporter: require('good-console'),
-                    args: [
-                        {
-                            log: '*',
-                            response: '*',
-                            error: '*'
-                        },
-                        {
-                            format: 'hh:mm:ss.SSS'
-                        }
+                    events: [
+                        { log: '*', response: '*', error: '*' },
+                        { format: 'hh:mm:ss.SSS' }
                     ]
                 }],
             }
