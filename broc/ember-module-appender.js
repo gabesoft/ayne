@@ -78,6 +78,7 @@ EmberModuleAppender.prototype.appendModules = function (type, dir, imports, stat
                     .replace(this.root, '')
                     .replace(new RegExp(type.dir + '/'), '')
                     .replace(/\.js$/, '')
+                    .replace(/\//, '')
                     .replace(/\//g, '-');
             return {
                 file: file.replace(/\.js$/, ''),

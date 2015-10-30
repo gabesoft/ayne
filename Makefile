@@ -62,13 +62,15 @@ eslint:
 loc:
 	@find src/ -name *.js | xargs wc -l
 
+setup: deps
+
 deps: deps-npm deps-bower
 
 deps-npm:
 	@npm install . -d
 
 deps-bower:
-	@$(BOWER) install --allow-root
+	@$(BOWER) install
 
 clean-dep:
 	@rm -rf node_modules

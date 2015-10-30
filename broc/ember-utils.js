@@ -1,8 +1,5 @@
 'use strict';
 
-global.Ember = {};
-
-require('ember-runtime-node/node_modules/ember-metal-node');
-require('ember-runtime-node');
+var Ember = require('./../bower_components/ember/ember-runtime.js')
 
 module.exports.string = Ember.String;
