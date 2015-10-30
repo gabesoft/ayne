@@ -1,10 +1,10 @@
 default: test
 
-MOCHA = node_modules/.bin/mocha -u tdd --check-leaks
+MOCHA = $(CURDIR)/node_modules/.bin/mocha -u tdd --check-leaks
 VERSION = $(shell node -pe 'require("./package.json").version')
-BOWER = node_modules/.bin/bower
-BROCCOLI = node_modules/.bin/broccoli
-ESLINT = node_modules/.bin/eslint
+BOWER = $(CURDIR)/node_modules/.bin/bower
+BROCCOLI = $(CURDIR)/node_modules/.bin/broccoli
+ESLINT = $(CURDIR)/node_modules/.bin/eslint
 
 all: test
 
