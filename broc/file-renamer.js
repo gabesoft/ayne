@@ -8,9 +8,6 @@ var fs = require('fs'),
 util.inherits(FileRenamer, Plugin);
 
 function FileRenamer(inputTree, options) {
-    if (!(this instanceof FileRenamer)) {
-        return new FileRenamer(inputTree, options);
-    }
     this.fileMap = options || {};
     Plugin.call(this, util.isArray(inputTree) ? inputTree : [inputTree], options);
 }
@@ -22,7 +19,7 @@ FileRenamer.prototype.build = function () {
     Object.keys(this.fileMap).forEach(function (p) {
         var oldPath = path.join(srcDir, p),
             newPath = path.join(destDir, this.fileMap[p]);
-        fs.renameSync(oldPath, newPath);
+      fs.createReadStream(oldPath).pipe(fs.createWriteStream(newPath));
     }.bind(this));
 };
 
