@@ -31,3 +31,4 @@ config/github.json
 components/*/app/.jshintrc
 .tern-port
 dired-nav.org
+.#*

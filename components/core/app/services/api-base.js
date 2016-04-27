@@ -15,6 +15,10 @@ export default Ember.Object.extend({
 
   , run: function (opts) {
         return new Ember.RSVP.Promise(function (resolve, reject) {
+            if (opts && opts.type !== 'GET') {
+                opts.headers = { 'Content-type': 'application/json' };
+                opts.data = JSON.stringify(opts.data || {});
+            }
             Ember.$
                .ajax(opts)
                .then(function (data, status, jqXHR) {

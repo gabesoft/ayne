@@ -61,6 +61,8 @@ function setupServer(cb) {
         });
     });
 
+    server.register(require('pstatus/lib/hapi'));
+
     server.path(__dirname);
 
     server.decorate('reply', 'conf', function (key) {

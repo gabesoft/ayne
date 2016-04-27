@@ -113,7 +113,8 @@ module.exports = function (opts) {
         var core = new Funnel(opts.root, {
             srcDir: '/',
             destDir: '/',
-            include: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')]
+            include: ['core/app/**/*.js', path.join('core', 'app', '.jshintrc')],
+            exclude: [ '.#*' ]
         });
         var modules = new Funnel(opts.root, {
             srcDir: '/',
@@ -121,7 +122,8 @@ module.exports = function (opts) {
             include: [
                 path.join(opts.name, 'app/**/*.js'),
                 path.join(opts.name, 'app', '.jshintrc')
-            ]
+            ],
+            exclude: [ '.#*' ]
         });
         var moduleSetup = new ModuleAppender(modules, {
             root: path.join(opts.name, 'app'),

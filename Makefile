@@ -5,6 +5,7 @@ VERSION = $(shell node -pe 'require("./package.json").version')
 BOWER = $(CURDIR)/node_modules/.bin/bower
 BROCCOLI = $(CURDIR)/node_modules/.bin/broccoli
 ESLINT = $(CURDIR)/node_modules/.bin/eslint
+EMACS_TEMP := $(shell find . -name '.\#*')
 
 all: test
 
@@ -14,7 +15,7 @@ no_targets__:
 help:
 	@sh -c "$(MAKE) -rpn no_targets__ | awk -F':' '/^[a-zA-Z0-9][^\$$#\/\\t=]*:([^=]|$$)/ {split(\$$1,A,/ /);for(i in A)print A[i]}' | grep -v '__\$$' | grep -v 'Makefile' | grep -v 'make\[1\]' | sort"
 
-start:
+start: clean-temp
 	@mpr run ./mpr.json
 
 run: start
@@ -65,6 +66,9 @@ loc:
 setup: deps
 
 deps: deps-npm deps-bower
+
+clean-temp:
+	$(RM) -f $(EMACS_TEMP)
 
 deps-npm:
 	@npm install . -d

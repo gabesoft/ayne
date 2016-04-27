@@ -50,8 +50,15 @@ module.exports = function (opts) {
         var tagsInputSass = new RenameFile(tagsInput, {
             'bootstrap-tagsinput.css': '_bootstrap-tagsinput.scss'
         });
+
+        var root = new Funnel(opts.root, {
+            srcDir: '/',
+            destDir: '/',
+            include: ['**/*.scss']
+        });
+
         var compiled = new CompileSass(
-            [opts.root, foundation, fontAwesome, roboto, hljsSass, tagsInputSass],
+            [root, foundation, fontAwesome, roboto, hljsSass, tagsInputSass],
             path.join(opts.name, 'styles', 'app.scss'),
             '/app.css', {
                 sourceMap: !opts.minify,
