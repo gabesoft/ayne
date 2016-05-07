@@ -32,12 +32,13 @@ module.exports = function (opts) {
         });
         var roboto = new Funnel(opts.bower, {
             srcDir: '/roboto-fontface',
-            destDir: '/roboto-fontface'
+            destDir: '/roboto-fontface',
+            include:  ['**/*.scss']
         });
         var hljs = new Funnel(opts.node, {
             srcDir: '/highlight.js/styles',
             destDir: '/',
-            files: ['foundation.css']
+            include: ['foundation.css']
         });
         var hljsSass = new RenameFile(hljs, {
             'foundation.css': '_hljs-foundation.scss'
@@ -45,7 +46,7 @@ module.exports = function (opts) {
         var tagsInput = new Funnel(opts.bower, {
             srcDir: '/bootstrap-tagsinput/dist',
             destDir: '/',
-            files: ['bootstrap-tagsinput.css']
+            include: ['bootstrap-tagsinput.css']
         });
         var tagsInputSass = new RenameFile(tagsInput, {
             'bootstrap-tagsinput.css': '_bootstrap-tagsinput.scss'
